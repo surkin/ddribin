@@ -1,6 +1,6 @@
 //
 //  DLDWidgetRunner.m
-//  WidgetRun
+//  WidgetRunner
 //
 //  Created by Dave Dribin on 7/9/06.
 //  Copyright 2006 __MyCompanyName__. All rights reserved.
@@ -65,24 +65,6 @@ BOOL DTRenameSelector(Class _class, SEL _oldSelector, SEL _newSelector)
 
 + (void) load
 {
-    NSLog(@"In [DLDWidgetRunnger load]");
-    Class aClass = [WidgetInstallerController class];
-    BOOL rc;
-    
-    rc = DTRenameSelector(aClass, @selector(run:), @selector(orig_run:));
-    NSLog(@"rc: %d", rc);
-
-    rc = DTRenameSelector(aClass, @selector(dld_run:), @selector(run:));
-    NSLog(@"rc: %d", rc);
-
-    rc = DTRenameSelector(aClass, @selector(ok:), @selector(orig_ok:));
-    NSLog(@"rc: %d", rc);
-    
-    rc = DTRenameSelector(aClass, @selector(dld_ok:), @selector(ok:));
-    NSLog(@"rc: %d", rc);
-    
-    NSLog(@"(%d): %@", __LINE__, [[NSProcessInfo processInfo] arguments]);
-
     WidgetInstallerController * controller = [NSApp targetForAction: @selector(run:)];
     NSLog(@"(%d) target: %@", __LINE__, controller);
     [controller performSelectorOnMainThread: @selector(run:) withObject: nil waitUntilDone: NO];
