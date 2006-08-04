@@ -32,10 +32,10 @@
 		089C167EFE841241C02AAC07 /* English */ = {isa = PBXFileReference; fileEncoding = 10; lastKnownFileType = text.plist.strings; name = English; path = English.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		089C167FFE841241C02AAC07 /* AppKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AppKit.framework; path = /System/Library/Frameworks/AppKit.framework; sourceTree = "<absolute>"; };
 		1058C7ADFEA557BF11CA2CBB /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = /System/Library/Frameworks/Cocoa.framework; sourceTree = "<absolute>"; };
-		32DBCF630370AF2F00C91783 /* WidgetRun_Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WidgetRun_Prefix.pch; sourceTree = "<group>"; };
+		32DBCF630370AF2F00C91783 /* WidgetRunner_Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WidgetRunner_Prefix.pch; sourceTree = "<group>"; };
 		557936ED0A61F46300A254F9 /* DLDWidgetRunner.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DLDWidgetRunner.h; sourceTree = "<group>"; };
 		557936EE0A61F46300A254F9 /* DLDWidgetRunner.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DLDWidgetRunner.m; sourceTree = "<group>"; };
-		8D5B49B6048680CD000E48DA /* WidgetRun.bundle */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = WidgetRun.bundle; sourceTree = BUILT_PRODUCTS_DIR; };
+		8D5B49B6048680CD000E48DA /* WidgetRunner.bundle */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = WidgetRunner.bundle; sourceTree = BUILT_PRODUCTS_DIR; };
 		8D5B49B7048680CD000E48DA /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = Info.plist; sourceTree = "<group>"; };
 		D2F7E65807B2D6F200F64583 /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = /System/Library/Frameworks/CoreData.framework; sourceTree = "<absolute>"; };
 /* End PBXFileReference section */
@@ -112,7 +112,7 @@
 		19C28FB8FE9D52D311CA2CBB /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				8D5B49B6048680CD000E48DA /* WidgetRun.bundle */,
+				8D5B49B6048680CD000E48DA /* WidgetRunner.bundle */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -120,7 +120,7 @@
 		32C88E010371C26100C91783 /* Other Sources */ = {
 			isa = PBXGroup;
 			children = (
-				32DBCF630370AF2F00C91783 /* WidgetRun_Prefix.pch */,
+				32DBCF630370AF2F00C91783 /* WidgetRunner_Prefix.pch */,
 			);
 			name = "Other Sources";
 			sourceTree = "<group>";
@@ -128,9 +128,9 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		8D5B49AC048680CD000E48DA /* WidgetRun */ = {
+		8D5B49AC048680CD000E48DA /* WidgetRunner */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 1DEB913A08733D840010E9CD /* Build configuration list for PBXNativeTarget "WidgetRun" */;
+			buildConfigurationList = 1DEB913A08733D840010E9CD /* Build configuration list for PBXNativeTarget "WidgetRunner" */;
 			buildPhases = (
 				8D5B49AF048680CD000E48DA /* Resources */,
 				8D5B49B1048680CD000E48DA /* Sources */,
@@ -142,10 +142,10 @@
 			};
 			dependencies = (
 			);
-			name = WidgetRun;
+			name = WidgetRunner;
 			productInstallPath = "$(HOME)/Library/Bundles";
 			productName = WidgetRun;
-			productReference = 8D5B49B6048680CD000E48DA /* WidgetRun.bundle */;
+			productReference = 8D5B49B6048680CD000E48DA /* WidgetRunner.bundle */;
 			productType = "com.apple.product-type.bundle";
 		};
 /* End PBXNativeTarget section */
@@ -153,7 +153,7 @@
 /* Begin PBXProject section */
 		089C1669FE841209C02AAC07 /* Project object */ = {
 			isa = PBXProject;
-			buildConfigurationList = 1DEB913E08733D840010E9CD /* Build configuration list for PBXProject "WidgetRun" */;
+			buildConfigurationList = 1DEB913E08733D840010E9CD /* Build configuration list for PBXProject "WidgetRunner" */;
 			buildSettings = {
 			};
 			buildStyles = (
@@ -164,7 +164,7 @@
 			mainGroup = 089C166AFE841209C02AAC07 /* WidgetRun */;
 			projectDirPath = "";
 			targets = (
-				8D5B49AC048680CD000E48DA /* WidgetRun */,
+				8D5B49AC048680CD000E48DA /* WidgetRunner */,
 			);
 		};
 /* End PBXProject section */
@@ -212,7 +212,7 @@
 				GCC_MODEL_TUNING = G5;
 				GCC_OPTIMIZATION_LEVEL = 0;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = WidgetRun_Prefix.pch;
+				GCC_PREFIX_HEADER = WidgetRunner_Prefix.pch;
 				INFOPLIST_FILE = Info.plist;
 				INSTALL_PATH = "$(HOME)/Library/Bundles";
 				MACOSX_DEPLOYMENT_TARGET = 10.4;
@@ -220,7 +220,7 @@
 					"-undefined",
 					dynamic_lookup,
 				);
-				PRODUCT_NAME = WidgetRun;
+				PRODUCT_NAME = WidgetRunner;
 				WRAPPER_EXTENSION = bundle;
 				ZERO_LINK = NO;
 			};
@@ -236,7 +236,7 @@
 				GCC_GENERATE_DEBUGGING_SYMBOLS = NO;
 				GCC_MODEL_TUNING = G5;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = WidgetRun_Prefix.pch;
+				GCC_PREFIX_HEADER = WidgetRunner_Prefix.pch;
 				INFOPLIST_FILE = Info.plist;
 				INSTALL_PATH = "$(HOME)/Library/Bundles";
 				MACOSX_DEPLOYMENT_TARGET = 10.4;
@@ -244,7 +244,7 @@
 					"-undefined",
 					dynamic_lookup,
 				);
-				PRODUCT_NAME = WidgetRun;
+				PRODUCT_NAME = WidgetRunner;
 				WRAPPER_EXTENSION = bundle;
 				ZERO_LINK = NO;
 			};
@@ -273,7 +273,7 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		1DEB913A08733D840010E9CD /* Build configuration list for PBXNativeTarget "WidgetRun" */ = {
+		1DEB913A08733D840010E9CD /* Build configuration list for PBXNativeTarget "WidgetRunner" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				1DEB913B08733D840010E9CD /* Debug */,
@@ -282,7 +282,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		1DEB913E08733D840010E9CD /* Build configuration list for PBXProject "WidgetRun" */ = {
+		1DEB913E08733D840010E9CD /* Build configuration list for PBXProject "WidgetRunner" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				1DEB913F08733D840010E9CD /* Debug */,
