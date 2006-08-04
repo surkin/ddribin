@@ -9,55 +9,10 @@
 #import "DLDWidgetRunner.h"
 #include <objc/objc-class.h>
 
-/**
-* Renames the selector for a given method.
- * Searches for a method with _oldSelector and reassigned _newSelector to that
- * implementation.
- * @return NO on an error and the methods were not swizzled
- */
-BOOL DTRenameSelector(Class _class, SEL _oldSelector, SEL _newSelector)
-{
-    Method method = nil;
-    
-    // First, look for the methods
-    method = class_getInstanceMethod(_class, _oldSelector);
-    if (method == nil)
-        return NO;
-    
-    method->method_name = _newSelector;
-    return YES;
-}
-
 @interface WidgetInstallerController : NSObject
 
 - (void) run: (id) target;
-- (void) orig_run: (id) target;
-
 - (void) ok: (id) target;
-- (void) orig_ok: (id) target;
-
-@end
-
-@interface WidgetInstallerController (DLD)
-
-- (void) dld_run: (id) target;
-- (void) dld_ok: (id) target;
-
-@end
-
-@implementation WidgetInstallerController (DLD)
-
-- (void) dld_run: (id) target;
-{
-    NSLog(@"Swizzle run:");
-    [self orig_run: target];
-}
-
-- (void) dld_ok: (id) target;
-{
-    NSLog(@"Swizzle ok:");
-    [self run: target];
-}
 
 @end
 
