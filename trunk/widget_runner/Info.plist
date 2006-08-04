@@ -19,9 +19,9 @@
 	<key>CFBundleSignature</key>
 	<string>????</string>
 	<key>CFBundleVersion</key>
-	<string>1.0</string>
+	<string>${CURRENT_PROJECT_VERSION}</string>
     <key>CFBundleShortVersionString</key>
-    <string>1.0.0d1</string>
+    <string>${CURRENT_MARKETING_VERSION}</string>
 	<key>NSPrincipalClass</key>
 	<string>WidgetRunner</string>
 	<key>SIMBLTargetApplications</key>
