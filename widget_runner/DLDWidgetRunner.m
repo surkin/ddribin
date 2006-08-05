@@ -7,7 +7,6 @@
 //
 
 #import "DLDWidgetRunner.h"
-#include <objc/objc-class.h>
 
 @interface WidgetInstallerController : NSObject
 
@@ -21,7 +20,6 @@
 + (void) load
 {
     WidgetInstallerController * controller = [NSApp targetForAction: @selector(run:)];
-    NSLog(@"(%d) target: %@", __LINE__, controller);
     [controller performSelectorOnMainThread: @selector(run:) withObject: nil waitUntilDone: NO];
 }
 
