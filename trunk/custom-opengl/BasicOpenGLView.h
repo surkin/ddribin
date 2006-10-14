@@ -13,7 +13,9 @@
 @interface BasicOpenGLView : DDCustomOpenGLView
 {
     CFAbsoluteTime mLastTime;
-    NSPoint mOrigin;
+    NSRect mRect;
+    int mDirX;
+    int mDirY;
 }
 
 @end

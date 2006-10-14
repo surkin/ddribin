@@ -66,7 +66,8 @@ static const int FULL_SCREEN_HEIGHT = 480;
     
     [self setFullScreenWidth: FULL_SCREEN_WIDTH height: FULL_SCREEN_HEIGHT];
     
-    mOrigin = NSMakePoint(0.0f, 0.0f);
+    mRect = NSMakeRect(0, 0, 160, 120);
+    mDirX = mDirY = 1;
     mLastTime = 0.0f;
     
     return self;
@@ -140,10 +141,7 @@ static const int FULL_SCREEN_HEIGHT = 480;
     glEnd();
 
     z = 0.0f;
-    rect.origin = mOrigin;
-    rect.size.width = 160;
-    rect.size.height = 120;
-
+    rect = mRect;
     glColor3f(0.0f, 0.0f, 1.0f);
     glBegin(GL_POLYGON);
     glVertex3f(rect.origin.x,       rect.origin.y,      z);
@@ -163,19 +161,35 @@ static const int FULL_SCREEN_HEIGHT = 480;
 
     if (mLastTime == 0.0f)
     {
-        mOrigin = NSMakePoint(0.0f, 0.0f);
+        mRect.origin = NSMakePoint(0.0f, 0.0f);
         mLastTime = currentTime;
         return;
     }
     
     CFAbsoluteTime diff = currentTime - mLastTime;
-    mOrigin.x += 300 * diff;
-    mOrigin.y += 300 * diff;
+    mRect.origin.x += 250 * mDirX * diff;
+    mRect.origin.y += 300 * mDirY * diff;
     
-    if (mOrigin.x > FULL_SCREEN_WIDTH)
-        mOrigin.x = 0;
-    if (mOrigin.y > FULL_SCREEN_HEIGHT)
-        mOrigin.y = 0;
+    if (mRect.origin.x < 0)
+    {
+        mDirX = 1;
+        mRect.origin.x = 0;
+    }
+    if (NSMaxX(mRect) > FULL_SCREEN_WIDTH)
+    {
+        mDirX = -1;
+        mRect.origin.x = FULL_SCREEN_WIDTH - mRect.size.width;
+    }
+    if (mRect.origin.y < 0)
+    {
+        mDirY = 1;
+        mRect.origin.y = 0;
+    }
+    if (NSMaxY(mRect) > FULL_SCREEN_HEIGHT)
+    {
+        mDirY = -1;
+        mRect.origin.y = FULL_SCREEN_HEIGHT - mRect.size.height;
+    }
     
     mLastTime = currentTime;
     return;
