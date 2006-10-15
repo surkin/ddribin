@@ -13,6 +13,7 @@ static const int FULL_SCREEN_HEIGHT = 480;
 
 @interface BasicOpenGLView (Private)
 
+- (void) loadTexture;
 - (void) updateAnimation;
 
 @end
@@ -21,6 +22,7 @@ static const int FULL_SCREEN_HEIGHT = 480;
 
 -(id) initWithFrame: (NSRect) frameRect
 {
+    NSLog(@"Foo");
 	NSOpenGLPixelFormatAttribute colorSize = 24;
 	NSOpenGLPixelFormatAttribute depthSize = 16;
 	
@@ -69,6 +71,7 @@ static const int FULL_SCREEN_HEIGHT = 480;
     mRect = NSMakeRect(0, 0, 160, 120);
     mDirX = mDirY = 1;
     mLastTime = 0.0f;
+    [self loadTexture];
     
     return self;
 }
@@ -140,6 +143,7 @@ static const int FULL_SCREEN_HEIGHT = 480;
     glVertex3f(rect.origin.x,       rect.origin.y,      z);
     glEnd();
 
+#if 0
     z = 0.0f;
     rect = mRect;
     glColor3f(0.0f, 0.0f, 1.0f);
@@ -149,11 +153,100 @@ static const int FULL_SCREEN_HEIGHT = 480;
     glVertex3f(NSMaxX(rect),        NSMaxY(rect),       z);
     glVertex3f(rect.origin.x,       NSMaxY(rect),       z);
     glEnd();
+#else
+    GLfloat vertices[4][2];
+    GLfloat texCoords[4][2];
+    
+    glColor3f(1.0f, 1.0f, 1.0f);
+    // Configure OpenGL to get vertex and texture coordinates from our two arrays
+    glEnableClientState(GL_VERTEX_ARRAY);
+    glEnableClientState(GL_TEXTURE_COORD_ARRAY);
+    glVertexPointer(2, GL_FLOAT, 0, vertices);
+    glTexCoordPointer(2, GL_FLOAT, 0, texCoords);
+    
+    rect = mRect;
+    // Top left
+    vertices[0][0] = rect.origin.x;
+    vertices[0][1] = rect.origin.y;
+    // Bottom left
+    vertices[1][0] = NSMaxX(rect);
+    vertices[1][1] = rect.origin.y;
+    // Bottom right
+    vertices[2][0] = NSMaxX(rect);
+    vertices[2][1] = NSMaxY(rect);
+    // Top right
+    vertices[3][0] = rect.origin.x;
+    vertices[3][1] = NSMaxY(rect);
+    
+    GLenum textureTarget = GL_TEXTURE_RECTANGLE_ARB;
+    glEnable(textureTarget);
+        
+    glTexParameteri(textureTarget, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
+    glTexParameteri(textureTarget, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
+    
+    // Get the current texture's coordinates, bind the texture, and draw our rectangle
+    rect.origin = NSMakePoint(0, 0);
+    texCoords[0][0] = rect.origin.x;
+    texCoords[0][1] = rect.origin.y;
+    texCoords[1][0] = NSMaxX(rect);
+    texCoords[1][1] = rect.origin.y;
+    texCoords[2][0] = NSMaxX(rect);
+    texCoords[2][1] = NSMaxY(rect);
+    texCoords[3][0] = rect.origin.x;
+    texCoords[3][1] = NSMaxY(rect);
+
+    glBindTexture(textureTarget, mTextureName);
+    glDrawArrays(GL_QUADS, 0, 4);
+    glDisable(textureTarget);
+#endif
 }
 
 @end
 
 @implementation BasicOpenGLView (Private)
+
+- (void) loadTexture;
+{
+    [[self openGLContext] makeCurrentContext];
+    NSBundle * myBundle = [NSBundle bundleForClass: [self class]];
+    NSString * path = [myBundle pathForImageResource: @"image"];
+    NSURL * url = [NSURL fileURLWithPath: path];
+    CGImageSourceRef myImageSourceRef = CGImageSourceCreateWithURL((CFURLRef) url, nil);
+    CGImageRef myImageRef = CGImageSourceCreateImageAtIndex (myImageSourceRef, 0, nil);
+    size_t width = CGImageGetWidth(myImageRef);
+    size_t height = CGImageGetHeight(myImageRef);
+    CGRect rect = {{0, 0}, {width, height}};
+    void * myData = calloc(width * 4, height);
+    CGColorSpaceRef space = CGColorSpaceCreateDeviceRGB();
+    CGContextRef myBitmapContext = CGBitmapContextCreate (myData, 
+                                                          width, height, 8,
+                                                          width*4, space, 
+                                                          kCGImageAlphaPremultipliedFirst);
+
+    //  Move the CG origin to the upper left of the port
+    CGContextTranslateCTM( myBitmapContext, 0,
+                           (float)(height) );
+    
+    //  Flip the y axis so that positive Y points down
+    //  Note that this will cause text drawn with Core Graphics
+    //  to draw upside down
+    CGContextScaleCTM( myBitmapContext, 1.0, -1.0 );
+    
+    CGContextDrawImage(myBitmapContext, rect, myImageRef);
+    CGContextRelease(myBitmapContext);
+    glPixelStorei(GL_UNPACK_ROW_LENGTH, width);
+    glPixelStorei(GL_UNPACK_ALIGNMENT, 1);
+    glGenTextures(1, &mTextureName);
+    glBindTexture(GL_TEXTURE_RECTANGLE_ARB, mTextureName);
+    glTexParameteri(GL_TEXTURE_RECTANGLE_ARB, 
+                    GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+    glTexImage2D(GL_TEXTURE_RECTANGLE_ARB, 0, GL_RGBA8, width, height,
+                 0, GL_BGRA_EXT, GL_UNSIGNED_INT_8_8_8_8, myData);
+    free(myData);
+
+    mRect.size.width = width;
+    mRect.size.height = height;
+}
 
 - (void) updateAnimation;
 {
