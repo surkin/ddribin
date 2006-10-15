@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		5511DBE50AE15AD400D416BF /* image.tif in Resources */ = {isa = PBXBuildFile; fileRef = 5511DBE40AE15AD400D416BF /* image.tif */; };
 		5565E72E0ADDD03F0047D6DE /* DDCustomOpenGLView.m in Sources */ = {isa = PBXBuildFile; fileRef = 5565E72D0ADDD03F0047D6DE /* DDCustomOpenGLView.m */; };
 		5565E80C0ADE064B0047D6DE /* BasicOpenGLView.m in Sources */ = {isa = PBXBuildFile; fileRef = 5565E80B0ADE064B0047D6DE /* BasicOpenGLView.m */; };
 		5565E81C0ADE06EB0047D6DE /* OpenGL.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5565E81B0ADE06EB0047D6DE /* OpenGL.framework */; };
@@ -27,6 +28,7 @@
 		29B97324FDCFA39411CA2CEA /* AppKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AppKit.framework; path = /System/Library/Frameworks/AppKit.framework; sourceTree = "<absolute>"; };
 		29B97325FDCFA39411CA2CEA /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = /System/Library/Frameworks/Foundation.framework; sourceTree = "<absolute>"; };
 		32CA4F630368D1EE00C91783 /* DDCustomOpenGL_Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DDCustomOpenGL_Prefix.pch; sourceTree = "<group>"; };
+		5511DBE40AE15AD400D416BF /* image.tif */ = {isa = PBXFileReference; lastKnownFileType = image.tiff; path = image.tif; sourceTree = "<group>"; };
 		5565E72C0ADDD03F0047D6DE /* DDCustomOpenGLView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DDCustomOpenGLView.h; sourceTree = "<group>"; };
 		5565E72D0ADDD03F0047D6DE /* DDCustomOpenGLView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DDCustomOpenGLView.m; sourceTree = "<group>"; };
 		5565E80A0ADE064B0047D6DE /* BasicOpenGLView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BasicOpenGLView.h; sourceTree = "<group>"; };
@@ -118,6 +120,7 @@
 		29B97317FDCFA39411CA2CEA /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				5511DBE40AE15AD400D416BF /* image.tif */,
 				8D1107310486CEB800E47090 /* Info.plist */,
 				089C165CFE840E0CC02AAC07 /* InfoPlist.strings */,
 				29B97318FDCFA39411CA2CEA /* MainMenu.nib */,
@@ -177,6 +180,7 @@
 			files = (
 				8D11072A0486CEB800E47090 /* MainMenu.nib in Resources */,
 				8D11072B0486CEB800E47090 /* InfoPlist.strings in Resources */,
+				5511DBE50AE15AD400D416BF /* image.tif in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

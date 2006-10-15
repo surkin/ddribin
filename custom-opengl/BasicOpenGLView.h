@@ -16,6 +16,7 @@
     NSRect mRect;
     int mDirX;
     int mDirY;
+    GLuint mTextureName;
 }
 
 @end
