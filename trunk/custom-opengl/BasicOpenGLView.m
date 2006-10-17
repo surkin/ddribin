@@ -22,7 +22,6 @@ static const int FULL_SCREEN_HEIGHT = 480;
 
 -(id) initWithFrame: (NSRect) frameRect
 {
-    NSLog(@"Foo");
 	NSOpenGLPixelFormatAttribute colorSize = 24;
 	NSOpenGLPixelFormatAttribute depthSize = 16;
 	
@@ -240,8 +239,13 @@ static const int FULL_SCREEN_HEIGHT = 480;
     glBindTexture(GL_TEXTURE_RECTANGLE_ARB, mTextureName);
     glTexParameteri(GL_TEXTURE_RECTANGLE_ARB, 
                     GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+#if __BIG_ENDIAN__
+    GLenum type = GL_UNSIGNED_INT_8_8_8_8_REV;
+#else
+    GLenum type = GL_UNSIGNED_INT_8_8_8_8;
+#endif
     glTexImage2D(GL_TEXTURE_RECTANGLE_ARB, 0, GL_RGBA8, width, height,
-                 0, GL_BGRA_EXT, GL_UNSIGNED_INT_8_8_8_8, myData);
+                 0, GL_BGRA_EXT, type, myData);
     free(myData);
 
     mRect.size.width = width;
