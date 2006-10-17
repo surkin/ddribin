@@ -19,4 +19,6 @@
     GLuint mTextureName;
 }
 
+- (void) updateAnimation;
+
 @end

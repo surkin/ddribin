@@ -14,7 +14,6 @@ static const int FULL_SCREEN_HEIGHT = 480;
 @interface BasicOpenGLView (Private)
 
 - (void) loadTexture;
-- (void) updateAnimation;
 
 @end
 
@@ -112,11 +111,50 @@ static const int FULL_SCREEN_HEIGHT = 480;
 	glLoadIdentity();
 }
 
+- (void) updateAnimation;
+{
+    CFAbsoluteTime currentTime = CFAbsoluteTimeGetCurrent();
+    
+    if (mLastTime == 0.0f)
+    {
+        mRect.origin = NSMakePoint(0.0f, 0.0f);
+        mLastTime = currentTime;
+        return;
+    }
+    
+    CFAbsoluteTime diff = currentTime - mLastTime;
+    mRect.origin.x += 250 * mDirX * diff;
+    mRect.origin.y += 300 * mDirY * diff;
+    
+    if (mRect.origin.x < 0)
+    {
+        mDirX = 1;
+        mRect.origin.x = 0;
+    }
+    if (NSMaxX(mRect) > FULL_SCREEN_WIDTH)
+    {
+        mDirX = -1;
+        mRect.origin.x = FULL_SCREEN_WIDTH - mRect.size.width;
+    }
+    if (mRect.origin.y < 0)
+    {
+        mDirY = 1;
+        mRect.origin.y = 0;
+    }
+    if (NSMaxY(mRect) > FULL_SCREEN_HEIGHT)
+    {
+        mDirY = -1;
+        mRect.origin.y = FULL_SCREEN_HEIGHT - mRect.size.height;
+    }
+    
+    mLastTime = currentTime;
+    return;
+}
+
 - (void) drawFrame
 {
     NSRect bounds = [self currentBounds];
     [self resize: bounds];
-    [self updateAnimation];
     
 	// clear our drawable
 	glClear (GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
@@ -250,46 +288,6 @@ static const int FULL_SCREEN_HEIGHT = 480;
 
     mRect.size.width = width;
     mRect.size.height = height;
-}
-
-- (void) updateAnimation;
-{
-    CFAbsoluteTime currentTime = CFAbsoluteTimeGetCurrent();
-
-    if (mLastTime == 0.0f)
-    {
-        mRect.origin = NSMakePoint(0.0f, 0.0f);
-        mLastTime = currentTime;
-        return;
-    }
-    
-    CFAbsoluteTime diff = currentTime - mLastTime;
-    mRect.origin.x += 250 * mDirX * diff;
-    mRect.origin.y += 300 * mDirY * diff;
-    
-    if (mRect.origin.x < 0)
-    {
-        mDirX = 1;
-        mRect.origin.x = 0;
-    }
-    if (NSMaxX(mRect) > FULL_SCREEN_WIDTH)
-    {
-        mDirX = -1;
-        mRect.origin.x = FULL_SCREEN_WIDTH - mRect.size.width;
-    }
-    if (mRect.origin.y < 0)
-    {
-        mDirY = 1;
-        mRect.origin.y = 0;
-    }
-    if (NSMaxY(mRect) > FULL_SCREEN_HEIGHT)
-    {
-        mDirY = -1;
-        mRect.origin.y = FULL_SCREEN_HEIGHT - mRect.size.height;
-    }
-    
-    mLastTime = currentTime;
-    return;
 }
 
 @end

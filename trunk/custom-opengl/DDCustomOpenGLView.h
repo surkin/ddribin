@@ -46,6 +46,7 @@
 
 - (void) prepareOpenGL;
 
+- (void) updateAnimation;
 - (void) drawFrame;
 
 - (NSOpenGLContext *) currentOpenGLContext;

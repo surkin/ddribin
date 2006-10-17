@@ -115,6 +115,10 @@
     [mDisplayLock unlock];
 }
 
+- (void) updateAnimation;
+{
+}
+
 - (void) drawFrame;
 {
 }
@@ -332,6 +336,7 @@ CVReturn static myCVDisplayLinkOutputCallback(CVDisplayLinkRef displayLink,
 {
     NSAutoreleasePool * pool = [[NSAutoreleasePool alloc] init];
     DDCustomOpenGLView * view = (DDCustomOpenGLView *) displayLinkContext;
+    [view updateAnimation];
     [view drawFrameInternal];
     [pool release];
     return kCVReturnSuccess;
