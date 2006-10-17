@@ -11,6 +11,7 @@
 @interface DDCustomOpenGLView (Private)
 
 - (void) initDisplayLink;
+- (void) emptyThreadEntry;
 - (void) surfaceNeedsUpdate: (NSNotification *) notification;
 - (void) drawFrameInternal;
 - (void) animationTimer;
@@ -104,9 +105,8 @@
 
 - (void)drawRect:(NSRect)rect
 {
-    NSOpenGLContext * currentContext = [self currentOpenGLContext];
-    
     [mDisplayLock lock];
+    NSOpenGLContext * currentContext = [self currentOpenGLContext];
     {
         [currentContext makeCurrentContext];
         [self drawFrame];
@@ -248,7 +248,6 @@
 
 - (void) setFullScreen: (BOOL) fullScreen
 {
-    [mDisplayLock lock];
     if (fullScreen && !mFullScreen)
     {
         if ([self fullScreenOpenGLContext] != nil)
@@ -262,7 +261,6 @@
         [self exitFullScreen];
         mFullScreen = NO;
     }
-    [mDisplayLock unlock];
 }
 
 - (NSOpenGLContext *) currentOpenGLContext;
@@ -341,6 +339,13 @@ CVReturn static myCVDisplayLinkOutputCallback(CVDisplayLinkRef displayLink,
 
 - (void) initDisplayLink;
 {
+    // Detaching a thread forces [NSThread isMultiThreaded]
+    // return YES. See:
+    // http://developer.apple.com/documentation/Cocoa/Conceptual/Multithreading/articles/CocoaDetaching.html
+    [NSThread detachNewThreadSelector: @selector(emptyThreadEntry)
+                             toTarget: self
+                           withObject: nil];
+    
     CVReturn            error = kCVReturnSuccess;
     CGDirectDisplayID   displayID = CGMainDisplayID();
     
@@ -354,6 +359,11 @@ CVReturn static myCVDisplayLinkOutputCallback(CVDisplayLinkRef displayLink,
     error = CVDisplayLinkSetOutputCallback(mDisplayLink,
                                            myCVDisplayLinkOutputCallback, self);
     CVDisplayLinkStart(mDisplayLink);
+}
+
+- (void) emptyThreadEntry;
+{
+    // Exit right away.
 }
 
 - (void) surfaceNeedsUpdate: (NSNotification *) notification;
@@ -385,11 +395,11 @@ CVReturn static myCVDisplayLinkOutputCallback(CVDisplayLinkRef displayLink,
 
 - (void) enterFullScreen;
 {
+    CVDisplayLinkStop(mDisplayLink);
+    CGDisplayFadeReservationToken token = [self displayFadeOut];
+
 	[mDisplayLock lock];
 	{
-        CVDisplayLinkStop(mDisplayLink);
-		// create nice fade in effect
-		CGDisplayFadeReservationToken token = [self displayFadeOut];
         
 		// clear the current context (window)
 		NSOpenGLContext *windowContext = [self openGLContext];
@@ -431,11 +441,11 @@ CVReturn static myCVDisplayLinkOutputCallback(CVDisplayLinkRef displayLink,
 		[self update];
 		
         NSLog(@"Enter full screen");
-        
-		[self displayFadeIn: token];	
-        CVDisplayLinkStart(mDisplayLink);
 	}
 	[mDisplayLock unlock];
+    
+    [self displayFadeIn: token];	
+    CVDisplayLinkStart(mDisplayLink);
 	
 	// enter the manual event loop processing
 	[self fullscreenEventLoop];
@@ -443,11 +453,11 @@ CVReturn static myCVDisplayLinkOutputCallback(CVDisplayLinkRef displayLink,
 
 - (void) exitFullScreen;
 {
+    CVDisplayLinkStop(mDisplayLink);
+    CGDisplayFadeReservationToken token = [self displayFadeOut];
+    
 	[mDisplayLock lock];
 	{
-        CVDisplayLinkStop(mDisplayLink);
-		// create nice fade in effect
-		CGDisplayFadeReservationToken token = [self displayFadeOut];
 		
 		// clear the current context (fullscreen)
 		[mFullScreenOpenGLContext makeCurrentContext];
@@ -470,11 +480,11 @@ CVReturn static myCVDisplayLinkOutputCallback(CVDisplayLinkRef displayLink,
 		[self update];
         
         NSLog(@"Exit full screen");
-        
-		[self displayFadeIn: token];
-        CVDisplayLinkStart(mDisplayLink);
 	}
 	[mDisplayLock unlock];
+    
+    [self displayFadeIn: token];
+    CVDisplayLinkStart(mDisplayLink);
 }
 
 - (void) fullscreenEventLoop;
