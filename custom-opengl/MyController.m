@@ -11,6 +11,13 @@
 
 @implementation MyController
 
+- (void) applicationDidFinishLaunching: (NSNotification*) notification;
+{
+    NSWindow * window = [mView window];
+    [window center];
+    [window makeKeyAndOrderFront: nil];    
+}
+
 - (void) setFullScreen: (BOOL) fullScreen;
 {
     [mView setFullScreen: fullScreen];
