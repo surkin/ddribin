@@ -323,12 +323,11 @@ static const int FULL_SCREEN_HEIGHT = 480;
     NSLog(@"Create texture with Core Video");
 
     CVReturn rc;
-    int pixelFormat = k32ARGBPixelFormat;
     CVPixelBufferRef pixelBuffer;
     rc = CVPixelBufferCreate(NULL,
                              width,
                              height,
-                             pixelFormat,
+                             k32ARGBPixelFormat,
                              NULL, // pixelBufferAttributes
                              &pixelBuffer);
     CVPixelBufferLockBaseAddress(pixelBuffer, 0);
