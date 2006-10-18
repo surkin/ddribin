@@ -38,26 +38,42 @@
 - (NSOpenGLPixelFormat *) pixelFormat;
 - (void) setPixelFormat: (NSOpenGLPixelFormat *) aPixelFormat;
 
+- (void) prepareOpenGL: (NSOpenGLContext *) context;
+
+
+- (NSOpenGLContext *) currentOpenGLContext;
+- (NSOpenGLPixelFormat *) currentPixelFormat;
+- (NSRect) currentBounds;
+
+- (void) update;
+
+#pragma mark -
+#pragma mark "Animation"
+
+- (void) startAnimation;
+- (void) stopAnimation;
+
+- (void) updateAnimation;
+- (void) drawFrame;
+
+#pragma mark -
+#pragma mark "Full screen"
+
 - (NSOpenGLContext *) fullScreenOpenGLContext;
 - (void) setFullScreenOpenGLContext: (NSOpenGLContext *) aFullScreenOpenGLContext;
 
 - (NSOpenGLPixelFormat *) fullScreenPixelFormat;
 - (void) setFullScreenPixelFormat: (NSOpenGLPixelFormat *) aFullScreenPixelFormat;
 
-- (void) prepareOpenGL: (NSOpenGLContext *) context;
-
-- (void) updateAnimation;
-- (void) drawFrame;
-
-- (NSOpenGLContext *) currentOpenGLContext;
-- (NSOpenGLPixelFormat *) currentPixelFormat;
-- (NSRect) currentBounds;
-
 - (void) setFullScreenWidth: (int) width height: (int) height;
 
 - (BOOL) fullScreen;
 - (void) setFullScreen: (BOOL) flag;
 
-- (void) update;
+- (void) willEnterFullScreen;
+- (void) willExitFullScreen;
+
+- (void) didEnterFullScreen;
+- (void) didExitFullScreen;
 
 @end

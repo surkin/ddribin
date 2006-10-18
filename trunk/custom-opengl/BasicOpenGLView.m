@@ -120,6 +120,16 @@ static const int FULL_SCREEN_HEIGHT = 480;
     glLoadIdentity();
 }
 
+- (void) didEnterFullScreen;
+{
+    NSLog(@"Enter full screen");
+}
+
+- (void) didExitFullScreen;
+{
+    NSLog(@"Exit full screen");
+}
+
 - (void) updateAnimation;
 {
     CFAbsoluteTime currentTime = CFAbsoluteTimeGetCurrent();
