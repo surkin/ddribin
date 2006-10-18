@@ -115,14 +115,6 @@
     [mDisplayLock unlock];
 }
 
-- (void) updateAnimation;
-{
-}
-
-- (void) drawFrame;
-{
-}
-
 //=========================================================== 
 //  openGLContext 
 //=========================================================== 
@@ -177,94 +169,10 @@
     [mDisplayLock unlock];
 }
 
-//=========================================================== 
-//  fullScreenOpenGLContext 
-//=========================================================== 
-- (NSOpenGLContext *) fullScreenOpenGLContext
-{
-    [mDisplayLock lock];
-    {
-        if ((mFullScreenOpenGLContext == nil) && (mFullScreenPixelFormat != nil))
-        {
-            mFullScreenOpenGLContext =
-                [[NSOpenGLContext alloc] initWithFormat: mFullScreenPixelFormat
-                                           shareContext: mOpenGLContext];
-            [mFullScreenOpenGLContext makeCurrentContext];
-            [self prepareOpenGL: mFullScreenOpenGLContext];
-        }
-    }
-    [mDisplayLock unlock];
-    return mFullScreenOpenGLContext; 
-}
-
-- (void) setFullScreenOpenGLContext: (NSOpenGLContext *) aFullScreenOpenGLContext
-{
-    [mDisplayLock lock];
-    {
-        if (mFullScreenOpenGLContext != aFullScreenOpenGLContext)
-        {
-            [mFullScreenOpenGLContext release];
-            mFullScreenOpenGLContext = [aFullScreenOpenGLContext retain];
-        }
-    }
-    [mDisplayLock unlock];
-}
-
-//=========================================================== 
-//  fullScreenPixelFormat 
-//=========================================================== 
-- (NSOpenGLPixelFormat *) fullScreenPixelFormat
-{
-    return mFullScreenPixelFormat; 
-}
-
-- (void) setFullScreenPixelFormat: (NSOpenGLPixelFormat *) aFullScreenPixelFormat
-{
-    [mDisplayLock lock];
-    {
-        if (mFullScreenPixelFormat != aFullScreenPixelFormat)
-        {
-            [mFullScreenPixelFormat release];
-            mFullScreenPixelFormat = [aFullScreenPixelFormat retain];
-        }
-    }
-    [mDisplayLock unlock];
-}
 
 - (void) prepareOpenGL: (NSOpenGLContext *) context;
 {
     // for overriding to initialize OpenGL state, occurs after context creation
-}
-
-- (void) setFullScreenWidth: (int) width height: (int) height;
-{
-    mFullScreenWidth = width;
-    mFullScreenHeight = height;
-}
-
-//=========================================================== 
-//  fullScreen 
-//=========================================================== 
-- (BOOL) fullScreen
-{
-    return mFullScreen;
-}
-
-- (void) setFullScreen: (BOOL) fullScreen
-{
-    if (fullScreen && !mFullScreen)
-    {
-        if ([self fullScreenOpenGLContext] != nil)
-        {
-            [self enterFullScreen];
-            mFullScreen = YES;
-        }
-    }
-    else if (!fullScreen && mFullScreen)
-    {
-        [self exitFullScreen];
-        mFullScreen = NO;
-    }
 }
 
 - (NSOpenGLContext *) currentOpenGLContext;
@@ -334,6 +242,131 @@
     [mDisplayLock unlock];
 }
 
+#pragma mark -
+#pragma mark "Animation"
+
+- (void) startAnimation;
+{
+    CVDisplayLinkStart(mDisplayLink);
+}
+
+- (void) stopAnimation;
+{
+    CVDisplayLinkStop(mDisplayLink);
+}
+
+- (void) updateAnimation;
+{
+}
+
+- (void) drawFrame;
+{
+}
+
+#pragma mark -
+#pragma mark "Full screen"
+
+//=========================================================== 
+//  fullScreenOpenGLContext 
+//=========================================================== 
+- (NSOpenGLContext *) fullScreenOpenGLContext
+{
+    [mDisplayLock lock];
+    {
+        if ((mFullScreenOpenGLContext == nil) && (mFullScreenPixelFormat != nil))
+        {
+            mFullScreenOpenGLContext =
+                [[NSOpenGLContext alloc] initWithFormat: mFullScreenPixelFormat
+                                           shareContext: mOpenGLContext];
+            [mFullScreenOpenGLContext makeCurrentContext];
+            [self prepareOpenGL: mFullScreenOpenGLContext];
+        }
+    }
+    [mDisplayLock unlock];
+    return mFullScreenOpenGLContext; 
+}
+
+- (void) setFullScreenOpenGLContext: (NSOpenGLContext *) aFullScreenOpenGLContext
+{
+    [mDisplayLock lock];
+    {
+        if (mFullScreenOpenGLContext != aFullScreenOpenGLContext)
+        {
+            [mFullScreenOpenGLContext release];
+            mFullScreenOpenGLContext = [aFullScreenOpenGLContext retain];
+        }
+    }
+    [mDisplayLock unlock];
+}
+
+//=========================================================== 
+//  fullScreenPixelFormat 
+//=========================================================== 
+- (NSOpenGLPixelFormat *) fullScreenPixelFormat
+{
+    return mFullScreenPixelFormat; 
+}
+
+- (void) setFullScreenPixelFormat: (NSOpenGLPixelFormat *) aFullScreenPixelFormat
+{
+    [mDisplayLock lock];
+    {
+        if (mFullScreenPixelFormat != aFullScreenPixelFormat)
+        {
+            [mFullScreenPixelFormat release];
+            mFullScreenPixelFormat = [aFullScreenPixelFormat retain];
+        }
+    }
+    [mDisplayLock unlock];
+}
+
+- (void) setFullScreenWidth: (int) width height: (int) height;
+{
+    mFullScreenWidth = width;
+    mFullScreenHeight = height;
+}
+
+//=========================================================== 
+//  fullScreen 
+//=========================================================== 
+- (BOOL) fullScreen
+{
+    return mFullScreen;
+}
+
+- (void) setFullScreen: (BOOL) fullScreen
+{
+    if (fullScreen && !mFullScreen)
+    {
+        if ([self fullScreenOpenGLContext] != nil)
+        {
+            [self enterFullScreen];
+            mFullScreen = YES;
+        }
+    }
+    else if (!fullScreen && mFullScreen)
+    {
+        [self exitFullScreen];
+        mFullScreen = NO;
+    }
+}
+
+- (void) willEnterFullScreen;
+{
+}
+
+- (void) willExitFullScreen;
+{
+}
+
+- (void) didEnterFullScreen;
+{
+}
+
+- (void) didExitFullScreen;
+{
+}
+
 @end
 
 @implementation DDCustomOpenGLView (Private)
@@ -374,7 +407,7 @@ CVReturn static myCVDisplayLinkOutputCallback(CVDisplayLinkRef displayLink,
     }
     error = CVDisplayLinkSetOutputCallback(mDisplayLink,
                                            myCVDisplayLinkOutputCallback, self);
-    CVDisplayLinkStart(mDisplayLink);
+    [self startAnimation];
 }
 
 - (void) emptyThreadEntry;
@@ -411,7 +444,8 @@ CVReturn static myCVDisplayLinkOutputCallback(CVDisplayLinkRef displayLink,
 
 - (void) enterFullScreen;
 {
-    CVDisplayLinkStop(mDisplayLink);
+    [self willEnterFullScreen];
+    [self stopAnimation];
     CGDisplayFadeReservationToken token = [self displayFadeOut];
 
     [mDisplayLock lock];
@@ -455,12 +489,12 @@ CVReturn static myCVDisplayLinkOutputCallback(CVDisplayLinkRef displayLink,
         
         [self update];
         
-        NSLog(@"Enter full screen");
+        [self didEnterFullScreen];
     }
     [mDisplayLock unlock];
     
     [self displayFadeIn: token];    
-    CVDisplayLinkStart(mDisplayLink);
+    [self startAnimation];
     
     // enter the manual event loop processing
     [self fullscreenEventLoop];
@@ -468,7 +502,8 @@ CVReturn static myCVDisplayLinkOutputCallback(CVDisplayLinkRef displayLink,
 
 - (void) exitFullScreen;
 {
-    CVDisplayLinkStop(mDisplayLink);
+    [self willExitFullScreen];
+    [self stopAnimation];
     CGDisplayFadeReservationToken token = [self displayFadeOut];
     
     [mDisplayLock lock];
@@ -494,12 +529,12 @@ CVReturn static myCVDisplayLinkOutputCallback(CVDisplayLinkRef displayLink,
         
         [self update];
         
-        NSLog(@"Exit full screen");
+        [self didExitFullScreen];
     }
     [mDisplayLock unlock];
     
     [self displayFadeIn: token];
-    CVDisplayLinkStart(mDisplayLink);
+    [self startAnimation];
 }
 
 - (void) fullscreenEventLoop;

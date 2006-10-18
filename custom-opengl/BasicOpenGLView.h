@@ -22,4 +22,7 @@
 
 - (void) updateAnimation;
 
+- (void) didEnterFullScreen;
+- (void) didExitFullScreen;
+
 @end
