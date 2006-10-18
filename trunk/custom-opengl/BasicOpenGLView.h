@@ -17,6 +17,7 @@
     int mDirX;
     int mDirY;
     GLuint mTextureName;
+    CVOpenGLTextureRef mTexture;
 }
 
 - (void) updateAnimation;
