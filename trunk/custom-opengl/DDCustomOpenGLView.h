@@ -21,7 +21,7 @@
     int mFullScreenWidth;
     int mFullScreenHeight;
     NSRect mFullScreenRect;
-	float mFullScreenMouseOffset;
+    float mFullScreenMouseOffset;
 
     NSRecursiveLock * mDisplayLock;
     CVDisplayLinkRef mDisplayLink;

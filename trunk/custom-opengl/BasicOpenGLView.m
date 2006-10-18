@@ -21,15 +21,15 @@ static const int FULL_SCREEN_HEIGHT = 480;
 
 -(id) initWithFrame: (NSRect) frameRect
 {
-	NSOpenGLPixelFormatAttribute colorSize = 24;
-	NSOpenGLPixelFormatAttribute depthSize = 16;
-	
+    NSOpenGLPixelFormatAttribute colorSize = 24;
+    NSOpenGLPixelFormatAttribute depthSize = 16;
+    
     // pixel format attributes for the view based (non-fullscreen) NSOpenGLContext
     NSOpenGLPixelFormatAttribute windowedAttributes[] =
-	{
+    {
         // specifying "NoRecovery" gives us a context that cannot fall back to the software renderer
-		// this makes the view-based context a compatible with the fullscreen context,
-		// enabling us to use the "shareContext" feature to share textures, display lists, and other OpenGL objects between the two
+        // this makes the view-based context a compatible with the fullscreen context,
+        // enabling us to use the "shareContext" feature to share textures, display lists, and other OpenGL objects between the two
         NSOpenGLPFANoRecovery,
         // attributes common to fullscreen and window modes
         NSOpenGLPFAColorSize, colorSize,
@@ -38,19 +38,19 @@ static const int FULL_SCREEN_HEIGHT = 480;
         NSOpenGLPFAAccelerated,
         0
     };
-	NSOpenGLPixelFormat * windowedPixelFormat = [[NSOpenGLPixelFormat alloc] initWithAttributes: windowedAttributes];
+    NSOpenGLPixelFormat * windowedPixelFormat = [[NSOpenGLPixelFormat alloc] initWithAttributes: windowedAttributes];
     [windowedPixelFormat autorelease];
     
-	self = [super initWithFrame: frameRect pixelFormat: windowedPixelFormat];
+    self = [super initWithFrame: frameRect pixelFormat: windowedPixelFormat];
     if (self == nil)
         return nil;
     
     // pixel format attributes for the full screen NSOpenGLContext
     NSOpenGLPixelFormatAttribute fullScreenAttributes[] =
-	{
+    {
         // specifying "NoRecovery" gives us a context that cannot fall back to the software renderer
-		// this makes the view-based context a compatible with the fullscreen context,
-		// enabling us to use the "shareContext" feature to share textures, display lists, and other OpenGL objects between the two
+        // this makes the view-based context a compatible with the fullscreen context,
+        // enabling us to use the "shareContext" feature to share textures, display lists, and other OpenGL objects between the two
         NSOpenGLPFANoRecovery,
         NSOpenGLPFAScreenMask, CGDisplayIDToOpenGLDisplayMask(kCGDirectMainDisplay),
         // attributes common to fullscreen and window modes
@@ -60,7 +60,7 @@ static const int FULL_SCREEN_HEIGHT = 480;
         NSOpenGLPFAAccelerated,
         0
     };
-	NSOpenGLPixelFormat * fullScreenPixelFormat = [[NSOpenGLPixelFormat alloc] initWithAttributes: fullScreenAttributes];
+    NSOpenGLPixelFormat * fullScreenPixelFormat = [[NSOpenGLPixelFormat alloc] initWithAttributes: fullScreenAttributes];
     [fullScreenPixelFormat autorelease];
     [self setFullScreenPixelFormat: fullScreenPixelFormat];
     
@@ -82,15 +82,15 @@ static const int FULL_SCREEN_HEIGHT = 480;
     // set to vbl sync
     [context setValues: &swapInt
           forParameter: NSOpenGLCPSwapInterval];
-	// init GL stuff here
-	glEnable(GL_DEPTH_TEST);
+    // init GL stuff here
+    glEnable(GL_DEPTH_TEST);
     
-	glShadeModel(GL_SMOOTH);    
-	glEnable(GL_CULL_FACE);
-	glFrontFace(GL_CCW);
-	glPolygonOffset(1.0f, 1.0f);
-	
-	glClearColor(0.0f, 0.0f, 0.0f, 0.0f);
+    glShadeModel(GL_SMOOTH);    
+    glEnable(GL_CULL_FACE);
+    glFrontFace(GL_CCW);
+    glPolygonOffset(1.0f, 1.0f);
+    
+    glClearColor(0.0f, 0.0f, 0.0f, 0.0f);
 }
 
 - (void) update
@@ -100,15 +100,15 @@ static const int FULL_SCREEN_HEIGHT = 480;
 
 - (void) resize: (NSRect) bounds
 {
-	glViewport(bounds.origin.x, bounds.origin.y, bounds.size.width,
+    glViewport(bounds.origin.x, bounds.origin.y, bounds.size.width,
                bounds.size.height);
-	
-	glMatrixMode(GL_PROJECTION);
-	glLoadIdentity();
-	glOrtho(0, bounds.size.width, 0, bounds.size.height, 0, 1);
-	
-	glMatrixMode(GL_MODELVIEW);
-	glLoadIdentity();
+    
+    glMatrixMode(GL_PROJECTION);
+    glLoadIdentity();
+    glOrtho(0, bounds.size.width, 0, bounds.size.height, 0, 1);
+    
+    glMatrixMode(GL_MODELVIEW);
+    glLoadIdentity();
 }
 
 - (void) updateAnimation;
@@ -156,8 +156,8 @@ static const int FULL_SCREEN_HEIGHT = 480;
     NSRect bounds = [self currentBounds];
     [self resize: bounds];
     
-	// clear our drawable
-	glClear (GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+    // clear our drawable
+    glClear (GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
     
     NSRect rect;
     float z;
