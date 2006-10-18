@@ -103,7 +103,7 @@
     [super dealloc];
 }
 
-- (void)drawRect:(NSRect)rect
+- (void) drawRect: (NSRect)rect
 {
     [mDisplayLock lock];
     NSOpenGLContext * currentContext = [self currentOpenGLContext];
@@ -136,7 +136,7 @@
                 [[NSOpenGLContext alloc] initWithFormat: mPixelFormat
                                            shareContext: nil];
             [mOpenGLContext makeCurrentContext];
-            [self prepareOpenGL];
+            [self prepareOpenGL: mOpenGLContext];
         }
     }
     [mDisplayLock unlock];
@@ -190,7 +190,7 @@
                 [[NSOpenGLContext alloc] initWithFormat: mFullScreenPixelFormat
                                            shareContext: mOpenGLContext];
             [mFullScreenOpenGLContext makeCurrentContext];
-            [self prepareOpenGL];
+            [self prepareOpenGL: mFullScreenOpenGLContext];
         }
     }
     [mDisplayLock unlock];
@@ -231,7 +231,7 @@
     [mDisplayLock unlock];
 }
 
-- (void) prepareOpenGL;
+- (void) prepareOpenGL: (NSOpenGLContext *) context;
 {
 	// for overriding to initialize OpenGL state, occurs after context creation
 }
@@ -285,7 +285,10 @@
 
 - (NSRect) currentBounds;
 {
-    return [self bounds];
+    if (mFullScreen)
+        return mFullScreenRect;
+    else
+        return [self bounds];
 }
 
 - (BOOL) isOpaque
@@ -295,32 +298,40 @@
 
 - (void) lockFocus
 {
-    // get context. will create if we don't have one yet
-    NSOpenGLContext* context = [self currentOpenGLContext];
-    
-    // make sure we are ready to draw
-    [super lockFocus];
-    
-    // when we are about to draw, make sure we are linked to the view
-    if ([context view] != self)
+    [mDisplayLock lock];
     {
-        [context setView: self];
+        // get context. will create if we don't have one yet
+        NSOpenGLContext* context = [self currentOpenGLContext];
+        
+        // make sure we are ready to draw
+        [super lockFocus];
+        
+        // when we are about to draw, make sure we are linked to the view
+        if ([context view] != self)
+        {
+            [context setView: self];
+        }
+        
+        // make us the current OpenGL context
+        [context makeCurrentContext];
     }
-    
-    // make us the current OpenGL context
-    [context makeCurrentContext];
+    [mDisplayLock unlock];
 }
 
 // no reshape will be called since NSView does not export a specific reshape method
 
-- (void)update
+- (void) update
 {
-    NSOpenGLContext * context = [self currentOpenGLContext];
-   
-    if ([context view] == self)
+    [mDisplayLock lock];
     {
-        [context update];
+        NSOpenGLContext * context = [self currentOpenGLContext];
+        
+        if ([context view] == self)
+        {
+            [context update];
+        }
     }
+    [mDisplayLock unlock];
 }
 
 @end
@@ -438,7 +449,7 @@ CVReturn static myCVDisplayLinkOutputCallback(CVDisplayLinkRef displayLink,
 		
 		// activate the fullscreen context and clear it
 		[mFullScreenOpenGLContext makeCurrentContext];
-        [self prepareOpenGL];
+        // [self prepareOpenGL];
 		[mFullScreenOpenGLContext setFullScreen];
 		glClear(GL_COLOR_BUFFER_BIT);
 		[mFullScreenOpenGLContext flushBuffer];
