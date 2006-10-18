@@ -74,14 +74,14 @@ static const int FULL_SCREEN_HEIGHT = 480;
     return self;
 }
 
-- (void) prepareOpenGL
+- (void) prepareOpenGL: (NSOpenGLContext *) context;
 {
     NSLog(@"prepareOpenGL");
     long swapInt = 1;
     
     // set to vbl sync
-    [[self openGLContext] setValues:&swapInt
-                       forParameter:NSOpenGLCPSwapInterval];
+    [context setValues: &swapInt
+          forParameter: NSOpenGLCPSwapInterval];
 	// init GL stuff here
 	glEnable(GL_DEPTH_TEST);
     

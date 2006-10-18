@@ -44,7 +44,7 @@
 - (NSOpenGLPixelFormat *) fullScreenPixelFormat;
 - (void) setFullScreenPixelFormat: (NSOpenGLPixelFormat *) aFullScreenPixelFormat;
 
-- (void) prepareOpenGL;
+- (void) prepareOpenGL: (NSOpenGLContext *) context;
 
 - (void) updateAnimation;
 - (void) drawFrame;
