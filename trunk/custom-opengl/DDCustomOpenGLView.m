@@ -233,7 +233,7 @@
 
 - (void) prepareOpenGL: (NSOpenGLContext *) context;
 {
-	// for overriding to initialize OpenGL state, occurs after context creation
+    // for overriding to initialize OpenGL state, occurs after context creation
 }
 
 - (void) setFullScreenWidth: (int) width height: (int) height;
@@ -414,56 +414,56 @@ CVReturn static myCVDisplayLinkOutputCallback(CVDisplayLinkRef displayLink,
     CVDisplayLinkStop(mDisplayLink);
     CGDisplayFadeReservationToken token = [self displayFadeOut];
 
-	[mDisplayLock lock];
-	{
+    [mDisplayLock lock];
+    {
         
-		// clear the current context (window)
-		NSOpenGLContext *windowContext = [self openGLContext];
-		[windowContext makeCurrentContext];
-		glClear(GL_COLOR_BUFFER_BIT);
-		[windowContext flushBuffer];
-		[windowContext clearDrawable];
-		
-		// hide the cursor
-		CGDisplayHideCursor(kCGDirectMainDisplay);
-		// ask to black out all the attached displays
-		CGCaptureAllDisplays();
-		
-		float oldHeight = CGDisplayPixelsHigh(kCGDirectMainDisplay);
-		
-		// change the display device resolution
-		[self setFullScreenParametersForDisplay: kCGDirectMainDisplay
+        // clear the current context (window)
+        NSOpenGLContext *windowContext = [self openGLContext];
+        [windowContext makeCurrentContext];
+        glClear(GL_COLOR_BUFFER_BIT);
+        [windowContext flushBuffer];
+        [windowContext clearDrawable];
+        
+        // hide the cursor
+        CGDisplayHideCursor(kCGDirectMainDisplay);
+        // ask to black out all the attached displays
+        CGCaptureAllDisplays();
+        
+        float oldHeight = CGDisplayPixelsHigh(kCGDirectMainDisplay);
+        
+        // change the display device resolution
+        [self setFullScreenParametersForDisplay: kCGDirectMainDisplay
                                           width: mFullScreenWidth
                                          height: mFullScreenHeight
                                         refresh: 60];
-		
-		// find out the new device bounds
-		mFullScreenRect.origin.x = 0; 
-		mFullScreenRect.origin.y = 0; 
-		mFullScreenRect.size.width = CGDisplayPixelsWide(kCGDirectMainDisplay); 
-		mFullScreenRect.size.height = CGDisplayPixelsHigh(kCGDirectMainDisplay);
-		
-		// account for a workaround for fullscreen mode in AppKit
-		// <http://www.idevgames.com/forum/showthread.php?s=&threadid=1461&highlight=mouse+location+cocoa>
-		mFullScreenMouseOffset = oldHeight - mFullScreenRect.size.height + 1;
-		
-		// activate the fullscreen context and clear it
-		[mFullScreenOpenGLContext makeCurrentContext];
-		[mFullScreenOpenGLContext setFullScreen];
-		glClear(GL_COLOR_BUFFER_BIT);
-		[mFullScreenOpenGLContext flushBuffer];
         
-		[self update];
-		
+        // find out the new device bounds
+        mFullScreenRect.origin.x = 0; 
+        mFullScreenRect.origin.y = 0; 
+        mFullScreenRect.size.width = CGDisplayPixelsWide(kCGDirectMainDisplay); 
+        mFullScreenRect.size.height = CGDisplayPixelsHigh(kCGDirectMainDisplay);
+        
+        // account for a workaround for fullscreen mode in AppKit
+        // <http://www.idevgames.com/forum/showthread.php?s=&threadid=1461&highlight=mouse+location+cocoa>
+        mFullScreenMouseOffset = oldHeight - mFullScreenRect.size.height + 1;
+        
+        // activate the fullscreen context and clear it
+        [mFullScreenOpenGLContext makeCurrentContext];
+        [mFullScreenOpenGLContext setFullScreen];
+        glClear(GL_COLOR_BUFFER_BIT);
+        [mFullScreenOpenGLContext flushBuffer];
+        
+        [self update];
+        
         NSLog(@"Enter full screen");
-	}
-	[mDisplayLock unlock];
+    }
+    [mDisplayLock unlock];
     
-    [self displayFadeIn: token];	
+    [self displayFadeIn: token];    
     CVDisplayLinkStart(mDisplayLink);
-	
-	// enter the manual event loop processing
-	[self fullscreenEventLoop];
+    
+    // enter the manual event loop processing
+    [self fullscreenEventLoop];
 }
 
 - (void) exitFullScreen;
@@ -471,32 +471,32 @@ CVReturn static myCVDisplayLinkOutputCallback(CVDisplayLinkRef displayLink,
     CVDisplayLinkStop(mDisplayLink);
     CGDisplayFadeReservationToken token = [self displayFadeOut];
     
-	[mDisplayLock lock];
-	{
-		
-		// clear the current context (fullscreen)
-		[mFullScreenOpenGLContext makeCurrentContext];
-		glClear(GL_COLOR_BUFFER_BIT);
-		[mFullScreenOpenGLContext flushBuffer];
-		[mFullScreenOpenGLContext clearDrawable];
-		
-		// ask the attached displays to return to normal operation
-		CGReleaseAllDisplays();
+    [mDisplayLock lock];
+    {
         
-		// show the cursor
-		CGDisplayShowCursor(kCGDirectMainDisplay);
-		
-		// activate the window context and clear it
-		NSOpenGLContext * windowContext = [self openGLContext];
-		[windowContext makeCurrentContext];
-		glClear(GL_COLOR_BUFFER_BIT);
-		[windowContext flushBuffer];
-		
-		[self update];
+        // clear the current context (fullscreen)
+        [mFullScreenOpenGLContext makeCurrentContext];
+        glClear(GL_COLOR_BUFFER_BIT);
+        [mFullScreenOpenGLContext flushBuffer];
+        [mFullScreenOpenGLContext clearDrawable];
+        
+        // ask the attached displays to return to normal operation
+        CGReleaseAllDisplays();
+        
+        // show the cursor
+        CGDisplayShowCursor(kCGDirectMainDisplay);
+        
+        // activate the window context and clear it
+        NSOpenGLContext * windowContext = [self openGLContext];
+        [windowContext makeCurrentContext];
+        glClear(GL_COLOR_BUFFER_BIT);
+        [windowContext flushBuffer];
+        
+        [self update];
         
         NSLog(@"Exit full screen");
-	}
-	[mDisplayLock unlock];
+    }
+    [mDisplayLock unlock];
     
     [self displayFadeIn: token];
     CVDisplayLinkStart(mDisplayLink);
@@ -504,19 +504,19 @@ CVReturn static myCVDisplayLinkOutputCallback(CVDisplayLinkRef displayLink,
 
 - (void) fullscreenEventLoop;
 {
-	while (mFullScreen)
-	{
+    while (mFullScreen)
+    {
         NSAutoreleasePool *pool = [[NSAutoreleasePool alloc] init];
-		
+        
         // check for and process input events.
-		NSDate * expiration = [NSDate distantPast];
+        NSDate * expiration = [NSDate distantPast];
         NSEvent * event = [NSApp nextEventMatchingMask: NSAnyEventMask
                                              untilDate: expiration
                                                 inMode: NSDefaultRunLoopMode
                                                dequeue: YES];
         if (event != nil)
             [NSApp sendEvent: event];
-		[pool release];
+        [pool release];
     }
 }
 
@@ -525,44 +525,44 @@ CVReturn static myCVDisplayLinkOutputCallback(CVDisplayLinkRef displayLink,
                                             height: (size_t) height
                                            refresh: (CGRefreshRate) fps;
 {
-	CFDictionaryRef displayMode =
+    CFDictionaryRef displayMode =
         CGDisplayBestModeForParametersAndRefreshRateWithProperty(
             display,
-            CGDisplayBitsPerPixel(display),		
-            width,								
-            height,								
-            fps,								
+            CGDisplayBitsPerPixel(display),     
+            width,                              
+            height,                             
+            fps,                                
             kCGDisplayModeIsSafeForHardware,
             NULL);
-	return CGDisplaySwitchToMode(display, displayMode);
+    return CGDisplaySwitchToMode(display, displayMode);
 }
 
 - (CGDisplayFadeReservationToken) displayFadeOut;
 {
-	CGDisplayFadeReservationToken token;
-	CGDisplayErr err =
+    CGDisplayFadeReservationToken token;
+    CGDisplayErr err =
         CGAcquireDisplayFadeReservation(kCGMaxDisplayReservationInterval, &token); 
-	if (err == CGDisplayNoErr)
-	{
-		CGDisplayFade(token, 0.5f, kCGDisplayBlendNormal,
+    if (err == CGDisplayNoErr)
+    {
+        CGDisplayFade(token, 0.5f, kCGDisplayBlendNormal,
                       kCGDisplayBlendSolidColor, 0, 0, 0, true); 
-	}
-	else
-	{ 
-		token = kCGDisplayFadeReservationInvalidToken;
-	}
-	
-	return token;
+    }
+    else
+    { 
+        token = kCGDisplayFadeReservationInvalidToken;
+    }
+    
+    return token;
 }
 
 - (void) displayFadeIn: (CGDisplayFadeReservationToken) token;
 {
-	if (token != kCGDisplayFadeReservationInvalidToken)
-	{
-		CGDisplayFade(token, 0.5f, kCGDisplayBlendSolidColor,
+    if (token != kCGDisplayFadeReservationInvalidToken)
+    {
+        CGDisplayFade(token, 0.5f, kCGDisplayBlendSolidColor,
                       kCGDisplayBlendNormal, 0, 0, 0, true); 
-		CGReleaseDisplayFadeReservation(token); 
-	}
+        CGReleaseDisplayFadeReservation(token); 
+    }
 }
 
 @end
