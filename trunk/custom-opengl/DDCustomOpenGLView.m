@@ -449,7 +449,6 @@ CVReturn static myCVDisplayLinkOutputCallback(CVDisplayLinkRef displayLink,
 		
 		// activate the fullscreen context and clear it
 		[mFullScreenOpenGLContext makeCurrentContext];
-        // [self prepareOpenGL];
 		[mFullScreenOpenGLContext setFullScreen];
 		glClear(GL_COLOR_BUFFER_BIT);
 		[mFullScreenOpenGLContext flushBuffer];
