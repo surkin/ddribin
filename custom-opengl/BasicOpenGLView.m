@@ -11,8 +11,11 @@
 static const int FULL_SCREEN_WIDTH = 640;
 static const int FULL_SCREEN_HEIGHT = 480;
 
+#define USE_CV_PIXEL_BUFFER 1
+
 @interface BasicOpenGLView (Private)
 
+- (CGImageRef) createImage;
 - (void) loadTexture;
 
 @end
@@ -21,8 +24,8 @@ static const int FULL_SCREEN_HEIGHT = 480;
 
 -(id) initWithFrame: (NSRect) frameRect
 {
-    NSOpenGLPixelFormatAttribute colorSize = 24;
-    NSOpenGLPixelFormatAttribute depthSize = 16;
+    NSOpenGLPixelFormatAttribute colorSize = 32;
+    NSOpenGLPixelFormatAttribute depthSize = 32;
     
     // pixel format attributes for the view based (non-fullscreen) NSOpenGLContext
     NSOpenGLPixelFormatAttribute windowedAttributes[] =
@@ -72,6 +75,12 @@ static const int FULL_SCREEN_HEIGHT = 480;
     [self loadTexture];
     
     return self;
+}
+
+- (void) dealloc
+{
+    CVOpenGLTextureRelease(mTexture);
+    [super dealloc];
 }
 
 - (void) prepareOpenGL: (NSOpenGLContext *) context;
@@ -215,7 +224,11 @@ static const int FULL_SCREEN_HEIGHT = 480;
     vertices[3][0] = rect.origin.x;
     vertices[3][1] = NSMaxY(rect);
     
+#if !USE_CV_PIXEL_BUFFER
     GLenum textureTarget = GL_TEXTURE_RECTANGLE_ARB;
+#else
+    GLenum textureTarget = CVOpenGLTextureGetTarget(mTexture);
+#endif
     glEnable(textureTarget);
         
     glTexParameteri(textureTarget, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
@@ -232,7 +245,12 @@ static const int FULL_SCREEN_HEIGHT = 480;
     texCoords[3][0] = rect.origin.x;
     texCoords[3][1] = NSMaxY(rect);
 
-    glBindTexture(textureTarget, mTextureName);
+#if !USE_CV_PIXEL_BUFFER    
+    GLuint textureName = mTextureName;
+#else
+    GLuint textureName = CVOpenGLTextureGetName(mTexture);
+#endif
+    glBindTexture(textureTarget, textureName);
     glDrawArrays(GL_QUADS, 0, 4);
     glDisable(textureTarget);
 #endif
@@ -242,17 +260,30 @@ static const int FULL_SCREEN_HEIGHT = 480;
 
 @implementation BasicOpenGLView (Private)
 
-- (void) loadTexture;
+- (CGImageRef) createImage;
 {
-    [[self openGLContext] makeCurrentContext];
     NSBundle * myBundle = [NSBundle bundleForClass: [self class]];
     NSString * path = [myBundle pathForImageResource: @"image"];
     NSURL * url = [NSURL fileURLWithPath: path];
     CGImageSourceRef myImageSourceRef = CGImageSourceCreateWithURL((CFURLRef) url, nil);
     CGImageRef myImageRef = CGImageSourceCreateImageAtIndex (myImageSourceRef, 0, nil);
+    CFRelease(myImageSourceRef);
+    
+    return myImageRef;
+}
+
+- (void) loadTexture;
+{
+    mTexture = NULL;
+    
+    CGImageRef myImageRef = [self createImage];
     size_t width = CGImageGetWidth(myImageRef);
     size_t height = CGImageGetHeight(myImageRef);
     CGRect rect = {{0, 0}, {width, height}};
+    
+#if !USE_CV_PIXEL_BUFFER
+    NSLog(@"Create texture directly");
+    
     void * myData = calloc(width * 4, height);
     CGColorSpaceRef space = CGColorSpaceCreateDeviceRGB();
     CGContextRef myBitmapContext = CGBitmapContextCreate (myData, 
@@ -271,6 +302,8 @@ static const int FULL_SCREEN_HEIGHT = 480;
     
     CGContextDrawImage(myBitmapContext, rect, myImageRef);
     CGContextRelease(myBitmapContext);
+
+    [[self openGLContext] makeCurrentContext];
     glPixelStorei(GL_UNPACK_ROW_LENGTH, width);
     glPixelStorei(GL_UNPACK_ALIGNMENT, 1);
     glGenTextures(1, &mTextureName);
@@ -286,6 +319,63 @@ static const int FULL_SCREEN_HEIGHT = 480;
                  0, GL_BGRA_EXT, type, myData);
     free(myData);
 
+#else // USE_CV_PIXEL_BUFFER
+    NSLog(@"Create texture with Core Video");
+
+    CVReturn rc;
+#if __BIG_ENDIAN__
+    static const int pixelFormat = k32BGRAPixelFormat;
+#else
+    static const int pixelFormat = k32ARGBPixelFormat;
+#endif
+    CVPixelBufferRef pixelBuffer;
+    rc = CVPixelBufferCreate(NULL,
+                             width,
+                             height,
+                             pixelFormat,
+                             NULL, // pixelBufferAttributes
+                             &pixelBuffer);
+    CVPixelBufferLockBaseAddress(pixelBuffer, 0);
+    void * baseAddress = CVPixelBufferGetBaseAddress(pixelBuffer);
+    size_t bytesPerRow = CVPixelBufferGetBytesPerRow(pixelBuffer);
+    
+    CGColorSpaceRef space = CGColorSpaceCreateDeviceRGB();
+    CGContextRef myBitmapContext = CGBitmapContextCreate(baseAddress, 
+                                                         width, height, 8,
+                                                         bytesPerRow, space, 
+                                                         kCGImageAlphaPremultipliedFirst);
+    //  Move the CG origin to the upper left of the port
+    CGContextTranslateCTM( myBitmapContext, 0,
+                           (float)(height) );
+    
+    //  Flip the y axis so that positive Y points down
+    //  Note that this will cause text drawn with Core Graphics
+    //  to draw upside down
+    CGContextScaleCTM( myBitmapContext, 1.0, -1.0 );
+    
+    CGContextDrawImage(myBitmapContext, rect, myImageRef);
+    CGContextRelease(myBitmapContext);
+    CVPixelBufferUnlockBaseAddress(pixelBuffer, 0);
+    
+    CVOpenGLTextureCacheRef textureCache;
+    rc = CVOpenGLTextureCacheCreate(NULL, NULL,
+                                    [[self openGLContext] CGLContextObj],
+                                    [[self pixelFormat] CGLPixelFormatObj],
+                                    NULL,
+                                    &textureCache);
+    
+    rc = CVOpenGLTextureCacheCreateTextureFromImage(NULL,
+                                                    textureCache,
+                                                    pixelBuffer,
+                                                    NULL,
+                                                    &mTexture);
+    CVOpenGLTextureCacheRelease(textureCache);
+                                    
+    
+    
+#endif
+
+    CFRelease(myImageRef);
     mRect.size.width = width;
     mRect.size.height = height;
 }
