@@ -68,7 +68,7 @@
     mFullScreenPixelFormat = nil;
     mFullScreen = NO;
     
-    mDisplayLock = [[NSRecursiveLock alloc] init];
+    mOpenGLLock = [[NSRecursiveLock alloc] init];
     
     [[NSNotificationCenter defaultCenter]
         addObserver: self
@@ -98,13 +98,13 @@
     [mPixelFormat release];
     [mFullScreenOpenGLContext release];
     [mFullScreenPixelFormat release];
-    [mDisplayLock release];
+    [mOpenGLLock release];
     
     mOpenGLContext = nil;
     mPixelFormat = nil;
     mFullScreenOpenGLContext = nil;
     mFullScreenPixelFormat = nil;
-    mDisplayLock = nil;
+    mOpenGLLock = nil;
     [super dealloc];
 }
 
@@ -253,14 +253,14 @@
 - (void) lockOpenGLLock;
 {
 #if ANIMATE_WITH_DISPLAY_LINK
-    [mDisplayLock lock];
+    [mOpenGLLock lock];
 #endif
 }
 
 - (void) unlockOpenGLLock;
 {
 #if ANIMATE_WITH_DISPLAY_LINK
-    [mDisplayLock unlock];
+    [mOpenGLLock unlock];
 #endif
 }
 

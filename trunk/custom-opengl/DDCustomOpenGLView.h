@@ -11,6 +11,7 @@
 
 @interface DDCustomOpenGLView : NSView
 {
+    NSRecursiveLock * mOpenGLLock;
     NSOpenGLContext * mOpenGLContext;
     NSOpenGLPixelFormat * mPixelFormat;
     
@@ -23,7 +24,6 @@
     NSRect mFullScreenRect;
     float mFullScreenMouseOffset;
 
-    NSRecursiveLock * mDisplayLock;
     CVDisplayLinkRef mDisplayLink;
     NSTimer * mAnimationTimer;
     
