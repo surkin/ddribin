@@ -204,17 +204,6 @@ static const int FULL_SCREEN_HEIGHT = 480;
     glVertex3f(rect.origin.x,       rect.origin.y,      z);
     glEnd();
 
-#if 0
-    z = 0.0f;
-    rect = mRect;
-    glColor3f(0.0f, 0.0f, 1.0f);
-    glBegin(GL_POLYGON);
-    glVertex3f(rect.origin.x,       rect.origin.y,      z);
-    glVertex3f(NSMaxX(rect),        rect.origin.y,      z);
-    glVertex3f(NSMaxX(rect),        NSMaxY(rect),       z);
-    glVertex3f(rect.origin.x,       NSMaxY(rect),       z);
-    glEnd();
-#else
     GLfloat vertices[4][2];
     GLfloat texCoords[4][2];
     
@@ -258,7 +247,6 @@ static const int FULL_SCREEN_HEIGHT = 480;
     glBindTexture(mTextureTarget, mTextureName);
     glDrawArrays(GL_QUADS, 0, 4);
     glDisable(mTextureTarget);
-#endif
 }
 
 @end
