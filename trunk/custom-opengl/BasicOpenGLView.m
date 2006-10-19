@@ -172,7 +172,7 @@ static const int FULL_SCREEN_HEIGHT = 480;
 
 - (void) drawFrame
 {
-    NSRect bounds = [self currentBounds];
+    NSRect bounds = [self activeBounds];
     [self resize: bounds];
     
     // clear our drawable
