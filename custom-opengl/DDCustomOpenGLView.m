@@ -111,7 +111,7 @@
 - (void) drawRect: (NSRect)rect
 {
     [self lockOpenGLLock];
-    NSOpenGLContext * currentContext = [self currentOpenGLContext];
+    NSOpenGLContext * currentContext = [self activeOpenGLContext];
     {
         [currentContext makeCurrentContext];
         [self drawFrame];
@@ -183,7 +183,10 @@
     // for overriding to initialize OpenGL state, occurs after context creation
 }
 
-- (NSOpenGLContext *) currentOpenGLContext;
+#pragma mark -
+#pragma mark Active OpenGL Properties
+
+- (NSOpenGLContext *) activeOpenGLContext;
 {
     if (mFullScreen)
         return [self fullScreenOpenGLContext];
@@ -191,7 +194,7 @@
         return [self openGLContext];
 }
 
-- (NSOpenGLPixelFormat *) currentPixelFormat;
+- (NSOpenGLPixelFormat *) activePixelFormat;
 {
     if (mFullScreen)
         return [self fullScreenPixelFormat];
@@ -199,7 +202,7 @@
         return [self pixelFormat];
 }
 
-- (NSRect) currentBounds;
+- (NSRect) activeBounds;
 {
     if (mFullScreen)
         return mFullScreenRect;
@@ -220,7 +223,7 @@
     [self lockOpenGLLock];
     {
         // get context. will create if we don't have one yet
-        NSOpenGLContext* context = [self currentOpenGLContext];
+        NSOpenGLContext* context = [self activeOpenGLContext];
         
         // when we are about to draw, make sure we are linked to the view
         if ([context view] != self)
@@ -240,7 +243,7 @@
 {
     [self lockOpenGLLock];
     {
-        NSOpenGLContext * context = [self currentOpenGLContext];
+        NSOpenGLContext * context = [self activeOpenGLContext];
         
         if ([context view] == self)
         {
@@ -481,13 +484,13 @@ CVReturn static myCVDisplayLinkOutputCallback(CVDisplayLinkRef displayLink,
 
 - (void) drawFrameInternal;
 {
-    NSOpenGLContext * currentContext = [self currentOpenGLContext];
+    NSOpenGLContext * currentContext = [self activeOpenGLContext];
     
     [self lockOpenGLLock];
     {
         [currentContext makeCurrentContext];
         [self drawFrame];
-        [self flushBuffer: [self currentOpenGLContext]];
+        [self flushBuffer: [self activeOpenGLContext]];
     }
     [self unlockOpenGLLock];
 }
