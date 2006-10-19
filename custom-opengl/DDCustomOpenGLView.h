@@ -54,7 +54,7 @@
 - (void) unlockOpenGLLock;
 
 #pragma mark -
-#pragma mark "Animation"
+#pragma mark Animation
 
 - (void) startAnimation;
 - (void) stopAnimation;
@@ -64,7 +64,7 @@
 - (void) drawFrame;
 
 #pragma mark -
-#pragma mark "Full screen"
+#pragma mark Full Screen
 
 - (NSOpenGLContext *) fullScreenOpenGLContext;
 - (void) setFullScreenOpenGLContext: (NSOpenGLContext *) aFullScreenOpenGLContext;
