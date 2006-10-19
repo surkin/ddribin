@@ -16,7 +16,14 @@
     NSWindow * window = [mView window];
     [window center];
     [window makeKeyAndOrderFront: nil];    
+    [mView startAnimation];
 }
+
+- (void) applicationWillTerminate: (NSNotification *) notification;
+{
+    [mView setFullScreen: false];
+}
+
 
 - (void) setFullScreen: (BOOL) fullScreen;
 {
