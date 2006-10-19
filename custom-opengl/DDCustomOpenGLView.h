@@ -25,6 +25,9 @@
 
     NSRecursiveLock * mDisplayLock;
     CVDisplayLinkRef mDisplayLink;
+    NSTimer * mAnimationTimer;
+    
+    BOOL mDoubleBuffered;
 }
 
 + (NSOpenGLPixelFormat*)defaultPixelFormat;
@@ -47,11 +50,15 @@
 
 - (void) update;
 
+- (void) lockOpenGLLock;
+- (void) unlockOpenGLLock;
+
 #pragma mark -
 #pragma mark "Animation"
 
 - (void) startAnimation;
 - (void) stopAnimation;
+- (BOOL) isAnimationRunning;
 
 - (void) updateAnimation;
 - (void) drawFrame;

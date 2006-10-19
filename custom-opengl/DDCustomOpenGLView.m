@@ -8,6 +8,8 @@
 
 #import "DDCustomOpenGLView.h"
 
+#define ANIMATE_WITH_DISPLAY_LINK 1
+
 @interface DDCustomOpenGLView (Private)
 
 - (void) initDisplayLink;
@@ -15,6 +17,8 @@
 - (void) surfaceNeedsUpdate: (NSNotification *) notification;
 - (void) drawFrameInternal;
 - (void) animationTimer;
+- (BOOL) isDoubleBuffered: (NSOpenGLPixelFormat *) pixelFormat;
+- (void) flushBuffer: (NSOpenGLContext *) context;
 
 #pragma mark -
 #pragma mark "full screen"
@@ -58,6 +62,8 @@
     mOpenGLContext = nil;
     mPixelFormat = [pixelFormat retain];
     
+    mDoubleBuffered = [self isDoubleBuffered: mPixelFormat];
+
     mFullScreenOpenGLContext = nil;
     mFullScreenPixelFormat = nil;
     mFullScreen = NO;
@@ -71,14 +77,13 @@
              object: self];
 
 
-#if 0
-    [NSTimer scheduledTimerWithTimeInterval: 1.0f/60.0f
-                                     target: self
-                                   selector: @selector(animationTimer)
-                                   userInfo: nil
-                                    repeats: YES];
-#else
+    mDisplayLink = NULL;
+    mAnimationTimer = nil;
+#if ANIMATE_WITH_DISPLAY_LINK
+    NSLog(@"Animate with display link");
     [self initDisplayLink];
+#else
+    NSLog(@"Animate with timer");
 #endif
     
     return self;
@@ -105,14 +110,17 @@
 
 - (void) drawRect: (NSRect)rect
 {
-    [mDisplayLock lock];
+    [self lockOpenGLLock];
     NSOpenGLContext * currentContext = [self currentOpenGLContext];
     {
         [currentContext makeCurrentContext];
         [self drawFrame];
-        glFlush();
+        // Don't flush the buffer here, as the window server does an implicit
+        // swap, if necessary.
+        // glFlush(); ???
+        [self flushBuffer: currentContext];
     }
-    [mDisplayLock unlock];
+    [self unlockOpenGLLock];
 }
 
 //=========================================================== 
@@ -120,7 +128,7 @@
 //=========================================================== 
 - (NSOpenGLContext *) openGLContext
 {
-    [mDisplayLock lock];
+    [self lockOpenGLLock];
     {
         if (mOpenGLContext == nil)
         {
@@ -131,13 +139,13 @@
             [self prepareOpenGL: mOpenGLContext];
         }
     }
-    [mDisplayLock unlock];
+    [self unlockOpenGLLock];
     return mOpenGLContext;
 }
 
 - (void) setOpenGLContext: (NSOpenGLContext *) anOpenGLContext
 {
-    [mDisplayLock lock];
+    [self lockOpenGLLock];
     {
         if (mOpenGLContext != anOpenGLContext)
         {
@@ -145,7 +153,7 @@
             mOpenGLContext = [anOpenGLContext retain];
         }
     }
-    [mDisplayLock unlock];
+    [self unlockOpenGLLock];
 }
 
 //=========================================================== 
@@ -158,7 +166,7 @@
 
 - (void) setPixelFormat: (NSOpenGLPixelFormat *) aPixelFormat
 {
-    [mDisplayLock lock];
+    [self lockOpenGLLock];
     {
         if (mPixelFormat != aPixelFormat)
         {
@@ -166,7 +174,7 @@
             mPixelFormat = [aPixelFormat retain];
         }
     }
-    [mDisplayLock unlock];
+    [self unlockOpenGLLock];
 }
 
 
@@ -206,13 +214,13 @@
 
 - (void) lockFocus
 {
-    [mDisplayLock lock];
+    // make sure we are ready to draw
+    [super lockFocus];
+    
+    [self lockOpenGLLock];
     {
         // get context. will create if we don't have one yet
         NSOpenGLContext* context = [self currentOpenGLContext];
-        
-        // make sure we are ready to draw
-        [super lockFocus];
         
         // when we are about to draw, make sure we are linked to the view
         if ([context view] != self)
@@ -223,23 +231,37 @@
         // make us the current OpenGL context
         [context makeCurrentContext];
     }
-    [mDisplayLock unlock];
+    [self unlockOpenGLLock];
 }
 
 // no reshape will be called since NSView does not export a specific reshape method
 
 - (void) update
 {
-    [mDisplayLock lock];
     {
         NSOpenGLContext * context = [self currentOpenGLContext];
         
         if ([context view] == self)
         {
+            [self lockOpenGLLock];
             [context update];
+            [self unlockOpenGLLock];
         }
     }
+}
+
+- (void) lockOpenGLLock;
+{
+#if ANIMATE_WITH_DISPLAY_LINK
+    [mDisplayLock lock];
+#endif
+}
+
+- (void) unlockOpenGLLock;
+{
+#if ANIMATE_WITH_DISPLAY_LINK
     [mDisplayLock unlock];
+#endif
 }
 
 #pragma mark -
@@ -247,13 +269,39 @@
 
 - (void) startAnimation;
 {
+#if ANIMATE_WITH_DISPLAY_LINK
     CVDisplayLinkStart(mDisplayLink);
+#else
+    mAnimationTimer =
+        [NSTimer scheduledTimerWithTimeInterval: 1.0f/60.0f
+                                         target: self
+                                       selector: @selector(animationTimer)
+                                       userInfo: nil
+                                        repeats: YES];
+    [mAnimationTimer retain];
+#endif    
 }
 
 - (void) stopAnimation;
 {
+#if ANIMATE_WITH_DISPLAY_LINK
     CVDisplayLinkStop(mDisplayLink);
+#else
+    [mAnimationTimer invalidate];
+    [mAnimationTimer release];
+    mAnimationTimer = nil;
+#endif
 }
+
+- (BOOL) isAnimationRunning;
+{
+#if ANIMATE_WITH_DISPLAY_LINK
+    return CVDisplayLinkIsRunning(mDisplayLink);
+#else
+    return (mAnimationTimer != nil);
+#endif
+}
+
 
 - (void) updateAnimation;
 {
@@ -271,7 +319,7 @@
 //=========================================================== 
 - (NSOpenGLContext *) fullScreenOpenGLContext
 {
-    [mDisplayLock lock];
+    [self lockOpenGLLock];
     {
         if ((mFullScreenOpenGLContext == nil) && (mFullScreenPixelFormat != nil))
         {
@@ -282,13 +330,13 @@
             [self prepareOpenGL: mFullScreenOpenGLContext];
         }
     }
-    [mDisplayLock unlock];
+    [self unlockOpenGLLock];
     return mFullScreenOpenGLContext; 
 }
 
 - (void) setFullScreenOpenGLContext: (NSOpenGLContext *) aFullScreenOpenGLContext
 {
-    [mDisplayLock lock];
+    [self lockOpenGLLock];
     {
         if (mFullScreenOpenGLContext != aFullScreenOpenGLContext)
         {
@@ -296,7 +344,7 @@
             mFullScreenOpenGLContext = [aFullScreenOpenGLContext retain];
         }
     }
-    [mDisplayLock unlock];
+    [self unlockOpenGLLock];
 }
 
 //=========================================================== 
@@ -309,7 +357,7 @@
 
 - (void) setFullScreenPixelFormat: (NSOpenGLPixelFormat *) aFullScreenPixelFormat
 {
-    [mDisplayLock lock];
+    [self lockOpenGLLock];
     {
         if (mFullScreenPixelFormat != aFullScreenPixelFormat)
         {
@@ -317,7 +365,7 @@
             mFullScreenPixelFormat = [aFullScreenPixelFormat retain];
         }
     }
-    [mDisplayLock unlock];
+    [self unlockOpenGLLock];
 }
 
 - (void) setFullScreenWidth: (int) width height: (int) height;
@@ -407,7 +455,6 @@ CVReturn static myCVDisplayLinkOutputCallback(CVDisplayLinkRef displayLink,
     }
     error = CVDisplayLinkSetOutputCallback(mDisplayLink,
                                            myCVDisplayLinkOutputCallback, self);
-    [self startAnimation];
 }
 
 - (void) emptyThreadEntry;
@@ -424,20 +471,37 @@ CVReturn static myCVDisplayLinkOutputCallback(CVDisplayLinkRef displayLink,
 {
     NSOpenGLContext * currentContext = [self currentOpenGLContext];
     
-    [mDisplayLock lock];
+    [self lockOpenGLLock];
     {
         [currentContext makeCurrentContext];
         [self drawFrame];
-        [currentContext flushBuffer];
+        [self flushBuffer: [self currentOpenGLContext]];
     }
-    [mDisplayLock unlock];
+    [self unlockOpenGLLock];
 }
 
 - (void) animationTimer;
 {
+    [self updateAnimation];
     [self drawFrameInternal];
 }
 
+- (BOOL) isDoubleBuffered: (NSOpenGLPixelFormat *) pixelFormat;
+{
+    long value;
+    [pixelFormat getValues: &value
+              forAttribute: NSOpenGLPFADoubleBuffer
+          forVirtualScreen: 0];
+    return value == 1? YES : NO;
+}
+
+- (void) flushBuffer: (NSOpenGLContext *) context;
+{
+    if (mDoubleBuffered)
+        [context flushBuffer];
+    else
+        glFlush();
+}
 
 #pragma mark -
 #pragma mark "full screen"
@@ -445,17 +509,19 @@ CVReturn static myCVDisplayLinkOutputCallback(CVDisplayLinkRef displayLink,
 - (void) enterFullScreen;
 {
     [self willEnterFullScreen];
-    [self stopAnimation];
+    BOOL isAnimationRunning = [self isAnimationRunning];
+    if (isAnimationRunning)
+        [self stopAnimation];
     CGDisplayFadeReservationToken token = [self displayFadeOut];
 
-    [mDisplayLock lock];
+    [self lockOpenGLLock];
     {
         
         // clear the current context (window)
         NSOpenGLContext *windowContext = [self openGLContext];
         [windowContext makeCurrentContext];
         glClear(GL_COLOR_BUFFER_BIT);
-        [windowContext flushBuffer];
+        [self flushBuffer: windowContext];
         [windowContext clearDrawable];
         
         // hide the cursor
@@ -483,18 +549,20 @@ CVReturn static myCVDisplayLinkOutputCallback(CVDisplayLinkRef displayLink,
         
         // activate the fullscreen context and clear it
         [mFullScreenOpenGLContext makeCurrentContext];
+        mDoubleBuffered = [self isDoubleBuffered: mFullScreenPixelFormat];
         [mFullScreenOpenGLContext setFullScreen];
         glClear(GL_COLOR_BUFFER_BIT);
-        [mFullScreenOpenGLContext flushBuffer];
+        [self flushBuffer: mFullScreenOpenGLContext];
         
         [self update];
         
         [self didEnterFullScreen];
     }
-    [mDisplayLock unlock];
+    [self unlockOpenGLLock];
     
     [self displayFadeIn: token];    
-    [self startAnimation];
+    if (isAnimationRunning)
+        [self startAnimation];
     
     // enter the manual event loop processing
     [self fullscreenEventLoop];
@@ -503,16 +571,18 @@ CVReturn static myCVDisplayLinkOutputCallback(CVDisplayLinkRef displayLink,
 - (void) exitFullScreen;
 {
     [self willExitFullScreen];
-    [self stopAnimation];
+    BOOL isAnimationRunning = [self isAnimationRunning];
+    if (isAnimationRunning)
+        [self stopAnimation];
     CGDisplayFadeReservationToken token = [self displayFadeOut];
     
-    [mDisplayLock lock];
+    [self lockOpenGLLock];
     {
         
         // clear the current context (fullscreen)
         [mFullScreenOpenGLContext makeCurrentContext];
         glClear(GL_COLOR_BUFFER_BIT);
-        [mFullScreenOpenGLContext flushBuffer];
+        [self flushBuffer: mFullScreenOpenGLContext];
         [mFullScreenOpenGLContext clearDrawable];
         
         // ask the attached displays to return to normal operation
@@ -524,17 +594,19 @@ CVReturn static myCVDisplayLinkOutputCallback(CVDisplayLinkRef displayLink,
         // activate the window context and clear it
         NSOpenGLContext * windowContext = [self openGLContext];
         [windowContext makeCurrentContext];
+        mDoubleBuffered = [self isDoubleBuffered: mPixelFormat];
         glClear(GL_COLOR_BUFFER_BIT);
-        [windowContext flushBuffer];
+        [self flushBuffer: windowContext];
         
         [self update];
         
         [self didExitFullScreen];
     }
-    [mDisplayLock unlock];
+    [self unlockOpenGLLock];
     
     [self displayFadeIn: token];
-    [self startAnimation];
+    if (isAnimationRunning)
+        [self startAnimation];
 }
 
 - (void) fullscreenEventLoop;
