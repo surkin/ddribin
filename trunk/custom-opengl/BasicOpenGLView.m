@@ -17,6 +17,11 @@ static const int FULL_SCREEN_HEIGHT = 480;
 
 - (CGImageRef) createImage;
 - (void) loadTexture;
+- (void) createTexture: (CGImageRef) image;
+- (void) createTextureWithCoreVideo: (CGImageRef) image;
+- (void) drawImage: (CGImageRef) image toBuffer: (void *) buffer
+             width: (size_t) width height: (size_t) height
+       bytesPerRow: (size_t) bytesPerRow;
 
 @end
 
@@ -234,17 +239,9 @@ static const int FULL_SCREEN_HEIGHT = 480;
     vertices[3][0] = rect.origin.x;
     vertices[3][1] = NSMaxY(rect);
     
-#if !USE_CV_PIXEL_BUFFER
-    GLenum textureTarget = GL_TEXTURE_RECTANGLE_ARB;
-#else
-    GLenum textureTarget = CVOpenGLTextureGetTarget(mTexture);
-#endif
-    glEnable(textureTarget);
-        
-    glTexParameteri(textureTarget, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
-    glTexParameteri(textureTarget, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
     
-    // Get the current texture's coordinates, bind the texture, and draw our rectangle
+    // Get the current texture's coordinates, bind the texture,and draw our
+    // rectangle
     rect.origin = NSMakePoint(0, 0);
     texCoords[0][0] = rect.origin.x;
     texCoords[0][1] = rect.origin.y;
@@ -255,14 +252,12 @@ static const int FULL_SCREEN_HEIGHT = 480;
     texCoords[3][0] = rect.origin.x;
     texCoords[3][1] = NSMaxY(rect);
 
-#if !USE_CV_PIXEL_BUFFER    
-    GLuint textureName = mTextureName;
-#else
-    GLuint textureName = CVOpenGLTextureGetName(mTexture);
-#endif
-    glBindTexture(textureTarget, textureName);
+    glEnable(mTextureTarget);
+    glTexParameteri(mTextureTarget, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
+    glTexParameteri(mTextureTarget, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
+    glBindTexture(mTextureTarget, mTextureName);
     glDrawArrays(GL_QUADS, 0, 4);
-    glDisable(textureTarget);
+    glDisable(mTextureTarget);
 #endif
 }
 
@@ -275,43 +270,42 @@ static const int FULL_SCREEN_HEIGHT = 480;
     NSBundle * myBundle = [NSBundle bundleForClass: [self class]];
     NSString * path = [myBundle pathForImageResource: @"image"];
     NSURL * url = [NSURL fileURLWithPath: path];
-    CGImageSourceRef myImageSourceRef = CGImageSourceCreateWithURL((CFURLRef) url, nil);
-    CGImageRef myImageRef = CGImageSourceCreateImageAtIndex (myImageSourceRef, 0, nil);
-    CFRelease(myImageSourceRef);
+    CGImageSourceRef imageSource = CGImageSourceCreateWithURL((CFURLRef) url, nil);
+    CGImageRef image = CGImageSourceCreateImageAtIndex (imageSource, 0, nil);
+    CFRelease(imageSource);
     
-    return myImageRef;
+    return image;
 }
 
 - (void) loadTexture;
 {
     mTexture = NULL;
     
-    CGImageRef myImageRef = [self createImage];
-    size_t width = CGImageGetWidth(myImageRef);
-    size_t height = CGImageGetHeight(myImageRef);
-    CGRect rect = {{0, 0}, {width, height}};
-    
-#if !USE_CV_PIXEL_BUFFER
-    NSLog(@"Create texture directly");
-    
-    void * myData = calloc(width * 4, height);
-    CGColorSpaceRef space = CGColorSpaceCreateDeviceRGB();
-    CGContextRef myBitmapContext = CGBitmapContextCreate (myData, 
-                                                          width, height, 8,
-                                                          width*4, space, 
-                                                          kCGImageAlphaPremultipliedFirst);
+    CGImageRef image = [self createImage];
 
-    //  Move the CG origin to the upper left of the port
-    CGContextTranslateCTM( myBitmapContext, 0,
-                           (float)(height) );
+    if (!USE_CV_PIXEL_BUFFER)
+    {
+        NSLog(@"Create texture directly");
+        [self createTexture: image];
+    }
+    else
+    {
+        NSLog(@"Create texture with Core Video");
+        [self createTextureWithCoreVideo: image];
+    }
     
-    //  Flip the y axis so that positive Y points down
-    //  Note that this will cause text drawn with Core Graphics
-    //  to draw upside down
-    CGContextScaleCTM( myBitmapContext, 1.0, -1.0 );
-    
-    CGContextDrawImage(myBitmapContext, rect, myImageRef);
-    CGContextRelease(myBitmapContext);
+    CFRelease(image);
+}
+
+- (void) createTexture: (CGImageRef) image;
+{    
+    size_t width = CGImageGetWidth(image);
+    size_t height = CGImageGetHeight(image);
+
+    void * pixelBuffer = calloc(width*4, height);
+    [self drawImage: image toBuffer: pixelBuffer
+              width: width height: height
+        bytesPerRow: width*4];
 
     [[self openGLContext] makeCurrentContext];
     glPixelStorei(GL_UNPACK_ROW_LENGTH, width);
@@ -326,12 +320,19 @@ static const int FULL_SCREEN_HEIGHT = 480;
     GLenum type = GL_UNSIGNED_INT_8_8_8_8;
 #endif
     glTexImage2D(GL_TEXTURE_RECTANGLE_ARB, 0, GL_RGBA8, width, height,
-                 0, GL_BGRA_EXT, type, myData);
-    free(myData);
+                 0, GL_BGRA_EXT, type, pixelBuffer);
+    free(pixelBuffer);
 
-#else // USE_CV_PIXEL_BUFFER
-    NSLog(@"Create texture with Core Video");
+    mTextureTarget = GL_TEXTURE_RECTANGLE_ARB;
+    mRect.size.width = width;
+    mRect.size.height = height;
+}
 
+- (void) createTextureWithCoreVideo: (CGImageRef) image;
+{
+    size_t width = CGImageGetWidth(image);
+    size_t height = CGImageGetHeight(image);
+    
     CVReturn rc;
     CVPixelBufferRef pixelBuffer;
     rc = CVPixelBufferCreate(NULL,
@@ -344,24 +345,14 @@ static const int FULL_SCREEN_HEIGHT = 480;
     void * baseAddress = CVPixelBufferGetBaseAddress(pixelBuffer);
     size_t bytesPerRow = CVPixelBufferGetBytesPerRow(pixelBuffer);
     
-    CGColorSpaceRef space = CGColorSpaceCreateDeviceRGB();
-    CGContextRef myBitmapContext = CGBitmapContextCreate(baseAddress, 
-                                                         width, height, 8,
-                                                         bytesPerRow, space, 
-                                                         kCGImageAlphaPremultipliedFirst);
-    //  Move the CG origin to the upper left of the port
-    CGContextTranslateCTM( myBitmapContext, 0,
-                           (float)(height) );
-    
-    //  Flip the y axis so that positive Y points down
-    //  Note that this will cause text drawn with Core Graphics
-    //  to draw upside down
-    CGContextScaleCTM( myBitmapContext, 1.0, -1.0 );
-    
-    CGContextDrawImage(myBitmapContext, rect, myImageRef);
-    CGContextRelease(myBitmapContext);
+    [self drawImage: image toBuffer: baseAddress
+              width: width height: height
+        bytesPerRow: bytesPerRow];
+
     CVPixelBufferUnlockBaseAddress(pixelBuffer, 0);
     
+    // It is rather wasteful to create the cache, and delete it right away,
+    // but the only way to create a CVOpenGLTexture is with a cache.
     CVOpenGLTextureCacheRef textureCache;
     rc = CVOpenGLTextureCacheCreate(NULL, NULL,
                                     [[self openGLContext] CGLContextObj],
@@ -375,14 +366,38 @@ static const int FULL_SCREEN_HEIGHT = 480;
                                                     NULL,
                                                     &mTexture);
     CVOpenGLTextureCacheRelease(textureCache);
-                                    
-    
-    
-#endif
+    CVPixelBufferRelease(pixelBuffer);
 
-    CFRelease(myImageRef);
+    mTextureName = CVOpenGLTextureGetName(mTexture);
+    mTextureTarget = CVOpenGLTextureGetTarget(mTexture);
     mRect.size.width = width;
     mRect.size.height = height;
+}
+
+- (void) drawImage: (CGImageRef) image toBuffer: (void *) buffer
+             width: (size_t) width height: (size_t) height
+       bytesPerRow: (size_t) bytesPerRow;
+{
+    CGRect rect = {{0, 0}, {width, height}};
+    CGColorSpaceRef space = CGColorSpaceCreateDeviceRGB();
+    CGContextRef bitmapContext = CGBitmapContextCreate(buffer, 
+                                                       width, height, 8,
+                                                       bytesPerRow, space, 
+                                                       kCGImageAlphaPremultipliedFirst);
+
+    
+    // Flip the axis, as per:
+    // http://developer.apple.com/qa/qa2001/qa1009.html
+   
+    //  Move the CG origin to the upper left of the port
+    CGContextTranslateCTM(bitmapContext, 0,
+                         (float)(height));
+    
+    //  Flip the y axis so that positive Y points down
+    CGContextScaleCTM(bitmapContext, 1.0, -1.0);
+    
+    CGContextDrawImage(bitmapContext, rect, image);
+    CGContextRelease(bitmapContext);
 }
 
 @end
