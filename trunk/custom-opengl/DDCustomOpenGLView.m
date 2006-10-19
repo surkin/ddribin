@@ -21,7 +21,7 @@
 - (void) flushBuffer: (NSOpenGLContext *) context;
 
 #pragma mark -
-#pragma mark "full screen"
+#pragma mark Full Screen
 
 - (void) enterFullScreen;
 - (void) exitFullScreen;
@@ -238,16 +238,16 @@
 
 - (void) update
 {
+    [self lockOpenGLLock];
     {
         NSOpenGLContext * context = [self currentOpenGLContext];
         
         if ([context view] == self)
         {
-            [self lockOpenGLLock];
             [context update];
-            [self unlockOpenGLLock];
         }
     }
+    [self unlockOpenGLLock];
 }
 
 - (void) lockOpenGLLock;
@@ -265,7 +265,7 @@
 }
 
 #pragma mark -
-#pragma mark "Animation"
+#pragma mark Animation
 
 - (void) startAnimation;
 {
@@ -312,7 +312,7 @@
 }
 
 #pragma mark -
-#pragma mark "Full screen"
+#pragma mark Full Screen
 
 //=========================================================== 
 //  fullScreenOpenGLContext 
@@ -427,6 +427,8 @@
 
 @end
 
+#pragma mark -
+
 @implementation DDCustomOpenGLView (Private)
 
 CVReturn static myCVDisplayLinkOutputCallback(CVDisplayLinkRef displayLink, 
@@ -514,7 +516,7 @@ CVReturn static myCVDisplayLinkOutputCallback(CVDisplayLinkRef displayLink,
 }
 
 #pragma mark -
-#pragma mark "full screen"
+#pragma mark Full Screen
 
 - (void) enterFullScreen;
 {
