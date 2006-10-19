@@ -558,11 +558,12 @@ CVReturn static myCVDisplayLinkOutputCallback(CVDisplayLinkRef displayLink,
         mFullScreenMouseOffset = oldHeight - mFullScreenRect.size.height + 1;
         
         // activate the fullscreen context and clear it
-        [mFullScreenOpenGLContext makeCurrentContext];
         mDoubleBuffered = [self isDoubleBuffered: mFullScreenPixelFormat];
-        [mFullScreenOpenGLContext setFullScreen];
+
+        [mFullScreenOpenGLContext makeCurrentContext];
         glClear(GL_COLOR_BUFFER_BIT);
         [self flushBuffer: mFullScreenOpenGLContext];
+        [mFullScreenOpenGLContext setFullScreen];
         
         [self update];
         
@@ -603,8 +604,10 @@ CVReturn static myCVDisplayLinkOutputCallback(CVDisplayLinkRef displayLink,
         
         // activate the window context and clear it
         NSOpenGLContext * windowContext = [self openGLContext];
-        [windowContext makeCurrentContext];
         mDoubleBuffered = [self isDoubleBuffered: mPixelFormat];
+        [windowContext setView: self];
+        
+        [windowContext makeCurrentContext];
         glClear(GL_COLOR_BUFFER_BIT);
         [self flushBuffer: windowContext];
         
