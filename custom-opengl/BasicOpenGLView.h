@@ -17,6 +17,7 @@
     int mDirX;
     int mDirY;
     GLuint mTextureName;
+    GLenum mTextureTarget;
     CVOpenGLTextureRef mTexture;
 }
 
