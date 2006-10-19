@@ -21,6 +21,7 @@
 
 - (void) applicationWillTerminate: (NSNotification *) notification;
 {
+    [[mView window] orderOut: nil];
     [mView setFullScreen: false];
 }
 
