@@ -37,6 +37,7 @@
 
 - (void) applicationWillTerminate: (NSNotification *) notification;
 {
+    [mView stopAnimation];
     [[mView window] orderOut: nil];
     [mView setFullScreen: false];
 }
