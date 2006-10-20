@@ -647,7 +647,8 @@ CVReturn static myCVDisplayLinkOutputCallback(CVDisplayLinkRef displayLink,
         // activate the window context and clear it
         NSOpenGLContext * windowContext = [self openGLContext];
         mDoubleBuffered = [self isDoubleBuffered: mPixelFormat];
-        [windowContext setView: self];
+        if ([[self window] isVisible])
+            [windowContext setView: self];
         
         [windowContext makeCurrentContext];
         glClear(GL_COLOR_BUFFER_BIT);
