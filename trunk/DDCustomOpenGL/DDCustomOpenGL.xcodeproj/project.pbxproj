@@ -37,6 +37,7 @@
 		5565EDB80ADFE1CC0047D6DE /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = /System/Library/Frameworks/QuartzCore.framework; sourceTree = "<absolute>"; };
 		5565EE2E0ADFE7110047D6DE /* MyController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MyController.h; sourceTree = "<group>"; };
 		5565EE2F0ADFE7110047D6DE /* MyController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MyController.m; sourceTree = "<group>"; };
+		558A6C090AEDCCA500B4DF99 /* versions.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; path = versions.xcconfig; sourceTree = "<group>"; };
 		55FEC5490AE82372001A1CAB /* readme.markdown */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = text; path = readme.markdown; sourceTree = "<group>"; };
 		8D1107310486CEB800E47090 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
 		8D1107320486CEB800E47090 /* DDCustomOpenGL.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = DDCustomOpenGL.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -126,6 +127,7 @@
 				8D1107310486CEB800E47090 /* Info.plist */,
 				089C165CFE840E0CC02AAC07 /* InfoPlist.strings */,
 				29B97318FDCFA39411CA2CEA /* MainMenu.nib */,
+				558A6C090AEDCCA500B4DF99 /* versions.xcconfig */,
 			);
 			name = Resources;
 			sourceTree = "<group>";
@@ -257,6 +259,7 @@
 		};
 		C01FCF4F08A954540054247B /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 558A6C090AEDCCA500B4DF99 /* versions.xcconfig */;
 			buildSettings = {
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
@@ -267,6 +270,7 @@
 		};
 		C01FCF5008A954540054247B /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 558A6C090AEDCCA500B4DF99 /* versions.xcconfig */;
 			buildSettings = {
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
