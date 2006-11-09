@@ -53,6 +53,16 @@
     return [mView fullScreen];
 }
 
+- (BOOL) syncToRefresh;
+{
+    return [mView syncToRefresh];
+}
+
+- (void) setSyncToRefresh: (BOOL) flag;
+{
+    [mView setSyncToRefresh: flag];
+}
+
 - (IBAction) nullAction: (id) sender;
 {
 }
