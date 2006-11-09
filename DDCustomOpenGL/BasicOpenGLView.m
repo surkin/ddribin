@@ -72,6 +72,8 @@ static const int FULL_SCREEN_HEIGHT = 480;
     if (self == nil)
         return nil;
     
+    [self setSyncToRefresh: YES];
+    
     // pixel format attributes for the full screen NSOpenGLContext
     NSOpenGLPixelFormatAttribute fullScreenAttributes[] =
     {
@@ -113,12 +115,15 @@ static const int FULL_SCREEN_HEIGHT = 480;
 
 - (void) prepareOpenGL: (NSOpenGLContext *) context;
 {
+#if 0
     NSLog(@"prepareOpenGL");
     long swapInt = 1;
     
     // set to vbl sync
     [context setValues: &swapInt
           forParameter: NSOpenGLCPSwapInterval];
+#endif
+    
     // init GL stuff here
     glEnable(GL_DEPTH_TEST);
     
@@ -212,7 +217,10 @@ static const int FULL_SCREEN_HEIGHT = 480;
     z = 0.0f;
     rect = NSMakeRect(0.0f, 0.0f, FULL_SCREEN_WIDTH - 1, FULL_SCREEN_HEIGHT - 1);
     
-    glColor3f(1.0f, 0.0f, 0.0f);
+    if ([self syncToRefresh])
+        glColor3f(1.0f, 0.0f, 0.0f);
+    else
+        glColor3f(0.0f, 1.0f, 0.0f);
     glBegin(GL_LINES);
     glVertex3f(rect.origin.x,       rect.origin.y,      z);
     glVertex3f(NSMaxX(rect),        rect.origin.y,      z);

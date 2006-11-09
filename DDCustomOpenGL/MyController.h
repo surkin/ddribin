@@ -34,6 +34,9 @@
 - (void) setFullScreen: (BOOL) fullScreen;
 - (BOOL) fullScreen;
 
+- (BOOL) syncToRefresh;
+- (void) setSyncToRefresh: (BOOL) flag;
+
 - (IBAction) nullAction: (id) sender;
 
 @end
