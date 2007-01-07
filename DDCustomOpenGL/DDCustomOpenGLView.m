@@ -85,6 +85,7 @@
     mFullScreenHeight = 600;
     mFullScreenRefreshRate = 60;
     mFadeTime = 0.5f;
+    mSwitchModesForFullScreen = YES;
     
     mOpenGLLock = [[NSRecursiveLock alloc] init];
     
@@ -448,6 +449,18 @@
     return mFadeTime;
 }
 
+//=========================================================== 
+//  switchModesForFullScreen 
+//=========================================================== 
+- (BOOL) switchModesForFullScreen
+{
+    return mSwitchModesForFullScreen;
+}
+
+- (void) setSwitchModesForFullScreen: (BOOL) flag
+{
+    mSwitchModesForFullScreen = flag;
+}
 
 //=========================================================== 
 //  fullScreen 
@@ -599,18 +612,23 @@ CVReturn static myCVDisplayLinkOutputCallback(CVDisplayLinkRef displayLink,
         [self flushBuffer: windowContext];
         [windowContext clearDrawable];
         
-        // hide the cursor
-        CGDisplayHideCursor(kCGDirectMainDisplay);
         // ask to black out all the attached displays
         CGCaptureAllDisplays();
+        // hide the cursor
+        CGDisplayHideCursor(kCGDirectMainDisplay);
+        // Remove the menu bar, so it doesn't register mouse clicks
+        [NSMenu setMenuBarVisible: NO];
         
         float oldHeight = CGDisplayPixelsHigh(kCGDirectMainDisplay);
         
         // change the display device resolution
-        [self setFullScreenParametersForDisplay: kCGDirectMainDisplay
-                                          width: mFullScreenWidth
-                                         height: mFullScreenHeight
-                                        refresh: mFullScreenRefreshRate];
+        if (mSwitchModesForFullScreen)
+        {
+            [self setFullScreenParametersForDisplay: kCGDirectMainDisplay
+                                              width: mFullScreenWidth
+                                             height: mFullScreenHeight
+                                            refresh: mFullScreenRefreshRate];
+        }
         
         // find out the new device bounds
         mFullScreenRect.origin.x = 0; 
@@ -661,11 +679,12 @@ CVReturn static myCVDisplayLinkOutputCallback(CVDisplayLinkRef displayLink,
         [self flushBuffer: mFullScreenOpenGLContext];
         [mFullScreenOpenGLContext clearDrawable];
         
-        // ask the attached displays to return to normal operation
-        CGReleaseAllDisplays();
-        
+        // Bring the menu bar back
+        [NSMenu setMenuBarVisible: YES];
         // show the cursor
         CGDisplayShowCursor(kCGDirectMainDisplay);
+        // ask the attached displays to return to normal operation
+        CGReleaseAllDisplays();
         
         // activate the window context and clear it
         NSOpenGLContext * windowContext = [self openGLContext];

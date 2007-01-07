@@ -34,6 +34,9 @@
 - (void) setFullScreen: (BOOL) fullScreen;
 - (BOOL) fullScreen;
 
+- (void) setSwitchModes: (BOOL) switchModes;
+- (BOOL) switchModes;
+
 - (BOOL) syncToRefresh;
 - (void) setSyncToRefresh: (BOOL) flag;
 

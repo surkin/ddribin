@@ -1,3 +1,4 @@
+
 /*
  * Copyright (c) 2006 Dave Dribin
  * 
@@ -23,7 +24,7 @@
  */
 
 #import "MyController.h"
-
+#import "BasicOpenGLView.h"
 
 @implementation MyController
 
@@ -51,6 +52,22 @@
 - (BOOL) fullScreen;
 {
     return [mView fullScreen];
+}
+
+- (void) setSwitchModes: (BOOL) switchModes;
+{
+    // Turn off fading if not switching modes
+    if (switchModes)
+        [mView setFadeTime: 0.5f];
+    else
+        [mView setFadeTime: 0.0f];
+    
+    [mView setSwitchModesForFullScreen: switchModes];
+}
+
+- (BOOL) switchModes;
+{
+    return [mView switchModesForFullScreen];
 }
 
 - (BOOL) syncToRefresh;

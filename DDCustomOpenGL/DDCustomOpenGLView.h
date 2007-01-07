@@ -41,6 +41,7 @@
     NSRect mFullScreenRect;
     float mFullScreenMouseOffset;
     float mFadeTime;
+    BOOL mSwitchModesForFullScreen;
 
     CVDisplayLinkRef mDisplayLink;
     NSTimer * mAnimationTimer;
@@ -105,6 +106,9 @@
 
 - (void) setFadeTime: (float) fadeTime;
 - (float) fadeTime;
+
+- (BOOL) switchModesForFullScreen;
+- (void) setSwitchModesForFullScreen: (BOOL) switchModesForFullScreen;
 
 - (BOOL) fullScreen;
 - (void) setFullScreen: (BOOL) flag;
