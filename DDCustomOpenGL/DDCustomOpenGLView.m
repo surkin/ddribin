@@ -495,7 +495,7 @@
 {
 }
 
-- (void) didEnterFullScreen;
+- (void) didEnterFullScreen: (NSSize) fullScreenSize;
 {
 }
 
@@ -654,7 +654,7 @@ CVReturn static myCVDisplayLinkOutputCallback(CVDisplayLinkRef displayLink,
     [self unlockOpenGLLock];
     
     [self displayFadeIn: token];    
-    [self didEnterFullScreen];
+    [self didEnterFullScreen: mFullScreenRect.size];
     if (isAnimationRunning)
         [self startAnimation];
     

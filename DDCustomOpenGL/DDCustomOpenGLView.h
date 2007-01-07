@@ -116,7 +116,7 @@
 - (void) willEnterFullScreen;
 - (void) willExitFullScreen;
 
-- (void) didEnterFullScreen;
+- (void) didEnterFullScreen: (NSSize) fullScreenSize;
 - (void) didExitFullScreen;
 
 @end
