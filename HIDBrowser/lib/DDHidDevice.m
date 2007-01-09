@@ -7,30 +7,8 @@
 //
 
 #import "DDHidDevice.h"
-
-@interface NSDictionary (IOHelpers)
-
-- (NSString *) stringForString: (const char *) key;
-- (long) longForString: (const char *) key;
-
-@end
-
-@implementation NSDictionary (IOHelpers)
-
-- (NSString *) stringForString: (const char *) key;
-{
-    NSString * objcKey = [NSString stringWithCString: key];
-    return [self objectForKey: objcKey];
-}
-
-- (long) longForString: (const char *) key;
-{
-    NSString * objcKey = [NSString stringWithCString: key];
-    NSNumber * number =  [self objectForKey: objcKey];
-    return [number longValue];
-}
-
-@end
+#import "DDHidElement.h"
+#import "NSDictionary+AccessHelpers.h"
 
 @interface DDHidDevice (Private)
 
@@ -70,16 +48,8 @@
 - (void) dealloc
 {
     [mProperties release];
-    [mProductName release];
-    [mManufacturer release];
-    [mSerialNumber release];
-    [mTransport release];
     
     mProperties = nil;
-    mProductName = nil;
-    mManufacturer = nil;
-    mSerialNumber = nil;
-    mTransport = nil;
     [super dealloc];
 }
 
@@ -126,7 +96,7 @@
 //=========================================================== 
 - (NSString *) productName
 {
-    return mProductName; 
+    return [mProperties stringForString: kIOHIDProductKey]; 
 }
 
 //=========================================================== 
@@ -134,7 +104,7 @@
 //=========================================================== 
 - (NSString *) manufacturer
 {
-    return mManufacturer; 
+    return [mProperties stringForString: kIOHIDManufacturerKey];
 }
 
 //=========================================================== 
@@ -142,7 +112,7 @@
 //=========================================================== 
 - (NSString *) serialNumber
 {
-    return mSerialNumber; 
+    return [mProperties stringForString: kIOHIDSerialNumberKey];
 }
 
 //=========================================================== 
@@ -150,7 +120,7 @@
 //=========================================================== 
 - (NSString *) transport
 {
-    return mTransport; 
+    return [mProperties stringForString: kIOHIDTransportKey];
 }
 
 //=========================================================== 
@@ -158,7 +128,7 @@
 //=========================================================== 
 - (long) vendorId
 {
-    return mVendorId;
+    return [mProperties longForString: kIOHIDVendorIDKey];
 }
 
 //=========================================================== 
@@ -166,7 +136,7 @@
 //=========================================================== 
 - (long) productId
 {
-    return mProductId;
+    return [mProperties longForString: kIOHIDProductIDKey];
 }
 
 //=========================================================== 
@@ -174,7 +144,7 @@
 //=========================================================== 
 - (long) version
 {
-    return mVersion;
+    return [mProperties longForString: kIOHIDVersionNumberKey];
 }
 
 //=========================================================== 
@@ -182,7 +152,7 @@
 //=========================================================== 
 - (long) usbLocationId
 {
-    return mUsbLocationId;
+    return [mProperties longForString: kIOHIDLocationIDKey];
 }
 
 //=========================================================== 
@@ -190,7 +160,7 @@
 //=========================================================== 
 - (long) usagePage
 {
-    return mUsagePage;
+    return [mProperties longForString: kIOHIDPrimaryUsagePageKey];
 }
 
 //=========================================================== 
@@ -198,7 +168,12 @@
 //=========================================================== 
 - (long) usage
 {
-    return mUsage;
+    return [mProperties longForString: kIOHIDPrimaryUsageKey];
+}
+
+- (NSArray *) elements;
+{
+    return mElements;
 }
 
 @end
@@ -216,15 +191,9 @@
         return NO;
     
     mProperties = (NSMutableDictionary *) properties;
-    mProductName = [[mProperties stringForString: kIOHIDProductKey] retain];
-    mManufacturer = [[mProperties stringForString: kIOHIDManufacturerKey] retain];
-    mTransport = [[mProperties stringForString: kIOHIDTransportKey] retain];
-    mSerialNumber = [[mProperties stringForString: kIOHIDSerialNumberKey] retain];
-    mVendorId = [mProperties longForString: kIOHIDVendorIDKey];
-    mProductId = [mProperties longForString: kIOHIDProductIDKey];
-    mVersion = [mProperties longForString: kIOHIDVersionNumberKey];
-    mUsagePage = [mProperties longForString: kIOHIDPrimaryUsagePageKey];
-    mUsage = [mProperties longForString: kIOHIDPrimaryUsageKey];
+    NSArray * elementProperties = [mProperties objectForString: kIOHIDElementKey];
+    mElements = [DDHidElement elementsWithPropertiesArray: elementProperties];
+    [mElements retain];
     return YES;
 }
 

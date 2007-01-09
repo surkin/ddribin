@@ -1,5 +1,6 @@
 {
     IBClasses = (
+        {CLASS = DDHidElement; LANGUAGE = ObjC; SUPERCLASS = NSObject; }, 
         {CLASS = FirstResponder; LANGUAGE = ObjC; SUPERCLASS = NSObject; }, 
         {CLASS = HexFormatter; LANGUAGE = ObjC; SUPERCLASS = NSFormatter; }, 
         {CLASS = HidBrowserController; LANGUAGE = ObjC; SUPERCLASS = NSObject; }

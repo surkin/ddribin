@@ -12,22 +12,11 @@
 #include <IOKit/hid/IOHIDLib.h>
 #include <IOKit/hid/IOHIDKeys.h>
 
-
 @interface DDHidDevice : NSObject
 {
     io_object_t mHidDevice;
     NSMutableDictionary * mProperties;
-
-    NSString * mProductName;
-    NSString * mManufacturer;
-    NSString * mSerialNumber;
-    NSString * mTransport;
-    long mVendorId;
-    long mProductId;
-    long mVersion;
-    long mUsbLocationId;
-    long mUsagePage;
-    long mUsage;
+    NSArray * mElements;
 }
 
 - (id) initWithDevice: (io_object_t) device;
@@ -37,6 +26,8 @@
 #pragma mark -
 
 - (NSDictionary *) properties;
+
+- (NSArray *) elements;
 
 - (NSString *) productName;
 - (NSString *) manufacturer;

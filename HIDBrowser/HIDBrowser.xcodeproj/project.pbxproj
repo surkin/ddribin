@@ -11,6 +11,8 @@
 		55917B510B533C82005308AC /* DDHidDevice.m in Sources */ = {isa = PBXBuildFile; fileRef = 55917B500B533C82005308AC /* DDHidDevice.m */; };
 		55917B640B53408C005308AC /* HidBrowserController.m in Sources */ = {isa = PBXBuildFile; fileRef = 55917B630B53408C005308AC /* HidBrowserController.m */; };
 		55917E1C0B53E454005308AC /* HexFormatter.m in Sources */ = {isa = PBXBuildFile; fileRef = 55917E1B0B53E454005308AC /* HexFormatter.m */; };
+		55917E710B5413E7005308AC /* DDHidElement.m in Sources */ = {isa = PBXBuildFile; fileRef = 55917E700B5413E7005308AC /* DDHidElement.m */; };
+		55917E740B541541005308AC /* NSDictionary+AccessHelpers.m in Sources */ = {isa = PBXBuildFile; fileRef = 55917E730B541541005308AC /* NSDictionary+AccessHelpers.m */; };
 		8D11072A0486CEB800E47090 /* MainMenu.nib in Resources */ = {isa = PBXBuildFile; fileRef = 29B97318FDCFA39411CA2CEA /* MainMenu.nib */; };
 		8D11072B0486CEB800E47090 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 089C165CFE840E0CC02AAC07 /* InfoPlist.strings */; };
 		8D11072D0486CEB800E47090 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 29B97316FDCFA39411CA2CEA /* main.m */; settings = {ATTRIBUTES = (); }; };
@@ -33,6 +35,10 @@
 		55917B630B53408C005308AC /* HidBrowserController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HidBrowserController.m; sourceTree = "<group>"; };
 		55917E1A0B53E454005308AC /* HexFormatter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HexFormatter.h; sourceTree = "<group>"; };
 		55917E1B0B53E454005308AC /* HexFormatter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HexFormatter.m; sourceTree = "<group>"; };
+		55917E6F0B5413E7005308AC /* DDHidElement.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DDHidElement.h; sourceTree = "<group>"; };
+		55917E700B5413E7005308AC /* DDHidElement.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DDHidElement.m; sourceTree = "<group>"; };
+		55917E720B541541005308AC /* NSDictionary+AccessHelpers.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSDictionary+AccessHelpers.h"; sourceTree = "<group>"; };
+		55917E730B541541005308AC /* NSDictionary+AccessHelpers.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSDictionary+AccessHelpers.m"; sourceTree = "<group>"; };
 		8D1107310486CEB800E47090 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
 		8D1107320486CEB800E47090 /* HIDBrowser.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = HIDBrowser.app; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
@@ -134,6 +140,10 @@
 			children = (
 				55917B4F0B533C82005308AC /* DDHidDevice.h */,
 				55917B500B533C82005308AC /* DDHidDevice.m */,
+				55917E6F0B5413E7005308AC /* DDHidElement.h */,
+				55917E700B5413E7005308AC /* DDHidElement.m */,
+				55917E720B541541005308AC /* NSDictionary+AccessHelpers.h */,
+				55917E730B541541005308AC /* NSDictionary+AccessHelpers.m */,
 			);
 			path = lib;
 			sourceTree = "<group>";
@@ -195,6 +205,8 @@
 				55917B510B533C82005308AC /* DDHidDevice.m in Sources */,
 				55917B640B53408C005308AC /* HidBrowserController.m in Sources */,
 				55917E1C0B53E454005308AC /* HexFormatter.m in Sources */,
+				55917E710B5413E7005308AC /* DDHidElement.m in Sources */,
+				55917E740B541541005308AC /* NSDictionary+AccessHelpers.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
