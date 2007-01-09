@@ -28,6 +28,7 @@
 - (unsigned) cookie;
 - (unsigned) usage;
 - (unsigned) usagePage;
+- (NSString *) usageDescription;
 - (NSArray *) elements;
 
 @end

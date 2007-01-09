@@ -7,6 +7,7 @@
 //
 
 #import "DDHidElement.h"
+#import "DDHidUsageTables.h"
 #import "NSDictionary+AccessHelpers.h"
 #include <IOKit/hid/IOHIDKeys.h>
 
@@ -67,6 +68,13 @@
 - (unsigned) usagePage;
 {
     return [mProperties unsignedIntForString: kIOHIDElementUsagePageKey];
+}
+
+- (NSString *) usageDescription;
+{
+    DDHidUsageTables * usageTables = [DDHidUsageTables standardUsageTables];
+    return [usageTables descriptionForUsagePage: [self usagePage]
+                                          usage: [self usage]];
 }
 
 - (NSArray *) elements;
