@@ -32,6 +32,13 @@
 
 @end
 
+@interface DDHidDevice (Private)
+
+- (BOOL) initProperties;
+- (BOOL) createDeviceInterface;
+
+@end
+
 @implementation DDHidDevice
 
 - (id) initWithDevice: (io_object_t) device;
@@ -41,26 +48,39 @@
         return nil;
     
     mHidDevice = device;
-
-    kern_return_t result;
-    CFMutableDictionaryRef properties;
-    result = IORegistryEntryCreateCFProperties(mHidDevice, &properties,
-                                               kCFAllocatorDefault, kNilOptions);
-    if (result != KERN_SUCCESS)
+    
+    if (![self initProperties])
+    {
+        [self release];
         return nil;
-
-    mProperties = (NSMutableDictionary *) properties;
-    mProductName = [[mProperties stringForString: kIOHIDProductKey] retain];
-    mManufacturer = [[mProperties stringForString: kIOHIDManufacturerKey] retain];
-    mTransport = [[mProperties stringForString: kIOHIDTransportKey] retain];
-    mSerialNumber = [[mProperties stringForString: kIOHIDSerialNumberKey] retain];
-    mVendorId = [mProperties longForString: kIOHIDVendorIDKey];
-    mProductId = [mProperties longForString: kIOHIDProductIDKey];
-    mVersion = [mProperties longForString: kIOHIDVersionNumberKey];
-    mUsagePage = [mProperties longForString: kIOHIDPrimaryUsagePageKey];
-    mUsage = [mProperties longForString: kIOHIDPrimaryUsageKey];
+    }
+    
+    if (![self createDeviceInterface])
+    {
+        [self release];
+        return nil;
+    }
     
     return self;
+}
+
+//=========================================================== 
+// dealloc
+//=========================================================== 
+- (void) dealloc
+{
+    [mProperties release];
+    [mProductName release];
+    [mManufacturer release];
+    [mSerialNumber release];
+    [mTransport release];
+    
+    mProperties = nil;
+    mProductName = nil;
+    mManufacturer = nil;
+    mSerialNumber = nil;
+    mTransport = nil;
+    [super dealloc];
 }
 
 + (NSArray *) allDevices;
@@ -181,5 +201,37 @@
     return mUsage;
 }
 
+@end
+
+
+@implementation DDHidDevice (Private)
+
+- (BOOL) initProperties;
+{
+    kern_return_t result;
+    CFMutableDictionaryRef properties;
+    result = IORegistryEntryCreateCFProperties(mHidDevice, &properties,
+                                               kCFAllocatorDefault, kNilOptions);
+    if (result != KERN_SUCCESS)
+        return NO;
+    
+    mProperties = (NSMutableDictionary *) properties;
+    mProductName = [[mProperties stringForString: kIOHIDProductKey] retain];
+    mManufacturer = [[mProperties stringForString: kIOHIDManufacturerKey] retain];
+    mTransport = [[mProperties stringForString: kIOHIDTransportKey] retain];
+    mSerialNumber = [[mProperties stringForString: kIOHIDSerialNumberKey] retain];
+    mVendorId = [mProperties longForString: kIOHIDVendorIDKey];
+    mProductId = [mProperties longForString: kIOHIDProductIDKey];
+    mVersion = [mProperties longForString: kIOHIDVersionNumberKey];
+    mUsagePage = [mProperties longForString: kIOHIDPrimaryUsagePageKey];
+    mUsage = [mProperties longForString: kIOHIDPrimaryUsageKey];
+    return YES;
+}
+
+- (BOOL) createDeviceInterface;
+{
+    return YES;
+}
 
 @end
+
