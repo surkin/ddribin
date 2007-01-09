@@ -13,21 +13,8 @@
 
 - (void) awakeFromNib
 {
-    NSArray * devices = [DDHidDevice allDevices];
-    NSLog(@"Devices:");
-    NSEnumerator * e = [devices objectEnumerator];
-    DDHidDevice * device;
-    while (device = [e nextObject])
-    {
-        NSLog(@"Name: %@", [device productName]);
-        NSLog(@"Manufacturer: %@, transport: %@", [device manufacturer],
-              [device transport]);
-        NSLog(@"Vendor ID: %ld, product ID: %ld, version: %ld",
-              [device vendorId], [device productId], [device version]);
-    }
-
     [self willChangeValueForKey: @"devices"];
-    mDevices = [devices retain];
+    mDevices = [[DDHidDevice allDevices] retain];
     [self didChangeValueForKey: @"devices"];
 }
 
