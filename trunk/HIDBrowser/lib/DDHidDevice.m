@@ -8,6 +8,7 @@
 
 #import "DDHidDevice.h"
 #import "DDHidElement.h"
+#import "DDHidUsageTables.h"
 #import "NSDictionary+AccessHelpers.h"
 
 @interface DDHidDevice (Private)
@@ -169,6 +170,18 @@
 - (long) usage
 {
     return [mProperties longForString: kIOHIDPrimaryUsageKey];
+}
+
+- (NSString *) usageDescription;
+{
+    DDHidUsageTables * usageTables = [DDHidUsageTables standardUsageTables];
+    unsigned usagePage = [self usagePage];
+    unsigned usage = [self usage];
+    NSString * description =
+        [usageTables descriptionForUsagePage: usagePage
+                                       usage: usage];
+    return [NSString stringWithFormat: @"%@ (0x%04X : 0x%04X)", description,
+        usagePage, usage];
 }
 
 - (NSArray *) elements;

@@ -39,5 +39,6 @@
 - (long) usbLocationId;
 - (long) usagePage;
 - (long) usage;
+- (NSString *) usageDescription;
 
 @end
