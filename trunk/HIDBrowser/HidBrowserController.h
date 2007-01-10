@@ -11,9 +11,13 @@
 
 @interface HidBrowserController : NSObject
 {
+    IBOutlet NSArrayController * mDevicesController;
+    IBOutlet NSTreeController * mElementsController;
     NSArray * mDevices;
 }
 
 - (NSArray *) devices;
+
+- (IBAction) press: (id) sender;
 
 @end

@@ -33,6 +33,47 @@
     return mDevices; 
 }
 
+- (DDHidDevice *) selectedDevice;
+{
+    unsigned index = [mDevicesController selectionIndex];
+    if (index == NSNotFound)
+        return nil;
+    return [mDevices objectAtIndex: index];}
+
+- (DDHidElement *) selectedElement;
+{
+    DDHidDevice * selectedDevice = [self selectedDevice];
+    if (selectedDevice == nil)
+        return nil;
+    
+    NSIndexPath * indexPath = [mElementsController selectionIndexPath];
+    NSArray * elements = [selectedDevice elements];
+    DDHidElement * element = nil;
+    unsigned i;
+    for (i = 0; i < [indexPath length]; i++)
+    {
+        element = [elements objectAtIndex: [indexPath indexAtPosition: i]];
+        elements = [element elements];
+    }
+    return element;
+}
+
+- (IBAction) press: (id) sender;
+{
+    DDHidDevice * device = [self selectedDevice];
+    DDHidElement * element = [self selectedElement];
+    NSLog(@"press: %@", [element usageDescription]);
+    IOHIDDeviceInterface122** deviceInterface = [device deviceInterface];
+    IOHIDElementCookie cookie = [element cookie];
+    IOHIDEventStruct event;
+    (*deviceInterface)->open(deviceInterface, kIOHIDOptionsTypeNone);
+    HRESULT result = (*deviceInterface)->getElementValue(deviceInterface, 
+                                                         cookie,
+                                                         &event);
+    NSLog(@"result: %d, value: %lx", result, event.value);
+    (*deviceInterface)->close(deviceInterface);
+    
+}
 
 @end
 
