@@ -49,8 +49,10 @@
 - (void) dealloc
 {
     [mProperties release];
+    (*mDeviceInterface)->Release(mDeviceInterface);
     
     mProperties = nil;
+    mDeviceInterface = NULL;
     [super dealloc];
 }
 
@@ -86,6 +88,16 @@
 }
 
 #pragma mark -
+
+- (io_object_t) ioDevice;
+{
+    return mHidDevice;
+}
+
+- (IOHIDDeviceInterface122**) deviceInterface;
+{
+    return mDeviceInterface;
+}
 
 - (NSDictionary *) properties;
 {
@@ -200,7 +212,40 @@
 
 - (BOOL) createDeviceInterface;
 {
-    return YES;
+	io_name_t				className;
+	IOCFPlugInInterface**   plugInInterface = NULL;
+	HRESULT					plugInResult = S_OK;
+	SInt32					score = 0;
+	IOReturn				ioReturnValue = kIOReturnSuccess;
+	
+	mDeviceInterface = NULL;
+	
+	ioReturnValue = IOObjectGetClass(mHidDevice, className);
+	
+	if (ioReturnValue != kIOReturnSuccess) {
+		NSLog(@"Error: Failed to get class name.");
+		return NO;
+	}
+	
+    BOOL result = YES;
+	ioReturnValue = IOCreatePlugInInterfaceForService(mHidDevice,
+													  kIOHIDDeviceUserClientTypeID,
+													  kIOCFPlugInInterfaceID,
+													  &plugInInterface,
+													  &score);
+	if (ioReturnValue == kIOReturnSuccess)
+	{
+		//Call a method of the intermediate plug-in to create the device interface
+		plugInResult = (*plugInInterface)->QueryInterface(plugInInterface, CFUUIDGetUUIDBytes(kIOHIDDeviceInterfaceID), (LPVOID) &mDeviceInterface);
+		
+		if (plugInResult != S_OK) {
+			NSLog(@"Error: Couldn't create HID class device interface");
+            result = NO;
+		}
+		// Release
+		if (plugInInterface) (*plugInInterface)->Release(plugInInterface);
+	}
+	return result;
 }
 
 @end

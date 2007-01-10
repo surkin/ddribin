@@ -15,6 +15,8 @@
 @interface DDHidDevice : NSObject
 {
     io_object_t mHidDevice;
+	IOHIDDeviceInterface122** mDeviceInterface;
+
     NSMutableDictionary * mProperties;
     NSArray * mElements;
 }
@@ -24,6 +26,9 @@
 + (NSArray *) allDevices;
 
 #pragma mark -
+
+- (io_object_t) ioDevice;
+- (IOHIDDeviceInterface122**) deviceInterface;
 
 - (NSDictionary *) properties;
 

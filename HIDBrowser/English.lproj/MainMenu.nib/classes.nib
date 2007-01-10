@@ -3,7 +3,16 @@
         {CLASS = DDHidElement; LANGUAGE = ObjC; SUPERCLASS = NSObject; }, 
         {CLASS = FirstResponder; LANGUAGE = ObjC; SUPERCLASS = NSObject; }, 
         {CLASS = HexFormatter; LANGUAGE = ObjC; SUPERCLASS = NSFormatter; }, 
-        {CLASS = HidBrowserController; LANGUAGE = ObjC; SUPERCLASS = NSObject; }
+        {
+            ACTIONS = {press = id; }; 
+            CLASS = HidBrowserController; 
+            LANGUAGE = ObjC; 
+            OUTLETS = {
+                mDevicesController = NSArrayController; 
+                mElementsController = NSTreeController; 
+            }; 
+            SUPERCLASS = NSObject; 
+        }
     ); 
     IBVersion = 1; 
 }
