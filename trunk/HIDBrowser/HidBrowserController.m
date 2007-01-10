@@ -7,7 +7,9 @@
 //
 
 #import "HidBrowserController.h"
+#import "DDHidUsageTables.h"
 #import "DDHidDevice.h"
+#import "DDHidElement.h"
 
 @implementation HidBrowserController
 
@@ -31,5 +33,51 @@
     return mDevices; 
 }
 
+
+@end
+
+@interface DDHidDevice (HIDUsageTables)
+
+- (NSString *) usageDescription;
+
+@end
+
+@implementation DDHidDevice (HIDUsageTables)
+
+
+- (NSString *) usageDescription;
+{
+    DDHidUsageTables * usageTables = [DDHidUsageTables standardUsageTables];
+    unsigned usagePage = [self usagePage];
+    unsigned usage = [self usage];
+    NSString * description =
+        [usageTables descriptionForUsagePage: usagePage
+                                       usage: usage];
+    return [NSString stringWithFormat: @"%@ (0x%04X : 0x%04X)", description,
+        usagePage, usage];
+}
+
+@end
+
+@interface DDHidElement (HIDUsageTables)
+
+- (NSString *) usageDescription;
+
+@end
+
+@implementation DDHidElement (HIDUsageTables)
+
+
+- (NSString *) usageDescription;
+{
+    DDHidUsageTables * usageTables = [DDHidUsageTables standardUsageTables];
+    unsigned usagePage = [self usagePage];
+    unsigned usage = [self usage];
+    NSString * description =
+        [usageTables descriptionForUsagePage: usagePage
+                                       usage: usage];
+    return [NSString stringWithFormat: @"%@ (0x%04X : 0x%04X)", description,
+        usagePage, usage];
+}
 
 @end
