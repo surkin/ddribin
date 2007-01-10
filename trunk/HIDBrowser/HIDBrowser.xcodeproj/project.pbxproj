@@ -68,6 +68,8 @@
 				55917B630B53408C005308AC /* HidBrowserController.m */,
 				55917E1A0B53E454005308AC /* HexFormatter.h */,
 				55917E1B0B53E454005308AC /* HexFormatter.m */,
+				55917F610B545104005308AC /* DDHidUsageTables.h */,
+				55917F620B545104005308AC /* DDHidUsageTables.m */,
 			);
 			name = Classes;
 			sourceTree = "<group>";
@@ -124,6 +126,7 @@
 		29B97317FDCFA39411CA2CEA /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				55917F760B54535B005308AC /* usb_hid_usages.plist */,
 				8D1107310486CEB800E47090 /* Info.plist */,
 				089C165CFE840E0CC02AAC07 /* InfoPlist.strings */,
 				29B97318FDCFA39411CA2CEA /* MainMenu.nib */,
@@ -143,15 +146,12 @@
 		55917B4C0B533C53005308AC /* lib */ = {
 			isa = PBXGroup;
 			children = (
-				55917F760B54535B005308AC /* usb_hid_usages.plist */,
 				55917B4F0B533C82005308AC /* DDHidDevice.h */,
 				55917B500B533C82005308AC /* DDHidDevice.m */,
 				55917E6F0B5413E7005308AC /* DDHidElement.h */,
 				55917E700B5413E7005308AC /* DDHidElement.m */,
 				55917E720B541541005308AC /* NSDictionary+AccessHelpers.h */,
 				55917E730B541541005308AC /* NSDictionary+AccessHelpers.m */,
-				55917F610B545104005308AC /* DDHidUsageTables.h */,
-				55917F620B545104005308AC /* DDHidUsageTables.m */,
 			);
 			path = lib;
 			sourceTree = "<group>";
