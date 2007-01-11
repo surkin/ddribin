@@ -55,7 +55,13 @@
     return [mProperties objectForKey: key];
 }
 
-- (unsigned) cookie;
+- (IOHIDElementCookie) cookie;
+{
+    return (IOHIDElementCookie)
+        [mProperties unsignedIntForString: kIOHIDElementCookieKey];
+}
+
+- (unsigned) cookieAsUnsigned;
 {
     return [mProperties unsignedIntForString: kIOHIDElementCookieKey];
 }

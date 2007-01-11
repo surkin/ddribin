@@ -12,6 +12,8 @@
 #include <IOKit/hid/IOHIDLib.h>
 #include <IOKit/hid/IOHIDKeys.h>
 
+@class DDHidElement;
+
 @interface DDHidDevice : NSObject
 {
     io_object_t mHidDevice;
@@ -19,6 +21,7 @@
 
     NSMutableDictionary * mProperties;
     NSArray * mElements;
+    NSMutableDictionary * mElementsByCookie;
 }
 
 - (id) initWithDevice: (io_object_t) device;
@@ -30,9 +33,18 @@
 - (io_object_t) ioDevice;
 - (IOHIDDeviceInterface122**) deviceInterface;
 
+#pragma mark -
+
+- (void) open;
+- (void) openWithOptions: (UInt32) options;
+- (void) close;
+
+#pragma mark -
+
 - (NSDictionary *) properties;
 
 - (NSArray *) elements;
+- (DDHidElement *) elementForCookie: (IOHIDElementCookie) cookie;
 
 - (NSString *) productName;
 - (NSString *) manufacturer;

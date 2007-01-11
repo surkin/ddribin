@@ -7,7 +7,7 @@
 //
 
 #import <Cocoa/Cocoa.h>
-
+#include <IOKit/hid/IOHIDKeys.h>
 
 @interface DDHidElement : NSObject
 {
@@ -25,7 +25,9 @@
 
 - (NSString *) stringForKey: (NSString *) key;
 
-- (unsigned) cookie;
+- (IOHIDElementCookie) cookie;
+- (unsigned) cookieAsUnsigned;
+
 - (unsigned) usage;
 - (unsigned) usagePage;
 - (NSArray *) elements;

@@ -10,6 +10,7 @@
 #import "DDHidUsageTables.h"
 #import "DDHidDevice.h"
 #import "DDHidElement.h"
+#import "WatcherWindowController.h"
 
 @implementation HidBrowserController
 
@@ -40,14 +41,10 @@
         return nil;
     return [mDevices objectAtIndex: index];}
 
-- (DDHidElement *) selectedElement;
+- (DDHidElement *) elementAtIndexPath: (NSIndexPath *) indexPath
+                            forDevice: (DDHidDevice *) device;
 {
-    DDHidDevice * selectedDevice = [self selectedDevice];
-    if (selectedDevice == nil)
-        return nil;
-    
-    NSIndexPath * indexPath = [mElementsController selectionIndexPath];
-    NSArray * elements = [selectedDevice elements];
+    NSArray * elements = [device elements];
     DDHidElement * element = nil;
     unsigned i;
     for (i = 0; i < [indexPath length]; i++)
@@ -58,21 +55,61 @@
     return element;
 }
 
+- (DDHidElement *) selectedElement;
+{
+    DDHidDevice * selectedDevice = [self selectedDevice];
+    if (selectedDevice == nil)
+        return nil;
+    
+    NSIndexPath * indexPath = [mElementsController selectionIndexPath];
+    return [self elementAtIndexPath: indexPath forDevice: selectedDevice];
+}
+
+- (NSArray *) selectedElements;
+{
+    NSMutableArray * elements = [NSMutableArray array];
+    DDHidDevice * selectedDevice = [self selectedDevice];
+    if (selectedDevice == nil)
+        return elements;
+    
+    NSArray * indexPaths = [mElementsController selectionIndexPaths];
+    NSIndexPath * indexPath;
+    NSEnumerator * e = [indexPaths objectEnumerator];
+    while (indexPath = [e nextObject])
+    {
+        DDHidElement * element = [self elementAtIndexPath: indexPath
+                                                forDevice: selectedDevice];
+        [elements addObject: element];
+    }
+    return elements;
+}
+
 - (IBAction) press: (id) sender;
 {
+    NSArray * selectedElements = [self selectedElements];
+    if ([selectedElements count] == 0)
+        return;
+
+    WatcherWindowController * controller =
+        [[WatcherWindowController alloc] init];
+    [controller setDevice: [self selectedDevice]];
+    [controller setElements: selectedElements];
+    [controller showWindow: self];
+    
+#if 0
     DDHidDevice * device = [self selectedDevice];
     DDHidElement * element = [self selectedElement];
     NSLog(@"press: %@", [element usageDescription]);
     IOHIDDeviceInterface122** deviceInterface = [device deviceInterface];
-    IOHIDElementCookie cookie = [element cookie];
+    IOHIDElementCookie cookie = (IOHIDElementCookie) [element cookie];
     IOHIDEventStruct event;
-    (*deviceInterface)->open(deviceInterface, kIOHIDOptionsTypeNone);
+    [device open];
     HRESULT result = (*deviceInterface)->getElementValue(deviceInterface, 
                                                          cookie,
                                                          &event);
     NSLog(@"result: %d, value: %lx", result, event.value);
-    (*deviceInterface)->close(deviceInterface);
-    
+    [device close]; 
+#endif
 }
 
 @end
