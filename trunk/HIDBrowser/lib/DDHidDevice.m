@@ -104,6 +104,25 @@
     return mProperties;
 }
 
+#pragma mark -
+
+- (void) open;
+{
+    [self openWithOptions: kIOHIDOptionsTypeNone];
+}
+
+- (void) openWithOptions: (UInt32) options;
+{
+    (*mDeviceInterface)->open(mDeviceInterface, kIOHIDOptionsTypeNone);
+}
+
+- (void) close;
+{
+    (*mDeviceInterface)->close(mDeviceInterface);
+}
+
+#pragma mark -
+
 //=========================================================== 
 // - productName
 //=========================================================== 
@@ -189,10 +208,31 @@
     return mElements;
 }
 
+- (DDHidElement *) elementForCookie: (IOHIDElementCookie) cookie;
+{
+    NSNumber * n = [NSNumber numberWithUnsignedInt: cookie];
+    return [mElementsByCookie objectForKey: n];
+}
+
 @end
 
 
 @implementation DDHidDevice (Private)
+
+- (void) indexElements: (NSArray *) elements;
+{
+    NSEnumerator * e = [elements objectEnumerator];
+    DDHidElement * element;
+    while (element = [e nextObject])
+    {
+        NSNumber * n = [NSNumber numberWithUnsignedInt: [element cookieAsUnsigned]];
+        [mElementsByCookie setObject: element
+                              forKey: n];
+        NSArray * children = [element elements];
+        if (children != nil)
+            [self indexElements: children];
+    }
+}
 
 - (BOOL) initProperties;
 {
@@ -207,6 +247,10 @@
     NSArray * elementProperties = [mProperties objectForString: kIOHIDElementKey];
     mElements = [DDHidElement elementsWithPropertiesArray: elementProperties];
     [mElements retain];
+    
+    mElementsByCookie = [[NSMutableDictionary alloc] init];
+    [self indexElements: mElements];
+    
     return YES;
 }
 
