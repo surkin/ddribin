@@ -27,9 +27,11 @@
 //=========================================================== 
 - (void) dealloc
 {
+    [mQueue release];
     [mDevice release];
     [mElements release];
     
+    mQueue = nil;
     mDevice = nil;
     mElements = nil;
     [super dealloc];
