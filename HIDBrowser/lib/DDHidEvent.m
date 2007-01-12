@@ -37,6 +37,11 @@
     return mEvent.elementCookie;
 }
 
+- (unsigned) elementCookieAsUnsigned;
+{
+    return (unsigned) mEvent.elementCookie;
+}
+
 - (SInt32) value;
 {
     return mEvent.value;

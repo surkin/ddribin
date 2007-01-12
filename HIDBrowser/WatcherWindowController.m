@@ -10,6 +10,63 @@
 #import "DDHidQueue.h"
 #import "DDHidEvent.h"
 
+@interface WatcherEvent : NSObject
+{
+    NSString * mUsageDescription;
+    DDHidEvent * mEvent;
+    int mSerialNumber;
+}
+
+- (id) initWithUsageDescription: (NSString *) anUsageDecription 
+                          event: (DDHidEvent *) anEvent
+                   serialNumber: (int) serialNumber;
+
+- (NSString *) usageDescription;
+- (DDHidEvent *) event;
+
+@end
+
+@implementation WatcherEvent : NSObject
+
+- (id) initWithUsageDescription: (NSString *) anUsageDescription 
+                          event: (DDHidEvent *) anEvent
+                   serialNumber: (int) serialNumber;
+{
+    if (self = [super init])
+    {
+        mUsageDescription = [anUsageDescription retain];
+        mEvent = [anEvent retain];
+        mSerialNumber = serialNumber;
+    }
+    return self;
+}
+
+//=========================================================== 
+// - usageDescription
+//=========================================================== 
+- (NSString *) usageDescription
+{
+    return mUsageDescription; 
+}
+
+//=========================================================== 
+// - event
+//=========================================================== 
+- (DDHidEvent *) event
+{
+    return mEvent; 
+}
+
+//=========================================================== 
+// - serialNumber
+//=========================================================== 
+- (int) serialNumber
+{
+    return mSerialNumber;
+}
+
+@end
+
 @implementation WatcherWindowController
 
 - (id) init
@@ -17,6 +74,9 @@
     self = [super initWithWindowNibName: @"EventWatcher" owner: self];
     if (self == nil)
         return nil;
+    
+    mEventHistory = [[NSMutableArray alloc] init];
+    mNextSerialNumber = 0;
     
     return self;
 }
@@ -30,16 +90,17 @@
     [mQueue release];
     [mDevice release];
     [mElements release];
+    [mEventHistory release];
     
     mQueue = nil;
     mDevice = nil;
     mElements = nil;
+    mEventHistory = nil;
     [super dealloc];
 }
 
 - (void)windowWillClose:(NSNotification *)notification
 {
-    fprintf(stderr, "windowWillClose");
     [mQueue release];
     mQueue = nil;
     [mDevice close];
@@ -53,13 +114,24 @@
 
 - (void) hidQueueHasEvents: (DDHidQueue *) hidQueue;
 {
+    WatcherEvent * watcherEvent;
+    watcherEvent =
+        [[WatcherEvent alloc] initWithUsageDescription: @"-----------------------------"
+                                                 event: nil
+                                          serialNumber: mNextSerialNumber++];
+    [watcherEvent autorelease];
+    [mEventHistoryController addObject: watcherEvent];
+
     DDHidEvent * event;
     while (event = [hidQueue nextEvent])
     {
         DDHidElement * element = [mDevice elementForCookie: [event elementCookie]];
-        NSLog(@"Element: %@, cookie: %d, value: %d, longValue: %d",
-              [element usageDescription],
-              [event elementCookie], [event value], [event longValue]);
+        watcherEvent =
+            [[WatcherEvent alloc] initWithUsageDescription: [element usageDescription]
+                                                     event: event
+                                              serialNumber: mNextSerialNumber++];
+        [watcherEvent autorelease];
+        [mEventHistoryController addObject: watcherEvent];
     }
 }
 
@@ -116,5 +188,29 @@
     }
 }
 
+//=========================================================== 
+//  eventHistory 
+//=========================================================== 
+- (NSMutableArray *) eventHistory
+{
+    return mEventHistory; 
+}
+
+- (void) setEventHistory: (NSMutableArray *) anEventHistory
+{
+    if (mEventHistory != anEventHistory)
+    {
+        [mEventHistory release];
+        mEventHistory = [anEventHistory retain];
+    }
+}
+- (void) addToEventHistory: (id)mEventHistoryObject
+{
+    [[self eventHistory] addObject: mEventHistoryObject];
+}
+- (void) removeFromEventHistory: (id)mEventHistoryObject
+{
+    [[self eventHistory] removeObject: mEventHistoryObject];
+}
 
 @end

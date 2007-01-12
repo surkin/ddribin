@@ -95,21 +95,11 @@
     [controller setDevice: [self selectedDevice]];
     [controller setElements: selectedElements];
     [controller showWindow: self];
-    
-#if 0
-    DDHidDevice * device = [self selectedDevice];
-    DDHidElement * element = [self selectedElement];
-    NSLog(@"press: %@", [element usageDescription]);
-    IOHIDDeviceInterface122** deviceInterface = [device deviceInterface];
-    IOHIDElementCookie cookie = (IOHIDElementCookie) [element cookie];
-    IOHIDEventStruct event;
-    [device open];
-    HRESULT result = (*deviceInterface)->getElementValue(deviceInterface, 
-                                                         cookie,
-                                                         &event);
-    NSLog(@"result: %d, value: %lx", result, event.value);
-    [device close]; 
-#endif
+}
+
+- (BOOL)applicationShouldTerminateAfterLastWindowClosed:(NSApplication *)theApplication
+{
+    return YES;
 }
 
 @end
