@@ -4,6 +4,7 @@
         {
             CLASS = WatcherWindowController; 
             LANGUAGE = ObjC; 
+            OUTLETS = {mEventHistoryController = NSArrayController; }; 
             SUPERCLASS = NSWindowController; 
         }
     ); 

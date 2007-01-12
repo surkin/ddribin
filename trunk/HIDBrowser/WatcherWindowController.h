@@ -14,9 +14,12 @@
 
 @interface WatcherWindowController : NSWindowController
 {
+    IBOutlet NSArrayController * mEventHistoryController;
     DDHidDevice * mDevice;
     NSArray * mElements;
     DDHidQueue * mQueue;
+    NSMutableArray * mEventHistory;
+    int mNextSerialNumber;
 }
 
 - (DDHidDevice *) device;
@@ -24,5 +27,10 @@
 
 - (NSArray *) elements;
 - (void) setElements: (NSArray *) newElements;
+
+- (NSMutableArray *) eventHistory;
+- (void) setEventHistory: (NSMutableArray *) anEventHistory;
+- (void) addToEventHistory: (id)mEventHistoryObject;
+- (void) removeFromEventHistory: (id)mEventHistoryObject;
 
 @end

@@ -20,6 +20,7 @@
 
 - (IOHIDElementType) type;
 - (IOHIDElementCookie) elementCookie;
+- (unsigned) elementCookieAsUnsigned;
 - (SInt32) value;
 - (AbsoluteTime) timestamp;
 - (UInt32) longValueSize;
