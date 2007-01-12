@@ -41,6 +41,7 @@
 {
     fprintf(stderr, "windowWillClose");
     [mQueue release];
+    mQueue = nil;
     [mDevice close];
     [self autorelease];
 }
