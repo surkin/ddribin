@@ -10,11 +10,13 @@
 #import "DDHidDevice.h"
 #import "DDHidElement.h"
 
+@class DDHidQueue;
+
 @interface WatcherWindowController : NSWindowController
 {
     DDHidDevice * mDevice;
     NSArray * mElements;
-    IOHIDQueueInterface ** mQueue;
+    DDHidQueue * mQueue;
 }
 
 - (DDHidDevice *) device;

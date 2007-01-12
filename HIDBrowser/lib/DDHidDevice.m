@@ -8,7 +8,7 @@
 
 #import "DDHidDevice.h"
 #import "DDHidElement.h"
-#import "DDHidUsageTables.h"
+#import "DDHidQueue.h"
 #import "NSDictionary+AccessHelpers.h"
 
 @interface DDHidDevice (Private)
@@ -121,6 +121,16 @@
     (*mDeviceInterface)->close(mDeviceInterface);
 }
 
+- (DDHidQueue *) createQueueWithSize: (unsigned) size;
+{
+    IOHIDQueueInterface ** queue =
+        (*mDeviceInterface)->allocQueue(mDeviceInterface);
+    if (queue == NULL)
+        return nil;
+    return [[[DDHidQueue alloc] initWithHIDQueue: queue
+                                            size: size] autorelease];
+}
+
 #pragma mark -
 
 //=========================================================== 
@@ -210,7 +220,7 @@
 
 - (DDHidElement *) elementForCookie: (IOHIDElementCookie) cookie;
 {
-    NSNumber * n = [NSNumber numberWithUnsignedInt: cookie];
+    NSNumber * n = [NSNumber numberWithUnsignedInt: (unsigned) cookie];
     return [mElementsByCookie objectForKey: n];
 }
 

@@ -15,6 +15,8 @@
 		55917E740B541541005308AC /* NSDictionary+AccessHelpers.m in Sources */ = {isa = PBXBuildFile; fileRef = 55917E730B541541005308AC /* NSDictionary+AccessHelpers.m */; };
 		55917F630B545104005308AC /* DDHidUsageTables.m in Sources */ = {isa = PBXBuildFile; fileRef = 55917F620B545104005308AC /* DDHidUsageTables.m */; };
 		55917F770B54535B005308AC /* usb_hid_usages.plist in Resources */ = {isa = PBXBuildFile; fileRef = 55917F760B54535B005308AC /* usb_hid_usages.plist */; };
+		559180CC0B575699005308AC /* DDHidQueue.m in Sources */ = {isa = PBXBuildFile; fileRef = 559180CB0B575698005308AC /* DDHidQueue.m */; };
+		559181A60B576149005308AC /* DDHidEvent.m in Sources */ = {isa = PBXBuildFile; fileRef = 559181A50B576149005308AC /* DDHidEvent.m */; };
 		55DCD9C60B55D35D000648E5 /* WatcherWindowController.m in Sources */ = {isa = PBXBuildFile; fileRef = 55DCD9C50B55D35D000648E5 /* WatcherWindowController.m */; };
 		55DCD9E00B55D503000648E5 /* EventWatcher.nib in Resources */ = {isa = PBXBuildFile; fileRef = 55DCD9DE0B55D503000648E5 /* EventWatcher.nib */; };
 		8D11072A0486CEB800E47090 /* MainMenu.nib in Resources */ = {isa = PBXBuildFile; fileRef = 29B97318FDCFA39411CA2CEA /* MainMenu.nib */; };
@@ -46,6 +48,10 @@
 		55917F610B545104005308AC /* DDHidUsageTables.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DDHidUsageTables.h; sourceTree = "<group>"; };
 		55917F620B545104005308AC /* DDHidUsageTables.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DDHidUsageTables.m; sourceTree = "<group>"; };
 		55917F760B54535B005308AC /* usb_hid_usages.plist */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = text.xml; path = usb_hid_usages.plist; sourceTree = "<group>"; };
+		559180CA0B575698005308AC /* DDHidQueue.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DDHidQueue.h; sourceTree = "<group>"; };
+		559180CB0B575698005308AC /* DDHidQueue.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DDHidQueue.m; sourceTree = "<group>"; };
+		559181A40B576149005308AC /* DDHidEvent.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DDHidEvent.h; sourceTree = "<group>"; };
+		559181A50B576149005308AC /* DDHidEvent.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DDHidEvent.m; sourceTree = "<group>"; };
 		55DCD9C40B55D35D000648E5 /* WatcherWindowController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WatcherWindowController.h; sourceTree = "<group>"; };
 		55DCD9C50B55D35D000648E5 /* WatcherWindowController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WatcherWindowController.m; sourceTree = "<group>"; };
 		55DCD9DF0B55D503000648E5 /* English */ = {isa = PBXFileReference; lastKnownFileType = wrapper.nib; name = English; path = English.lproj/EventWatcher.nib; sourceTree = "<group>"; };
@@ -158,6 +164,10 @@
 				55917B500B533C82005308AC /* DDHidDevice.m */,
 				55917E6F0B5413E7005308AC /* DDHidElement.h */,
 				55917E700B5413E7005308AC /* DDHidElement.m */,
+				559180CA0B575698005308AC /* DDHidQueue.h */,
+				559180CB0B575698005308AC /* DDHidQueue.m */,
+				559181A40B576149005308AC /* DDHidEvent.h */,
+				559181A50B576149005308AC /* DDHidEvent.m */,
 				55917E720B541541005308AC /* NSDictionary+AccessHelpers.h */,
 				55917E730B541541005308AC /* NSDictionary+AccessHelpers.m */,
 			);
@@ -227,6 +237,8 @@
 				55917E740B541541005308AC /* NSDictionary+AccessHelpers.m in Sources */,
 				55917F630B545104005308AC /* DDHidUsageTables.m in Sources */,
 				55DCD9C60B55D35D000648E5 /* WatcherWindowController.m in Sources */,
+				559180CC0B575699005308AC /* DDHidQueue.m in Sources */,
+				559181A60B576149005308AC /* DDHidEvent.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
