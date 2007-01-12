@@ -7,7 +7,8 @@
 //
 
 #import "WatcherWindowController.h"
-
+#import "DDHidQueue.h"
+#import "DDHidEvent.h"
 
 @implementation WatcherWindowController
 
@@ -34,15 +35,10 @@
     [super dealloc];
 }
 
-static CFRunLoopSourceRef eventSource;
-
 - (void)windowWillClose:(NSNotification *)notification
 {
     fprintf(stderr, "windowWillClose");
-    CFRunLoopRemoveSource(CFRunLoopGetCurrent(), eventSource, kCFRunLoopDefaultMode);
-    (*mQueue)->stop(mQueue);
-    (*mQueue)->dispose(mQueue);
-    (*mQueue)->Release(mQueue);
+    [mQueue release];
     [mDevice close];
     [self autorelease];
 }
@@ -52,33 +48,16 @@ static CFRunLoopSourceRef eventSource;
     [super showWindow: sender];
 }
 
-- (void) callback: (const IOHIDEventStruct *) event;
+- (void) hidQueueHasEvents: (DDHidQueue *) hidQueue;
 {
-    DDHidElement * element = [mDevice elementForCookie: event->elementCookie];
-    NSLog(@"Element: %@, cookie: %d, value: %d, longValue: %d",
-          [element usageDescription],
-          event->elementCookie, event->value, event->longValue);
-}
-
-/*	Callback method for the device queue
-Will be called for any event of any type (cookie) to which we subscribe
-*/
-static void QueueCallbackFunction(void* target,  IOReturn result, void* refcon, void* sender)
-{
-    NSAutoreleasePool * pool = [[NSAutoreleasePool alloc] init];
-    WatcherWindowController * controller = (WatcherWindowController *) target;
-
-	IOHIDEventStruct event;	
-	AbsoluteTime 	 zeroTime = {0,0};
-	while (result == kIOReturnSuccess)
-	{
-		result = (*(controller->mQueue))->getNextEvent((controller->mQueue), &event, zeroTime, 0);		
-		if ( result != kIOReturnSuccess )
-			continue;
-        
-        [controller callback: &event];
-	}
-    [pool release];
+    DDHidEvent * event;
+    while (event = [hidQueue nextEvent])
+    {
+        DDHidElement * element = [mDevice elementForCookie: [event elementCookie]];
+        NSLog(@"Element: %@, cookie: %d, value: %d, longValue: %d",
+              [element usageDescription],
+              [event elementCookie], [event value], [event longValue]);
+    }
 }
 
 - (void) addCookiesToQueue;
@@ -87,38 +66,17 @@ static void QueueCallbackFunction(void* target,  IOReturn result, void* refcon, 
     DDHidElement * element;
     while(element = [e nextObject])
     {
-        IOHIDElementCookie cookie = [element cookie];
-        (*mQueue)->addElement(mQueue, cookie, 0);
+        [mQueue addElement: element];
     }
 }
 
 - (void) windowDidLoad;
 {
     [mDevice open];
-    IOHIDDeviceInterface122 ** deviceInterface = [mDevice deviceInterface];
-    mQueue = (*deviceInterface)->allocQueue(deviceInterface);
-    if (!mQueue)
-        return;
-    IOReturn ioReturnValue = (*mQueue)->create(mQueue, 0, 12);
-    
+    mQueue = [[mDevice createQueueWithSize: 12] retain];
+    [mQueue setDelegate: self];
     [self addCookiesToQueue];
-    
-    // add callback for async events
-    ioReturnValue = (*mQueue)->createAsyncEventSource(mQueue, &eventSource);
-    if (ioReturnValue == KERN_SUCCESS) {
-        ioReturnValue = (*mQueue)->setEventCallout(mQueue,QueueCallbackFunction, self, NULL);
-        if (ioReturnValue == KERN_SUCCESS) {
-            CFRunLoopAddSource(CFRunLoopGetCurrent(), eventSource, kCFRunLoopDefaultMode);					
-            //start data delivery to queue
-            (*mQueue)->start(mQueue);	
-            return;
-        } else {
-            NSLog(@"Error when setting event callout");
-        }
-    } else {
-        NSLog(@"Error when creating async event source");
-    }
-    
+    [mQueue startOnCurrentRunLoop];
 }
 
 //=========================================================== 

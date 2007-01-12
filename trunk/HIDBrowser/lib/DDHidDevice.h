@@ -13,6 +13,7 @@
 #include <IOKit/hid/IOHIDKeys.h>
 
 @class DDHidElement;
+@class DDHidQueue;
 
 @interface DDHidDevice : NSObject
 {
@@ -38,6 +39,7 @@
 - (void) open;
 - (void) openWithOptions: (UInt32) options;
 - (void) close;
+- (DDHidQueue *) createQueueWithSize: (unsigned) size;
 
 #pragma mark -
 
