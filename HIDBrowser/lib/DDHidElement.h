@@ -21,15 +21,23 @@
 
 - (id) initWithProperties: (NSDictionary *) properties;
 
-- (NSDictionary *) properites;
+- (NSDictionary *) properties;
 
 - (NSString *) stringForKey: (NSString *) key;
 
 - (IOHIDElementCookie) cookie;
 - (unsigned) cookieAsUnsigned;
 
+- (NSArray *) elements;
 - (unsigned) usage;
 - (unsigned) usagePage;
-- (NSArray *) elements;
+- (BOOL) hasNullState;
+- (BOOL) hasPreferredState;
+- (BOOL) isArray;
+- (BOOL) isRelative;
+- (BOOL) isWrapping;
+- (long) maxValue;
+- (long) minValue;
+
 
 @end

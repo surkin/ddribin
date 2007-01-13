@@ -19,11 +19,19 @@
     [self willChangeValueForKey: @"devices"];
     mDevices = [[DDHidDevice allDevices] retain];
     [self didChangeValueForKey: @"devices"];
-    NSDictionary * properties = [[mDevices objectAtIndex: 1] properties];
-    NSArray * elements =  [properties objectForKey: @"Elements"];
-    NSLog(@"Elements: %d, %@", [elements count], [elements class]);
-    // NSDictionary * subElements = [elements objectForKey: @"Elements"];
-    // NSLog(@"Subelements: %d", [subElements count]);
+    
+#if 0
+    NSEnumerator * e = [mDevices objectEnumerator];
+    int i = 0;
+    DDHidDevice * device;
+    while (device = [e nextObject])
+    {
+        NSDictionary * properties = [device properties];
+        [properties writeToFile: [NSString stringWithFormat: @"/tmp/device_%d.plist", i]
+                     atomically: NO];
+        i++;
+    }
+#endif
 }
 
 //=========================================================== 

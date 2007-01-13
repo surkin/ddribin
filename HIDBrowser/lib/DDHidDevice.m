@@ -190,9 +190,9 @@
 }
 
 //=========================================================== 
-// - usbLocationId
+// - locationId
 //=========================================================== 
-- (long) usbLocationId
+- (long) locationId
 {
     return [mProperties longForString: kIOHIDLocationIDKey];
 }

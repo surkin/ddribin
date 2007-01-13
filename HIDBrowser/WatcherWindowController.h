@@ -19,7 +19,7 @@
     NSArray * mElements;
     DDHidQueue * mQueue;
     NSMutableArray * mEventHistory;
-    int mNextSerialNumber;
+    int mNextIndex;
 }
 
 - (DDHidDevice *) device;

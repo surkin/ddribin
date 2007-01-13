@@ -14,12 +14,12 @@
 {
     NSString * mUsageDescription;
     DDHidEvent * mEvent;
-    int mSerialNumber;
+    int mIndex;
 }
 
 - (id) initWithUsageDescription: (NSString *) anUsageDecription 
                           event: (DDHidEvent *) anEvent
-                   serialNumber: (int) serialNumber;
+                          index: (int) index;
 
 - (NSString *) usageDescription;
 - (DDHidEvent *) event;
@@ -30,13 +30,13 @@
 
 - (id) initWithUsageDescription: (NSString *) anUsageDescription 
                           event: (DDHidEvent *) anEvent
-                   serialNumber: (int) serialNumber;
+                          index: (int) index
 {
     if (self = [super init])
     {
         mUsageDescription = [anUsageDescription retain];
         mEvent = [anEvent retain];
-        mSerialNumber = serialNumber;
+        mIndex = index;
     }
     return self;
 }
@@ -58,11 +58,11 @@
 }
 
 //=========================================================== 
-// - serialNumber
+// - index
 //=========================================================== 
-- (int) serialNumber
+- (int) index
 {
-    return mSerialNumber;
+    return mIndex;
 }
 
 @end
@@ -76,7 +76,7 @@
         return nil;
     
     mEventHistory = [[NSMutableArray alloc] init];
-    mNextSerialNumber = 0;
+    mNextIndex = 1;
     
     return self;
 }
@@ -118,7 +118,7 @@
     watcherEvent =
         [[WatcherEvent alloc] initWithUsageDescription: @"-----------------------------"
                                                  event: nil
-                                          serialNumber: mNextSerialNumber++];
+                                                 index: mNextIndex++];
     [watcherEvent autorelease];
     [mEventHistoryController addObject: watcherEvent];
 
@@ -129,7 +129,7 @@
         watcherEvent =
             [[WatcherEvent alloc] initWithUsageDescription: [element usageDescription]
                                                      event: event
-                                              serialNumber: mNextSerialNumber++];
+                                                     index: mNextIndex++];
         [watcherEvent autorelease];
         [mEventHistoryController addObject: watcherEvent];
     }

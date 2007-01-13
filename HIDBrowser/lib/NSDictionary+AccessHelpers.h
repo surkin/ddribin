@@ -17,5 +17,6 @@
 - (NSString *) stringForString: (const char *) key;
 - (long) longForString: (const char *) key;
 - (unsigned int) unsignedIntForString: (const char *) key;
+- (BOOL) boolForString: (const char *) key;
 
 @end

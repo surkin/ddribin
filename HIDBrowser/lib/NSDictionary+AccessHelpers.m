@@ -40,4 +40,10 @@
     return [number unsignedIntValue];
 }
 
+- (BOOL) boolForString: (const char *) key;
+{
+    NSNumber * number =  [self objectForString: key];
+    return [number boolValue];
+}
+
 @end

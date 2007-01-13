@@ -45,7 +45,7 @@
     return self;
 }
 
-- (NSDictionary *) properites;
+- (NSDictionary *) properties;
 {
     return mProperties;
 }
@@ -82,5 +82,41 @@
         [mProperties objectForString: kIOHIDElementKey];
     return [DDHidElement elementsWithPropertiesArray: elementsProperties];
 }
+
+- (BOOL) hasNullState;
+{
+    return [mProperties boolForString: kIOHIDElementHasNullStateKey];
+}
+
+- (BOOL) hasPreferredState;
+{
+    return [mProperties boolForString: kIOHIDElementHasNullStateKey];
+}
+
+- (BOOL) isArray;
+{
+    return [mProperties boolForString: kIOHIDElementIsArrayKey];
+}
+
+- (BOOL) isRelative;
+{
+    return [mProperties boolForString: kIOHIDElementIsRelativeKey];
+}
+
+- (BOOL) isWrapping;
+{
+    return [mProperties boolForString: kIOHIDElementIsWrappingKey];
+}
+
+- (long) maxValue;
+{
+    return [mProperties longForString: kIOHIDElementMaxKey];
+}
+
+- (long) minValue;
+{
+    return [mProperties longForString: kIOHIDElementMinKey];
+}
+
 
 @end
