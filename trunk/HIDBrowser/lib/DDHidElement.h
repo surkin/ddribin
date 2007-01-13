@@ -9,9 +9,12 @@
 #import <Cocoa/Cocoa.h>
 #include <IOKit/hid/IOHIDKeys.h>
 
+@class DDHidUsage;
+
 @interface DDHidElement : NSObject
 {
     NSDictionary * mProperties;
+    DDHidUsage * mUsage;
     DDHidElement * mChildren;
 }
 
@@ -29,8 +32,7 @@
 - (unsigned) cookieAsUnsigned;
 
 - (NSArray *) elements;
-- (unsigned) usage;
-- (unsigned) usagePage;
+- (DDHidUsage *) usage;
 - (BOOL) hasNullState;
 - (BOOL) hasPreferredState;
 - (BOOL) isArray;
