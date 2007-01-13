@@ -55,7 +55,7 @@
 - (long) vendorId;
 - (long) productId;
 - (long) version;
-- (long) usbLocationId;
+- (long) locationId;
 - (long) usagePage;
 - (long) usage;
 
