@@ -9,6 +9,7 @@
 #import "WatcherWindowController.h"
 #import "DDHidQueue.h"
 #import "DDHidEvent.h"
+#import "DDHidUsage.h"
 
 @interface WatcherEvent : NSObject
 {
@@ -127,7 +128,7 @@
     {
         DDHidElement * element = [mDevice elementForCookie: [event elementCookie]];
         watcherEvent =
-            [[WatcherEvent alloc] initWithUsageDescription: [element usageDescription]
+            [[WatcherEvent alloc] initWithUsageDescription: [[element usage] usageNameWithIds]
                                                      event: event
                                                      index: mNextIndex++];
         [watcherEvent autorelease];

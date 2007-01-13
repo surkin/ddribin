@@ -12,6 +12,7 @@
 #include <IOKit/hid/IOHIDLib.h>
 #include <IOKit/hid/IOHIDKeys.h>
 
+@class DDHidUsage;
 @class DDHidElement;
 @class DDHidQueue;
 
@@ -21,6 +22,8 @@
 	IOHIDDeviceInterface122** mDeviceInterface;
 
     NSMutableDictionary * mProperties;
+    DDHidUsage * mPrimaryUsage;
+    NSMutableArray * mUsages;
     NSArray * mElements;
     NSMutableDictionary * mElementsByCookie;
 }
@@ -58,5 +61,7 @@
 - (long) locationId;
 - (long) usagePage;
 - (long) usage;
+- (DDHidUsage *) primaryUsage;
+- (NSArray *) usages;
 
 @end

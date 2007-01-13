@@ -7,7 +7,7 @@
 //
 
 #import "DDHidElement.h"
-#import "DDHidUsageTables.h"
+#import "DDHidUsage.h"
 #import "NSDictionary+AccessHelpers.h"
 #include <IOKit/hid/IOHIDKeys.h>
 
@@ -41,6 +41,10 @@
         return nil;
     
     mProperties = [properties retain];
+    unsigned usagePage = [mProperties unsignedIntForString: kIOHIDElementUsagePageKey];
+    unsigned usageId = [mProperties unsignedIntForString: kIOHIDElementUsageKey];
+    mUsage = [[DDHidUsage alloc] initWithUsagePage: usagePage
+                                           usageId: usageId];
     
     return self;
 }
@@ -66,14 +70,9 @@
     return [mProperties unsignedIntForString: kIOHIDElementCookieKey];
 }
 
-- (unsigned) usage;
+- (DDHidUsage *) usage;
 {
-    return [mProperties unsignedIntForString: kIOHIDElementUsageKey];
-}
-
-- (unsigned) usagePage;
-{
-    return [mProperties unsignedIntForString: kIOHIDElementUsagePageKey];
+    return mUsage;
 }
 
 - (NSArray *) elements;

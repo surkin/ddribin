@@ -7,6 +7,7 @@
 //
 
 #import "DDHidDevice.h"
+#import "DDHidUsage.h"
 #import "DDHidElement.h"
 #import "DDHidQueue.h"
 #import "NSDictionary+AccessHelpers.h"
@@ -224,6 +225,16 @@
     return [mElementsByCookie objectForKey: n];
 }
 
+- (DDHidUsage *) primaryUsage;
+{
+    return mPrimaryUsage;
+}
+
+- (NSArray *) usages;
+{
+    return mUsages;
+}
+
 @end
 
 
@@ -257,6 +268,25 @@
     NSArray * elementProperties = [mProperties objectForString: kIOHIDElementKey];
     mElements = [DDHidElement elementsWithPropertiesArray: elementProperties];
     [mElements retain];
+    
+    unsigned usagePage = [mProperties unsignedIntForString: kIOHIDPrimaryUsagePageKey];
+    unsigned usageId = [mProperties unsignedIntForString: kIOHIDPrimaryUsageKey];
+    
+    mPrimaryUsage = [[DDHidUsage alloc] initWithUsagePage: usagePage
+                                                  usageId: usageId];
+    mUsages = [[NSMutableArray alloc] init];
+    
+    NSArray * usagePairs = [mProperties objectForString: kIOHIDDeviceUsagePairsKey];
+    NSEnumerator * e = [usagePairs objectEnumerator];
+    NSDictionary * usagePair;
+    while (usagePair = [e nextObject])
+    {
+        usagePage = [usagePair unsignedIntForString: kIOHIDDeviceUsagePageKey];
+        usageId = [usagePair unsignedIntForString: kIOHIDDeviceUsageKey];
+        DDHidUsage * usage = [DDHidUsage usageWithUsagePage: usagePage
+                                                    usageId: usageId];
+        [mUsages addObject: usage];
+    }
     
     mElementsByCookie = [[NSMutableDictionary alloc] init];
     [self indexElements: mElements];
