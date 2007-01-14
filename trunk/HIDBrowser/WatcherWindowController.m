@@ -123,6 +123,7 @@
     [watcherEvent autorelease];
     [mEventHistoryController addObject: watcherEvent];
 
+    NSMutableArray * newEvents = [NSMutableArray array];
     DDHidEvent * event;
     while (event = [hidQueue nextEvent])
     {
@@ -132,8 +133,9 @@
                                                      event: event
                                                      index: mNextIndex++];
         [watcherEvent autorelease];
-        [mEventHistoryController addObject: watcherEvent];
+        [newEvents addObject: watcherEvent];
     }
+    [mEventHistoryController addObjects: newEvents];
 }
 
 - (void) addCookiesToQueue;
