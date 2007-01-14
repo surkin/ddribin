@@ -135,7 +135,14 @@
         [watcherEvent autorelease];
         [newEvents addObject: watcherEvent];
     }
+    
+#if 1
     [mEventHistoryController addObjects: newEvents];
+#else
+    [mEventHistoryController performSelector: @selector(addObjects:)
+                                  withObject: newEvents
+                                  afterDelay: 0.0f];
+#endif
 }
 
 - (void) addCookiesToQueue;
@@ -151,10 +158,12 @@
 - (void) windowDidLoad;
 {
     [mDevice open];
-    mQueue = [[mDevice createQueueWithSize: 12] retain];
+    mQueue = [[mDevice createQueueWithSize: 30] retain];
     [mQueue setDelegate: self];
     [self addCookiesToQueue];
+    [self willChangeValueForKey: @"watching"];
     [mQueue startOnCurrentRunLoop];
+    [self didChangeValueForKey: @"watching"];
 }
 
 //=========================================================== 
@@ -215,5 +224,25 @@
 {
     [[self eventHistory] removeObject: mEventHistoryObject];
 }
+
+- (BOOL) isWatching;
+{
+    if (mQueue == nil)
+        return NO;
+    return [mQueue isStarted];
+}
+
+- (void) setWatching: (BOOL) watching;
+{
+    BOOL isStarted = [mQueue isStarted];
+    if (isStarted == watching)
+        return;
+    
+    if (watching)
+        [mQueue startOnCurrentRunLoop];
+    else
+        [mQueue stop];
+}
+
 
 @end

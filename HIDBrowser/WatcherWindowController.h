@@ -33,4 +33,7 @@
 - (void) addToEventHistory: (id)mEventHistoryObject;
 - (void) removeFromEventHistory: (id)mEventHistoryObject;
 
+- (BOOL) isWatching;
+- (void) setWatching: (BOOL) watching;
+
 @end
