@@ -23,6 +23,12 @@
     return [self objectForKey: objcKey];
 }
 
+- (void) setObject: (id) object forString: (const char *) key;
+{
+    NSString * objcKey = [NSString stringWithCString: key];
+    [self setObject: object forKey: objcKey];
+}
+
 - (NSString *) stringForString: (const char *) key;
 {
     return [self objectForString: key];

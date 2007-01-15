@@ -27,6 +27,8 @@
 
 - (void) addElement: (DDHidElement *) element;
 
+- (void) addElements: (NSArray *) elements;
+
 - (void) setDelegate: (id) delegate;
 
 - (void) startOnCurrentRunLoop;

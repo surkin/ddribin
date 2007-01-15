@@ -1,0 +1,7 @@
+{
+    IBClasses = (
+        {CLASS = DeviceTestController; LANGUAGE = ObjC; SUPERCLASS = NSObject; }, 
+        {CLASS = FirstResponder; LANGUAGE = ObjC; SUPERCLASS = NSObject; }
+    ); 
+    IBVersion = 1; 
+}

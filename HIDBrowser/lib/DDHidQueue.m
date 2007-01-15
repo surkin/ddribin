@@ -53,6 +53,16 @@ static void queueCallbackFunction(void* target,  IOReturn result, void* refcon,
     (*mQueue)->addElement(mQueue, cookie, 0);
 }
 
+- (void) addElements: (NSArray *) elements;
+{
+    NSEnumerator * e = [elements objectEnumerator];
+    DDHidElement * element;
+    while (element = [e nextObject])
+    {
+        [self addElement: element];
+    }
+}
+
 - (void) setDelegate: (id) delegate;
 {
     mDelegate = delegate;
