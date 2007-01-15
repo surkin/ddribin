@@ -244,5 +244,12 @@
         [mQueue stop];
 }
 
+- (IBAction) clearHistory: (id) sender;
+{
+    [self willChangeValueForKey: @"eventHistory"];
+    [mEventHistory removeAllObjects];
+    mNextIndex = 1;
+    [self didChangeValueForKey: @"eventHistory"];
+}
 
 @end
