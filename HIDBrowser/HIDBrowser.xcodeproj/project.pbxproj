@@ -48,7 +48,7 @@
 		55917E730B541541005308AC /* NSDictionary+AccessHelpers.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSDictionary+AccessHelpers.m"; sourceTree = "<group>"; };
 		55917F610B545104005308AC /* DDHidUsageTables.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DDHidUsageTables.h; sourceTree = "<group>"; };
 		55917F620B545104005308AC /* DDHidUsageTables.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DDHidUsageTables.m; sourceTree = "<group>"; };
-		55917F760B54535B005308AC /* usb_hid_usages.plist */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = text.xml; name = usb_hid_usages.plist; path = lib/usb_hid_usages.plist; sourceTree = "<group>"; };
+		55917F760B54535B005308AC /* usb_hid_usages.plist */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = text.xml; name = usb_hid_usages.plist; path = ../lib/usb_hid_usages.plist; sourceTree = "<group>"; };
 		559180CA0B575698005308AC /* DDHidQueue.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DDHidQueue.h; sourceTree = "<group>"; };
 		559180CB0B575698005308AC /* DDHidQueue.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DDHidQueue.m; sourceTree = "<group>"; };
 		559181A40B576149005308AC /* DDHidEvent.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DDHidEvent.h; sourceTree = "<group>"; };
@@ -118,10 +118,8 @@
 		29B97314FDCFA39411CA2CEA /* HIDBrowser */ = {
 			isa = PBXGroup;
 			children = (
-				080E96DDFE201D6D7F000001 /* Classes */,
+				559CBAA10B5B2F4400C8FD74 /* browser */,
 				55917B4C0B533C53005308AC /* lib */,
-				29B97315FDCFA39411CA2CEA /* Other Sources */,
-				29B97317FDCFA39411CA2CEA /* Resources */,
 				29B97323FDCFA39411CA2CEA /* Frameworks */,
 				19C28FACFE9D520D11CA2CBB /* Products */,
 			);
@@ -177,6 +175,16 @@
 				55917E730B541541005308AC /* NSDictionary+AccessHelpers.m */,
 			);
 			path = lib;
+			sourceTree = "<group>";
+		};
+		559CBAA10B5B2F4400C8FD74 /* browser */ = {
+			isa = PBXGroup;
+			children = (
+				080E96DDFE201D6D7F000001 /* Classes */,
+				29B97315FDCFA39411CA2CEA /* Other Sources */,
+				29B97317FDCFA39411CA2CEA /* Resources */,
+			);
+			path = browser;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -286,7 +294,7 @@
 				GCC_ENABLE_FIX_AND_CONTINUE = YES;
 				GCC_MODEL_TUNING = G5;
 				GCC_OPTIMIZATION_LEVEL = 0;
-				INFOPLIST_FILE = Info.plist;
+				INFOPLIST_FILE = browser/Info.plist;
 				INSTALL_PATH = "$(HOME)/Applications";
 				PRODUCT_NAME = HIDBrowser;
 				WRAPPER_EXTENSION = app;
@@ -303,7 +311,7 @@
 				);
 				GCC_GENERATE_DEBUGGING_SYMBOLS = NO;
 				GCC_MODEL_TUNING = G5;
-				INFOPLIST_FILE = Info.plist;
+				INFOPLIST_FILE = browser/Info.plist;
 				INSTALL_PATH = "$(HOME)/Applications";
 				PRODUCT_NAME = HIDBrowser;
 				WRAPPER_EXTENSION = app;
