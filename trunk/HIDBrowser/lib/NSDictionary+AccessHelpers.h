@@ -14,6 +14,8 @@
 - (unsigned) unsignedForKey: (NSString *) key;
 
 - (id) objectForString: (const char *) key;
+- (void) setObject: (id) object forString: (const char *) key;
+
 - (NSString *) stringForString: (const char *) key;
 - (long) longForString: (const char *) key;
 - (unsigned int) unsignedIntForString: (const char *) key;

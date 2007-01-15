@@ -32,6 +32,13 @@
 
 + (NSArray *) allDevices;
 
++ (NSArray *) allDevicesMatchingUsagePage: (unsigned) usagePage
+                                  usageId: (unsigned) usageId
+                                withClass: (Class) hidClass;
+
++ (NSArray *) allDevicesMatchingCFDictionary: (CFDictionaryRef) matchDictionary
+                                   withClass: (Class) hidClass;
+
 #pragma mark -
 
 - (io_object_t) ioDevice;

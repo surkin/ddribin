@@ -35,6 +35,12 @@
         return nil;
     }
     
+    if ([self productId] == 0)
+    {
+        [self release];
+        return nil;
+    }
+    
     if (![self createDeviceInterface])
     {
         [self release];
@@ -49,8 +55,16 @@
 //=========================================================== 
 - (void) dealloc
 {
+    if (mDeviceInterface != NULL)
+    {
+        (*mDeviceInterface)->close(mDeviceInterface);
+        (*mDeviceInterface)->Release(mDeviceInterface);
+    }
+    [mElementsByCookie release];
+    [mElements release];
+    [mUsages release];
+    [mPrimaryUsage release];
     [mProperties release];
-    (*mDeviceInterface)->Release(mDeviceInterface);
     
     mProperties = nil;
     mDeviceInterface = NULL;
@@ -63,11 +77,35 @@
 	// name for all HID class devices
 	CFMutableDictionaryRef hidMatchDictionary =
         IOServiceMatching(kIOHIDDeviceKey);
-    
+    return [self allDevicesMatchingCFDictionary: hidMatchDictionary
+                                      withClass: [DDHidDevice class]];
+}
+
++ (NSArray *) allDevicesMatchingUsagePage: (unsigned) usagePage
+                                  usageId: (unsigned) usageId
+                                withClass: (Class) hidClass;
+{
+	// Set up a matching dictionary to search the I/O Registry by class
+	// name for all HID class devices
+	CFMutableDictionaryRef hidMatchDictionary =
+        IOServiceMatching(kIOHIDDeviceKey);
+    NSMutableDictionary * objcMatchDictionary =
+        (NSMutableDictionary *) hidMatchDictionary;
+    [objcMatchDictionary setObject: [NSNumber numberWithUnsignedInt: usagePage]
+                         forString: kIOHIDDeviceUsagePageKey];
+    [objcMatchDictionary setObject: [NSNumber numberWithUnsignedInt: usageId]
+                         forString: kIOHIDDeviceUsageKey];
+    return [self allDevicesMatchingCFDictionary: hidMatchDictionary
+                                      withClass: hidClass];
+}
+
++ (NSArray *) allDevicesMatchingCFDictionary: (CFDictionaryRef) matchDictionary
+                                   withClass: (Class) hidClass;
+{
 	// Now search I/O Registry for matching devices.
 	io_iterator_t hidObjectIterator;
     IOReturn result = IOServiceGetMatchingServices(kIOMasterPortDefault,
-                                                   hidMatchDictionary,
+                                                   matchDictionary,
                                                    &hidObjectIterator);
     if ((result != kIOReturnSuccess) || (hidObjectIterator == 0))
         return nil;
@@ -77,7 +115,9 @@
     io_object_t hidDevice;
     while (hidDevice = IOIteratorNext(hidObjectIterator))
     {
-        DDHidDevice * device = [[DDHidDevice alloc] initWithDevice: hidDevice];
+        DDHidDevice * device = [[hidClass alloc] initWithDevice: hidDevice];
+        if (device == nil)
+            continue;
         [device autorelease];
         
         [devices addObject: device];
