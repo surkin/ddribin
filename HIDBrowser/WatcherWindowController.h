@@ -36,4 +36,6 @@
 - (BOOL) isWatching;
 - (void) setWatching: (BOOL) watching;
 
+- (IBAction) clearHistory: (id) sender;
+
 @end
