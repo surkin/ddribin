@@ -9,6 +9,7 @@
 #import "DDHidMouse.h"
 #import "DDHidUsage.h"
 #import "DDHidElement.h"
+#import "DDHidQueue.h"
 #include <IOKit/hid/IOHIDUsageTables.h>
 
 
@@ -40,6 +41,11 @@
         {
             mYElement = [element retain];
         }
+        else if ((usagePage == kHIDPage_GenericDesktop) &&
+                 (usageId == kHIDUsage_GD_Wheel))
+        {
+            mWheelElement = [element retain];
+        }
         else if ((usagePage == kHIDPage_Button) &&
                  (usageId > 0))
         {
@@ -67,28 +73,45 @@
 }
 
 //=========================================================== 
-// - XElement
+// - xElement
 //=========================================================== 
-- (DDHidElement *) XElement
+- (DDHidElement *) xElement
 {
     return mXElement; 
 }
 
 //=========================================================== 
-// - YElement
+// - yElement
 //=========================================================== 
-- (DDHidElement *) YElement
+- (DDHidElement *) yElement
 {
     return mYElement; 
+}
+
+- (DDHidElement *) wheelElement;
+{
+    return mWheelElement;
 }
 
 //=========================================================== 
 // - buttonElements
 //=========================================================== 
-- (NSMutableArray *) buttonElements
+- (NSArray *) buttonElements;
 {
     return mButtonElements; 
 }
 
+- (unsigned) numberOfButtons;
+{
+    return [mButtonElements count];
+}
+
+- (void) addElementsToQueue: (DDHidQueue *) queue;
+{
+    [queue addElement: mXElement];
+    [queue addElement: mYElement];
+    [queue addElement: mWheelElement];
+    [queue addElements: mButtonElements];
+}
 
 @end

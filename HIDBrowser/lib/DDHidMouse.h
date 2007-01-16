@@ -10,11 +10,13 @@
 #import "DDHidDevice.h"
 
 @class DDHidElement;
+@class DDHidQueue;
 
 @interface DDHidMouse : DDHidDevice
 {
     DDHidElement * mXElement;
     DDHidElement * mYElement;
+    DDHidElement * mWheelElement;
     NSMutableArray * mButtonElements;
 }
 
@@ -22,10 +24,16 @@
 
 - (id) initWithDevice: (io_object_t) device;
 
-- (DDHidElement *) XElement;
+- (DDHidElement *) xElement;
 
-- (DDHidElement *) YElement;
+- (DDHidElement *) yElement;
 
-- (NSMutableArray *) buttonElements;
+- (DDHidElement *) wheelElement;
+
+- (NSArray *) buttonElements;
+
+- (unsigned) numberOfButtons;
+
+- (void) addElementsToQueue: (DDHidQueue *) queue;
 
 @end

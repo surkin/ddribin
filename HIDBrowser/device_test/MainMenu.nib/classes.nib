@@ -1,7 +1,19 @@
 {
     IBClasses = (
-        {CLASS = DeviceTestController; LANGUAGE = ObjC; SUPERCLASS = NSObject; }, 
-        {CLASS = FirstResponder; LANGUAGE = ObjC; SUPERCLASS = NSObject; }
+        {
+            CLASS = BoolFormatter; 
+            LANGUAGE = ObjC; 
+            OUTLETS = {labels = id; }; 
+            SUPERCLASS = NSFormatter; 
+        }, 
+        {
+            CLASS = DeviceTestController; 
+            LANGUAGE = ObjC; 
+            OUTLETS = {mMiceController = NSArrayController; }; 
+            SUPERCLASS = NSObject; 
+        }, 
+        {CLASS = FirstResponder; LANGUAGE = ObjC; SUPERCLASS = NSObject; }, 
+        {CLASS = NSLevelIndicator; LANGUAGE = ObjC; SUPERCLASS = NSControl; }
     ); 
     IBVersion = 1; 
 }

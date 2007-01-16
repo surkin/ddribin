@@ -12,38 +12,126 @@
 #import "DDHidEvent.h"
 #import "DDHidElement.h"
 #import "DDHidUsage.h"
+#import "DDMouse.h"
 
+
+@interface ButtonState : NSObject
+{
+    NSString * mName;
+    BOOL mPressed;
+}
+
+- (NSString *) name;
+- (void) setName: (NSString *) theName;
+
+- (BOOL) pressed;
+- (void) setPressed: (BOOL) flag;
+
+@end
+
+@implementation ButtonState
+
+- (id) initWithName: (NSString *) name
+{
+    self = [super init];
+    if (self == nil)
+        return nil;
+    
+    mName = [name retain];
+    mPressed = NO;
+    
+    return self;
+}
+
+//=========================================================== 
+// dealloc
+//=========================================================== 
+- (void) dealloc
+{
+    [self setName: nil];
+    [super dealloc];
+}
+
+//=========================================================== 
+// - name
+//=========================================================== 
+- (NSString *) name
+{
+    return mName; 
+}
+
+//=========================================================== 
+// - setName:
+//=========================================================== 
+- (void) setName: (NSString *) theName
+{
+    if (mName != theName)
+    {
+        [mName release];
+        mName = [theName retain];
+    }
+}
+//=========================================================== 
+// - pressed
+//=========================================================== 
+- (BOOL) pressed
+{
+    return mPressed;
+}
+
+//=========================================================== 
+// - setPressed:
+//=========================================================== 
+- (void) setPressed: (BOOL) flag
+{
+    mPressed = flag;
+}
+
+@end
+
+
+@interface DeviceTestController (Private)
+
+- (void) setMouseX: (int) mouseX;
+- (void) setMouseY: (int) mouseY;
+- (void) setMouseWheel: (int) mouseWheel;
+
+@end
 
 @implementation DeviceTestController
 
 static DDHidMouse * mDevice;
 
-- (void) addCookiesToQueue: (DDHidMouse *) mouse;
+static int sMaxValue = 2500;
+
+static int applyDelta(int current, int delta)
 {
-    [mQueue addElement: [mouse XElement]];
-    [mQueue addElement: [mouse YElement]];
-    [mQueue addElements: [mouse buttonElements]];
+    int newValue = (current + delta) % sMaxValue;
+    if (newValue < 0)
+        newValue = sMaxValue + newValue;
+    return newValue;
 }
 
 - (void) awakeFromNib;
 {
     NSLog(@"DeviceTestController");
-    NSArray * mice = [DDHidMouse allMice];
-    NSLog(@"All mice: %@", mice);
+    mCurrentMouse = 0;
+    mMouseButtons = [[NSMutableArray alloc] init];
+
+    NSArray * mice = [DDMouse allMice];
     NSEnumerator * e = [mice objectEnumerator];
-    DDHidMouse * mouse;
+    DDMouse * mouse;
     while (mouse = [e nextObject])
     {
-        NSLog(@"Product name: %@, location: 0x%08X, product: 0x%08X, vendor: 0x%08X",
-              [mouse productName], [mouse locationId], [mouse productId], [mouse vendorId]);
+        [mouse setDelegate: self];
+#if 1
+        NSLog(@"Product name: %@",
+              [mouse productName]);
+#endif
         
     }
     [self setMice: mice];
-    mDevice = [mMice objectAtIndex: 0];
-    mQueue = [[mDevice createQueueWithSize: 30] retain];
-    [mQueue setDelegate: self];
-    [self addCookiesToQueue: mDevice];
-    [mQueue startOnCurrentRunLoop];
+    [self setMouseIndex: 0];
 }
 
 //=========================================================== 
@@ -63,6 +151,89 @@ static DDHidMouse * mDevice;
     }
 }
 
+- (NSArray *) mouseButtons;
+{
+    return mMouseButtons;
+}
+
+- (BOOL) no;
+{
+    return NO;
+}
+
+//=========================================================== 
+// - mouseIndex
+//=========================================================== 
+- (unsigned) mouseIndex
+{
+    return mMouseIndex;
+}
+
+//=========================================================== 
+// - setMouseIndex:
+//=========================================================== 
+- (void) setMouseIndex: (unsigned) theMouseIndex
+{
+    if (mCurrentMouse != nil)
+    {
+        [mCurrentMouse stopListening];
+        mCurrentMouse = nil;
+    }
+    mMouseIndex = theMouseIndex;
+    [mMiceController setSelectionIndex: mMouseIndex];
+    if (mMouseIndex != NSNotFound)
+    {
+        mCurrentMouse = [mMice objectAtIndex: mMouseIndex];
+        [mCurrentMouse startListening];
+        [self setMouseX: sMaxValue/2];
+        [self setMouseY: sMaxValue/2];
+        [self setMouseWheel: sMaxValue/2];
+
+        [self willChangeValueForKey: @"mouseButtons"];
+        [mMouseButtons removeAllObjects];
+        NSArray * buttons = [[mCurrentMouse hidMouse] buttonElements];
+        NSEnumerator * e = [buttons objectEnumerator];
+        DDHidElement * element;
+        while (element = [e nextObject])
+        {
+            ButtonState * state = [[ButtonState alloc] initWithName: [[element usage] usageName]];
+            [state autorelease];
+            [mMouseButtons addObject: state];
+        }
+        [self didChangeValueForKey: @"mouseButtons"];
+    }
+}
+
+- (int) maxValue;
+{
+    return sMaxValue;
+}
+
+//=========================================================== 
+// - mouseX
+//=========================================================== 
+- (int) mouseX
+{
+    return mMouseX;
+}
+
+//=========================================================== 
+// - mouseY
+//=========================================================== 
+- (int) mouseY
+{
+    return mMouseY;
+}
+
+//=========================================================== 
+// - mouseWheel
+//=========================================================== 
+- (int) mouseWheel
+{
+    return mMouseWheel;
+}
+
+
 - (void) hidQueueHasEvents: (DDHidQueue *) hidQueue;
 {
     DDHidEvent * event;
@@ -73,4 +244,54 @@ static DDHidMouse * mDevice;
     }
 }
 
+- (void) hidMouse: (DDMouse *) mouse xChanged: (SInt32) deltaX;
+{
+    [self setMouseX: applyDelta(mMouseX, deltaX)];
+}
+
+- (void) hidMouse: (DDMouse *) mouse yChanged: (SInt32) deltaY;
+{
+    [self setMouseY: applyDelta(mMouseY, deltaY)];
+}
+
+- (void) hidMouse: (DDMouse *) mouse wheelChanged: (SInt32) deltaWheel;
+{
+    // Some wheels only output -1 or +1, some output a more analog value.
+    // Normalize wheel to -1%/+1% movement.
+    deltaWheel = (deltaWheel/abs(deltaWheel))*(sMaxValue/100);
+    [self setMouseWheel: applyDelta(mMouseWheel, deltaWheel)];
+}
+
+- (void) hidMouse: (DDMouse *) mouse buttonDown: (unsigned) buttonNumber;
+{
+    ButtonState * state = [mMouseButtons objectAtIndex: buttonNumber];
+    [state setPressed: YES];
+}
+
+- (void) hidMouse: (DDMouse *) mouse buttonUp: (unsigned) buttonNumber;
+{
+    ButtonState * state = [mMouseButtons objectAtIndex: buttonNumber];
+    [state setPressed: NO];
+}
+
 @end
+
+@implementation DeviceTestController (Private)
+
+- (void) setMouseX: (int) mouseX;
+{
+    mMouseX = mouseX;
+}
+
+- (void) setMouseY: (int) mouseY;
+{
+    mMouseY = mouseY;
+}
+
+- (void) setMouseWheel: (int) mouseWheel;
+{
+    mMouseWheel = mouseWheel;
+}
+
+@end
+
