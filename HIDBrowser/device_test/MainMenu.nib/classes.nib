@@ -9,10 +9,16 @@
         {
             CLASS = DeviceTestController; 
             LANGUAGE = ObjC; 
-            OUTLETS = {mMiceController = NSArrayController; }; 
+            OUTLETS = {mMousePaneController = MousePaneController; }; 
             SUPERCLASS = NSObject; 
         }, 
         {CLASS = FirstResponder; LANGUAGE = ObjC; SUPERCLASS = NSObject; }, 
+        {
+            CLASS = MousePaneController; 
+            LANGUAGE = ObjC; 
+            OUTLETS = {mMiceController = NSArrayController; }; 
+            SUPERCLASS = NSObject; 
+        }, 
         {CLASS = NSLevelIndicator; LANGUAGE = ObjC; SUPERCLASS = NSControl; }
     ); 
     IBVersion = 1; 

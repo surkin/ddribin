@@ -6,7 +6,7 @@
 //  Copyright 2007 __MyCompanyName__. All rights reserved.
 //
 
-#import "DeviceTestController.h"
+#import "MousePaneController.h"
 #import "DDHidMouse.h"
 #import "DDHidQueue.h"
 #import "DDHidEvent.h"
@@ -80,7 +80,7 @@
 @end
 
 
-@interface DeviceTestController (Private)
+@interface MousePaneController (Private)
 
 - (void) setMouseX: (int) mouseX;
 - (void) setMouseY: (int) mouseY;
@@ -88,7 +88,7 @@
 
 @end
 
-@implementation DeviceTestController
+@implementation MousePaneController
 
 static DDHidMouse * mDevice;
 
@@ -265,7 +265,7 @@ static int applyDelta(int current, int delta)
 
 @end
 
-@implementation DeviceTestController (Private)
+@implementation MousePaneController (Private)
 
 - (void) setMouseX: (int) mouseX;
 {
