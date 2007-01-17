@@ -16,6 +16,7 @@
 
 @interface DDHidMouse (Private)
 
+- (void) initMouseElements: (NSArray *) elements;
 - (void) hidQueueHasEvents: (DDHidQueue *) hidQueue;
 
 @end
@@ -30,40 +31,6 @@
                                        withClass: self];
 }
 
-- (void) initMouseElements: (NSArray *) elements;
-{
-    NSEnumerator * e = [elements objectEnumerator];
-    DDHidElement * element;
-    while (element = [e nextObject])
-    {
-        unsigned usagePage = [[element usage] usagePage];
-        unsigned usageId = [[element usage] usageId];
-        if ((usagePage == kHIDPage_GenericDesktop) &&
-            (usageId == kHIDUsage_GD_X))
-        {
-            mXElement = [element retain];
-        }
-        else if ((usagePage == kHIDPage_GenericDesktop) &&
-                 (usageId == kHIDUsage_GD_Y))
-        {
-            mYElement = [element retain];
-        }
-        else if ((usagePage == kHIDPage_GenericDesktop) &&
-                 (usageId == kHIDUsage_GD_Wheel))
-        {
-            mWheelElement = [element retain];
-        }
-        else if ((usagePage == kHIDPage_Button) &&
-                 (usageId > 0))
-        {
-            [mButtonElements addObject: element];
-        }
-        NSArray * subElements = [element elements];
-        if (subElements != nil)
-            [self initMouseElements: subElements];
-    }
-}
-
 - (id) initWithDevice: (io_object_t) device;
 {
     self = [super initWithDevice: device];
@@ -71,12 +38,28 @@
         return nil;
     
     mButtonElements = [[NSMutableArray alloc] init];
-    NSArray * elements = [self elements];
-    [self initMouseElements: elements];
-    
-    NSLog(@"X: %@, Y: %@, buttons: %@", mXElement, mYElement, mButtonElements);
+    [self initMouseElements: [self elements]];
     
     return self;
+}
+
+//=========================================================== 
+// dealloc
+//=========================================================== 
+- (void) dealloc
+{
+    [mQueue release];
+    [mXElement release];
+    [mYElement release];
+    [mWheelElement release];
+    [mButtonElements release];
+    
+    mXElement = nil;
+    mYElement = nil;
+    mWheelElement = nil;
+    mButtonElements = nil;
+    mQueue = nil;
+    [super dealloc];
 }
 
 #pragma mark -
@@ -157,6 +140,40 @@
 @end
 
 @implementation DDHidMouse (Private)
+
+- (void) initMouseElements: (NSArray *) elements;
+{
+    NSEnumerator * e = [elements objectEnumerator];
+    DDHidElement * element;
+    while (element = [e nextObject])
+    {
+        unsigned usagePage = [[element usage] usagePage];
+        unsigned usageId = [[element usage] usageId];
+        if ((usagePage == kHIDPage_GenericDesktop) &&
+            (usageId == kHIDUsage_GD_X))
+        {
+            mXElement = [element retain];
+        }
+        else if ((usagePage == kHIDPage_GenericDesktop) &&
+                 (usageId == kHIDUsage_GD_Y))
+        {
+            mYElement = [element retain];
+        }
+        else if ((usagePage == kHIDPage_GenericDesktop) &&
+                 (usageId == kHIDUsage_GD_Wheel))
+        {
+            mWheelElement = [element retain];
+        }
+        else if ((usagePage == kHIDPage_Button) &&
+                 (usageId > 0))
+        {
+            [mButtonElements addObject: element];
+        }
+        NSArray * subElements = [element elements];
+        if (subElements != nil)
+            [self initMouseElements: subElements];
+    }
+}
 
 - (void) hidQueueHasEvents: (DDHidQueue *) hidQueue;
 {
