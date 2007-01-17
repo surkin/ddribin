@@ -32,7 +32,10 @@
               [joystick productName]);
     }
     [self setJoysticks: joysticks];
-    [self setJoystickIndex: 0];
+    if ([mJoysticks count] > 0)
+        [self setJoystickIndex: 0];
+    else
+        [self setJoystickIndex: NSNotFound];
 }
 
 //=========================================================== 
