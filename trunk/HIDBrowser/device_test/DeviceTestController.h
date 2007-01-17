@@ -15,7 +15,6 @@
 {
     IBOutlet NSArrayController * mMiceController;
     NSArray * mMice;
-    DDHidQueue * mQueue;
     DDMouse * mCurrentMouse;
     
     unsigned mMouseIndex;
