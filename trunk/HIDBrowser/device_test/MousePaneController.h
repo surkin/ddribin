@@ -1,5 +1,5 @@
 //
-//  DeviceTestController.h
+//  MousePaneController.h
 //  HIDBrowser
 //
 //  Created by Dave Dribin on 1/14/07.
@@ -11,7 +11,7 @@
 @class DDHidQueue;
 @class DDMouse;
 
-@interface DeviceTestController : NSObject
+@interface MousePaneController : NSObject
 {
     IBOutlet NSArrayController * mMiceController;
     NSArray * mMice;
