@@ -8,6 +8,7 @@
 
 #import "JoystickPaneController.h"
 #import "DDHidJoystick.h"
+#import "ButtonState.h"
 
 @interface JoystickPaneController (Private)
 
@@ -21,6 +22,7 @@
 {
     NSArray * joysticks = [DDHidJoystick allJoysticks];
 
+    mJoystickButtons = [[NSMutableArray alloc] init];
     NSEnumerator * e = [joysticks objectEnumerator];
     DDHidJoystick * joystick;
     while (joystick = [e nextObject])
@@ -30,8 +32,7 @@
               [joystick productName]);
     }
     [self setJoysticks: joysticks];
-    joystick = [mJoysticks objectAtIndex: 0];
-    [joystick startListening];
+    [self setJoystickIndex: 0];
 }
 
 //=========================================================== 
@@ -47,16 +48,55 @@
     return mJoystickButtons;
 }
 
+//=========================================================== 
+//  joystickIndex 
+//=========================================================== 
+- (unsigned) joystickIndex
+{
+    return mJoystickIndex;
+}
+
+- (void) setJoystickIndex: (unsigned) theJoystickIndex
+{
+    if (mCurrentJoystick != nil)
+    {
+        [mCurrentJoystick stopListening];
+        mCurrentJoystick = nil;
+    }
+    mJoystickIndex = theJoystickIndex;
+    [mJoysticksController setSelectionIndex: mJoystickIndex];
+    if (mJoystickIndex != NSNotFound)
+    {
+        mCurrentJoystick = [mJoysticks objectAtIndex: mJoystickIndex];
+        [mCurrentJoystick startListening];
+        
+        [self willChangeValueForKey: @"joystickButtons"];
+        [mJoystickButtons removeAllObjects];
+        NSArray * buttons = [mCurrentJoystick buttonElements];
+        NSEnumerator * e = [buttons objectEnumerator];
+        DDHidElement * element;
+        while (element = [e nextObject])
+        {
+            ButtonState * state = [[ButtonState alloc] initWithName: [[element usage] usageName]];
+            [state autorelease];
+            [mJoystickButtons addObject: state];
+        }
+        [self didChangeValueForKey: @"joystickButtons"];
+    }
+}
+
 - (void) hidJoystick: (DDHidJoystick *) joystick
           buttonDown: (unsigned) buttonNumber;
 {
-    NSLog(@"Joystick button #%d down", buttonNumber);
+    ButtonState * state = [mJoystickButtons objectAtIndex: buttonNumber];
+    [state setPressed: YES];
 }
 
 - (void) hidJoystick: (DDHidJoystick *) joystick
             buttonUp: (unsigned) buttonNumber;
 {
-    NSLog(@"Joystick button #%d up", buttonNumber);
+    ButtonState * state = [mJoystickButtons objectAtIndex: buttonNumber];
+    [state setPressed: NO];
 }
 
 @end
