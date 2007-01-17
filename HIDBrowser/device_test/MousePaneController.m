@@ -12,71 +12,7 @@
 #import "DDHidEvent.h"
 #import "DDHidElement.h"
 #import "DDHidUsage.h"
-
-
-@interface ButtonState : NSObject
-{
-    NSString * mName;
-    BOOL mPressed;
-}
-
-- (NSString *) name;
-
-- (BOOL) pressed;
-- (void) setPressed: (BOOL) flag;
-
-@end
-
-@implementation ButtonState
-
-- (id) initWithName: (NSString *) name
-{
-    self = [super init];
-    if (self == nil)
-        return nil;
-    
-    mName = [name retain];
-    mPressed = NO;
-    
-    return self;
-}
-
-//=========================================================== 
-// dealloc
-//=========================================================== 
-- (void) dealloc
-{
-    [mName release];
-
-    mName = nil;
-    [super dealloc];
-}
-
-//=========================================================== 
-// - name
-//=========================================================== 
-- (NSString *) name
-{
-    return mName; 
-}
-
-//=========================================================== 
-// - pressed
-//=========================================================== 
-- (BOOL) pressed
-{
-    return mPressed;
-}
-
-//=========================================================== 
-// - setPressed:
-//=========================================================== 
-- (void) setPressed: (BOOL) flag
-{
-    mPressed = flag;
-}
-
-@end
+#import "ButtonState.h"
 
 
 @interface MousePaneController (Private)
