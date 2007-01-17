@@ -14,6 +14,12 @@
 #include <IOKit/hid/IOHIDUsageTables.h>
 
 
+@interface DDHidMouse (Private)
+
+- (void) hidQueueHasEvents: (DDHidQueue *) hidQueue;
+
+@end
+
 @implementation DDHidMouse
 
 + (NSArray *) allMice;
@@ -73,6 +79,9 @@
     return self;
 }
 
+#pragma mark -
+#pragma mark Mouse Elements
+
 //=========================================================== 
 // - xElement
 //=========================================================== 
@@ -115,6 +124,10 @@
     [queue addElements: mButtonElements];
 }
 
+
+#pragma mark -
+#pragma mark Asynchronous Notification
+
 - (void) setDelegate: (id) delegate;
 {
     mDelegate = delegate;
@@ -140,6 +153,10 @@
     [mQueue release];
     mQueue = nil;
 }
+
+@end
+
+@implementation DDHidMouse (Private)
 
 - (void) hidQueueHasEvents: (DDHidQueue *) hidQueue;
 {
