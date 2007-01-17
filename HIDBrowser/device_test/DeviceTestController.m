@@ -22,7 +22,6 @@
 }
 
 - (NSString *) name;
-- (void) setName: (NSString *) theName;
 
 - (BOOL) pressed;
 - (void) setPressed: (BOOL) flag;
@@ -48,7 +47,9 @@
 //=========================================================== 
 - (void) dealloc
 {
-    [self setName: nil];
+    [mName release];
+
+    mName = nil;
     [super dealloc];
 }
 
@@ -60,17 +61,6 @@
     return mName; 
 }
 
-//=========================================================== 
-// - setName:
-//=========================================================== 
-- (void) setName: (NSString *) theName
-{
-    if (mName != theName)
-    {
-        [mName release];
-        mName = [theName retain];
-    }
-}
 //=========================================================== 
 // - pressed
 //=========================================================== 
@@ -124,14 +114,13 @@ static int applyDelta(int current, int delta)
     while (mouse = [e nextObject])
     {
         [mouse setDelegate: self];
-#if 1
         NSLog(@"Product name: %@",
               [mouse productName]);
-#endif
-        
     }
     [self setMice: mice];
     [self setMouseIndex: 0];
+    // [self setMice: [NSArray array]];
+    // [self setMouseIndex: NSNotFound];
 }
 
 //=========================================================== 
