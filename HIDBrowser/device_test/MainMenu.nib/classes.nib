@@ -13,7 +13,12 @@
             SUPERCLASS = NSObject; 
         }, 
         {CLASS = FirstResponder; LANGUAGE = ObjC; SUPERCLASS = NSObject; }, 
-        {CLASS = JoystickPaneController; LANGUAGE = ObjC; SUPERCLASS = NSObject; }, 
+        {
+            CLASS = JoystickPaneController; 
+            LANGUAGE = ObjC; 
+            OUTLETS = {mJoysticksController = NSArrayController; }; 
+            SUPERCLASS = NSObject; 
+        }, 
         {
             CLASS = MousePaneController; 
             LANGUAGE = ObjC; 
