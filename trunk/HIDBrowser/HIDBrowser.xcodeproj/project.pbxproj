@@ -37,8 +37,6 @@
 		559CBCA90B5B3BCE00C8FD74 /* MousePaneController.m in Sources */ = {isa = PBXBuildFile; fileRef = 559CBCA80B5B3BCE00C8FD74 /* MousePaneController.m */; };
 		559CBDAB0B5B451E00C8FD74 /* usb_hid_usages.plist in Resources */ = {isa = PBXBuildFile; fileRef = 55917F760B54535B005308AC /* usb_hid_usages.plist */; };
 		55A000520B5D7C06001B47E5 /* BoolFormatter.m in Sources */ = {isa = PBXBuildFile; fileRef = 55A000500B5D7C06001B47E5 /* BoolFormatter.m */; };
-		55A0FB3E0B5C55E3001B47E5 /* DDMouse.h in Headers */ = {isa = PBXBuildFile; fileRef = 55A0FB3C0B5C55E3001B47E5 /* DDMouse.h */; };
-		55A0FB3F0B5C55E3001B47E5 /* DDMouse.m in Sources */ = {isa = PBXBuildFile; fileRef = 55A0FB3D0B5C55E3001B47E5 /* DDMouse.m */; };
 		55DCD9C60B55D35D000648E5 /* WatcherWindowController.m in Sources */ = {isa = PBXBuildFile; fileRef = 55DCD9C50B55D35D000648E5 /* WatcherWindowController.m */; };
 		55DCD9E00B55D503000648E5 /* EventWatcher.nib in Resources */ = {isa = PBXBuildFile; fileRef = 55DCD9DE0B55D503000648E5 /* EventWatcher.nib */; };
 		55FD65CB0B5DD57200325FEF /* DeviceTestController.m in Sources */ = {isa = PBXBuildFile; fileRef = 55FD65CA0B5DD57200325FEF /* DeviceTestController.m */; };
@@ -105,8 +103,6 @@
 		559CBCA80B5B3BCE00C8FD74 /* MousePaneController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MousePaneController.m; sourceTree = "<group>"; };
 		55A000500B5D7C06001B47E5 /* BoolFormatter.m */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.objc; path = BoolFormatter.m; sourceTree = "<group>"; };
 		55A000510B5D7C06001B47E5 /* BoolFormatter.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = BoolFormatter.h; sourceTree = "<group>"; };
-		55A0FB3C0B5C55E3001B47E5 /* DDMouse.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DDMouse.h; sourceTree = "<group>"; };
-		55A0FB3D0B5C55E3001B47E5 /* DDMouse.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DDMouse.m; sourceTree = "<group>"; };
 		55DCD9C40B55D35D000648E5 /* WatcherWindowController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WatcherWindowController.h; sourceTree = "<group>"; };
 		55DCD9C50B55D35D000648E5 /* WatcherWindowController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WatcherWindowController.m; sourceTree = "<group>"; };
 		55DCD9DF0B55D503000648E5 /* English */ = {isa = PBXFileReference; lastKnownFileType = wrapper.nib; name = English; path = English.lproj/EventWatcher.nib; sourceTree = "<group>"; };
@@ -250,8 +246,6 @@
 				55917E730B541541005308AC /* NSDictionary+AccessHelpers.m */,
 				559CBC2A0B5B34C300C8FD74 /* DDHidMouse.h */,
 				559CBC2B0B5B34C300C8FD74 /* DDHidMouse.m */,
-				55A0FB3C0B5C55E3001B47E5 /* DDMouse.h */,
-				55A0FB3D0B5C55E3001B47E5 /* DDMouse.m */,
 			);
 			path = lib;
 			sourceTree = "<group>";
@@ -305,7 +299,6 @@
 				559CBBDB0B5B337600C8FD74 /* DDHidUsageTables.h in Headers */,
 				559CBBDD0B5B337600C8FD74 /* NSDictionary+AccessHelpers.h in Headers */,
 				559CBC2C0B5B34C300C8FD74 /* DDHidMouse.h in Headers */,
-				55A0FB3E0B5C55E3001B47E5 /* DDMouse.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -431,7 +424,6 @@
 				559CBBDC0B5B337600C8FD74 /* DDHidUsageTables.m in Sources */,
 				559CBC260B5B349100C8FD74 /* NSDictionary+AccessHelpers.m in Sources */,
 				559CBC2D0B5B34C300C8FD74 /* DDHidMouse.m in Sources */,
-				55A0FB3F0B5C55E3001B47E5 /* DDMouse.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

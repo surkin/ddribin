@@ -12,7 +12,6 @@
 #import "DDHidEvent.h"
 #import "DDHidElement.h"
 #import "DDHidUsage.h"
-#import "DDMouse.h"
 
 
 @interface ButtonState : NSObject
@@ -108,9 +107,9 @@ static int applyDelta(int current, int delta)
     mCurrentMouse = 0;
     mMouseButtons = [[NSMutableArray alloc] init];
 
-    NSArray * mice = [DDMouse allMice];
+    NSArray * mice = [DDHidMouse allMice];
     NSEnumerator * e = [mice objectEnumerator];
-    DDMouse * mouse;
+    DDHidMouse * mouse;
     while (mouse = [e nextObject])
     {
         [mouse setDelegate: self];
@@ -180,7 +179,7 @@ static int applyDelta(int current, int delta)
 
         [self willChangeValueForKey: @"mouseButtons"];
         [mMouseButtons removeAllObjects];
-        NSArray * buttons = [[mCurrentMouse hidMouse] buttonElements];
+        NSArray * buttons = [mCurrentMouse buttonElements];
         NSEnumerator * e = [buttons objectEnumerator];
         DDHidElement * element;
         while (element = [e nextObject])
@@ -233,17 +232,17 @@ static int applyDelta(int current, int delta)
     }
 }
 
-- (void) hidMouse: (DDMouse *) mouse xChanged: (SInt32) deltaX;
+- (void) hidMouse: (DDHidMouse *) mouse xChanged: (SInt32) deltaX;
 {
     [self setMouseX: applyDelta(mMouseX, deltaX)];
 }
 
-- (void) hidMouse: (DDMouse *) mouse yChanged: (SInt32) deltaY;
+- (void) hidMouse: (DDHidMouse *) mouse yChanged: (SInt32) deltaY;
 {
     [self setMouseY: applyDelta(mMouseY, deltaY)];
 }
 
-- (void) hidMouse: (DDMouse *) mouse wheelChanged: (SInt32) deltaWheel;
+- (void) hidMouse: (DDHidMouse *) mouse wheelChanged: (SInt32) deltaWheel;
 {
     // Some wheels only output -1 or +1, some output a more analog value.
     // Normalize wheel to -1%/+1% movement.
@@ -251,13 +250,13 @@ static int applyDelta(int current, int delta)
     [self setMouseWheel: applyDelta(mMouseWheel, deltaWheel)];
 }
 
-- (void) hidMouse: (DDMouse *) mouse buttonDown: (unsigned) buttonNumber;
+- (void) hidMouse: (DDHidMouse *) mouse buttonDown: (unsigned) buttonNumber;
 {
     ButtonState * state = [mMouseButtons objectAtIndex: buttonNumber];
     [state setPressed: YES];
 }
 
-- (void) hidMouse: (DDMouse *) mouse buttonUp: (unsigned) buttonNumber;
+- (void) hidMouse: (DDHidMouse *) mouse buttonUp: (unsigned) buttonNumber;
 {
     ButtonState * state = [mMouseButtons objectAtIndex: buttonNumber];
     [state setPressed: NO];

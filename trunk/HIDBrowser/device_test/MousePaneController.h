@@ -9,13 +9,13 @@
 #import <Cocoa/Cocoa.h>
 
 @class DDHidQueue;
-@class DDMouse;
+@class DDHidMouse;
 
 @interface MousePaneController : NSObject
 {
     IBOutlet NSArrayController * mMiceController;
     NSArray * mMice;
-    DDMouse * mCurrentMouse;
+    DDHidMouse * mCurrentMouse;
     
     unsigned mMouseIndex;
     int mMouseX;
@@ -42,11 +42,11 @@
 
 - (int) mouseWheel;
 
-- (void) hidMouse: (DDMouse *) mouse xChanged: (SInt32) deltaX;
-- (void) hidMouse: (DDMouse *) mouse yChanged: (SInt32) deltaY;
-- (void) hidMouse: (DDMouse *) mouse wheelChanged: (SInt32) deltaWheel;
+- (void) hidMouse: (DDHidMouse *) mouse xChanged: (SInt32) deltaX;
+- (void) hidMouse: (DDHidMouse *) mouse yChanged: (SInt32) deltaY;
+- (void) hidMouse: (DDHidMouse *) mouse wheelChanged: (SInt32) deltaWheel;
 
-- (void) hidMouse: (DDMouse *) mouse buttonDown: (unsigned) buttonNumber;
-- (void) hidMouse: (DDMouse *) mouse buttonUp: (unsigned) buttonNumber;
+- (void) hidMouse: (DDHidMouse *) mouse buttonDown: (unsigned) buttonNumber;
+- (void) hidMouse: (DDHidMouse *) mouse buttonUp: (unsigned) buttonNumber;
 
 @end
