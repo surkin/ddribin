@@ -40,6 +40,11 @@
 		55DCD9C60B55D35D000648E5 /* WatcherWindowController.m in Sources */ = {isa = PBXBuildFile; fileRef = 55DCD9C50B55D35D000648E5 /* WatcherWindowController.m */; };
 		55DCD9E00B55D503000648E5 /* EventWatcher.nib in Resources */ = {isa = PBXBuildFile; fileRef = 55DCD9DE0B55D503000648E5 /* EventWatcher.nib */; };
 		55FD65CB0B5DD57200325FEF /* DeviceTestController.m in Sources */ = {isa = PBXBuildFile; fileRef = 55FD65CA0B5DD57200325FEF /* DeviceTestController.m */; };
+		55FD66D50B5DDC3F00325FEF /* DDHidJoystick.h in Headers */ = {isa = PBXBuildFile; fileRef = 55FD66D30B5DDC3F00325FEF /* DDHidJoystick.h */; };
+		55FD66D60B5DDC3F00325FEF /* DDHidJoystick.m in Sources */ = {isa = PBXBuildFile; fileRef = 55FD66D40B5DDC3F00325FEF /* DDHidJoystick.m */; };
+		55FD66FD0B5DDD2100325FEF /* JoystickPaneController.m in Sources */ = {isa = PBXBuildFile; fileRef = 55FD66FC0B5DDD2100325FEF /* JoystickPaneController.m */; };
+		55FD67750B5DDF8200325FEF /* ButtonState.m in Sources */ = {isa = PBXBuildFile; fileRef = 55FD67740B5DDF8200325FEF /* ButtonState.m */; };
+		55FD67CC0B5DE18600325FEF /* DDHidLib.h in Headers */ = {isa = PBXBuildFile; fileRef = 55FD67CB0B5DE18600325FEF /* DDHidLib.h */; };
 		8D11072A0486CEB800E47090 /* MainMenu.nib in Resources */ = {isa = PBXBuildFile; fileRef = 29B97318FDCFA39411CA2CEA /* MainMenu.nib */; };
 		8D11072B0486CEB800E47090 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 089C165CFE840E0CC02AAC07 /* InfoPlist.strings */; };
 		8D11072D0486CEB800E47090 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 29B97316FDCFA39411CA2CEA /* main.m */; settings = {ATTRIBUTES = (); }; };
@@ -108,6 +113,13 @@
 		55DCD9DF0B55D503000648E5 /* English */ = {isa = PBXFileReference; lastKnownFileType = wrapper.nib; name = English; path = English.lproj/EventWatcher.nib; sourceTree = "<group>"; };
 		55FD65C90B5DD57200325FEF /* DeviceTestController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DeviceTestController.h; sourceTree = "<group>"; };
 		55FD65CA0B5DD57200325FEF /* DeviceTestController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DeviceTestController.m; sourceTree = "<group>"; };
+		55FD66D30B5DDC3F00325FEF /* DDHidJoystick.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DDHidJoystick.h; sourceTree = "<group>"; };
+		55FD66D40B5DDC3F00325FEF /* DDHidJoystick.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DDHidJoystick.m; sourceTree = "<group>"; };
+		55FD66FB0B5DDD2100325FEF /* JoystickPaneController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JoystickPaneController.h; sourceTree = "<group>"; };
+		55FD66FC0B5DDD2100325FEF /* JoystickPaneController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JoystickPaneController.m; sourceTree = "<group>"; };
+		55FD67730B5DDF8200325FEF /* ButtonState.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ButtonState.h; sourceTree = "<group>"; };
+		55FD67740B5DDF8200325FEF /* ButtonState.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ButtonState.m; sourceTree = "<group>"; };
+		55FD67CB0B5DE18600325FEF /* DDHidLib.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DDHidLib.h; sourceTree = "<group>"; };
 		8D1107310486CEB800E47090 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
 		8D1107320486CEB800E47090 /* HIDBrowser.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = HIDBrowser.app; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
@@ -246,6 +258,9 @@
 				55917E730B541541005308AC /* NSDictionary+AccessHelpers.m */,
 				559CBC2A0B5B34C300C8FD74 /* DDHidMouse.h */,
 				559CBC2B0B5B34C300C8FD74 /* DDHidMouse.m */,
+				55FD66D30B5DDC3F00325FEF /* DDHidJoystick.h */,
+				55FD66D40B5DDC3F00325FEF /* DDHidJoystick.m */,
+				55FD67CB0B5DE18600325FEF /* DDHidLib.h */,
 			);
 			path = lib;
 			sourceTree = "<group>";
@@ -269,8 +284,12 @@
 				55FD65CA0B5DD57200325FEF /* DeviceTestController.m */,
 				559CBCA70B5B3BCE00C8FD74 /* MousePaneController.h */,
 				559CBCA80B5B3BCE00C8FD74 /* MousePaneController.m */,
+				55FD66FB0B5DDD2100325FEF /* JoystickPaneController.h */,
+				55FD66FC0B5DDD2100325FEF /* JoystickPaneController.m */,
 				55A000510B5D7C06001B47E5 /* BoolFormatter.h */,
 				55A000500B5D7C06001B47E5 /* BoolFormatter.m */,
+				55FD67730B5DDF8200325FEF /* ButtonState.h */,
+				55FD67740B5DDF8200325FEF /* ButtonState.m */,
 			);
 			path = device_test;
 			sourceTree = "<group>";
@@ -299,6 +318,8 @@
 				559CBBDB0B5B337600C8FD74 /* DDHidUsageTables.h in Headers */,
 				559CBBDD0B5B337600C8FD74 /* NSDictionary+AccessHelpers.h in Headers */,
 				559CBC2C0B5B34C300C8FD74 /* DDHidMouse.h in Headers */,
+				55FD66D50B5DDC3F00325FEF /* DDHidJoystick.h in Headers */,
+				55FD67CC0B5DE18600325FEF /* DDHidLib.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -409,6 +430,8 @@
 				559CBCA90B5B3BCE00C8FD74 /* MousePaneController.m in Sources */,
 				55A000520B5D7C06001B47E5 /* BoolFormatter.m in Sources */,
 				55FD65CB0B5DD57200325FEF /* DeviceTestController.m in Sources */,
+				55FD66FD0B5DDD2100325FEF /* JoystickPaneController.m in Sources */,
+				55FD67750B5DDF8200325FEF /* ButtonState.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -424,6 +447,7 @@
 				559CBBDC0B5B337600C8FD74 /* DDHidUsageTables.m in Sources */,
 				559CBC260B5B349100C8FD74 /* NSDictionary+AccessHelpers.m in Sources */,
 				559CBC2D0B5B34C300C8FD74 /* DDHidMouse.m in Sources */,
+				55FD66D60B5DDC3F00325FEF /* DDHidJoystick.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

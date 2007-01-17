@@ -107,8 +107,10 @@
     IOReturn result = IOServiceGetMatchingServices(kIOMasterPortDefault,
                                                    matchDictionary,
                                                    &hidObjectIterator);
-    if ((result != kIOReturnSuccess) || (hidObjectIterator == 0))
+    if (result != kIOReturnSuccess)
         return nil;
+    if (hidObjectIterator == 0)
+        return [NSArray array];
     
     NSMutableArray * devices = [NSMutableArray array];
     
