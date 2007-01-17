@@ -27,6 +27,9 @@
 
 - (id) initWithDevice: (io_object_t) device;
 
+#pragma mark -
+#pragma mark Mouse Elements
+
 - (DDHidElement *) xElement;
 
 - (DDHidElement *) yElement;
@@ -38,6 +41,9 @@
 - (unsigned) numberOfButtons;
 
 - (void) addElementsToQueue: (DDHidQueue *) queue;
+
+#pragma mark -
+#pragma mark Asynchronous Notification
 
 - (void) setDelegate: (id) delegate;
 
