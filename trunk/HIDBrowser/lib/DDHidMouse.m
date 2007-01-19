@@ -14,6 +14,18 @@
 #include <IOKit/hid/IOHIDUsageTables.h>
 
 
+// Implement our own delegate methods
+
+@interface DDHidMouse (DDHidMouseDelegate)
+
+- (void) hidMouse: (DDHidMouse *) mouse xChanged: (SInt32) deltaX;
+- (void) hidMouse: (DDHidMouse *) mouse yChanged: (SInt32) deltaY;
+- (void) hidMouse: (DDHidMouse *) mouse wheelChanged: (SInt32) deltaWheel;
+- (void) hidMouse: (DDHidMouse *) mouse buttonDown: (unsigned) buttonNumber;
+- (void) hidMouse: (DDHidMouse *) mouse buttonUp: (unsigned) buttonNumber;
+
+@end
+
 @interface DDHidMouse (Private)
 
 - (void) initMouseElements: (NSArray *) elements;
@@ -139,6 +151,40 @@
 
 @end
 
+@implementation DDHidMouse (DDHidMouseDelegate)
+
+- (void) hidMouse: (DDHidMouse *) mouse xChanged: (SInt32) deltaX;
+{
+    if ([mDelegate respondsToSelector: _cmd])
+        [mDelegate hidMouse: mouse xChanged: deltaX];
+}
+
+- (void) hidMouse: (DDHidMouse *) mouse yChanged: (SInt32) deltaY;
+{
+    if ([mDelegate respondsToSelector: _cmd])
+        [mDelegate hidMouse: mouse yChanged: deltaY];
+}
+
+- (void) hidMouse: (DDHidMouse *) mouse wheelChanged: (SInt32) deltaWheel;
+{
+    if ([mDelegate respondsToSelector: _cmd])
+        [mDelegate hidMouse: mouse wheelChanged: deltaWheel];
+}
+
+- (void) hidMouse: (DDHidMouse *) mouse buttonDown: (unsigned) buttonNumber;
+{
+    if ([mDelegate respondsToSelector: _cmd])
+        [mDelegate hidMouse: mouse buttonDown: buttonNumber];
+}
+
+- (void) hidMouse: (DDHidMouse *) mouse buttonUp: (unsigned) buttonNumber;
+{
+    if ([mDelegate respondsToSelector: _cmd])
+        [mDelegate hidMouse: mouse buttonUp: buttonNumber];
+}
+
+@end
+
 @implementation DDHidMouse (Private)
 
 - (void) initMouseElements: (NSArray *) elements;
@@ -184,26 +230,23 @@
         SInt32 value = [event value];
         if (cookie == [[self xElement] cookie])
         {
-            if ((value != 0) &&
-                [mDelegate respondsToSelector: @selector(hidMouse:xChanged:)])
+            if (value != 0)
             {
-                [mDelegate hidMouse: self xChanged: value];
+                [self hidMouse: self xChanged: value];
             }
         }
         else if (cookie == [[self yElement] cookie])
         {
-            if ((value != 0) &&
-                [mDelegate respondsToSelector: @selector(hidMouse:yChanged:)])
+            if (value != 0)
             {
-                [mDelegate hidMouse: self yChanged: value];
+                [self hidMouse: self yChanged: value];
             }
         }
         else if (cookie == [[self wheelElement] cookie])
         {
-            if ((value != 0) &&
-                [mDelegate respondsToSelector: @selector(hidMouse:wheelChanged:)])
+            if (value != 0)
             {
-                [mDelegate hidMouse: self wheelChanged: value];
+                [self hidMouse: self wheelChanged: value];
             }
         }
         else
@@ -215,15 +258,13 @@
                     break;
             }
             
-            if ((value == 1) &&
-                [mDelegate respondsToSelector: @selector(hidMouse:buttonDown:)])
+            if (value == 1)
             {
-                [mDelegate hidMouse: self buttonDown: i];
+                [self hidMouse: self buttonDown: i];
             }
-            else if ((value == 0) &&
-                     [mDelegate respondsToSelector: @selector(hidMouse:buttonUp:)])
+            else if (value == 0)
             {
-                [mDelegate hidMouse: self buttonUp: i];
+                [self hidMouse: self buttonUp: i];
             }
             else
             {
@@ -235,3 +276,4 @@
 }
 
 @end
+

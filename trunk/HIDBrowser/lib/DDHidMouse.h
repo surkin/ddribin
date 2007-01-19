@@ -62,3 +62,4 @@
 - (void) hidMouse: (DDHidMouse *) mouse buttonUp: (unsigned) buttonNumber;
 
 @end
+
