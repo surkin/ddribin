@@ -1,4 +1,6 @@
+Run: 2007-01-18
 MacBook Pro, 2.33 GHz Core 2 Duo
+--------------------------------
 
 Delegate option 1: inline respondsToSelector
 Total time: 3.326362 for 100000000 invocations, Mi/s: 30.062874
