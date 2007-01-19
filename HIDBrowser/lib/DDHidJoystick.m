@@ -9,6 +9,15 @@
 #import "DDHidLib.h"
 #include <IOKit/hid/IOHIDUsageTables.h>
 
+@interface DDHidJoystick (DDHidJoystickDelegate)
+
+- (void) hidJoystick: (DDHidJoystick *) joystick
+          buttonDown: (unsigned) buttonNumber;
+- (void) hidJoystick: (DDHidJoystick *) joystick
+            buttonUp: (unsigned) buttonNumber;
+
+@end
+
 @interface DDHidJoystick (Private)
 
 - (void) initJoystickElements: (NSArray *) elements;
@@ -174,15 +183,13 @@
                     break;
             }
             
-            if ((value == 1) &&
-                [mDelegate respondsToSelector: @selector(hidJoystick:buttonDown:)])
+            if (value == 1)
             {
-                [mDelegate hidJoystick: self buttonDown: i];
+                [self hidJoystick: self buttonDown: i];
             }
-            else if ((value == 0) &&
-                     [mDelegate respondsToSelector: @selector(hidJoystick:buttonUp:)])
+            else if (value == 0)
             {
-                [mDelegate hidJoystick: self buttonUp: i];
+                [self hidJoystick: self buttonUp: i];
             }
             else
             {
@@ -191,6 +198,24 @@
             }
         }
     }
+}
+
+@end
+
+@implementation DDHidJoystick (DDHidJoystickDelegate)
+
+- (void) hidJoystick: (DDHidJoystick *) joystick
+          buttonDown: (unsigned) buttonNumber;
+{
+    if ([mDelegate respondsToSelector: _cmd])
+        [mDelegate hidJoystick: joystick buttonDown: buttonNumber];
+}
+
+- (void) hidJoystick: (DDHidJoystick *) joystick
+            buttonUp: (unsigned) buttonNumber;  
+{
+    if ([mDelegate respondsToSelector: _cmd])
+        [mDelegate hidJoystick: joystick buttonUp: buttonNumber];
 }
 
 @end
