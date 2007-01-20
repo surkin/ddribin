@@ -18,6 +18,8 @@
 
 - (NSArray *) devices;
 
-- (IBAction) press: (id) sender;
+- (IBAction) watchSelected: (id) sender;
+
+- (IBAction) exportPlist: (id) sender;
 
 @end

@@ -4,7 +4,7 @@
         {CLASS = FirstResponder; LANGUAGE = ObjC; SUPERCLASS = NSObject; }, 
         {CLASS = HexFormatter; LANGUAGE = ObjC; SUPERCLASS = NSFormatter; }, 
         {
-            ACTIONS = {press = id; }; 
+            ACTIONS = {exportPlist = id; watchSelected = id; }; 
             CLASS = HidBrowserController; 
             LANGUAGE = ObjC; 
             OUTLETS = {
