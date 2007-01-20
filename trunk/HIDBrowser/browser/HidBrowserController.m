@@ -92,7 +92,7 @@
     return elements;
 }
 
-- (IBAction) press: (id) sender;
+- (IBAction) watchSelected: (id) sender;
 {
     NSArray * selectedElements = [self selectedElements];
     if ([selectedElements count] == 0)
@@ -103,6 +103,43 @@
     [controller setDevice: [self selectedDevice]];
     [controller setElements: selectedElements];
     [controller showWindow: self];
+}
+
+- (IBAction) exportPlist: (id) sender;
+{
+    DDHidDevice * selectedDevice = [self selectedDevice];
+    if (selectedDevice == nil)
+        return;
+
+    NSSavePanel * panel = [NSSavePanel savePanel];
+    
+    /* set up new attributes */
+    [panel setRequiredFileType: @"plist"];
+    [panel setAllowsOtherFileTypes: NO];
+    [panel setCanSelectHiddenExtension: YES];
+    
+    /* display the NSSavePanel */
+    [panel beginSheetForDirectory: NSHomeDirectory()
+                             file: @""
+                   modalForWindow: [NSApp mainWindow]
+                    modalDelegate: self
+                   didEndSelector: @selector(exportPlistPanelDidEnd:returnCode:contextInfo:)
+                      contextInfo: selectedDevice];
+}
+
+- (void) exportPlistPanelDidEnd: (NSSavePanel *) panel
+                     returnCode: (int) returnCode
+                    contextInfo: (void *) contextInfo;
+{
+    DDHidDevice * selectedDevice = contextInfo;
+
+    /* if successful, save file under designated name */
+    if (returnCode != NSOKButton)
+        return;
+    
+    NSDictionary * deviceProperties = [selectedDevice properties];
+    if (![deviceProperties writeToFile: [panel filename] atomically: YES])
+        NSBeep();
 }
 
 - (BOOL)applicationShouldTerminateAfterLastWindowClosed:(NSApplication *)theApplication
