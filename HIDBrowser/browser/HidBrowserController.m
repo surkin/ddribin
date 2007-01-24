@@ -44,57 +44,16 @@
 
 - (DDHidDevice *) selectedDevice;
 {
-    unsigned index = [mDevicesController selectionIndex];
-    if (index == NSNotFound)
+    NSArray * selectedDevices = [mDevicesController selectedObjects];
+    if ([selectedDevices count] > 0)
+        return [selectedDevices objectAtIndex: 0];
+    else
         return nil;
-    return [mDevices objectAtIndex: index];}
-
-- (DDHidElement *) elementAtIndexPath: (NSIndexPath *) indexPath
-                            forDevice: (DDHidDevice *) device;
-{
-    NSArray * elements = [device elements];
-    DDHidElement * element = nil;
-    unsigned i;
-    for (i = 0; i < [indexPath length]; i++)
-    {
-        element = [elements objectAtIndex: [indexPath indexAtPosition: i]];
-        elements = [element elements];
-    }
-    return element;
-}
-
-- (DDHidElement *) selectedElement;
-{
-    DDHidDevice * selectedDevice = [self selectedDevice];
-    if (selectedDevice == nil)
-        return nil;
-    
-    NSIndexPath * indexPath = [mElementsController selectionIndexPath];
-    return [self elementAtIndexPath: indexPath forDevice: selectedDevice];
-}
-
-- (NSArray *) selectedElements;
-{
-    NSMutableArray * elements = [NSMutableArray array];
-    DDHidDevice * selectedDevice = [self selectedDevice];
-    if (selectedDevice == nil)
-        return elements;
-    
-    NSArray * indexPaths = [mElementsController selectionIndexPaths];
-    NSIndexPath * indexPath;
-    NSEnumerator * e = [indexPaths objectEnumerator];
-    while (indexPath = [e nextObject])
-    {
-        DDHidElement * element = [self elementAtIndexPath: indexPath
-                                                forDevice: selectedDevice];
-        [elements addObject: element];
-    }
-    return elements;
 }
 
 - (IBAction) watchSelected: (id) sender;
 {
-    NSArray * selectedElements = [self selectedElements];
+    NSArray * selectedElements = [mElementsController selectedObjects];
     if ([selectedElements count] == 0)
         return;
 
