@@ -32,3 +32,12 @@ Total time: 1.401858 for 100000000 invocations, Mi/s: 71.333900
 Total time: 1.409716 for 100000000 invocations, Mi/s: 70.936272
 Avg:  71.2 Mi/s
 
+Run: 2007-01-25
+MacBook Pro, 2.33 GHz Core 2 Duo
+--------------------------------
+
+Delegate option 5: MDelegateManager
+Total time: 14.990698 for 10000000 invocations, Mi/s: 0.667080
+Total time: 14.775730 for 10000000 invocations, Mi/s: 0.676786
+Total time: 14.792133 for 10000000 invocations, Mi/s: 0.676035
+Total time: 14.811392 for 10000000 invocations, Mi/s: 0.675156

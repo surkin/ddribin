@@ -40,16 +40,34 @@
     [object incrementCount];
 #else
     [object setDelegate: self];
-    NSDate * start = [NSDate date];
-#if DELEGATE_OPTION == 3
+#if (DELEGATE_OPTION == 3) || (DELEGATE_OPTION == 5)
     int invocations = 10000000;
 #else
     int invocations = 100000000;
 #endif
+
+#if BENCHMARK_AUTORELEASE_COUNT > 0
+    int innerLoop = BENCHMARK_AUTORELEASE_COUNT;
+#else
+    int innerLoop = invocations;
+#endif
+
+    int outerLoop = invocations/innerLoop;
     int i;
-    for (i = 0; i < invocations; i++)
+    NSDate * start = [NSDate date];
+    for (i = 0; i < outerLoop; i++)
     {
-        [object doSomething];
+        int j;
+#if BENCHMARK_AUTORELEASE_COUNT > 0
+        NSAutoreleasePool * pool = [[NSAutoreleasePool alloc] init];
+#endif
+        for (j = 0; j < innerLoop; j++)
+        {
+            [object doSomething];
+        }
+#if BENCHMARK_AUTORELEASE_COUNT > 0
+        [pool release];
+#endif
     }
     NSDate * finish = [NSDate date];
     NSTimeInterval time = [finish timeIntervalSinceDate: start];
@@ -94,6 +112,8 @@ int main (int argc, const char * argv[])
     printf("Delegate option 3: delegate helper\n");
 #elif DELEGATE_OPTION == 4
     printf("Delegate option 4: ivar cache\n");
+#elif DELEGATE_OPTION == 5
+    printf("Delegate option 5: MDelegateManager\n");
 #else
 #error Invalid DELEGATE_OPTION 
 #endif
