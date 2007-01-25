@@ -15,10 +15,11 @@
 #define NSLog(...)
 #endif
 
-#define DELEGATE_OPTION 2
+#define DELEGATE_OPTION 3
 
 @class MyObjectDelegate;
 @class MDelegateManager;
+@class DDDelegateManager;
 
 @interface MyObject : NSObject
 {
@@ -33,6 +34,9 @@
 #endif
 #if DELEGATE_OPTION == 5
     MDelegateManager * mDelegateManager;
+#endif
+#if DELEGATE_OPTION == 6
+    DDDelegateManager * mDelegateManager;
 #endif
     int mCount;
 }

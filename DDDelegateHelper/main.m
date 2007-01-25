@@ -40,7 +40,7 @@
     [object incrementCount];
 #else
     [object setDelegate: self];
-#if (DELEGATE_OPTION == 3) || (DELEGATE_OPTION == 5)
+#if (DELEGATE_OPTION == 3) || (DELEGATE_OPTION == 5) || (DELEGATE_OPTION == 6)
     int invocations = 10000000;
 #else
     int invocations = 100000000;
@@ -114,6 +114,8 @@ int main (int argc, const char * argv[])
     printf("Delegate option 4: ivar cache\n");
 #elif DELEGATE_OPTION == 5
     printf("Delegate option 5: MDelegateManager\n");
+#elif DELEGATE_OPTION == 6
+    printf("Delegate option 6: DDDelegateManager\n");
 #else
 #error Invalid DELEGATE_OPTION 
 #endif
