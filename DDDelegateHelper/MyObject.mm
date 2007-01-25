@@ -69,15 +69,12 @@
     
 #if DELEGATE_OPTION == 3
     mDelegateHelper = [[MyObjectDelegate alloc] init];
-#endif
-#if DELEGATE_OPTION ==  4
+#elif DELEGATE_OPTION ==  4
     mHasDidDoSomethingDelegate = NO;
     mHasShouldResetCountDelegate = NO;
-#endif
-#if DELEGATE_OPTION ==  5
+#elif DELEGATE_OPTION ==  5
     mDelegateManager = [[MDelegateManager alloc] init];
-#endif
-#if DELEGATE_OPTION ==  6
+#elif DELEGATE_OPTION ==  6
     mDelegateManager = [[DDDelegateManager alloc] init];
 #endif
     
@@ -92,8 +89,7 @@
     [mDelegateHelper release];
     
     mDelegateHelper = nil;
-#endif
-#if (DELEGATE_OPTION == 5) || (DELEGATE_OPTION == 6)
+#elif (DELEGATE_OPTION == 5) || (DELEGATE_OPTION == 6)
     [mDelegateManager dealloc];
     mDelegateManager = nil;
 #endif
@@ -116,6 +112,13 @@
         mHasShouldResetCountDelegate = YES;
 #elif (DELEGATE_OPTION == 5) || (DELEGATE_OPTION == 6)
     [mDelegateManager setProxiedObject: delegate];
+#elif DELEGATE_OPTION == 7
+    mSelectorMap.clear();
+    BOOL respondsToSelector;
+    respondsToSelector = [mDelegate respondsToSelector: @selector(myObjectDidDoSomething:)];
+    mSelectorMap[@selector(myObjectDidDoSomething:)] = respondsToSelector;
+    respondsToSelector = [mDelegate respondsToSelector: @selector(myObjectShouldResetCount:count:)];
+    mSelectorMap[@selector(myObjectShouldResetCount:count:)] = respondsToSelector;
 #endif
 }
 
@@ -136,6 +139,11 @@
     }
 #elif (DELEGATE_OPTION == 5) || (DELEGATE_OPTION == 6)
     [mDelegateManager myObjectDidDoSomething: self];
+#elif DELEGATE_OPTION == 7
+    if (mSelectorMap[@selector(myObjectDidDoSomething:)])
+    {
+        [mDelegate myObjectDidDoSomething: self];
+    }
 #endif
 }
 
@@ -169,6 +177,14 @@
     BOOL rc = [mDelegateManager myObjectShouldResetCount: self count: mCount];
     if ([mDelegateManager justResponded] && rc)
         mCount = 0;
+#elif DELEGATE_OPTION == 7
+    if (mSelectorMap[@selector(myObjectShouldResetCount:count:)])
+    {
+        if ([mDelegate myObjectShouldResetCount: self count: mCount])
+        {
+            mCount = 0;
+        }
+    }
 #endif
 }
 

@@ -42,3 +42,9 @@ Total time: 14.775730 for 10000000 invocations, Mi/s: 0.676786
 Total time: 14.792133 for 10000000 invocations, Mi/s: 0.676035
 Total time: 14.811392 for 10000000 invocations, Mi/s: 0.675156
 Avg: 0.673 Mi/s, 105.8x slower than option 4
+
+Delegate option 7: SelectorMap
+Total time: 2.221540 for 100000000 invocations, Mi/s: 45.013821
+Total time: 2.223064 for 100000000 invocations, Mi/s: 44.982960
+Total time: 2.223823 for 100000000 invocations, Mi/s: 44.967609
+Total time: 2.235671 for 100000000 invocations, Mi/s: 44.729301
