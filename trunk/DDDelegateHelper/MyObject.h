@@ -21,22 +21,30 @@
 @class MDelegateManager;
 @class DDDelegateManager;
 
+
+#if DELEGATE_OPTION == 7
+#include <map>
+
+typedef std::map<SEL, BOOL> SelectorMap;
+#endif
+
+
 @interface MyObject : NSObject
 {
-#if (DELEGATE_OPTION == 1) || (DELEGATE_OPTION == 2) || (DELEGATE_OPTION == 4)
+#if (DELEGATE_OPTION == 1) || (DELEGATE_OPTION == 2) || (DELEGATE_OPTION == 4) || (DELEGATE_OPTION == 7)
     id mDelegate;
-#elif DELEGATE_OPTION == 3
-    MyObjectDelegate * mDelegateHelper;
 #endif
-#if DELEGATE_OPTION == 4
+#if DELEGATE_OPTION == 3
+    MyObjectDelegate * mDelegateHelper;
+#elif DELEGATE_OPTION == 4
     BOOL mHasDidDoSomethingDelegate;
     BOOL mHasShouldResetCountDelegate;
-#endif
-#if DELEGATE_OPTION == 5
+#elif DELEGATE_OPTION == 5
     MDelegateManager * mDelegateManager;
-#endif
-#if DELEGATE_OPTION == 6
+#elif DELEGATE_OPTION == 6
     DDDelegateManager * mDelegateManager;
+#elif DELEGATE_OPTION == 7
+    SelectorMap mSelectorMap;
 #endif
     int mCount;
 }

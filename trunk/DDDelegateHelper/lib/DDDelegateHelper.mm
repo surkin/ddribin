@@ -8,6 +8,14 @@
 
 #import "DDDelegateHelper.h"
 
+#define USE_CPP_MAP 0
+
+#if USE_CPP_MAP == 1
+#include <map>
+
+typedef std::map<SEL, BOOL> SelectorMap;
+SelectorMap sSelectors;
+#endif
 
 @implementation DDDelegateHelper
 
@@ -36,11 +44,30 @@
 - (void) setDelegate: (id) theDelegate
 {
     mDelegate = theDelegate;
+#if USE_CPP_MAP == 1
+    sSelectors.clear();
+#else
     [mSelectors removeAllObjects];
+#endif
 }
 
 - (BOOL) shouldCallSelector: (SEL) selector;
 {
+#if USE_CPP_MAP == 1
+    SelectorMap::const_iterator i = sSelectors.find(selector);
+    if (i != sSelectors.end())
+    {
+        return i->second;
+    }
+    BOOL shouldCallSelector;
+    if ([mDelegate respondsToSelector: selector])
+        shouldCallSelector = YES;
+    else
+        shouldCallSelector = NO;
+    sSelectors[selector] = shouldCallSelector;
+    return shouldCallSelector;
+    
+#else
     NSValue * selectorValue = [NSValue valueWithPointer: selector];
     NSNumber * shouldCallSelector = [mSelectors objectForKey: selectorValue];
     if (shouldCallSelector == nil)
@@ -53,6 +80,7 @@
                        forKey: selectorValue];
     }
     return [shouldCallSelector boolValue];
+#endif
 }
 
 - (BOOL) willCallSelector: (SEL) selector;

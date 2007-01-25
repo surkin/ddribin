@@ -116,6 +116,8 @@ int main (int argc, const char * argv[])
     printf("Delegate option 5: MDelegateManager\n");
 #elif DELEGATE_OPTION == 6
     printf("Delegate option 6: DDDelegateManager\n");
+#elif DELEGATE_OPTION == 7
+    printf("Delegate option 7: SelectorMap\n");
 #else
 #error Invalid DELEGATE_OPTION 
 #endif

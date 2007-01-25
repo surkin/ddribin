@@ -12,10 +12,10 @@
 		553786110B6915BD00017FD5 /* DDDelegateManager.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = 5537860F0B6915BD00017FD5 /* DDDelegateManager.h */; };
 		553786120B6915BD00017FD5 /* DDDelegateManager.mm in Sources */ = {isa = PBXBuildFile; fileRef = 553786100B6915BD00017FD5 /* DDDelegateManager.mm */; };
 		55A007C80B606BA3001B47E5 /* DDDelegateHelper.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = 55A007C60B606BA3001B47E5 /* DDDelegateHelper.h */; };
-		55A007C90B606BA3001B47E5 /* DDDelegateHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 55A007C70B606BA3001B47E5 /* DDDelegateHelper.m */; };
+		55A007C90B606BA3001B47E5 /* DDDelegateHelper.mm in Sources */ = {isa = PBXBuildFile; fileRef = 55A007C70B606BA3001B47E5 /* DDDelegateHelper.mm */; };
 		55A007F20B606EC3001B47E5 /* MyObject.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = 55A007F00B606EC3001B47E5 /* MyObject.h */; };
-		55A007F30B606EC3001B47E5 /* MyObject.m in Sources */ = {isa = PBXBuildFile; fileRef = 55A007F10B606EC3001B47E5 /* MyObject.m */; };
-		8DD76F9A0486AA7600D96B5E /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 08FB7796FE84155DC02AAC07 /* main.m */; settings = {ATTRIBUTES = (); }; };
+		55A007F30B606EC3001B47E5 /* MyObject.mm in Sources */ = {isa = PBXBuildFile; fileRef = 55A007F10B606EC3001B47E5 /* MyObject.mm */; };
+		8DD76F9A0486AA7600D96B5E /* main.mm in Sources */ = {isa = PBXBuildFile; fileRef = 08FB7796FE84155DC02AAC07 /* main.mm */; settings = {ATTRIBUTES = (); }; };
 		8DD76F9C0486AA7600D96B5E /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 08FB779EFE84155DC02AAC07 /* Foundation.framework */; };
 		8DD76F9F0486AA7600D96B5E /* DDDelegateHelper.1 in CopyFiles */ = {isa = PBXBuildFile; fileRef = C6859EA3029092ED04C91782 /* DDDelegateHelper.1 */; };
 /* End PBXBuildFile section */
@@ -38,7 +38,7 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
-		08FB7796FE84155DC02AAC07 /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
+		08FB7796FE84155DC02AAC07 /* main.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = main.mm; sourceTree = "<group>"; };
 		08FB779EFE84155DC02AAC07 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = /System/Library/Frameworks/Foundation.framework; sourceTree = "<absolute>"; };
 		32A70AAB03705E1F00C91783 /* DDDelegateHelper_Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DDDelegateHelper_Prefix.pch; sourceTree = "<group>"; };
 		5537846E0B68FF1C00017FD5 /* MDelegateManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MDelegateManager.h; sourceTree = "<group>"; };
@@ -46,9 +46,9 @@
 		5537860F0B6915BD00017FD5 /* DDDelegateManager.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = DDDelegateManager.h; sourceTree = "<group>"; };
 		553786100B6915BD00017FD5 /* DDDelegateManager.mm */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.cpp.objcpp; path = DDDelegateManager.mm; sourceTree = "<group>"; };
 		55A007C60B606BA3001B47E5 /* DDDelegateHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DDDelegateHelper.h; sourceTree = "<group>"; };
-		55A007C70B606BA3001B47E5 /* DDDelegateHelper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DDDelegateHelper.m; sourceTree = "<group>"; };
+		55A007C70B606BA3001B47E5 /* DDDelegateHelper.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = DDDelegateHelper.mm; sourceTree = "<group>"; };
 		55A007F00B606EC3001B47E5 /* MyObject.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MyObject.h; sourceTree = "<group>"; };
-		55A007F10B606EC3001B47E5 /* MyObject.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MyObject.m; sourceTree = "<group>"; };
+		55A007F10B606EC3001B47E5 /* MyObject.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = MyObject.mm; sourceTree = "<group>"; };
 		8DD76FA10486AA7600D96B5E /* DDDelegateHelper */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = DDDelegateHelper; sourceTree = BUILT_PRODUCTS_DIR; };
 		C6859EA3029092ED04C91782 /* DDDelegateHelper.1 */ = {isa = PBXFileReference; lastKnownFileType = text.man; path = DDDelegateHelper.1; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -82,8 +82,8 @@
 			children = (
 				32A70AAB03705E1F00C91783 /* DDDelegateHelper_Prefix.pch */,
 				55A007F00B606EC3001B47E5 /* MyObject.h */,
-				55A007F10B606EC3001B47E5 /* MyObject.m */,
-				08FB7796FE84155DC02AAC07 /* main.m */,
+				55A007F10B606EC3001B47E5 /* MyObject.mm */,
+				08FB7796FE84155DC02AAC07 /* main.mm */,
 			);
 			name = Source;
 			sourceTree = "<group>";
@@ -108,7 +108,7 @@
 			isa = PBXGroup;
 			children = (
 				55A007C60B606BA3001B47E5 /* DDDelegateHelper.h */,
-				55A007C70B606BA3001B47E5 /* DDDelegateHelper.m */,
+				55A007C70B606BA3001B47E5 /* DDDelegateHelper.mm */,
 				5537846E0B68FF1C00017FD5 /* MDelegateManager.h */,
 				5537846F0B68FF1C00017FD5 /* MDelegateManager.m */,
 				5537860F0B6915BD00017FD5 /* DDDelegateManager.h */,
@@ -166,9 +166,9 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				8DD76F9A0486AA7600D96B5E /* main.m in Sources */,
-				55A007C90B606BA3001B47E5 /* DDDelegateHelper.m in Sources */,
-				55A007F30B606EC3001B47E5 /* MyObject.m in Sources */,
+				8DD76F9A0486AA7600D96B5E /* main.mm in Sources */,
+				55A007C90B606BA3001B47E5 /* DDDelegateHelper.mm in Sources */,
+				55A007F30B606EC3001B47E5 /* MyObject.mm in Sources */,
 				553784710B68FF1C00017FD5 /* MDelegateManager.m in Sources */,
 				553786120B6915BD00017FD5 /* DDDelegateManager.mm in Sources */,
 			);
