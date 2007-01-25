@@ -36,7 +36,20 @@
 
 #import "MDelegateManager.h"
 
-@interface MDelegateManager (MDelegateManager)
+@interface MDelegateManager (MyObjectDelegate)
+
+- (void) myObjectDidDoSomething: (MyObject *) myObject;
+- (BOOL) myObjectShouldResetCount: (MyObject *) myObject count: (int) count;
+
+@end
+
+#endif
+
+#if DELEGATE_OPTION == 6
+
+#import "DDDelegateManager.h"
+
+@interface DDDelegateManager (MyObjectDelegate)
 
 - (void) myObjectDidDoSomething: (MyObject *) myObject;
 - (BOOL) myObjectShouldResetCount: (MyObject *) myObject count: (int) count;
@@ -64,7 +77,10 @@
 #if DELEGATE_OPTION ==  5
     mDelegateManager = [[MDelegateManager alloc] init];
 #endif
-
+#if DELEGATE_OPTION ==  6
+    mDelegateManager = [[DDDelegateManager alloc] init];
+#endif
+    
     mCount = 0;
     
     return self;
@@ -77,7 +93,7 @@
     
     mDelegateHelper = nil;
 #endif
-#if DELEGATE_OPTION ==  5
+#if (DELEGATE_OPTION == 5) || (DELEGATE_OPTION == 6)
     [mDelegateManager dealloc];
     mDelegateManager = nil;
 #endif
@@ -98,7 +114,7 @@
         mHasDidDoSomethingDelegate = YES;
     if ([mDelegate respondsToSelector: @selector(myObjectShouldResetCount:count:)])
         mHasShouldResetCountDelegate = YES;
-#elif DELEGATE_OPTION == 5
+#elif (DELEGATE_OPTION == 5) || (DELEGATE_OPTION == 6)
     [mDelegateManager setProxiedObject: delegate];
 #endif
 }
@@ -118,7 +134,7 @@
     {
         [mDelegate myObjectDidDoSomething: self];
     }
-#elif DELEGATE_OPTION == 5
+#elif (DELEGATE_OPTION == 5) || (DELEGATE_OPTION == 6)
     [mDelegateManager myObjectDidDoSomething: self];
 #endif
 }
@@ -149,7 +165,7 @@
             mCount = 0;
         }
     }
-#elif DELEGATE_OPTION == 5
+#elif (DELEGATE_OPTION == 5) || (DELEGATE_OPTION == 6)
     BOOL rc = [mDelegateManager myObjectShouldResetCount: self count: mCount];
     if ([mDelegateManager justResponded] && rc)
         mCount = 0;
