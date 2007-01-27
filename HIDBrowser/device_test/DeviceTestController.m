@@ -11,4 +11,15 @@
 
 @implementation DeviceTestController
 
+- (void) awakeFromNib
+{
+    [mWindow center];
+    [mWindow makeKeyAndOrderFront: self];
+}
+
+- (BOOL)applicationShouldTerminateAfterLastWindowClosed:(NSApplication *)theApplication
+{
+    return YES;
+}
+
 @end

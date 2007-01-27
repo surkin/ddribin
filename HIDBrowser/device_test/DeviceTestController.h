@@ -12,6 +12,7 @@
 
 @interface DeviceTestController : NSObject
 {
+    IBOutlet NSWindow * mWindow;
     IBOutlet MousePaneController * mMousePaneController;
 }
 

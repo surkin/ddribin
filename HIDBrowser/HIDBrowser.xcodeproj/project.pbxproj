@@ -278,7 +278,6 @@
 		559CBAE80B5B31AB00C8FD74 /* device_test */ = {
 			isa = PBXGroup;
 			children = (
-				559CBBA20B5B31FD00C8FD74 /* Resources */,
 				559CBAEA0B5B31AB00C8FD74 /* main.m */,
 				55FD65C90B5DD57200325FEF /* DeviceTestController.h */,
 				55FD65CA0B5DD57200325FEF /* DeviceTestController.m */,
@@ -290,6 +289,7 @@
 				55A000500B5D7C06001B47E5 /* BoolFormatter.m */,
 				55FD67730B5DDF8200325FEF /* ButtonState.h */,
 				55FD67740B5DDF8200325FEF /* ButtonState.m */,
+				559CBBA20B5B31FD00C8FD74 /* Resources */,
 			);
 			path = device_test;
 			sourceTree = "<group>";

@@ -9,7 +9,7 @@
         {
             CLASS = DeviceTestController; 
             LANGUAGE = ObjC; 
-            OUTLETS = {mMousePaneController = MousePaneController; }; 
+            OUTLETS = {mMousePaneController = MousePaneController; mWindow = NSWindow; }; 
             SUPERCLASS = NSObject; 
         }, 
         {CLASS = FirstResponder; LANGUAGE = ObjC; SUPERCLASS = NSObject; }, 
