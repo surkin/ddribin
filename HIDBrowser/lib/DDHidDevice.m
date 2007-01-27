@@ -127,6 +127,10 @@
     
     IOObjectRelease(hidObjectIterator);
     
+    // This makes sure the array return is consistent from run to run, 
+    // assuming no new devices were added.
+    [devices sortUsingSelector: @selector(compareByLocationId:)];
+    
     return devices;
 }
 
@@ -275,6 +279,18 @@
 - (NSArray *) usages;
 {
     return mUsages;
+}
+
+- (NSComparisonResult) compareByLocationId: (DDHidDevice *) device;
+{
+    long myLocationId = [self locationId];
+    long otherLocationId = [device locationId];
+    if (myLocationId < otherLocationId)
+        return NSOrderedAscending;
+    else if (myLocationId > otherLocationId)
+        return NSOrderedDescending;
+    else
+        return NSOrderedSame;
 }
 
 @end

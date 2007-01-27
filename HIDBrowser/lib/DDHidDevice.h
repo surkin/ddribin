@@ -71,4 +71,6 @@
 - (DDHidUsage *) primaryUsage;
 - (NSArray *) usages;
 
+- (NSComparisonResult) compareByLocationId: (DDHidDevice *) device;
+
 @end
