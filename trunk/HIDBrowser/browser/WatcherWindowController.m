@@ -43,6 +43,19 @@
 }
 
 //=========================================================== 
+// dealloc
+//=========================================================== 
+- (void) dealloc
+{
+    [mUsageDescription release];
+    [mEvent release];
+    
+    mUsageDescription = nil;
+    mEvent = nil;
+    [super dealloc];
+}
+
+//=========================================================== 
 // - usageDescription
 //=========================================================== 
 - (NSString *) usageDescription
@@ -145,22 +158,12 @@
 #endif
 }
 
-- (void) addCookiesToQueue;
-{
-    NSEnumerator * e = [mElements objectEnumerator];
-    DDHidElement * element;
-    while(element = [e nextObject])
-    {
-        [mQueue addElement: element];
-    }
-}
-
 - (void) windowDidLoad;
 {
     [mDevice open];
     mQueue = [[mDevice createQueueWithSize: 30] retain];
     [mQueue setDelegate: self];
-    [self addCookiesToQueue];
+    [mQueue addElements: mElements];
     [self willChangeValueForKey: @"watching"];
     [mQueue startOnCurrentRunLoop];
     [self didChangeValueForKey: @"watching"];
