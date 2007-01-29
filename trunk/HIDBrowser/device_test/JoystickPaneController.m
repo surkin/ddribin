@@ -100,8 +100,8 @@
 }
 
 - (void) hidJoystick: (DDHidJoystick *)  joystick
-            xChanged: (int) value
-             ofStick: (unsigned) stick;
+               stick: (unsigned) stick
+            xChanged: (int) value;
 {
     [self willChangeValueForKey: @"xAxis"];
     mXAxis = value;
@@ -109,8 +109,8 @@
 }
 
 - (void) hidJoystick: (DDHidJoystick *)  joystick
-            yChanged: (int) value
-             ofStick: (unsigned) stick;
+               stick: (unsigned) stick
+            yChanged: (int) value;
 {
     [self willChangeValueForKey: @"yAxis"];
     mYAxis = value;

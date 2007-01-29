@@ -12,11 +12,11 @@
 @interface DDHidJoystick (DDHidJoystickDelegate)
 
 - (void) hidJoystick: (DDHidJoystick *)  joystick
-            xChanged: (int) value
-             ofStick: (unsigned) stick;
+               stick: (unsigned) stick
+            xChanged: (int) value;
 - (void) hidJoystick: (DDHidJoystick *)  joystick
-            yChanged: (int) value
-             ofStick: (unsigned) stick;
+               stick: (unsigned) stick
+            yChanged: (int) value;
 - (void) hidJoystick: (DDHidJoystick *) joystick
           buttonDown: (unsigned) buttonNumber;
 - (void) hidJoystick: (DDHidJoystick *) joystick
@@ -30,6 +30,9 @@
 - (void) addStick: (NSArray *) stickElements;
 - (void) hidQueueHasEvents: (DDHidQueue *) hidQueue;
 
+- (int) normalizeValue: (int) value
+            forElement: (DDHidElement *) element;
+
 - (BOOL) findStick: (unsigned *) stick
            element: (DDHidElement **) elementOut
    withXAxisCookie: (IOHIDElementCookie) cookie;
@@ -37,7 +40,7 @@
            element: (DDHidElement **) elementOut
    withYAxisCookie: (IOHIDElementCookie) cookie;
 - (BOOL) findOtherAxis: (unsigned *) otherAxis
-               onStick: (unsigned *) stick
+                 stick: (unsigned *) stick
             withCookie: (IOHIDElementCookie) cookie;
 
 @end
@@ -227,15 +230,13 @@
         // unsigned otherAxis;
         if ([self findStick: &stick element: &element withXAxisCookie: cookie])
         {
-            int normalizedValue = (((value - [element minValue]) * 65536) /
-                                   ([element maxValue] - [element minValue] + 1)) - 32768;
-            [self hidJoystick: self xChanged: normalizedValue ofStick: stick];
+            int normalizedValue = [self normalizeValue: value forElement: element];
+            [self hidJoystick: self stick: stick xChanged: normalizedValue];
         }
         else if ([self findStick: &stick element: &element withYAxisCookie: cookie])
         {
-            int normalizedValue = (((value - [element minValue]) * 65536) /
-                                   ([element maxValue] - [element minValue] + 1)) - 32768;
-            [self hidJoystick: self yChanged: normalizedValue ofStick: stick];
+            int normalizedValue = [self normalizeValue: value forElement: element];
+            [self hidJoystick: self stick: stick yChanged: normalizedValue];
         }
 #if 0
         else if (cookie == [[self wheelElement] cookie])
@@ -271,6 +272,20 @@
             }
         }
     }
+}
+
+- (int) normalizeValue: (int) value
+            forElement: (DDHidElement *) element;
+{
+    static const int normalizedMin = -32768;
+    static const int normalizedMax = 32768;
+    
+    int normalizedUnits = normalizedMax - normalizedMin;
+    int elementUnits = [element maxValue] - [element minValue];
+    
+    int normalizedValue = (((value - [element minValue]) * normalizedUnits) /
+                           elementUnits) + normalizedMin;
+    return normalizedValue;
 }
 
 - (BOOL) findStick: (unsigned *) stick
@@ -310,7 +325,7 @@
 }
 
 - (BOOL) findOtherAxis: (unsigned *) otherAxis
-               onStick: (unsigned *) stick
+                 stick: (unsigned *) stick
             withCookie: (IOHIDElementCookie) cookie;
 {
     return NO;
@@ -321,19 +336,19 @@
 @implementation DDHidJoystick (DDHidJoystickDelegate)
 
 - (void) hidJoystick: (DDHidJoystick *)  joystick
-            xChanged: (int) value
-             ofStick: (unsigned) stick;
+               stick: (unsigned) stick
+            xChanged: (int) value;
 {
     if ([mDelegate respondsToSelector: _cmd])
-        [mDelegate hidJoystick: joystick xChanged: value ofStick: stick];
+        [mDelegate hidJoystick: joystick stick: stick xChanged: value];
 }
 
 - (void) hidJoystick: (DDHidJoystick *)  joystick
-            yChanged: (int) value
-             ofStick: (unsigned) stick;
+               stick: (unsigned) stick
+            yChanged: (int) value;
 {
     if ([mDelegate respondsToSelector: _cmd])
-        [mDelegate hidJoystick: joystick yChanged: value ofStick: stick];
+        [mDelegate hidJoystick: joystick stick: stick yChanged: value];
 }
 
 - (void) hidJoystick: (DDHidJoystick *) joystick

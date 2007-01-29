@@ -78,11 +78,11 @@
 @interface NSObject (DDHidJoystickDelegate)
 
 - (void) hidJoystick: (DDHidJoystick *)  joystick
-            xChanged: (int) value
-             ofStick: (unsigned) stick;
+               stick: (unsigned) stick
+            xChanged: (int) value;
 - (void) hidJoystick: (DDHidJoystick *)  joystick
-            yChanged: (int) value
-             ofStick: (unsigned) stick;
+               stick: (unsigned) stick
+            yChanged: (int) value;
 - (void) hidJoystick: (DDHidJoystick *) joystick
           buttonDown: (unsigned) buttonNumber;
 - (void) hidJoystick: (DDHidJoystick *) joystick
