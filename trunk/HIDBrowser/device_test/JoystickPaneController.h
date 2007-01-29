@@ -16,6 +16,8 @@
 
     NSArray * mJoysticks;
     NSMutableArray * mJoystickButtons;
+    int mXAxis;
+    int mYAxis;
     unsigned mJoystickIndex;
 
     // Don't retain these
@@ -29,6 +31,15 @@
 - (unsigned) joystickIndex;
 - (void) setJoystickIndex: (unsigned) theJoystickIndex;
 
+- (int) xAxis;
+- (int) yAxis;
+
+- (void) hidJoystick: (DDHidJoystick *)  joystick
+            xChanged: (int) value
+             ofStick: (unsigned) stick;
+- (void) hidJoystick: (DDHidJoystick *)  joystick
+            yChanged: (int) value
+             ofStick: (unsigned) stick;
 - (void) hidJoystick: (DDHidJoystick *) joystick
           buttonDown: (unsigned) buttonNumber;
 - (void) hidJoystick: (DDHidJoystick *) joystick

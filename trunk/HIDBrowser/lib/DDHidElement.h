@@ -28,6 +28,8 @@
 
 - (NSString *) stringForKey: (NSString *) key;
 
+- (NSString *) description;
+
 - (IOHIDElementCookie) cookie;
 - (unsigned) cookieAsUnsigned;
 
