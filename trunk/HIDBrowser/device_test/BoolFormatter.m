@@ -23,16 +23,44 @@
     [super dealloc];
 }
 
+- (BOOL) boolForObjectValue: (id) object
+{
+    BOOL result;
+    if ([object respondsToSelector: @selector(boolValue)])
+        result = [object boolValue] ? YES : NO;
+    else
+        result = NO;
+    return result;
+}
+
 - (NSString *)stringForObjectValue:(id)_obj
 {
     NSString *str;
     
-    if ([_obj respondsToSelector: @selector(boolValue)])
-        str = [_obj boolValue] ? @"Yes" : @"No";
+    if ([self boolForObjectValue: _obj])
+        str = @"Yes";
     else
         str = @"No";
+
     return (self->labels != nil)
         ? (NSString *)[self->labels valueForKey:str] : str;
+}
+
+- (NSAttributedString *)attributedStringForObjectValue:(id)anObject
+                                 withDefaultAttributes:(NSDictionary *)defaultAttributes
+{
+    NSDictionary * yesAttributes = [NSDictionary dictionaryWithObjectsAndKeys:
+        [NSColor redColor], NSBackgroundColorAttributeName,
+        nil];
+    NSDictionary * attributes = defaultAttributes;
+    if ([self boolForObjectValue: anObject])
+        attributes = yesAttributes;
+    
+    NSAttributedString * string =
+        [[NSAttributedString alloc] initWithString: [self stringForObjectValue: anObject]
+                                        attributes: attributes];
+    [string autorelease];
+    return string;
 }
 
 @end
