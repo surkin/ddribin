@@ -60,4 +60,9 @@
     return [NSString stringWithFormat: @"HID Usage: %@", [self usageName]];
 }
 
+- (BOOL) isEqualToUsagePage: (unsigned) usagePage usageId: (unsigned) usageId;
+{
+    return ((mUsagePage == usagePage) && (mUsageId == usageId));
+}
+
 @end

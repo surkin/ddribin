@@ -30,6 +30,7 @@
         [joystick setDelegate: self];
         NSLog(@"Joystick product name: %@",
               [joystick productName]);
+        NSLog(@"Joystick stick elements: %@", [joystick objectInSticksAtIndex: 0]);
     }
     [self setJoysticks: joysticks];
     if ([mJoysticks count] > 0)
@@ -86,6 +87,34 @@
         }
         [self didChangeValueForKey: @"joystickButtons"];
     }
+}
+
+- (int) xAxis;
+{
+    return mXAxis;
+}
+
+- (int) yAxis;
+{
+    return mYAxis;
+}
+
+- (void) hidJoystick: (DDHidJoystick *)  joystick
+            xChanged: (int) value
+             ofStick: (unsigned) stick;
+{
+    [self willChangeValueForKey: @"xAxis"];
+    mXAxis = value;
+    [self didChangeValueForKey: @"xAxis"];
+}
+
+- (void) hidJoystick: (DDHidJoystick *)  joystick
+            yChanged: (int) value
+             ofStick: (unsigned) stick;
+{
+    [self willChangeValueForKey: @"yAxis"];
+    mYAxis = value;
+    [self didChangeValueForKey: @"yAxis"];
 }
 
 - (void) hidJoystick: (DDHidJoystick *) joystick

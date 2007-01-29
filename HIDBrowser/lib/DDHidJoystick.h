@@ -12,11 +12,36 @@
 @class DDHidElement;
 @class DDHidQueue;
 
+@interface DDHidJoystickStick : NSObject
+{
+    NSMutableArray * mStickElements;
+    DDHidElement * mXAxisElement;
+    DDHidElement * mYAxisElement;
+}
+
+#pragma mark -
+#pragma mark mStickElements - indexed accessors
+
+- (unsigned int) countOfStickElements;
+- (DDHidElement *) objectInStickElementsAtIndex: (unsigned int)index;
+
+- (DDHidElement *) xAxisElement;
+
+- (DDHidElement *) yAxisElement;
+
+- (NSArray *) allElements;
+
+-  (void) addElement: (DDHidElement *) element;
+
+@end
+
 @interface DDHidJoystick : DDHidDevice
 {
+    DDHidQueue * mQueue;
+
+    NSMutableArray * mSticks;
     NSMutableArray * mButtonElements;
 
-    DDHidQueue * mQueue;
     id mDelegate;
 }
 
@@ -25,11 +50,17 @@
 - (id) initWithDevice: (io_object_t) device;
 
 #pragma mark -
-#pragma mark Mouse Elements
+#pragma mark Joystick Elements
+
+- (unsigned) numberOfButtons;
 
 - (NSArray *) buttonElements;
 
-- (unsigned) numberOfButtons;
+#pragma mark -
+#pragma mark Sticks - indexed accessors
+
+- (unsigned int) countOfSticks;
+- (DDHidJoystickStick *) objectInSticksAtIndex: (unsigned int)index;
 
 - (void) addElementsToQueue: (DDHidQueue *) queue;
 
@@ -46,6 +77,12 @@
 
 @interface NSObject (DDHidJoystickDelegate)
 
+- (void) hidJoystick: (DDHidJoystick *)  joystick
+            xChanged: (int) value
+             ofStick: (unsigned) stick;
+- (void) hidJoystick: (DDHidJoystick *)  joystick
+            yChanged: (int) value
+             ofStick: (unsigned) stick;
 - (void) hidJoystick: (DDHidJoystick *) joystick
           buttonDown: (unsigned) buttonNumber;
 - (void) hidJoystick: (DDHidJoystick *) joystick

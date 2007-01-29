@@ -23,10 +23,14 @@
     [super dealloc];
 }
 
-- (NSString *)stringForObjectValue:(id)_obj {
+- (NSString *)stringForObjectValue:(id)_obj
+{
     NSString *str;
     
-    str = [_obj boolValue] ? @"Yes" : @"No";
+    if ([_obj respondsToSelector: @selector(boolValue)])
+        str = [_obj boolValue] ? @"Yes" : @"No";
+    else
+        str = @"No";
     return (self->labels != nil)
         ? (NSString *)[self->labels valueForKey:str] : str;
 }

@@ -59,6 +59,11 @@
     return [mProperties objectForKey: key];
 }
 
+- (NSString *) description;
+{
+    return [[self usage] usageNameWithIds];
+}
+
 - (IOHIDElementCookie) cookie;
 {
     return (IOHIDElementCookie)

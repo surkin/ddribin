@@ -31,4 +31,6 @@
 
 - (NSString *) description;
 
+- (BOOL) isEqualToUsagePage: (unsigned) usagePage usageId: (unsigned) usageId;
+
 @end
