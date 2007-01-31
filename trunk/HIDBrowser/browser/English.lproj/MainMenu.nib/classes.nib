@@ -10,6 +10,7 @@
             OUTLETS = {
                 mDevicesController = NSArrayController; 
                 mElementsController = NSTreeController; 
+                mWindow = NSWindow; 
             }; 
             SUPERCLASS = NSObject; 
         }
