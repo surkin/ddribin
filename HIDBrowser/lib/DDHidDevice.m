@@ -71,6 +71,9 @@
     [super dealloc];
 }
 
+#pragma mark -
+#pragma mark Finding Devices
+
 + (NSArray *) allDevices;
 {
 	// Set up a matching dictionary to search the I/O Registry by class
@@ -135,6 +138,7 @@
 }
 
 #pragma mark -
+#pragma mark I/O Kit Objects
 
 - (io_object_t) ioDevice;
 {
@@ -152,6 +156,7 @@
 }
 
 #pragma mark -
+#pragma mark Operations
 
 - (void) open;
 {
@@ -160,7 +165,7 @@
 
 - (void) openWithOptions: (UInt32) options;
 {
-    (*mDeviceInterface)->open(mDeviceInterface, kIOHIDOptionsTypeNone);
+    (*mDeviceInterface)->open(mDeviceInterface, options);
 }
 
 - (void) close;
@@ -179,6 +184,7 @@
 }
 
 #pragma mark -
+#pragma mark Properties
 
 //=========================================================== 
 // - productName

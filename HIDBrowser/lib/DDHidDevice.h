@@ -30,6 +30,9 @@
 
 - (id) initWithDevice: (io_object_t) device;
 
+#pragma mark -
+#pragma mark Finding Devices
+
 + (NSArray *) allDevices;
 
 + (NSArray *) allDevicesMatchingUsagePage: (unsigned) usagePage
@@ -40,11 +43,13 @@
                                    withClass: (Class) hidClass;
 
 #pragma mark -
+#pragma mark I/O Kit Objects
 
 - (io_object_t) ioDevice;
 - (IOHIDDeviceInterface122**) deviceInterface;
 
 #pragma mark -
+#pragma mark Operations
 
 - (void) open;
 - (void) openWithOptions: (UInt32) options;
@@ -52,6 +57,7 @@
 - (DDHidQueue *) createQueueWithSize: (unsigned) size;
 
 #pragma mark -
+#pragma mark Properties
 
 - (NSDictionary *) properties;
 
