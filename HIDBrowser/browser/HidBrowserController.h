@@ -11,6 +11,7 @@
 
 @interface HidBrowserController : NSObject
 {
+    IBOutlet NSWindow * mWindow;
     IBOutlet NSArrayController * mDevicesController;
     IBOutlet NSTreeController * mElementsController;
     NSArray * mDevices;

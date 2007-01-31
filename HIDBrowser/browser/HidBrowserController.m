@@ -14,12 +14,15 @@
 
 @implementation HidBrowserController
 
+
 - (void) awakeFromNib
 {
     [self willChangeValueForKey: @"devices"];
     mDevices = [[DDHidDevice allDevices] retain];
     [self didChangeValueForKey: @"devices"];
     
+    [mWindow center];
+    [mWindow makeKeyAndOrderFront: self];
 #if 0
     NSEnumerator * e = [mDevices objectEnumerator];
     int i = 0;
