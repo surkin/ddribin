@@ -49,10 +49,19 @@
 
 + (NSArray *) allJoysticks;
 {
-    return
+    NSArray * joysticks =
         [DDHidDevice allDevicesMatchingUsagePage: kHIDPage_GenericDesktop
                                          usageId: kHIDUsage_GD_Joystick
                                        withClass: self];
+    NSArray * gamepads =
+        [DDHidDevice allDevicesMatchingUsagePage: kHIDPage_GenericDesktop
+                                         usageId: kHIDUsage_GD_GamePad
+                                       withClass: self];
+
+    NSMutableArray * allJoysticks = [NSMutableArray arrayWithArray: joysticks];
+    [allJoysticks addObjectsFromArray: gamepads];
+    [allJoysticks sortUsingSelector: @selector(compareByLocationId:)];
+    return allJoysticks;
 }
 
 - (id) initWithDevice: (io_object_t) device;
