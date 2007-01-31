@@ -150,11 +150,6 @@
     return mDeviceInterface;
 }
 
-- (NSDictionary *) properties;
-{
-    return mProperties;
-}
-
 #pragma mark -
 #pragma mark Operations
 
@@ -185,6 +180,11 @@
 
 #pragma mark -
 #pragma mark Properties
+
+- (NSDictionary *) properties;
+{
+    return mProperties;
+}
 
 //=========================================================== 
 // - productName
