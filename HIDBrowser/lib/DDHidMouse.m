@@ -40,7 +40,8 @@
     return
         [DDHidDevice allDevicesMatchingUsagePage: kHIDPage_GenericDesktop
                                          usageId: kHIDUsage_GD_Mouse
-                                       withClass: self];
+                                       withClass: self
+                               skipZeroLocations: YES];
 }
 
 - (id) initWithDevice: (io_object_t) device;

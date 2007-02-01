@@ -52,11 +52,13 @@
     NSArray * joysticks =
         [DDHidDevice allDevicesMatchingUsagePage: kHIDPage_GenericDesktop
                                          usageId: kHIDUsage_GD_Joystick
-                                       withClass: self];
+                                       withClass: self
+                               skipZeroLocations: YES];
     NSArray * gamepads =
         [DDHidDevice allDevicesMatchingUsagePage: kHIDPage_GenericDesktop
                                          usageId: kHIDUsage_GD_GamePad
-                                       withClass: self];
+                                       withClass: self
+                               skipZeroLocations: YES];
 
     NSMutableArray * allJoysticks = [NSMutableArray arrayWithArray: joysticks];
     [allJoysticks addObjectsFromArray: gamepads];

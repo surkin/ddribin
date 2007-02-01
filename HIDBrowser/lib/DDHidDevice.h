@@ -37,10 +37,12 @@
 
 + (NSArray *) allDevicesMatchingUsagePage: (unsigned) usagePage
                                   usageId: (unsigned) usageId
-                                withClass: (Class) hidClass;
+                                withClass: (Class) hidClass
+                        skipZeroLocations: (BOOL) emptyLocation;
 
 + (NSArray *) allDevicesMatchingCFDictionary: (CFDictionaryRef) matchDictionary
-                                   withClass: (Class) hidClass;
+                                   withClass: (Class) hidClass
+                           skipZeroLocations: (BOOL) emptyLocation;
 
 #pragma mark -
 #pragma mark I/O Kit Objects
@@ -55,6 +57,7 @@
 - (void) openWithOptions: (UInt32) options;
 - (void) close;
 - (DDHidQueue *) createQueueWithSize: (unsigned) size;
+- (long) getElementValue: (DDHidElement *) element;
 
 #pragma mark -
 #pragma mark Properties
