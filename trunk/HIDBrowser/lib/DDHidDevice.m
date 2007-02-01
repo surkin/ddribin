@@ -35,12 +35,6 @@
         return nil;
     }
     
-    if ([self productId] == 0)
-    {
-        [self release];
-        return nil;
-    }
-    
     if (![self createDeviceInterface])
     {
         [self release];
@@ -81,17 +75,19 @@
 	CFMutableDictionaryRef hidMatchDictionary =
         IOServiceMatching(kIOHIDDeviceKey);
     return [self allDevicesMatchingCFDictionary: hidMatchDictionary
-                                      withClass: [DDHidDevice class]];
+                                      withClass: [DDHidDevice class]
+                              skipZeroLocations: NO];
 }
 
 + (NSArray *) allDevicesMatchingUsagePage: (unsigned) usagePage
                                   usageId: (unsigned) usageId
-                                withClass: (Class) hidClass;
+                                withClass: (Class) hidClass
+                        skipZeroLocations: (BOOL) skipZeroLocations;
 {
 	// Set up a matching dictionary to search the I/O Registry by class
 	// name for all HID class devices
 	CFMutableDictionaryRef hidMatchDictionary =
-        IOServiceMatching(kIOHIDDeviceKey);
+    IOServiceMatching(kIOHIDDeviceKey);
     NSMutableDictionary * objcMatchDictionary =
         (NSMutableDictionary *) hidMatchDictionary;
     [objcMatchDictionary setObject: [NSNumber numberWithUnsignedInt: usagePage]
@@ -99,11 +95,13 @@
     [objcMatchDictionary setObject: [NSNumber numberWithUnsignedInt: usageId]
                          forString: kIOHIDDeviceUsageKey];
     return [self allDevicesMatchingCFDictionary: hidMatchDictionary
-                                      withClass: hidClass];
+                                      withClass: hidClass
+                              skipZeroLocations: skipZeroLocations];
 }
 
 + (NSArray *) allDevicesMatchingCFDictionary: (CFDictionaryRef) matchDictionary
-                                   withClass: (Class) hidClass;
+                                   withClass: (Class) hidClass
+                           skipZeroLocations: (BOOL) skipZeroLocations;
 {
 	// Now search I/O Registry for matching devices.
 	io_iterator_t hidObjectIterator;
@@ -124,6 +122,8 @@
         if (device == nil)
             continue;
         [device autorelease];
+        if (([device locationId] == 0) && skipZeroLocations)
+            continue;
         
         [devices addObject: device];
     }
@@ -176,6 +176,18 @@
         return nil;
     return [[[DDHidQueue alloc] initWithHIDQueue: queue
                                             size: size] autorelease];
+}
+
+- (long) getElementValue: (DDHidElement *) element;
+{
+    IOHIDEventStruct event;
+    IOReturn result = (*mDeviceInterface)->getElementValue(mDeviceInterface,
+                                                           [element cookie],
+                                                           &event);
+    if (result == kIOReturnSuccess)
+        return event.value;
+    else
+        return 0;
 }
 
 #pragma mark -
