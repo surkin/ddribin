@@ -340,16 +340,13 @@
 - (BOOL) initPropertiesWithError: (NSError **) error_;
 {
     NSError * error = nil;
-    BOOL result = YES;
+    BOOL result = NO;
     
     CFMutableDictionaryRef properties;
     NSXReturnError(IORegistryEntryCreateCFProperties(mHidDevice, &properties,
                                                      kCFAllocatorDefault, kNilOptions));
     if (error)
-    {
-        result = NO;
         goto done;
-    }
     
     mProperties = (NSMutableDictionary *) properties;
     NSArray * elementProperties = [mProperties objectForString: kIOHIDElementKey];
@@ -377,6 +374,7 @@
     
     mElementsByCookie = [[NSMutableDictionary alloc] init];
     [self indexElements: mElements];
+    result = YES;
     
 done:
     if (error_)
