@@ -28,7 +28,7 @@
     NSMutableDictionary * mElementsByCookie;
 }
 
-- (id) initWithDevice: (io_object_t) device;
+- (id) initWithDevice: (io_object_t) device error: (NSError **) error_;
 
 #pragma mark -
 #pragma mark Finding Devices

@@ -11,17 +11,18 @@
 #import "DDHidElement.h"
 #import "DDHidQueue.h"
 #import "NSDictionary+AccessHelpers.h"
+#import "NSXReturnThrowError.h"
 
 @interface DDHidDevice (Private)
 
-- (BOOL) initProperties;
-- (BOOL) createDeviceInterface;
+- (BOOL) initPropertiesWithError: (NSError **) error_;
+- (BOOL) createDeviceInterfaceWithError: (NSError **) error_;
 
 @end
 
 @implementation DDHidDevice
 
-- (id) initWithDevice: (io_object_t) device;
+- (id) initWithDevice: (io_object_t) device error: (NSError **) error_;
 {
     self = [super init];
     if (self == nil)
@@ -29,13 +30,13 @@
     
     mHidDevice = device;
     
-    if (![self initProperties])
+    if (![self initPropertiesWithError: error_])
     {
         [self release];
         return nil;
     }
     
-    if (![self createDeviceInterface])
+    if (![self createDeviceInterfaceWithError: error_])
     {
         [self release];
         return nil;
@@ -104,35 +105,43 @@
                            skipZeroLocations: (BOOL) skipZeroLocations;
 {
 	// Now search I/O Registry for matching devices.
-	io_iterator_t hidObjectIterator;
-    IOReturn result = IOServiceGetMatchingServices(kIOMasterPortDefault,
-                                                   matchDictionary,
-                                                   &hidObjectIterator);
-    if (result != kIOReturnSuccess)
-        return nil;
-    if (hidObjectIterator == 0)
-        return [NSArray array];
-    
+	io_iterator_t hidObjectIterator = MACH_PORT_NULL;
     NSMutableArray * devices = [NSMutableArray array];
-    
-    io_object_t hidDevice;
-    while (hidDevice = IOIteratorNext(hidObjectIterator))
+    @try
     {
-        DDHidDevice * device = [[hidClass alloc] initWithDevice: hidDevice];
-        if (device == nil)
-            continue;
-        [device autorelease];
-        if (([device locationId] == 0) && skipZeroLocations)
-            continue;
+        NSXThrowError(IOServiceGetMatchingServices(kIOMasterPortDefault,
+                                                   matchDictionary,
+                                                   &hidObjectIterator));
         
-        [devices addObject: device];
+        if (hidObjectIterator == 0)
+            return [NSArray array];
+        
+        io_object_t hidDevice;
+        while (hidDevice = IOIteratorNext(hidObjectIterator))
+        {
+            NSError * error = nil;
+            DDHidDevice * device = [[hidClass alloc] initWithDevice: hidDevice
+                                                              error: &error];
+            if (device == nil)
+            {
+                NSXRaiseError(error);
+            }
+            [device autorelease];
+            if (([device locationId] == 0) && skipZeroLocations)
+                continue;
+            
+            [devices addObject: device];
+        }
+        
+        // This makes sure the array return is consistent from run to run, 
+        // assuming no new devices were added.
+        [devices sortUsingSelector: @selector(compareByLocationId:)];
     }
-    
-    IOObjectRelease(hidObjectIterator);
-    
-    // This makes sure the array return is consistent from run to run, 
-    // assuming no new devices were added.
-    [devices sortUsingSelector: @selector(compareByLocationId:)];
+    @finally
+    {
+        if (hidObjectIterator != MACH_PORT_NULL)
+            IOObjectRelease(hidObjectIterator);
+    }
     
     return devices;
 }
@@ -181,13 +190,10 @@
 - (long) getElementValue: (DDHidElement *) element;
 {
     IOHIDEventStruct event;
-    IOReturn result = (*mDeviceInterface)->getElementValue(mDeviceInterface,
-                                                           [element cookie],
-                                                           &event);
-    if (result == kIOReturnSuccess)
-        return event.value;
-    else
-        return 0;
+    NSXThrowError((*mDeviceInterface)->getElementValue(mDeviceInterface,
+                                                       [element cookie],
+                                                       &event));
+    return event.value;
 }
 
 #pragma mark -
@@ -331,14 +337,19 @@
     }
 }
 
-- (BOOL) initProperties;
+- (BOOL) initPropertiesWithError: (NSError **) error_;
 {
-    kern_return_t result;
+    NSError * error = nil;
+    BOOL result = YES;
+    
     CFMutableDictionaryRef properties;
-    result = IORegistryEntryCreateCFProperties(mHidDevice, &properties,
-                                               kCFAllocatorDefault, kNilOptions);
-    if (result != KERN_SUCCESS)
-        return NO;
+    NSXReturnError(IORegistryEntryCreateCFProperties(mHidDevice, &properties,
+                                                     kCFAllocatorDefault, kNilOptions));
+    if (error)
+    {
+        result = NO;
+        goto done;
+    }
     
     mProperties = (NSMutableDictionary *) properties;
     NSArray * elementProperties = [mProperties objectForString: kIOHIDElementKey];
@@ -367,44 +378,46 @@
     mElementsByCookie = [[NSMutableDictionary alloc] init];
     [self indexElements: mElements];
     
-    return YES;
+done:
+    if (error_)
+        *error_ = error;
+    return result;
 }
 
-- (BOOL) createDeviceInterface;
+- (BOOL) createDeviceInterfaceWithError: (NSError **) error_;
 {
-	io_name_t				className;
-	IOCFPlugInInterface**   plugInInterface = NULL;
-	HRESULT					plugInResult = S_OK;
-	SInt32					score = 0;
-	IOReturn				ioReturnValue = kIOReturnSuccess;
+	io_name_t className;
+	IOCFPlugInInterface ** plugInInterface = NULL;
+	SInt32 score = 0;
+    NSError * error = nil;
+    BOOL result = NO;
 	
 	mDeviceInterface = NULL;
 	
-	ioReturnValue = IOObjectGetClass(mHidDevice, className);
+	NSXReturnError(IOObjectGetClass(mHidDevice, className));
+    if (error)
+        goto done;
 	
-	if (ioReturnValue != kIOReturnSuccess) {
-		NSLog(@"Error: Failed to get class name.");
-		return NO;
-	}
-	
-    BOOL result = YES;
-	ioReturnValue = IOCreatePlugInInterfaceForService(mHidDevice,
-													  kIOHIDDeviceUserClientTypeID,
-													  kIOCFPlugInInterfaceID,
-													  &plugInInterface,
-													  &score);
-	if (ioReturnValue == kIOReturnSuccess)
-	{
-		//Call a method of the intermediate plug-in to create the device interface
-		plugInResult = (*plugInInterface)->QueryInterface(plugInInterface, CFUUIDGetUUIDBytes(kIOHIDDeviceInterfaceID), (LPVOID) &mDeviceInterface);
-		
-		if (plugInResult != S_OK) {
-			NSLog(@"Error: Couldn't create HID class device interface");
-            result = NO;
-		}
-		// Release
-		if (plugInInterface) (*plugInInterface)->Release(plugInInterface);
-	}
+	NSXReturnError(IOCreatePlugInInterfaceForService(mHidDevice,
+                                                     kIOHIDDeviceUserClientTypeID,
+                                                     kIOCFPlugInInterfaceID,
+													 &plugInInterface,
+													 &score));
+    if (error)
+        goto done;
+    
+    //Call a method of the intermediate plug-in to create the device interface
+    NSXReturnError((*plugInInterface)->QueryInterface(plugInInterface, CFUUIDGetUUIDBytes(kIOHIDDeviceInterfaceID), (LPVOID) &mDeviceInterface));
+    if (error)
+        goto done;
+    
+    result = YES;
+    
+done:
+    if (plugInInterface != NULL)
+        (*plugInInterface)->Release(plugInInterface);
+    if (error_)
+        *error_ = error;
 	return result;
 }
 

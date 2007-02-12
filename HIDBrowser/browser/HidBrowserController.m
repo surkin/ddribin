@@ -23,18 +23,6 @@
     
     [mWindow center];
     [mWindow makeKeyAndOrderFront: self];
-#if 0
-    NSEnumerator * e = [mDevices objectEnumerator];
-    int i = 0;
-    DDHidDevice * device;
-    while (device = [e nextObject])
-    {
-        NSDictionary * properties = [device properties];
-        [properties writeToFile: [NSString stringWithFormat: @"/tmp/device_%d.plist", i]
-                     atomically: NO];
-        i++;
-    }
-#endif
 }
 
 //=========================================================== 

@@ -66,9 +66,9 @@
     return allJoysticks;
 }
 
-- (id) initWithDevice: (io_object_t) device;
+- (id) initWithDevice: (io_object_t) device error: (NSError **) error_;
 {
-    self = [super initWithDevice: device];
+    self = [super initWithDevice: device error: error_];
     if (self == nil)
         return nil;
     
