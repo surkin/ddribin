@@ -9,6 +9,7 @@
 #import "DDHidQueue.h"
 #import "DDHidElement.h"
 #import "DDHIdEvent.h"
+#import "NSXReturnThrowError.h"
 
 static void queueCallbackFunction(void* target,  IOReturn result, void* refcon,
                                   void* sender);
@@ -80,24 +81,12 @@ static void queueCallbackFunction(void* target,  IOReturn result, void* refcon,
     
     mRunLoop = [runLoop retain];
     
-    IOReturn result;
-    result = (*mQueue)->createAsyncEventSource(mQueue, &mEventSource);
-    if (result == kIOReturnSuccess)
-    {
-        result = (*mQueue)->setEventCallout(mQueue, queueCallbackFunction, self, NULL);
-        if (result == kIOReturnSuccess)
-        {
-            CFRunLoopAddSource([mRunLoop getCFRunLoop], mEventSource,
-                               kCFRunLoopDefaultMode);
-            (*mQueue)->start(mQueue);
-            mStarted = YES;
-        }
-        else
-            NSLog(@"Error setting event callout");
-    }
-    else
-        NSLog(@"Error creating async event source");
-    
+    NSXThrowError((*mQueue)->createAsyncEventSource(mQueue, &mEventSource));
+    NSXThrowError((*mQueue)->setEventCallout(mQueue, queueCallbackFunction, self, NULL));
+    CFRunLoopAddSource([mRunLoop getCFRunLoop], mEventSource,
+                       kCFRunLoopDefaultMode);
+    (*mQueue)->start(mQueue);
+    mStarted = YES;
 }
 
 - (void) stop;
