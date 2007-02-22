@@ -28,7 +28,8 @@
 	sig=[[_proxiedObject class] instanceMethodSignatureForSelector:selector];
 	if(sig==nil)
 	{
-		sig=[NSMethodSignature signatureWithObjCTypes:"@^v^c"];		
+		// sig=[NSMethodSignature signatureWithObjCTypes:"@^v^c"];		
+        sig = [[NSObject class] instanceMethodSignatureForSelector: @selector(init)];
 	}
 	_justResponded=NO;
 	return sig;

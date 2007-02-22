@@ -8,14 +8,14 @@
 
 #import <Foundation/Foundation.h>
 
-#define RUN_BENCHMARK 1
+#define RUN_BENCHMARK 0
 #define BENCHMARK_AUTORELEASE_COUNT 0
 
 #if RUN_BENCHMARK
 #define NSLog(...)
 #endif
 
-#define DELEGATE_OPTION 3
+#define DELEGATE_OPTION 5
 
 @class MyObjectDelegate;
 @class MDelegateManager;

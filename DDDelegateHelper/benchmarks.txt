@@ -48,3 +48,4 @@ Total time: 2.221540 for 100000000 invocations, Mi/s: 45.013821
 Total time: 2.223064 for 100000000 invocations, Mi/s: 44.982960
 Total time: 2.223823 for 100000000 invocations, Mi/s: 44.967609
 Total time: 2.235671 for 100000000 invocations, Mi/s: 44.729301
+Avg: 45.0 Mi/s, 1.58x slower than option 4
