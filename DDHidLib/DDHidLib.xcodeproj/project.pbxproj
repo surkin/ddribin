@@ -6,6 +6,21 @@
 	objectVersion = 42;
 	objects = {
 
+/* Begin PBXAggregateTarget section */
+		551711110B8F41EB00C82155 /* All */ = {
+			isa = PBXAggregateTarget;
+			buildConfigurationList = 551711280B8F420E00C82155 /* Build configuration list for PBXAggregateTarget "All" */;
+			buildPhases = (
+			);
+			dependencies = (
+				551711130B8F41F500C82155 /* PBXTargetDependency */,
+				551711150B8F41F500C82155 /* PBXTargetDependency */,
+			);
+			name = All;
+			productName = All;
+		};
+/* End PBXAggregateTarget section */
+
 /* Begin PBXBuildFile section */
 		55170D360B8EC2CE00C82155 /* DDHidAppleRemote.h in Headers */ = {isa = PBXBuildFile; fileRef = 55170D340B8EC2CE00C82155 /* DDHidAppleRemote.h */; };
 		55170D370B8EC2CE00C82155 /* DDHidAppleRemote.m in Sources */ = {isa = PBXBuildFile; fileRef = 55170D350B8EC2CE00C82155 /* DDHidAppleRemote.m */; };
@@ -59,6 +74,20 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
+		551711120B8F41F500C82155 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 29B97313FDCFA39411CA2CEA /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 8D1107260486CEB800E47090 /* HIDBrowser */;
+			remoteInfo = HIDBrowser;
+		};
+		551711140B8F41F500C82155 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 29B97313FDCFA39411CA2CEA /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 559CBAE00B5B313000C8FD74 /* HIDDeviceTest */;
+			remoteInfo = HIDDeviceTest;
+		};
 		559CBBF00B5B33CF00C8FD74 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 29B97313FDCFA39411CA2CEA /* Project object */;
@@ -441,6 +470,7 @@
 			mainGroup = 29B97314FDCFA39411CA2CEA /* HIDBrowser */;
 			projectDirPath = "";
 			targets = (
+				551711110B8F41EB00C82155 /* All */,
 				8D1107260486CEB800E47090 /* HIDBrowser */,
 				559CBAE00B5B313000C8FD74 /* HIDDeviceTest */,
 				559CBBCB0B5B336600C8FD74 /* ddhid */,
@@ -521,6 +551,16 @@
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
+		551711130B8F41F500C82155 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 8D1107260486CEB800E47090 /* HIDBrowser */;
+			targetProxy = 551711120B8F41F500C82155 /* PBXContainerItemProxy */;
+		};
+		551711150B8F41F500C82155 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 559CBAE00B5B313000C8FD74 /* HIDDeviceTest */;
+			targetProxy = 551711140B8F41F500C82155 /* PBXContainerItemProxy */;
+		};
 		559CBBF10B5B33CF00C8FD74 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			target = 559CBBCB0B5B336600C8FD74 /* ddhid */;
@@ -561,6 +601,28 @@
 /* End PBXVariantGroup section */
 
 /* Begin XCBuildConfiguration section */
+		551711290B8F420E00C82155 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				COPY_PHASE_STRIP = NO;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_GENERATE_DEBUGGING_SYMBOLS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				PRODUCT_NAME = All;
+			};
+			name = Debug;
+		};
+		5517112A0B8F420E00C82155 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				COPY_PHASE_STRIP = YES;
+				GCC_ENABLE_FIX_AND_CONTINUE = NO;
+				GCC_GENERATE_DEBUGGING_SYMBOLS = NO;
+				PRODUCT_NAME = All;
+				ZERO_LINK = NO;
+			};
+			name = Release;
+		};
 		559CBAE50B5B313000C8FD74 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -719,6 +781,15 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
+		551711280B8F420E00C82155 /* Build configuration list for PBXAggregateTarget "All" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				551711290B8F420E00C82155 /* Debug */,
+				5517112A0B8F420E00C82155 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
 		559CBAE40B5B313000C8FD74 /* Build configuration list for PBXNativeTarget "HIDDeviceTest" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
