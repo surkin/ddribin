@@ -10,7 +10,7 @@
 #import "DDHidUsage.h"
 #import "DDHidElement.h"
 #import "DDHidQueue.h"
-#import "NSDictionary+AccessHelpers.h"
+#import "NSDictionary+DDHidExtras.h"
 #import "NSXReturnThrowError.h"
 
 @interface DDHidDevice (Private)

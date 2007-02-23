@@ -1,15 +1,15 @@
 //
-//  NSDictionary+AccessHelpers.m
+//  NSDictionary+DDHidExtras.m
 //  HIDBrowser
 //
 //  Created by Dave Dribin on 1/9/07.
 //  Copyright 2007 __MyCompanyName__. All rights reserved.
 //
 
-#import "NSDictionary+AccessHelpers.h"
+#import "NSDictionary+DDHidExtras.h"
 
 
-@implementation NSDictionary (AccessHelpers)
+@implementation NSDictionary (DDHidExtras)
 
 - (unsigned) ddhid_unsignedForKey: (NSString *) key;
 {
@@ -48,7 +48,7 @@
 
 @end
 
-@implementation NSMutableDictionary (AccessHelpers)
+@implementation NSMutableDictionary (DDHidExtras)
 
 - (void) ddhid_setObject: (id) object forString: (const char *) key;
 {

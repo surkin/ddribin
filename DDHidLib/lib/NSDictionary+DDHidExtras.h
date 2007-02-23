@@ -1,5 +1,5 @@
 //
-//  NSDictionary+AccessHelpers.h
+//  NSDictionary+DDHidExtras.h
 //  HIDBrowser
 //
 //  Created by Dave Dribin on 1/9/07.
@@ -9,7 +9,7 @@
 #import <Cocoa/Cocoa.h>
 
 
-@interface NSDictionary (AccessHelpers)
+@interface NSDictionary (DDHidExtras)
 
 - (unsigned) ddhid_unsignedForKey: (NSString *) key;
 
@@ -22,7 +22,7 @@
 
 @end
 
-@interface NSMutableDictionary (AccessHelpers)
+@interface NSMutableDictionary (DDHidExtras)
 
 - (void) ddhid_setObject: (id) object forString: (const char *) key;
 
