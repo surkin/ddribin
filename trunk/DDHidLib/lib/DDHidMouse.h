@@ -35,7 +35,6 @@
     DDHidElement * mWheelElement;
     NSMutableArray * mButtonElements;
     
-    DDHidQueue * mQueue;
     id mDelegate;
 }
 
@@ -63,9 +62,7 @@
 
 - (void) setDelegate: (id) delegate;
 
-- (void) startListening;
-
-- (void) stopListening;
+- (void) addElementsToDefaultQueue;
 
 @end
 

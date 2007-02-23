@@ -53,8 +53,6 @@
 
 @interface DDHidJoystick : DDHidDevice
 {
-    DDHidQueue * mQueue;
-
     NSMutableArray * mSticks;
     NSMutableArray * mButtonElements;
 
@@ -85,9 +83,7 @@
 
 - (void) setDelegate: (id) delegate;
 
-- (void) startListening;
-
-- (void) stopListening;
+- (void) addElementsToDefaultQueue;
 
 @end
 

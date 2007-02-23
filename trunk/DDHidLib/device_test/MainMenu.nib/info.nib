@@ -11,6 +11,16 @@
 	</dict>
 	<key>IBFramework Version</key>
 	<string>446.1</string>
+	<key>IBGroupedObjects</key>
+	<dict>
+		<key>0</key>
+		<array>
+			<string>420</string>
+			<string>421</string>
+		</array>
+	</dict>
+	<key>IBLastGroupID</key>
+	<string>1</string>
 	<key>IBLockedTabItems</key>
 	<array>
 		<integer>251</integer>

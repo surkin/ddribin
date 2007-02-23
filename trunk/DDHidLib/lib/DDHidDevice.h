@@ -42,6 +42,8 @@
     NSMutableArray * mUsages;
     NSArray * mElements;
     NSMutableDictionary * mElementsByCookie;
+    BOOL mListenInExclusiveMode;
+    DDHidQueue * mDefaultQueue;
 }
 
 - (id) initWithDevice: (io_object_t) device error: (NSError **) error_;
@@ -76,6 +78,18 @@
 - (long) getElementValue: (DDHidElement *) element;
 
 #pragma mark -
+#pragma mark Asynchronous Notification
+
+- (BOOL) listenInExclusiveMode;
+- (void) setListenInExclusiveMode: (BOOL) flag;
+
+- (void) startListening;
+
+- (void) stopListening;
+
+- (BOOL) isListening;
+
+#pragma mark -
 #pragma mark Properties
 
 - (NSDictionary *) properties;
@@ -97,5 +111,12 @@
 - (NSArray *) usages;
 
 - (NSComparisonResult) compareByLocationId: (DDHidDevice *) device;
+
+@end
+
+@interface DDHidDevice (Protected)
+
+- (unsigned) sizeOfDefaultQueue;
+- (void) addElementsToDefaultQueue;
 
 @end
