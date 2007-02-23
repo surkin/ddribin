@@ -11,19 +11,19 @@
 
 @interface NSDictionary (AccessHelpers)
 
-- (unsigned) unsignedForKey: (NSString *) key;
+- (unsigned) ddhid_unsignedForKey: (NSString *) key;
 
-- (id) objectForString: (const char *) key;
+- (id) ddhid_objectForString: (const char *) key;
 
-- (NSString *) stringForString: (const char *) key;
-- (long) longForString: (const char *) key;
-- (unsigned int) unsignedIntForString: (const char *) key;
-- (BOOL) boolForString: (const char *) key;
+- (NSString *) ddhid_stringForString: (const char *) key;
+- (long) ddhid_longForString: (const char *) key;
+- (unsigned int) ddhid_unsignedIntForString: (const char *) key;
+- (BOOL) ddhid_boolForString: (const char *) key;
 
 @end
 
 @interface NSMutableDictionary (AccessHelpers)
 
-- (void) setObject: (id) object forString: (const char *) key;
+- (void) ddhid_setObject: (id) object forString: (const char *) key;
 
 @end

@@ -16,7 +16,7 @@
 + (NSArray *) elementsWithPropertiesArray: (NSArray *) propertiesArray;
 {
     NSMutableArray * elements = [NSMutableArray array];
-
+    
     NSDictionary * properties;
     NSEnumerator * e = [propertiesArray objectEnumerator];
     while (properties = [e nextObject])
@@ -41,8 +41,8 @@
         return nil;
     
     mProperties = [properties retain];
-    unsigned usagePage = [mProperties unsignedIntForString: kIOHIDElementUsagePageKey];
-    unsigned usageId = [mProperties unsignedIntForString: kIOHIDElementUsageKey];
+    unsigned usagePage = [mProperties ddhid_unsignedIntForString: kIOHIDElementUsagePageKey];
+    unsigned usageId = [mProperties ddhid_unsignedIntForString: kIOHIDElementUsageKey];
     mUsage = [[DDHidUsage alloc] initWithUsagePage: usagePage
                                            usageId: usageId];
     
@@ -67,12 +67,12 @@
 - (IOHIDElementCookie) cookie;
 {
     return (IOHIDElementCookie)
-        [mProperties unsignedIntForString: kIOHIDElementCookieKey];
+    [mProperties ddhid_unsignedIntForString: kIOHIDElementCookieKey];
 }
 
 - (unsigned) cookieAsUnsigned;
 {
-    return [mProperties unsignedIntForString: kIOHIDElementCookieKey];
+    return [mProperties ddhid_unsignedIntForString: kIOHIDElementCookieKey];
 }
 
 - (DDHidUsage *) usage;
@@ -83,43 +83,43 @@
 - (NSArray *) elements;
 {
     NSArray * elementsProperties =
-        [mProperties objectForString: kIOHIDElementKey];
+    [mProperties ddhid_objectForString: kIOHIDElementKey];
     return [DDHidElement elementsWithPropertiesArray: elementsProperties];
 }
 
 - (BOOL) hasNullState;
 {
-    return [mProperties boolForString: kIOHIDElementHasNullStateKey];
+    return [mProperties ddhid_boolForString: kIOHIDElementHasNullStateKey];
 }
 
 - (BOOL) hasPreferredState;
 {
-    return [mProperties boolForString: kIOHIDElementHasNullStateKey];
+    return [mProperties ddhid_boolForString: kIOHIDElementHasNullStateKey];
 }
 
 - (BOOL) isArray;
 {
-    return [mProperties boolForString: kIOHIDElementIsArrayKey];
+    return [mProperties ddhid_boolForString: kIOHIDElementIsArrayKey];
 }
 
 - (BOOL) isRelative;
 {
-    return [mProperties boolForString: kIOHIDElementIsRelativeKey];
+    return [mProperties ddhid_boolForString: kIOHIDElementIsRelativeKey];
 }
 
 - (BOOL) isWrapping;
 {
-    return [mProperties boolForString: kIOHIDElementIsWrappingKey];
+    return [mProperties ddhid_boolForString: kIOHIDElementIsWrappingKey];
 }
 
 - (long) maxValue;
 {
-    return [mProperties longForString: kIOHIDElementMaxKey];
+    return [mProperties ddhid_longForString: kIOHIDElementMaxKey];
 }
 
 - (long) minValue;
 {
-    return [mProperties longForString: kIOHIDElementMinKey];
+    return [mProperties ddhid_longForString: kIOHIDElementMinKey];
 }
 
 

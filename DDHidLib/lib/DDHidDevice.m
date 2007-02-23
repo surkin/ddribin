@@ -74,7 +74,7 @@
 	// Set up a matching dictionary to search the I/O Registry by class
 	// name for all HID class devices
 	CFMutableDictionaryRef hidMatchDictionary =
-        IOServiceMatching(kIOHIDDeviceKey);
+    IOServiceMatching(kIOHIDDeviceKey);
     return [self allDevicesMatchingCFDictionary: hidMatchDictionary
                                       withClass: [DDHidDevice class]
                               skipZeroLocations: NO];
@@ -91,10 +91,10 @@
     IOServiceMatching(kIOHIDDeviceKey);
     NSMutableDictionary * objcMatchDictionary =
         (NSMutableDictionary *) hidMatchDictionary;
-    [objcMatchDictionary setObject: [NSNumber numberWithUnsignedInt: usagePage]
-                         forString: kIOHIDDeviceUsagePageKey];
-    [objcMatchDictionary setObject: [NSNumber numberWithUnsignedInt: usageId]
-                         forString: kIOHIDDeviceUsageKey];
+    [objcMatchDictionary ddhid_setObject: [NSNumber numberWithUnsignedInt: usagePage]
+                               forString: kIOHIDDeviceUsagePageKey];
+    [objcMatchDictionary ddhid_setObject: [NSNumber numberWithUnsignedInt: usageId]
+                               forString: kIOHIDDeviceUsageKey];
     return [self allDevicesMatchingCFDictionary: hidMatchDictionary
                                       withClass: hidClass
                               skipZeroLocations: skipZeroLocations];
@@ -180,7 +180,7 @@
 - (DDHidQueue *) createQueueWithSize: (unsigned) size;
 {
     IOHIDQueueInterface ** queue =
-        (*mDeviceInterface)->allocQueue(mDeviceInterface);
+    (*mDeviceInterface)->allocQueue(mDeviceInterface);
     if (queue == NULL)
         return nil;
     return [[[DDHidQueue alloc] initWithHIDQueue: queue
@@ -209,7 +209,7 @@
 //=========================================================== 
 - (NSString *) productName
 {
-    return [mProperties stringForString: kIOHIDProductKey]; 
+    return [mProperties ddhid_stringForString: kIOHIDProductKey]; 
 }
 
 //=========================================================== 
@@ -217,7 +217,7 @@
 //=========================================================== 
 - (NSString *) manufacturer
 {
-    return [mProperties stringForString: kIOHIDManufacturerKey];
+    return [mProperties ddhid_stringForString: kIOHIDManufacturerKey];
 }
 
 //=========================================================== 
@@ -225,7 +225,7 @@
 //=========================================================== 
 - (NSString *) serialNumber
 {
-    return [mProperties stringForString: kIOHIDSerialNumberKey];
+    return [mProperties ddhid_stringForString: kIOHIDSerialNumberKey];
 }
 
 //=========================================================== 
@@ -233,7 +233,7 @@
 //=========================================================== 
 - (NSString *) transport
 {
-    return [mProperties stringForString: kIOHIDTransportKey];
+    return [mProperties ddhid_stringForString: kIOHIDTransportKey];
 }
 
 //=========================================================== 
@@ -241,7 +241,7 @@
 //=========================================================== 
 - (long) vendorId
 {
-    return [mProperties longForString: kIOHIDVendorIDKey];
+    return [mProperties ddhid_longForString: kIOHIDVendorIDKey];
 }
 
 //=========================================================== 
@@ -249,7 +249,7 @@
 //=========================================================== 
 - (long) productId
 {
-    return [mProperties longForString: kIOHIDProductIDKey];
+    return [mProperties ddhid_longForString: kIOHIDProductIDKey];
 }
 
 //=========================================================== 
@@ -257,7 +257,7 @@
 //=========================================================== 
 - (long) version
 {
-    return [mProperties longForString: kIOHIDVersionNumberKey];
+    return [mProperties ddhid_longForString: kIOHIDVersionNumberKey];
 }
 
 //=========================================================== 
@@ -265,7 +265,7 @@
 //=========================================================== 
 - (long) locationId
 {
-    return [mProperties longForString: kIOHIDLocationIDKey];
+    return [mProperties ddhid_longForString: kIOHIDLocationIDKey];
 }
 
 //=========================================================== 
@@ -273,7 +273,7 @@
 //=========================================================== 
 - (long) usagePage
 {
-    return [mProperties longForString: kIOHIDPrimaryUsagePageKey];
+    return [mProperties ddhid_longForString: kIOHIDPrimaryUsagePageKey];
 }
 
 //=========================================================== 
@@ -281,7 +281,7 @@
 //=========================================================== 
 - (long) usage
 {
-    return [mProperties longForString: kIOHIDPrimaryUsageKey];
+    return [mProperties ddhid_longForString: kIOHIDPrimaryUsageKey];
 }
 
 - (NSArray *) elements;
@@ -349,24 +349,24 @@
         goto done;
     
     mProperties = (NSMutableDictionary *) properties;
-    NSArray * elementProperties = [mProperties objectForString: kIOHIDElementKey];
+    NSArray * elementProperties = [mProperties ddhid_objectForString: kIOHIDElementKey];
     mElements = [DDHidElement elementsWithPropertiesArray: elementProperties];
     [mElements retain];
     
-    unsigned usagePage = [mProperties unsignedIntForString: kIOHIDPrimaryUsagePageKey];
-    unsigned usageId = [mProperties unsignedIntForString: kIOHIDPrimaryUsageKey];
+    unsigned usagePage = [mProperties ddhid_unsignedIntForString: kIOHIDPrimaryUsagePageKey];
+    unsigned usageId = [mProperties ddhid_unsignedIntForString: kIOHIDPrimaryUsageKey];
     
     mPrimaryUsage = [[DDHidUsage alloc] initWithUsagePage: usagePage
                                                   usageId: usageId];
     mUsages = [[NSMutableArray alloc] init];
     
-    NSArray * usagePairs = [mProperties objectForString: kIOHIDDeviceUsagePairsKey];
+    NSArray * usagePairs = [mProperties ddhid_objectForString: kIOHIDDeviceUsagePairsKey];
     NSEnumerator * e = [usagePairs objectEnumerator];
     NSDictionary * usagePair;
     while (usagePair = [e nextObject])
     {
-        usagePage = [usagePair unsignedIntForString: kIOHIDDeviceUsagePageKey];
-        usageId = [usagePair unsignedIntForString: kIOHIDDeviceUsageKey];
+        usagePage = [usagePair ddhid_unsignedIntForString: kIOHIDDeviceUsagePageKey];
+        usageId = [usagePair ddhid_unsignedIntForString: kIOHIDDeviceUsageKey];
         DDHidUsage * usage = [DDHidUsage usageWithUsagePage: usagePage
                                                     usageId: usageId];
         [mUsages addObject: usage];
@@ -377,8 +377,8 @@
     result = YES;
     
 done:
-    if (error_)
-        *error_ = error;
+        if (error_)
+            *error_ = error;
     return result;
 }
 
@@ -412,8 +412,8 @@ done:
     result = YES;
     
 done:
-    if (plugInInterface != NULL)
-        (*plugInInterface)->Release(plugInInterface);
+        if (plugInInterface != NULL)
+            (*plugInInterface)->Release(plugInInterface);
     if (error_)
         *error_ = error;
 	return result;
