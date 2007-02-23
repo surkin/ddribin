@@ -91,7 +91,6 @@
     mButtonElements = [[NSMutableArray alloc] init];
     mSticks = [[NSMutableArray alloc] init];
     [self initJoystickElements: [self elements]];
-    mQueue = nil;
     mDelegate = nil;
     
     return self;
@@ -102,11 +101,9 @@
 //=========================================================== 
 - (void) dealloc
 {
-    [mQueue release];
     [mSticks release];
     [mButtonElements release];
     
-    mQueue = nil;
     mSticks = nil;
     mButtonElements = nil;
     [super dealloc];
@@ -162,25 +159,9 @@
     mDelegate = delegate;
 }
 
-- (void) startListening;
+- (void) addElementsToDefaultQueue;
 {
-    if (mQueue != nil)
-        return;
-    
-    mQueue = [[self createQueueWithSize: 10] retain];
-    [mQueue setDelegate: self];
-    [self addElementsToQueue: mQueue];
-    [mQueue startOnCurrentRunLoop];
-}
-
-- (void) stopListening;
-{
-    if (mQueue == nil)
-        return;
-    
-    [mQueue stop];
-    [mQueue release];
-    mQueue = nil;
+    [self addElementsToQueue: mDefaultQueue];
 }
 
 @end

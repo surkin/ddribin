@@ -58,6 +58,9 @@
         return nil;
     }
     
+    mListenInExclusiveMode = NO;
+    mDefaultQueue = nil;
+    
     return self;
 }
 
@@ -66,6 +69,7 @@
 //=========================================================== 
 - (void) dealloc
 {
+    [mDefaultQueue release];
     if (mDeviceInterface != NULL)
     {
         (*mDeviceInterface)->close(mDeviceInterface);
@@ -185,12 +189,12 @@
 
 - (void) openWithOptions: (UInt32) options;
 {
-    (*mDeviceInterface)->open(mDeviceInterface, options);
+    NSXThrowError((*mDeviceInterface)->open(mDeviceInterface, options));
 }
 
 - (void) close;
 {
-    (*mDeviceInterface)->close(mDeviceInterface);
+    NSXThrowError((*mDeviceInterface)->close(mDeviceInterface));
 }
 
 - (DDHidQueue *) createQueueWithSize: (unsigned) size;
@@ -210,6 +214,53 @@
                                                        [element cookie],
                                                        &event));
     return event.value;
+}
+
+#pragma mark -
+#pragma mark Asynchronous Notification
+
+//=========================================================== 
+//  listenInExclusiveMode 
+//=========================================================== 
+- (BOOL) listenInExclusiveMode
+{
+    return mListenInExclusiveMode;
+}
+
+- (void) setListenInExclusiveMode: (BOOL) flag
+{
+    mListenInExclusiveMode = flag;
+}
+
+- (void) startListening;
+{
+    if ([self isListening])
+        return;
+    
+    UInt32 options = kIOHIDOptionsTypeNone;
+    if (mListenInExclusiveMode)
+        options = kIOHIDOptionsTypeSeizeDevice;
+    [self openWithOptions: options];
+    mDefaultQueue = [[self createQueueWithSize: [self sizeOfDefaultQueue]] retain];
+    [mDefaultQueue setDelegate: self];
+    [self addElementsToDefaultQueue];
+    [mDefaultQueue startOnCurrentRunLoop];
+}
+
+- (void) stopListening;
+{
+    if (![self isListening])
+        return;
+    
+    [mDefaultQueue stop];
+    [mDefaultQueue release];
+    mDefaultQueue = nil;
+    [self close];
+}
+
+- (BOOL) isListening;
+{
+    return (mDefaultQueue != nil);
 }
 
 #pragma mark -
@@ -335,6 +386,19 @@
 
 @end
 
+@implementation DDHidDevice (Protected)
+
+- (unsigned) sizeOfDefaultQueue;
+{
+    return 10;
+}
+
+- (void) addElementsToDefaultQueue;
+{
+    [mDefaultQueue addElements: [self elements]];
+}
+
+@end
 
 @implementation DDHidDevice (Private)
 

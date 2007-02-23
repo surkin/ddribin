@@ -72,4 +72,10 @@
     [self setObject: object forKey: objcKey];
 }
 
+- (void) ddhid_setInt: (int) i forKey: (id) key;
+{
+    NSNumber * number = [NSNumber numberWithInt: i];
+    [self setObject: number forKey: key];
+}
+
 @end

@@ -7,6 +7,11 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		55170D360B8EC2CE00C82155 /* DDHidAppleRemote.h in Headers */ = {isa = PBXBuildFile; fileRef = 55170D340B8EC2CE00C82155 /* DDHidAppleRemote.h */; };
+		55170D370B8EC2CE00C82155 /* DDHidAppleRemote.m in Sources */ = {isa = PBXBuildFile; fileRef = 55170D350B8EC2CE00C82155 /* DDHidAppleRemote.m */; };
+		55170E0D0B8ECCAC00C82155 /* AppleRemotePaneController.m in Sources */ = {isa = PBXBuildFile; fileRef = 55170E0C0B8ECCAC00C82155 /* AppleRemotePaneController.m */; };
+		55170E650B8ECEF600C82155 /* RemoteFeedbackView.m in Sources */ = {isa = PBXBuildFile; fileRef = 55170E640B8ECEF600C82155 /* RemoteFeedbackView.m */; };
+		55170E670B8ECF0000C82155 /* AppleRemote.tiff in Resources */ = {isa = PBXBuildFile; fileRef = 55170E660B8ECF0000C82155 /* AppleRemote.tiff */; };
 		556E1E690B5359F9002F709C /* IOKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 556E1E680B5359F9002F709C /* IOKit.framework */; };
 		55917B640B53408C005308AC /* HidBrowserController.m in Sources */ = {isa = PBXBuildFile; fileRef = 55917B630B53408C005308AC /* HidBrowserController.m */; };
 		55917E1C0B53E454005308AC /* HexFormatter.m in Sources */ = {isa = PBXBuildFile; fileRef = 55917E1B0B53E454005308AC /* HexFormatter.m */; };
@@ -79,6 +84,13 @@
 		29B97324FDCFA39411CA2CEA /* AppKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AppKit.framework; path = /System/Library/Frameworks/AppKit.framework; sourceTree = "<absolute>"; };
 		29B97325FDCFA39411CA2CEA /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = /System/Library/Frameworks/Foundation.framework; sourceTree = "<absolute>"; };
 		32CA4F630368D1EE00C91783 /* HIDBrowser_Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HIDBrowser_Prefix.pch; sourceTree = "<group>"; };
+		55170D340B8EC2CE00C82155 /* DDHidAppleRemote.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DDHidAppleRemote.h; sourceTree = "<group>"; };
+		55170D350B8EC2CE00C82155 /* DDHidAppleRemote.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DDHidAppleRemote.m; sourceTree = "<group>"; };
+		55170E0B0B8ECCAC00C82155 /* AppleRemotePaneController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AppleRemotePaneController.h; sourceTree = "<group>"; };
+		55170E0C0B8ECCAC00C82155 /* AppleRemotePaneController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AppleRemotePaneController.m; sourceTree = "<group>"; };
+		55170E630B8ECEF600C82155 /* RemoteFeedbackView.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = RemoteFeedbackView.h; sourceTree = "<group>"; };
+		55170E640B8ECEF600C82155 /* RemoteFeedbackView.m */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.objc; path = RemoteFeedbackView.m; sourceTree = "<group>"; };
+		55170E660B8ECF0000C82155 /* AppleRemote.tiff */ = {isa = PBXFileReference; lastKnownFileType = image.tiff; path = AppleRemote.tiff; sourceTree = "<group>"; };
 		556E1E680B5359F9002F709C /* IOKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = IOKit.framework; path = /System/Library/Frameworks/IOKit.framework; sourceTree = "<absolute>"; };
 		55917B4F0B533C82005308AC /* DDHidDevice.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DDHidDevice.h; sourceTree = "<group>"; };
 		55917B500B533C82005308AC /* DDHidDevice.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DDHidDevice.m; sourceTree = "<group>"; };
@@ -253,6 +265,10 @@
 				559CBCA80B5B3BCE00C8FD74 /* MousePaneController.m */,
 				55FD66FB0B5DDD2100325FEF /* JoystickPaneController.h */,
 				55FD66FC0B5DDD2100325FEF /* JoystickPaneController.m */,
+				55170E0B0B8ECCAC00C82155 /* AppleRemotePaneController.h */,
+				55170E0C0B8ECCAC00C82155 /* AppleRemotePaneController.m */,
+				55170E630B8ECEF600C82155 /* RemoteFeedbackView.h */,
+				55170E640B8ECEF600C82155 /* RemoteFeedbackView.m */,
 				55A000510B5D7C06001B47E5 /* BoolFormatter.h */,
 				55A000500B5D7C06001B47E5 /* BoolFormatter.m */,
 				55FD67730B5DDF8200325FEF /* ButtonState.h */,
@@ -282,6 +298,8 @@
 				559CBC2B0B5B34C300C8FD74 /* DDHidMouse.m */,
 				55FD66D30B5DDC3F00325FEF /* DDHidJoystick.h */,
 				55FD66D40B5DDC3F00325FEF /* DDHidJoystick.m */,
+				55170D340B8EC2CE00C82155 /* DDHidAppleRemote.h */,
+				55170D350B8EC2CE00C82155 /* DDHidAppleRemote.m */,
 				55FD67CB0B5DE18600325FEF /* DDHidLib.h */,
 			);
 			path = lib;
@@ -310,6 +328,7 @@
 		559CBBA20B5B31FD00C8FD74 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				55170E660B8ECF0000C82155 /* AppleRemote.tiff */,
 				559CBAE90B5B31AB00C8FD74 /* Info.plist */,
 				559CBBA40B5B324700C8FD74 /* MainMenu.nib */,
 			);
@@ -351,6 +370,7 @@
 				55FD66D50B5DDC3F00325FEF /* DDHidJoystick.h in Headers */,
 				55FD67CC0B5DE18600325FEF /* DDHidLib.h in Headers */,
 				55BE6DCD0B8033010085514D /* NSXReturnThrowError.h in Headers */,
+				55170D360B8EC2CE00C82155 /* DDHidAppleRemote.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -436,6 +456,7 @@
 				559CBAEB0B5B31AB00C8FD74 /* Info.plist in Resources */,
 				559CBBA50B5B324700C8FD74 /* MainMenu.nib in Resources */,
 				559CBDAB0B5B451E00C8FD74 /* usb_hid_usages.plist in Resources */,
+				55170E670B8ECF0000C82155 /* AppleRemote.tiff in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -463,6 +484,8 @@
 				55FD65CB0B5DD57200325FEF /* DeviceTestController.m in Sources */,
 				55FD66FD0B5DDD2100325FEF /* JoystickPaneController.m in Sources */,
 				55FD67750B5DDF8200325FEF /* ButtonState.m in Sources */,
+				55170E0D0B8ECCAC00C82155 /* AppleRemotePaneController.m in Sources */,
+				55170E650B8ECEF600C82155 /* RemoteFeedbackView.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -480,6 +503,7 @@
 				559CBC2D0B5B34C300C8FD74 /* DDHidMouse.m in Sources */,
 				55FD66D60B5DDC3F00325FEF /* DDHidJoystick.m in Sources */,
 				55BE6DCE0B8033010085514D /* NSXReturnThrowError.m in Sources */,
+				55170D370B8EC2CE00C82155 /* DDHidAppleRemote.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

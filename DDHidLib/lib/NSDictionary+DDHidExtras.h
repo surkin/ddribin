@@ -41,5 +41,6 @@
 @interface NSMutableDictionary (DDHidExtras)
 
 - (void) ddhid_setObject: (id) object forString: (const char *) key;
+- (void) ddhid_setInt: (int) i forKey: (id) key;
 
 @end
