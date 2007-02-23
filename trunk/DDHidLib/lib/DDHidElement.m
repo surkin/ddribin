@@ -8,7 +8,7 @@
 
 #import "DDHidElement.h"
 #import "DDHidUsage.h"
-#import "NSDictionary+AccessHelpers.h"
+#import "NSDictionary+DDHidExtras.h"
 #include <IOKit/hid/IOHIDKeys.h>
 
 @implementation DDHidElement
