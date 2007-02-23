@@ -28,10 +28,10 @@
 		559CBBDA0B5B337600C8FD74 /* DDHidEvent.m in Sources */ = {isa = PBXBuildFile; fileRef = 559181A50B576149005308AC /* DDHidEvent.m */; };
 		559CBBDB0B5B337600C8FD74 /* DDHidUsageTables.h in Headers */ = {isa = PBXBuildFile; fileRef = 55917F610B545104005308AC /* DDHidUsageTables.h */; };
 		559CBBDC0B5B337600C8FD74 /* DDHidUsageTables.m in Sources */ = {isa = PBXBuildFile; fileRef = 55917F620B545104005308AC /* DDHidUsageTables.m */; };
-		559CBBDD0B5B337600C8FD74 /* NSDictionary+AccessHelpers.h in Headers */ = {isa = PBXBuildFile; fileRef = 55917E720B541541005308AC /* NSDictionary+AccessHelpers.h */; };
+		559CBBDD0B5B337600C8FD74 /* NSDictionary+DDHidExtras.h in Headers */ = {isa = PBXBuildFile; fileRef = 55917E720B541541005308AC /* NSDictionary+DDHidExtras.h */; };
 		559CBBEC0B5B33C000C8FD74 /* libddhid.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 559CBBCC0B5B336600C8FD74 /* libddhid.a */; };
 		559CBBED0B5B33C400C8FD74 /* libddhid.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 559CBBCC0B5B336600C8FD74 /* libddhid.a */; };
-		559CBC260B5B349100C8FD74 /* NSDictionary+AccessHelpers.m in Sources */ = {isa = PBXBuildFile; fileRef = 55917E730B541541005308AC /* NSDictionary+AccessHelpers.m */; };
+		559CBC260B5B349100C8FD74 /* NSDictionary+DDHidExtras.m in Sources */ = {isa = PBXBuildFile; fileRef = 55917E730B541541005308AC /* NSDictionary+DDHidExtras.m */; };
 		559CBC2C0B5B34C300C8FD74 /* DDHidMouse.h in Headers */ = {isa = PBXBuildFile; fileRef = 559CBC2A0B5B34C300C8FD74 /* DDHidMouse.h */; };
 		559CBC2D0B5B34C300C8FD74 /* DDHidMouse.m in Sources */ = {isa = PBXBuildFile; fileRef = 559CBC2B0B5B34C300C8FD74 /* DDHidMouse.m */; };
 		559CBCA90B5B3BCE00C8FD74 /* MousePaneController.m in Sources */ = {isa = PBXBuildFile; fileRef = 559CBCA80B5B3BCE00C8FD74 /* MousePaneController.m */; };
@@ -88,8 +88,8 @@
 		55917E1B0B53E454005308AC /* HexFormatter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HexFormatter.m; sourceTree = "<group>"; };
 		55917E6F0B5413E7005308AC /* DDHidElement.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DDHidElement.h; sourceTree = "<group>"; };
 		55917E700B5413E7005308AC /* DDHidElement.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DDHidElement.m; sourceTree = "<group>"; };
-		55917E720B541541005308AC /* NSDictionary+AccessHelpers.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSDictionary+AccessHelpers.h"; sourceTree = "<group>"; };
-		55917E730B541541005308AC /* NSDictionary+AccessHelpers.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSDictionary+AccessHelpers.m"; sourceTree = "<group>"; };
+		55917E720B541541005308AC /* NSDictionary+DDHidExtras.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSDictionary+DDHidExtras.h"; sourceTree = "<group>"; };
+		55917E730B541541005308AC /* NSDictionary+DDHidExtras.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSDictionary+DDHidExtras.m"; sourceTree = "<group>"; };
 		55917F610B545104005308AC /* DDHidUsageTables.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DDHidUsageTables.h; sourceTree = "<group>"; };
 		55917F620B545104005308AC /* DDHidUsageTables.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DDHidUsageTables.m; sourceTree = "<group>"; };
 		55917F760B54535B005308AC /* usb_hid_usages.plist */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = text.xml; name = usb_hid_usages.plist; path = ../lib/usb_hid_usages.plist; sourceTree = "<group>"; };
@@ -276,8 +276,8 @@
 				559181A50B576149005308AC /* DDHidEvent.m */,
 				55917F610B545104005308AC /* DDHidUsageTables.h */,
 				55917F620B545104005308AC /* DDHidUsageTables.m */,
-				55917E720B541541005308AC /* NSDictionary+AccessHelpers.h */,
-				55917E730B541541005308AC /* NSDictionary+AccessHelpers.m */,
+				55917E720B541541005308AC /* NSDictionary+DDHidExtras.h */,
+				55917E730B541541005308AC /* NSDictionary+DDHidExtras.m */,
 				559CBC2A0B5B34C300C8FD74 /* DDHidMouse.h */,
 				559CBC2B0B5B34C300C8FD74 /* DDHidMouse.m */,
 				55FD66D30B5DDC3F00325FEF /* DDHidJoystick.h */,
@@ -346,7 +346,7 @@
 				559CBBD70B5B337600C8FD74 /* DDHidQueue.h in Headers */,
 				559CBBD90B5B337600C8FD74 /* DDHidEvent.h in Headers */,
 				559CBBDB0B5B337600C8FD74 /* DDHidUsageTables.h in Headers */,
-				559CBBDD0B5B337600C8FD74 /* NSDictionary+AccessHelpers.h in Headers */,
+				559CBBDD0B5B337600C8FD74 /* NSDictionary+DDHidExtras.h in Headers */,
 				559CBC2C0B5B34C300C8FD74 /* DDHidMouse.h in Headers */,
 				55FD66D50B5DDC3F00325FEF /* DDHidJoystick.h in Headers */,
 				55FD67CC0B5DE18600325FEF /* DDHidLib.h in Headers */,
@@ -476,7 +476,7 @@
 				559CBBD80B5B337600C8FD74 /* DDHidQueue.m in Sources */,
 				559CBBDA0B5B337600C8FD74 /* DDHidEvent.m in Sources */,
 				559CBBDC0B5B337600C8FD74 /* DDHidUsageTables.m in Sources */,
-				559CBC260B5B349100C8FD74 /* NSDictionary+AccessHelpers.m in Sources */,
+				559CBC260B5B349100C8FD74 /* NSDictionary+DDHidExtras.m in Sources */,
 				559CBC2D0B5B34C300C8FD74 /* DDHidMouse.m in Sources */,
 				55FD66D60B5DDC3F00325FEF /* DDHidJoystick.m in Sources */,
 				55BE6DCE0B8033010085514D /* NSXReturnThrowError.m in Sources */,
