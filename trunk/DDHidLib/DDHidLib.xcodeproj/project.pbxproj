@@ -27,6 +27,30 @@
 		55170E0D0B8ECCAC00C82155 /* AppleRemotePaneController.m in Sources */ = {isa = PBXBuildFile; fileRef = 55170E0C0B8ECCAC00C82155 /* AppleRemotePaneController.m */; };
 		55170E650B8ECEF600C82155 /* RemoteFeedbackView.m in Sources */ = {isa = PBXBuildFile; fileRef = 55170E640B8ECEF600C82155 /* RemoteFeedbackView.m */; };
 		55170E670B8ECF0000C82155 /* AppleRemote.tiff in Resources */ = {isa = PBXBuildFile; fileRef = 55170E660B8ECF0000C82155 /* AppleRemote.tiff */; };
+		55193E580B93F31D004C0C98 /* DDHidDevice.h in Headers */ = {isa = PBXBuildFile; fileRef = 55917B4F0B533C82005308AC /* DDHidDevice.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		55193E590B93F31D004C0C98 /* DDHidDevice.m in Sources */ = {isa = PBXBuildFile; fileRef = 55917B500B533C82005308AC /* DDHidDevice.m */; };
+		55193E5A0B93F31D004C0C98 /* DDHidElement.h in Headers */ = {isa = PBXBuildFile; fileRef = 55917E6F0B5413E7005308AC /* DDHidElement.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		55193E5B0B93F31D004C0C98 /* DDHidElement.m in Sources */ = {isa = PBXBuildFile; fileRef = 55917E700B5413E7005308AC /* DDHidElement.m */; };
+		55193E5C0B93F31D004C0C98 /* DDHidUsage.h in Headers */ = {isa = PBXBuildFile; fileRef = 559CB82B0B595B2F00C8FD74 /* DDHidUsage.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		55193E5D0B93F31D004C0C98 /* DDHidUsage.m in Sources */ = {isa = PBXBuildFile; fileRef = 559CB82C0B595B2F00C8FD74 /* DDHidUsage.m */; };
+		55193E5E0B93F31D004C0C98 /* DDHidQueue.h in Headers */ = {isa = PBXBuildFile; fileRef = 559180CA0B575698005308AC /* DDHidQueue.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		55193E5F0B93F31D004C0C98 /* DDHidQueue.m in Sources */ = {isa = PBXBuildFile; fileRef = 559180CB0B575698005308AC /* DDHidQueue.m */; };
+		55193E600B93F31D004C0C98 /* DDHidEvent.h in Headers */ = {isa = PBXBuildFile; fileRef = 559181A40B576149005308AC /* DDHidEvent.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		55193E610B93F31D004C0C98 /* DDHidEvent.m in Sources */ = {isa = PBXBuildFile; fileRef = 559181A50B576149005308AC /* DDHidEvent.m */; };
+		55193E620B93F31D004C0C98 /* DDHidUsageTables.h in Headers */ = {isa = PBXBuildFile; fileRef = 55917F610B545104005308AC /* DDHidUsageTables.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		55193E630B93F31D004C0C98 /* DDHidUsageTables.m in Sources */ = {isa = PBXBuildFile; fileRef = 55917F620B545104005308AC /* DDHidUsageTables.m */; };
+		55193E640B93F31D004C0C98 /* NSDictionary+DDHidExtras.h in Headers */ = {isa = PBXBuildFile; fileRef = 55917E720B541541005308AC /* NSDictionary+DDHidExtras.h */; settings = {ATTRIBUTES = (Private, ); }; };
+		55193E650B93F31D004C0C98 /* NSDictionary+DDHidExtras.m in Sources */ = {isa = PBXBuildFile; fileRef = 55917E730B541541005308AC /* NSDictionary+DDHidExtras.m */; };
+		55193E660B93F31D004C0C98 /* DDHidMouse.h in Headers */ = {isa = PBXBuildFile; fileRef = 559CBC2A0B5B34C300C8FD74 /* DDHidMouse.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		55193E670B93F31D004C0C98 /* DDHidMouse.m in Sources */ = {isa = PBXBuildFile; fileRef = 559CBC2B0B5B34C300C8FD74 /* DDHidMouse.m */; };
+		55193E680B93F31D004C0C98 /* DDHidJoystick.h in Headers */ = {isa = PBXBuildFile; fileRef = 55FD66D30B5DDC3F00325FEF /* DDHidJoystick.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		55193E690B93F31D004C0C98 /* DDHidJoystick.m in Sources */ = {isa = PBXBuildFile; fileRef = 55FD66D40B5DDC3F00325FEF /* DDHidJoystick.m */; };
+		55193E6A0B93F31D004C0C98 /* DDHidAppleRemote.h in Headers */ = {isa = PBXBuildFile; fileRef = 55170D340B8EC2CE00C82155 /* DDHidAppleRemote.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		55193E6B0B93F31D004C0C98 /* DDHidAppleRemote.m in Sources */ = {isa = PBXBuildFile; fileRef = 55170D350B8EC2CE00C82155 /* DDHidAppleRemote.m */; };
+		55193E6C0B93F31D004C0C98 /* DDHidLib.h in Headers */ = {isa = PBXBuildFile; fileRef = 55FD67CB0B5DE18600325FEF /* DDHidLib.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		55193E700B93F35A004C0C98 /* IOKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 556E1E680B5359F9002F709C /* IOKit.framework */; };
+		55193F110B93F36F004C0C98 /* NSXReturnThrowError.h in Headers */ = {isa = PBXBuildFile; fileRef = 55BE6DCB0B8033010085514D /* NSXReturnThrowError.h */; settings = {ATTRIBUTES = (Private, ); }; };
+		55193F120B93F371004C0C98 /* NSXReturnThrowError.m in Sources */ = {isa = PBXBuildFile; fileRef = 55BE6DCC0B8033010085514D /* NSXReturnThrowError.m */; };
 		556E1E690B5359F9002F709C /* IOKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 556E1E680B5359F9002F709C /* IOKit.framework */; };
 		55917B640B53408C005308AC /* HidBrowserController.m in Sources */ = {isa = PBXBuildFile; fileRef = 55917B630B53408C005308AC /* HidBrowserController.m */; };
 		55917E1C0B53E454005308AC /* HexFormatter.m in Sources */ = {isa = PBXBuildFile; fileRef = 55917E1B0B53E454005308AC /* HexFormatter.m */; };
@@ -120,6 +144,8 @@
 		55170E630B8ECEF600C82155 /* RemoteFeedbackView.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = RemoteFeedbackView.h; sourceTree = "<group>"; };
 		55170E640B8ECEF600C82155 /* RemoteFeedbackView.m */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.objc; path = RemoteFeedbackView.m; sourceTree = "<group>"; };
 		55170E660B8ECF0000C82155 /* AppleRemote.tiff */ = {isa = PBXFileReference; lastKnownFileType = image.tiff; path = AppleRemote.tiff; sourceTree = "<group>"; };
+		55193E500B93F2EE004C0C98 /* DDHidLib.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; name = DDHidLib.framework; path = build/Debug/DDHidLib.framework; sourceTree = "<group>"; };
+		55193E510B93F2EE004C0C98 /* DDHidLib-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.xml; path = "DDHidLib-Info.plist"; sourceTree = "<group>"; };
 		556E1E680B5359F9002F709C /* IOKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = IOKit.framework; path = /System/Library/Frameworks/IOKit.framework; sourceTree = "<absolute>"; };
 		55917B4F0B533C82005308AC /* DDHidDevice.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DDHidDevice.h; sourceTree = "<group>"; };
 		55917B500B533C82005308AC /* DDHidDevice.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DDHidDevice.m; sourceTree = "<group>"; };
@@ -170,6 +196,14 @@
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
+		55193E4E0B93F2EE004C0C98 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				55193E700B93F35A004C0C98 /* IOKit.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		559CBADF0B5B313000C8FD74 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
@@ -238,6 +272,7 @@
 				8D1107320486CEB800E47090 /* HIDBrowser.app */,
 				559CBAE10B5B313000C8FD74 /* HIDDeviceTest.app */,
 				559CBBCC0B5B336600C8FD74 /* libddhid.a */,
+				55193E500B93F2EE004C0C98 /* DDHidLib.framework */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -251,6 +286,7 @@
 				55BE6DC90B8033010085514D /* vendor */,
 				29B97323FDCFA39411CA2CEA /* Frameworks */,
 				19C28FACFE9D520D11CA2CBB /* Products */,
+				55193E510B93F2EE004C0C98 /* DDHidLib-Info.plist */,
 			);
 			name = HIDBrowser;
 			sourceTree = "<group>";
@@ -384,6 +420,25 @@
 /* End PBXGroup section */
 
 /* Begin PBXHeadersBuildPhase section */
+		55193E4B0B93F2EE004C0C98 /* Headers */ = {
+			isa = PBXHeadersBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				55193E580B93F31D004C0C98 /* DDHidDevice.h in Headers */,
+				55193E5A0B93F31D004C0C98 /* DDHidElement.h in Headers */,
+				55193E5C0B93F31D004C0C98 /* DDHidUsage.h in Headers */,
+				55193E5E0B93F31D004C0C98 /* DDHidQueue.h in Headers */,
+				55193E600B93F31D004C0C98 /* DDHidEvent.h in Headers */,
+				55193E620B93F31D004C0C98 /* DDHidUsageTables.h in Headers */,
+				55193E640B93F31D004C0C98 /* NSDictionary+DDHidExtras.h in Headers */,
+				55193E660B93F31D004C0C98 /* DDHidMouse.h in Headers */,
+				55193E680B93F31D004C0C98 /* DDHidJoystick.h in Headers */,
+				55193E6A0B93F31D004C0C98 /* DDHidAppleRemote.h in Headers */,
+				55193E6C0B93F31D004C0C98 /* DDHidLib.h in Headers */,
+				55193F110B93F36F004C0C98 /* NSXReturnThrowError.h in Headers */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		559CBBC80B5B336600C8FD74 /* Headers */ = {
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
@@ -406,6 +461,24 @@
 /* End PBXHeadersBuildPhase section */
 
 /* Begin PBXNativeTarget section */
+		55193E4F0B93F2EE004C0C98 /* DDHidLib */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 55193E530B93F2EF004C0C98 /* Build configuration list for PBXNativeTarget "DDHidLib" */;
+			buildPhases = (
+				55193E4B0B93F2EE004C0C98 /* Headers */,
+				55193E4C0B93F2EE004C0C98 /* Resources */,
+				55193E4D0B93F2EE004C0C98 /* Sources */,
+				55193E4E0B93F2EE004C0C98 /* Frameworks */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = DDHidLib;
+			productName = DDHidLib;
+			productReference = 55193E500B93F2EE004C0C98 /* DDHidLib.framework */;
+			productType = "com.apple.product-type.framework";
+		};
 		559CBAE00B5B313000C8FD74 /* HIDDeviceTest */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = 559CBAE40B5B313000C8FD74 /* Build configuration list for PBXNativeTarget "HIDDeviceTest" */;
@@ -474,11 +547,19 @@
 				8D1107260486CEB800E47090 /* HIDBrowser */,
 				559CBAE00B5B313000C8FD74 /* HIDDeviceTest */,
 				559CBBCB0B5B336600C8FD74 /* ddhid */,
+				55193E4F0B93F2EE004C0C98 /* DDHidLib */,
 			);
 		};
 /* End PBXProject section */
 
 /* Begin PBXResourcesBuildPhase section */
+		55193E4C0B93F2EE004C0C98 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		559CBADD0B5B313000C8FD74 /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -504,6 +585,24 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
+		55193E4D0B93F2EE004C0C98 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				55193E590B93F31D004C0C98 /* DDHidDevice.m in Sources */,
+				55193E5B0B93F31D004C0C98 /* DDHidElement.m in Sources */,
+				55193E5D0B93F31D004C0C98 /* DDHidUsage.m in Sources */,
+				55193E5F0B93F31D004C0C98 /* DDHidQueue.m in Sources */,
+				55193E610B93F31D004C0C98 /* DDHidEvent.m in Sources */,
+				55193E630B93F31D004C0C98 /* DDHidUsageTables.m in Sources */,
+				55193E650B93F31D004C0C98 /* NSDictionary+DDHidExtras.m in Sources */,
+				55193E670B93F31D004C0C98 /* DDHidMouse.m in Sources */,
+				55193E690B93F31D004C0C98 /* DDHidJoystick.m in Sources */,
+				55193E6B0B93F31D004C0C98 /* DDHidAppleRemote.m in Sources */,
+				55193F120B93F371004C0C98 /* NSXReturnThrowError.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		559CBADE0B5B313000C8FD74 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -619,6 +718,60 @@
 				GCC_ENABLE_FIX_AND_CONTINUE = NO;
 				GCC_GENERATE_DEBUGGING_SYMBOLS = NO;
 				PRODUCT_NAME = All;
+				ZERO_LINK = NO;
+			};
+			name = Release;
+		};
+		55193E540B93F2EF004C0C98 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				COPY_PHASE_STRIP = NO;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				FRAMEWORK_VERSION = A;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_ENABLE_FIX_AND_CONTINUE = YES;
+				GCC_GENERATE_DEBUGGING_SYMBOLS = YES;
+				GCC_MODEL_TUNING = G5;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "$(SYSTEM_LIBRARY_DIR)/Frameworks/AppKit.framework/Headers/AppKit.h";
+				INFOPLIST_FILE = "DDHidLib-Info.plist";
+				INSTALL_PATH = "$(HOME)/Library/Frameworks";
+				OTHER_LDFLAGS = (
+					"-framework",
+					Foundation,
+					"-framework",
+					AppKit,
+				);
+				PREBINDING = NO;
+				PRODUCT_NAME = DDHidLib;
+				ZERO_LINK = YES;
+			};
+			name = Debug;
+		};
+		55193E550B93F2EF004C0C98 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				COPY_PHASE_STRIP = YES;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				FRAMEWORK_VERSION = A;
+				GCC_ENABLE_FIX_AND_CONTINUE = NO;
+				GCC_GENERATE_DEBUGGING_SYMBOLS = NO;
+				GCC_MODEL_TUNING = G5;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "$(SYSTEM_LIBRARY_DIR)/Frameworks/AppKit.framework/Headers/AppKit.h";
+				INFOPLIST_FILE = "DDHidLib-Info.plist";
+				INSTALL_PATH = "$(HOME)/Library/Frameworks";
+				OTHER_LDFLAGS = (
+					"-framework",
+					Foundation,
+					"-framework",
+					AppKit,
+				);
+				PREBINDING = NO;
+				PRODUCT_NAME = DDHidLib;
 				ZERO_LINK = NO;
 			};
 			name = Release;
@@ -794,6 +947,15 @@
 			buildConfigurations = (
 				551711290B8F420E00C82155 /* Debug */,
 				5517112A0B8F420E00C82155 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		55193E530B93F2EF004C0C98 /* Build configuration list for PBXNativeTarget "DDHidLib" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				55193E540B93F2EF004C0C98 /* Debug */,
+				55193E550B93F2EF004C0C98 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
