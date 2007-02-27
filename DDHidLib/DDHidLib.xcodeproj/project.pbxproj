@@ -30,7 +30,7 @@
 		556E1E690B5359F9002F709C /* IOKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 556E1E680B5359F9002F709C /* IOKit.framework */; };
 		55917B640B53408C005308AC /* HidBrowserController.m in Sources */ = {isa = PBXBuildFile; fileRef = 55917B630B53408C005308AC /* HidBrowserController.m */; };
 		55917E1C0B53E454005308AC /* HexFormatter.m in Sources */ = {isa = PBXBuildFile; fileRef = 55917E1B0B53E454005308AC /* HexFormatter.m */; };
-		55917F770B54535B005308AC /* usb_hid_usages.plist in Resources */ = {isa = PBXBuildFile; fileRef = 55917F760B54535B005308AC /* usb_hid_usages.plist */; };
+		55917F770B54535B005308AC /* DDHidStandardUsages.plist in Resources */ = {isa = PBXBuildFile; fileRef = 55917F760B54535B005308AC /* DDHidStandardUsages.plist */; };
 		559CBAEB0B5B31AB00C8FD74 /* Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 559CBAE90B5B31AB00C8FD74 /* Info.plist */; };
 		559CBAEC0B5B31AB00C8FD74 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 559CBAEA0B5B31AB00C8FD74 /* main.m */; };
 		559CBB930B5B31E300C8FD74 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1058C7A1FEA54F0111CA2CBB /* Cocoa.framework */; };
@@ -55,7 +55,7 @@
 		559CBC2C0B5B34C300C8FD74 /* DDHidMouse.h in Headers */ = {isa = PBXBuildFile; fileRef = 559CBC2A0B5B34C300C8FD74 /* DDHidMouse.h */; };
 		559CBC2D0B5B34C300C8FD74 /* DDHidMouse.m in Sources */ = {isa = PBXBuildFile; fileRef = 559CBC2B0B5B34C300C8FD74 /* DDHidMouse.m */; };
 		559CBCA90B5B3BCE00C8FD74 /* MousePaneController.m in Sources */ = {isa = PBXBuildFile; fileRef = 559CBCA80B5B3BCE00C8FD74 /* MousePaneController.m */; };
-		559CBDAB0B5B451E00C8FD74 /* usb_hid_usages.plist in Resources */ = {isa = PBXBuildFile; fileRef = 55917F760B54535B005308AC /* usb_hid_usages.plist */; };
+		559CBDAB0B5B451E00C8FD74 /* DDHidStandardUsages.plist in Resources */ = {isa = PBXBuildFile; fileRef = 55917F760B54535B005308AC /* DDHidStandardUsages.plist */; };
 		55A000520B5D7C06001B47E5 /* BoolFormatter.m in Sources */ = {isa = PBXBuildFile; fileRef = 55A000500B5D7C06001B47E5 /* BoolFormatter.m */; };
 		55BE6DCD0B8033010085514D /* NSXReturnThrowError.h in Headers */ = {isa = PBXBuildFile; fileRef = 55BE6DCB0B8033010085514D /* NSXReturnThrowError.h */; };
 		55BE6DCE0B8033010085514D /* NSXReturnThrowError.m in Sources */ = {isa = PBXBuildFile; fileRef = 55BE6DCC0B8033010085514D /* NSXReturnThrowError.m */; };
@@ -133,7 +133,7 @@
 		55917E730B541541005308AC /* NSDictionary+DDHidExtras.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSDictionary+DDHidExtras.m"; sourceTree = "<group>"; };
 		55917F610B545104005308AC /* DDHidUsageTables.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DDHidUsageTables.h; sourceTree = "<group>"; };
 		55917F620B545104005308AC /* DDHidUsageTables.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DDHidUsageTables.m; sourceTree = "<group>"; };
-		55917F760B54535B005308AC /* usb_hid_usages.plist */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = text.xml; name = usb_hid_usages.plist; path = ../lib/usb_hid_usages.plist; sourceTree = "<group>"; };
+		55917F760B54535B005308AC /* DDHidStandardUsages.plist */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = text.xml; name = DDHidStandardUsages.plist; path = ../lib/DDHidStandardUsages.plist; sourceTree = "<group>"; };
 		559180CA0B575698005308AC /* DDHidQueue.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DDHidQueue.h; sourceTree = "<group>"; };
 		559180CB0B575698005308AC /* DDHidQueue.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DDHidQueue.m; sourceTree = "<group>"; };
 		559181A40B576149005308AC /* DDHidEvent.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DDHidEvent.h; sourceTree = "<group>"; };
@@ -267,7 +267,7 @@
 		29B97317FDCFA39411CA2CEA /* Resources */ = {
 			isa = PBXGroup;
 			children = (
-				55917F760B54535B005308AC /* usb_hid_usages.plist */,
+				55917F760B54535B005308AC /* DDHidStandardUsages.plist */,
 				8D1107310486CEB800E47090 /* Info.plist */,
 				089C165CFE840E0CC02AAC07 /* InfoPlist.strings */,
 				29B97318FDCFA39411CA2CEA /* MainMenu.nib */,
@@ -485,7 +485,7 @@
 			files = (
 				559CBAEB0B5B31AB00C8FD74 /* Info.plist in Resources */,
 				559CBBA50B5B324700C8FD74 /* MainMenu.nib in Resources */,
-				559CBDAB0B5B451E00C8FD74 /* usb_hid_usages.plist in Resources */,
+				559CBDAB0B5B451E00C8FD74 /* DDHidStandardUsages.plist in Resources */,
 				55170E670B8ECF0000C82155 /* AppleRemote.tiff in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -496,7 +496,7 @@
 			files = (
 				8D11072A0486CEB800E47090 /* MainMenu.nib in Resources */,
 				8D11072B0486CEB800E47090 /* InfoPlist.strings in Resources */,
-				55917F770B54535B005308AC /* usb_hid_usages.plist in Resources */,
+				55917F770B54535B005308AC /* DDHidStandardUsages.plist in Resources */,
 				55DCD9E00B55D503000648E5 /* EventWatcher.nib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

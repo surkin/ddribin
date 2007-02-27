@@ -34,7 +34,7 @@ static DDHidUsageTables * sStandardUsageTables = nil;
     {
         NSBundle * myBundle = [NSBundle bundleForClass: self];
         NSString * usageTablesPath =
-            [myBundle pathForResource: @"usb_hid_usages" ofType: @"plist"];
+            [myBundle pathForResource: @"DDHidStandardUsages" ofType: @"plist"];
         NSDictionary * lookupTables =
             [NSDictionary dictionaryWithContentsOfFile: usageTablesPath];
         sStandardUsageTables =
