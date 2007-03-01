@@ -173,13 +173,18 @@
     NSEnumerator * e = [elements objectEnumerator];
     DDHidElement * element;
     DDHidJoystickStick * currentStick = [[[DDHidJoystickStick alloc] init] autorelease];
+    unsigned unusedElements = 0;
     while (element = [e nextObject])
     {
         unsigned usagePage = [[element usage] usagePage];
         unsigned usageId = [[element usage] usageId];
         NSArray * subElements = [element elements];
         
-        if ((usagePage == kHIDPage_GenericDesktop) &&
+        if ([subElements count] > 0)
+        {
+            [self initJoystickElements: subElements];
+        }
+        else if ((usagePage == kHIDPage_GenericDesktop) &&
             (usageId == kHIDUsage_GD_Pointer))
         {
             [self addStick: subElements];
@@ -207,10 +212,12 @@
         {
             [mButtonElements addObject: element];
         }
-        if (subElements != nil)
-            [self initJoystickElements: subElements];
+        else
+        {
+            unusedElements++;
+        }
     }
-    if ([currentStick countOfStickElements] > 0)
+    if ([elements count] != unusedElements)
     {
         [mSticks addObject: currentStick];
     }
@@ -407,7 +414,6 @@
 
 -  (void) addElement: (DDHidElement *) element;
 {
-    [mStickElements addObject: element];
     DDHidUsage * usage = [element usage];
     BOOL isXAxis = [usage isEqualToUsagePage: kHIDPage_GenericDesktop
                                      usageId: kHIDUsage_GD_X];
@@ -415,8 +421,10 @@
                                      usageId: kHIDUsage_GD_Y];
     if (isXAxis && (mXAxisElement == nil))
         mXAxisElement = [element retain];
-    if (isYAxis && (mYAxisElement == nil))
+    else if (isYAxis && (mYAxisElement == nil))
         mYAxisElement = [element retain];
+    else
+        [mStickElements addObject: element];
 }
 
 - (NSArray *) allElements;
