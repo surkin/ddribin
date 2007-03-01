@@ -275,11 +275,11 @@
 - (int) normalizeValue: (int) value
             forElement: (DDHidElement *) element;
 {
-    int normalizedUnits = DDHID_JOYSTICK_MAX - DDHID_JOYSTICK_MIN;
+    int normalizedUnits = DDHID_JOYSTICK_VALUE_MAX - DDHID_JOYSTICK_VALUE_MIN;
     int elementUnits = [element maxValue] - [element minValue];
     
     int normalizedValue = (((value - [element minValue]) * normalizedUnits) /
-                           elementUnits) + DDHID_JOYSTICK_MIN;
+                           elementUnits) + DDHID_JOYSTICK_VALUE_MIN;
     return normalizedValue;
 }
 
