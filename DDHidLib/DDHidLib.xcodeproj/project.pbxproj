@@ -144,7 +144,7 @@
 		55170E630B8ECEF600C82155 /* RemoteFeedbackView.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = RemoteFeedbackView.h; sourceTree = "<group>"; };
 		55170E640B8ECEF600C82155 /* RemoteFeedbackView.m */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.objc; path = RemoteFeedbackView.m; sourceTree = "<group>"; };
 		55170E660B8ECF0000C82155 /* AppleRemote.tiff */ = {isa = PBXFileReference; lastKnownFileType = image.tiff; path = AppleRemote.tiff; sourceTree = "<group>"; };
-		55193E500B93F2EE004C0C98 /* DDHidLib.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; name = DDHidLib.framework; path = build/Debug/DDHidLib.framework; sourceTree = "<group>"; };
+		55193E500B93F2EE004C0C98 /* DDHidLib.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = DDHidLib.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		55193E510B93F2EE004C0C98 /* DDHidLib-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.xml; path = "DDHidLib-Info.plist"; sourceTree = "<group>"; };
 		556E1E680B5359F9002F709C /* IOKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = IOKit.framework; path = /System/Library/Frameworks/IOKit.framework; sourceTree = "<absolute>"; };
 		55917B4F0B533C82005308AC /* DDHidDevice.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DDHidDevice.h; sourceTree = "<group>"; };
