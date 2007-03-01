@@ -173,7 +173,6 @@
     NSEnumerator * e = [elements objectEnumerator];
     DDHidElement * element;
     DDHidJoystickStick * currentStick = [[[DDHidJoystickStick alloc] init] autorelease];
-    unsigned unusedElements = 0;
     while (element = [e nextObject])
     {
         unsigned usagePage = [[element usage] usagePage];
@@ -212,12 +211,8 @@
         {
             [mButtonElements addObject: element];
         }
-        else
-        {
-            unusedElements++;
-        }
     }
-    if ([elements count] != unusedElements)
+    if (![currentStick isEmpty])
     {
         [mSticks addObject: currentStick];
     }
@@ -436,6 +431,13 @@
         [elements addObject: mYAxisElement];
     [elements addObjectsFromArray: mStickElements];
     return elements;
+}
+
+- (BOOL) isEmpty;
+{
+    return ((mXAxisElement == nil)  &&
+            (mYAxisElement == nil) &&
+            ([mStickElements count] == 0));
 }
 
 #pragma mark -

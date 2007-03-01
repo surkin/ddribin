@@ -38,6 +38,8 @@
 #pragma mark -
 #pragma mark mStickElements - indexed accessors
 
+- (BOOL) isEmpty;
+
 - (unsigned int) countOfStickElements;
 - (DDHidElement *) objectInStickElementsAtIndex: (unsigned int)index;
 

@@ -46,7 +46,7 @@
         [joystick setDelegate: self];
         NSLog(@"Joystick product name: %@",
               [joystick productName]);
-        NSLog(@"Joystick stick elements: %@", [joystick objectInSticksAtIndex: 0]);
+        NSLog(@"Joystick stick count: %d", [joystick countOfSticks]);
     }
     [self setJoysticks: joysticks];
     if ([mJoysticks count] > 0)
