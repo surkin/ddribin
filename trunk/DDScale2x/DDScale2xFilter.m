@@ -16,14 +16,13 @@ static CIKernel * sScale2xKernel = nil;
 #if STANDALONE
 + (void) initialize
 {
-    [CIFilter registerFilterName: @"DDScale2x"  constructor: self
+    [CIFilter registerFilterName: @"DDScale2xFilter"  constructor: self
                  classAttributes: [NSDictionary dictionaryWithObjectsAndKeys:
                      
                      @"Scale 2x",                       kCIAttributeFilterDisplayName,
                      
                      [NSArray arrayWithObjects:
-                         kCICategoryColorAdjustment, kCICategoryVideo, kCICategoryStillImage,
-                         kCICategoryInterlaced, kCICategoryNonSquarePixels,
+                         kCICategoryGeometryAdjustment, kCICategoryVideo, kCICategoryStillImage,
                          nil],                              kCIAttributeFilterCategories,
                                           
                      nil]];
@@ -86,8 +85,7 @@ static CIKernel * sScale2xKernel = nil;
 
     // [sScale2xKernel setROISelector: @selector(regionOf:destRect:userInfo:)];
 
-    NSArray * arguments = [NSArray arrayWithObjects:
-        src, @"definition", extent, nil];
+    NSArray * arguments = [NSArray arrayWithObject: src];
     NSDictionary * options = [NSDictionary dictionaryWithObjectsAndKeys:
         extent, kCIApplyOptionExtent,
         // [src definition], kCIApplyOptionDefinition,
