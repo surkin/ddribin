@@ -16,15 +16,15 @@
     if (self == nil)
         return nil;
     
-    NSURL       *url;
-    
     [DDScale2xFilter class];
+    // [CIPlugIn loadAllPlugIns];
     
-    url      = [NSURL fileURLWithPath: [[NSBundle mainBundle]
+    NSURL * url = [NSURL fileURLWithPath: [[NSBundle mainBundle]
             pathForResource: @"liquidk-1s"  ofType: @"png"]];
     inputImage = [[CIImage imageWithContentsOfURL: url] retain];
-    filter   = [CIFilter filterWithName: @"DDScale2x"
-                          keysAndValues: @"inputImage", inputImage, nil];
+    NSLog(@"Names: %@", [CIFilter filterNamesInCategory: kCICategoryGeometryAdjustment]);
+    filter   = [CIFilter filterWithName: @"DDScale2xFilter"];
+    [filter setValue: inputImage forKey: @"inputImage"];
     [filter retain];
     
     
@@ -38,11 +38,12 @@
 	if (context != nil)
     {
         CIImage * outputImage = [filter valueForKey: @"outputImage"];
-        CGRect outputRect = [outputImage extent];
+        CGRect outputExtent = [outputImage extent];
+        NSLog(@"outputRect: %d", CGRectIsInfinite(outputExtent));
         CGPoint origin = CGPointMake(NSMinX(rect), NSMinY(rect));
         
 		[context drawImage: outputImage
-                   atPoint: origin  fromRect: outputRect];
+                   atPoint: origin  fromRect: outputExtent];
     }
 }
 
