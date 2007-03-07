@@ -19,12 +19,12 @@
 		550B6B8D0B9E488F00CA6D4B /* ApplicationServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 550B6B8C0B9E488F00CA6D4B /* ApplicationServices.framework */; };
 		550B6C470B9E4ECA00CA6D4B /* DDScale2xView.m in Sources */ = {isa = PBXBuildFile; fileRef = 550B6C460B9E4ECA00CA6D4B /* DDScale2xView.m */; };
 		550B6C7E0B9E5DE200CA6D4B /* MainMenu.nib in Resources */ = {isa = PBXBuildFile; fileRef = 550B6C7C0B9E5DE200CA6D4B /* MainMenu.nib */; };
-		550B6C840B9E5E8700CA6D4B /* DDScale2xFilter.m in Sources */ = {isa = PBXBuildFile; fileRef = 550B6ACD0B9E416300CA6D4B /* DDScale2xFilter.m */; };
 		550B6D260B9E5EAA00CA6D4B /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 019B76F806B5B49B000EAC1F /* QuartzCore.framework */; };
 		550B6D3D0B9E5EE800CA6D4B /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 550B6D3C0B9E5EE800CA6D4B /* main.m */; };
 		550B6D5E0B9E5F1100CA6D4B /* DDScale2x.cikernel in Resources */ = {isa = PBXBuildFile; fileRef = 550B6ACA0B9E415700CA6D4B /* DDScale2x.cikernel */; };
 		556EC6700B9E601A00B54157 /* liquidk-1s.png in Resources */ = {isa = PBXBuildFile; fileRef = 556EC66F0B9E601A00B54157 /* liquidk-1s.png */; };
 		556EC6D00B9E661A00B54157 /* MyController.m in Sources */ = {isa = PBXBuildFile; fileRef = 556EC6CF0B9E661A00B54157 /* MyController.m */; };
+		556EC8450B9E732900B54157 /* DDScale2xFilter.m in Sources */ = {isa = PBXBuildFile; fileRef = 550B6ACD0B9E416300CA6D4B /* DDScale2xFilter.m */; };
 		8D576314048677EA00EA77CD /* CoreFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0AA1909FFE8422F4C02AAC07 /* CoreFoundation.framework */; };
 		8D5B49A804867FD3000E48DA /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 8D5B49A704867FD3000E48DA /* InfoPlist.strings */; };
 /* End PBXBuildFile section */
@@ -256,9 +256,9 @@
 			buildActionMask = 2147483647;
 			files = (
 				550B6C470B9E4ECA00CA6D4B /* DDScale2xView.m in Sources */,
-				550B6C840B9E5E8700CA6D4B /* DDScale2xFilter.m in Sources */,
 				550B6D3D0B9E5EE800CA6D4B /* main.m in Sources */,
 				556EC6D00B9E661A00B54157 /* MyController.m in Sources */,
+				556EC8450B9E732900B54157 /* DDScale2xFilter.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
