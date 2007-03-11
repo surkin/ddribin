@@ -40,6 +40,7 @@
 
 - (NSString *) usageDescription;
 - (DDHidEvent *) event;
+- (int) index;
 
 @end
 

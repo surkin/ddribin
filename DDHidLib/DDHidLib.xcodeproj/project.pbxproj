@@ -83,6 +83,9 @@
 		55A000520B5D7C06001B47E5 /* BoolFormatter.m in Sources */ = {isa = PBXBuildFile; fileRef = 55A000500B5D7C06001B47E5 /* BoolFormatter.m */; };
 		55BE6DCD0B8033010085514D /* NSXReturnThrowError.h in Headers */ = {isa = PBXBuildFile; fileRef = 55BE6DCB0B8033010085514D /* NSXReturnThrowError.h */; };
 		55BE6DCE0B8033010085514D /* NSXReturnThrowError.m in Sources */ = {isa = PBXBuildFile; fileRef = 55BE6DCC0B8033010085514D /* NSXReturnThrowError.m */; };
+		55CA60E50BA0F2530012CF7B /* DDHidKeyboard.h in Headers */ = {isa = PBXBuildFile; fileRef = 55CA60E30BA0F2530012CF7B /* DDHidKeyboard.h */; };
+		55CA60E60BA0F2530012CF7B /* DDHidKeyboard.m in Sources */ = {isa = PBXBuildFile; fileRef = 55CA60E40BA0F2530012CF7B /* DDHidKeyboard.m */; };
+		55CA668B0BA38AEF0012CF7B /* KeyboardPaneController.m in Sources */ = {isa = PBXBuildFile; fileRef = 55CA668A0BA38AEF0012CF7B /* KeyboardPaneController.m */; };
 		55DCD9C60B55D35D000648E5 /* WatcherWindowController.m in Sources */ = {isa = PBXBuildFile; fileRef = 55DCD9C50B55D35D000648E5 /* WatcherWindowController.m */; };
 		55DCD9E00B55D503000648E5 /* EventWatcher.nib in Resources */ = {isa = PBXBuildFile; fileRef = 55DCD9DE0B55D503000648E5 /* EventWatcher.nib */; };
 		55FD65CB0B5DD57200325FEF /* DeviceTestController.m in Sources */ = {isa = PBXBuildFile; fileRef = 55FD65CA0B5DD57200325FEF /* DeviceTestController.m */; };
@@ -179,6 +182,10 @@
 		55A000510B5D7C06001B47E5 /* BoolFormatter.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = BoolFormatter.h; sourceTree = "<group>"; };
 		55BE6DCB0B8033010085514D /* NSXReturnThrowError.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = NSXReturnThrowError.h; sourceTree = "<group>"; };
 		55BE6DCC0B8033010085514D /* NSXReturnThrowError.m */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.objc; path = NSXReturnThrowError.m; sourceTree = "<group>"; };
+		55CA60E30BA0F2530012CF7B /* DDHidKeyboard.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DDHidKeyboard.h; sourceTree = "<group>"; };
+		55CA60E40BA0F2530012CF7B /* DDHidKeyboard.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DDHidKeyboard.m; sourceTree = "<group>"; };
+		55CA66890BA38AEF0012CF7B /* KeyboardPaneController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KeyboardPaneController.h; sourceTree = "<group>"; };
+		55CA668A0BA38AEF0012CF7B /* KeyboardPaneController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KeyboardPaneController.m; sourceTree = "<group>"; };
 		55DCD9C40B55D35D000648E5 /* WatcherWindowController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WatcherWindowController.h; sourceTree = "<group>"; };
 		55DCD9C50B55D35D000648E5 /* WatcherWindowController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WatcherWindowController.m; sourceTree = "<group>"; };
 		55DCD9DF0B55D503000648E5 /* English */ = {isa = PBXFileReference; lastKnownFileType = wrapper.nib; name = English; path = English.lproj/EventWatcher.nib; sourceTree = "<group>"; };
@@ -330,6 +337,8 @@
 				559CBCA80B5B3BCE00C8FD74 /* MousePaneController.m */,
 				55FD66FB0B5DDD2100325FEF /* JoystickPaneController.h */,
 				55FD66FC0B5DDD2100325FEF /* JoystickPaneController.m */,
+				55CA66890BA38AEF0012CF7B /* KeyboardPaneController.h */,
+				55CA668A0BA38AEF0012CF7B /* KeyboardPaneController.m */,
 				55170E0B0B8ECCAC00C82155 /* AppleRemotePaneController.h */,
 				55170E0C0B8ECCAC00C82155 /* AppleRemotePaneController.m */,
 				55170E630B8ECEF600C82155 /* RemoteFeedbackView.h */,
@@ -363,6 +372,8 @@
 				559CBC2B0B5B34C300C8FD74 /* DDHidMouse.m */,
 				55FD66D30B5DDC3F00325FEF /* DDHidJoystick.h */,
 				55FD66D40B5DDC3F00325FEF /* DDHidJoystick.m */,
+				55CA60E30BA0F2530012CF7B /* DDHidKeyboard.h */,
+				55CA60E40BA0F2530012CF7B /* DDHidKeyboard.m */,
 				55170D340B8EC2CE00C82155 /* DDHidAppleRemote.h */,
 				55170D350B8EC2CE00C82155 /* DDHidAppleRemote.m */,
 				55FD67CB0B5DE18600325FEF /* DDHidLib.h */,
@@ -455,6 +466,7 @@
 				55FD67CC0B5DE18600325FEF /* DDHidLib.h in Headers */,
 				55BE6DCD0B8033010085514D /* NSXReturnThrowError.h in Headers */,
 				55170D360B8EC2CE00C82155 /* DDHidAppleRemote.h in Headers */,
+				55CA60E50BA0F2530012CF7B /* DDHidKeyboard.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -615,6 +627,7 @@
 				55FD67750B5DDF8200325FEF /* ButtonState.m in Sources */,
 				55170E0D0B8ECCAC00C82155 /* AppleRemotePaneController.m in Sources */,
 				55170E650B8ECEF600C82155 /* RemoteFeedbackView.m in Sources */,
+				55CA668B0BA38AEF0012CF7B /* KeyboardPaneController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -633,6 +646,7 @@
 				55FD66D60B5DDC3F00325FEF /* DDHidJoystick.m in Sources */,
 				55BE6DCE0B8033010085514D /* NSXReturnThrowError.m in Sources */,
 				55170D370B8EC2CE00C82155 /* DDHidAppleRemote.m in Sources */,
+				55CA60E60BA0F2530012CF7B /* DDHidKeyboard.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
