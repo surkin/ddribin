@@ -55,7 +55,6 @@ static int applyDelta(int current, int delta)
 
 - (void) awakeFromNib;
 {
-    NSLog(@"DeviceTestController");
     mCurrentMouse = 0;
     mMouseButtons = [[NSMutableArray alloc] init];
 
@@ -65,8 +64,6 @@ static int applyDelta(int current, int delta)
     while (mouse = [e nextObject])
     {
         [mouse setDelegate: self];
-        NSLog(@"Product name: %@",
-              [mouse productName]);
     }
     [self setMice: mice];
     [self setMouseIndex: 0];
