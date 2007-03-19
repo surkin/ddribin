@@ -23,11 +23,7 @@
  */
 
 #import "MousePaneController.h"
-#import "DDHidMouse.h"
-#import "DDHidQueue.h"
-#import "DDHidEvent.h"
-#import "DDHidElement.h"
-#import "DDHidUsage.h"
+#import "DDHidLib.h"
 #import "ButtonState.h"
 
 
@@ -40,8 +36,6 @@
 @end
 
 @implementation MousePaneController
-
-static DDHidMouse * mDevice;
 
 static int sMaxValue = 2500;
 
@@ -59,12 +53,8 @@ static int applyDelta(int current, int delta)
     mMouseButtons = [[NSMutableArray alloc] init];
 
     NSArray * mice = [DDHidMouse allMice];
-    NSEnumerator * e = [mice objectEnumerator];
-    DDHidMouse * mouse;
-    while (mouse = [e nextObject])
-    {
-        [mouse setDelegate: self];
-    }
+    [mice makeObjectsPerformSelector: @selector(setDelegate:)
+                          withObject: self];
     [self setMice: mice];
     [self setMouseIndex: 0];
 }
@@ -166,17 +156,6 @@ static int applyDelta(int current, int delta)
 - (int) mouseWheel
 {
     return mMouseWheel;
-}
-
-
-- (void) ddhidQueueHasEvents: (DDHidQueue *) hidQueue;
-{
-    DDHidEvent * event;
-    while (event = [hidQueue nextEvent])
-    {
-        DDHidElement * element = [mDevice elementForCookie: [event elementCookie]];
-        NSLog(@"Element: %@, value: %d", [[element usage] usageName], [event value]);
-    }
 }
 
 - (void) ddhidMouse: (DDHidMouse *) mouse xChanged: (SInt32) deltaX;

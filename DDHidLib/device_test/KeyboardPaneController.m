@@ -48,13 +48,8 @@
 - (void) awakeFromNib;
 {
     NSArray * keyboards = [DDHidKeyboard allKeyboards];
-    NSEnumerator * e = [keyboards objectEnumerator];
-    DDHidKeyboard * keyboard;
-    while (keyboard = [e nextObject])
-    {
-        [keyboard setDelegate: self];
-    }
-
+    [keyboards makeObjectsPerformSelector: @selector(setDelegate:)
+                               withObject: self];
     [self setKeyboards: keyboards];
     
     if ([keyboards count] > 0)

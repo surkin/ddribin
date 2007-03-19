@@ -39,15 +39,8 @@
     NSArray * joysticks = [DDHidJoystick allJoysticks];
 
     mJoystickButtons = [[NSMutableArray alloc] init];
-    NSEnumerator * e = [joysticks objectEnumerator];
-    DDHidJoystick * joystick;
-    while (joystick = [e nextObject])
-    {
-        [joystick setDelegate: self];
-        NSLog(@"Joystick product name: %@",
-              [joystick productName]);
-        NSLog(@"Joystick stick count: %d", [joystick countOfSticks]);
-    }
+    [joysticks makeObjectsPerformSelector: @selector(setDelegate:)
+                               withObject: self];
     [self setJoysticks: joysticks];
     if ([mJoysticks count] > 0)
         [self setJoystickIndex: 0];
