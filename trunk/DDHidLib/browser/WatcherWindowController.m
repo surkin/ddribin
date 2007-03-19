@@ -143,7 +143,7 @@
     [super showWindow: sender];
 }
 
-- (void) hidQueueHasEvents: (DDHidQueue *) hidQueue;
+- (void) ddhidQueueHasEvents: (DDHidQueue *) hidQueue;
 {
     WatcherEvent * watcherEvent;
     watcherEvent =

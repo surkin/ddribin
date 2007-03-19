@@ -67,8 +67,6 @@ static int applyDelta(int current, int delta)
     }
     [self setMice: mice];
     [self setMouseIndex: 0];
-    // [self setMice: [NSArray array]];
-    // [self setMouseIndex: NSNotFound];
 }
 
 //=========================================================== 
@@ -171,7 +169,7 @@ static int applyDelta(int current, int delta)
 }
 
 
-- (void) hidQueueHasEvents: (DDHidQueue *) hidQueue;
+- (void) ddhidQueueHasEvents: (DDHidQueue *) hidQueue;
 {
     DDHidEvent * event;
     while (event = [hidQueue nextEvent])
@@ -181,17 +179,17 @@ static int applyDelta(int current, int delta)
     }
 }
 
-- (void) hidMouse: (DDHidMouse *) mouse xChanged: (SInt32) deltaX;
+- (void) ddhidMouse: (DDHidMouse *) mouse xChanged: (SInt32) deltaX;
 {
     [self setMouseX: applyDelta(mMouseX, deltaX)];
 }
 
-- (void) hidMouse: (DDHidMouse *) mouse yChanged: (SInt32) deltaY;
+- (void) ddhidMouse: (DDHidMouse *) mouse yChanged: (SInt32) deltaY;
 {
     [self setMouseY: applyDelta(mMouseY, deltaY)];
 }
 
-- (void) hidMouse: (DDHidMouse *) mouse wheelChanged: (SInt32) deltaWheel;
+- (void) ddhidMouse: (DDHidMouse *) mouse wheelChanged: (SInt32) deltaWheel;
 {
     // Some wheels only output -1 or +1, some output a more analog value.
     // Normalize wheel to -1%/+1% movement.
@@ -199,13 +197,13 @@ static int applyDelta(int current, int delta)
     [self setMouseWheel: applyDelta(mMouseWheel, deltaWheel)];
 }
 
-- (void) hidMouse: (DDHidMouse *) mouse buttonDown: (unsigned) buttonNumber;
+- (void) ddhidMouse: (DDHidMouse *) mouse buttonDown: (unsigned) buttonNumber;
 {
     ButtonState * state = [mMouseButtons objectAtIndex: buttonNumber];
     [state setPressed: YES];
 }
 
-- (void) hidMouse: (DDHidMouse *) mouse buttonUp: (unsigned) buttonNumber;
+- (void) ddhidMouse: (DDHidMouse *) mouse buttonUp: (unsigned) buttonNumber;
 {
     ButtonState * state = [mMouseButtons objectAtIndex: buttonNumber];
     [state setPressed: NO];
