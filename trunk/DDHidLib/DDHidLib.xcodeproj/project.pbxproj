@@ -15,6 +15,7 @@
 			dependencies = (
 				551711130B8F41F500C82155 /* PBXTargetDependency */,
 				551711150B8F41F500C82155 /* PBXTargetDependency */,
+				55D5935D0BAE3B1E00364849 /* PBXTargetDependency */,
 			);
 			name = All;
 			productName = All;
@@ -39,7 +40,7 @@
 		55193E610B93F31D004C0C98 /* DDHidEvent.m in Sources */ = {isa = PBXBuildFile; fileRef = 559181A50B576149005308AC /* DDHidEvent.m */; };
 		55193E620B93F31D004C0C98 /* DDHidUsageTables.h in Headers */ = {isa = PBXBuildFile; fileRef = 55917F610B545104005308AC /* DDHidUsageTables.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		55193E630B93F31D004C0C98 /* DDHidUsageTables.m in Sources */ = {isa = PBXBuildFile; fileRef = 55917F620B545104005308AC /* DDHidUsageTables.m */; };
-		55193E640B93F31D004C0C98 /* NSDictionary+DDHidExtras.h in Headers */ = {isa = PBXBuildFile; fileRef = 55917E720B541541005308AC /* NSDictionary+DDHidExtras.h */; settings = {ATTRIBUTES = (Private, ); }; };
+		55193E640B93F31D004C0C98 /* NSDictionary+DDHidExtras.h in Headers */ = {isa = PBXBuildFile; fileRef = 55917E720B541541005308AC /* NSDictionary+DDHidExtras.h */; settings = {ATTRIBUTES = (); }; };
 		55193E650B93F31D004C0C98 /* NSDictionary+DDHidExtras.m in Sources */ = {isa = PBXBuildFile; fileRef = 55917E730B541541005308AC /* NSDictionary+DDHidExtras.m */; };
 		55193E660B93F31D004C0C98 /* DDHidMouse.h in Headers */ = {isa = PBXBuildFile; fileRef = 559CBC2A0B5B34C300C8FD74 /* DDHidMouse.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		55193E670B93F31D004C0C98 /* DDHidMouse.m in Sources */ = {isa = PBXBuildFile; fileRef = 559CBC2B0B5B34C300C8FD74 /* DDHidMouse.m */; };
@@ -49,12 +50,11 @@
 		55193E6B0B93F31D004C0C98 /* DDHidAppleRemote.m in Sources */ = {isa = PBXBuildFile; fileRef = 55170D350B8EC2CE00C82155 /* DDHidAppleRemote.m */; };
 		55193E6C0B93F31D004C0C98 /* DDHidLib.h in Headers */ = {isa = PBXBuildFile; fileRef = 55FD67CB0B5DE18600325FEF /* DDHidLib.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		55193E700B93F35A004C0C98 /* IOKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 556E1E680B5359F9002F709C /* IOKit.framework */; };
-		55193F110B93F36F004C0C98 /* NSXReturnThrowError.h in Headers */ = {isa = PBXBuildFile; fileRef = 55BE6DCB0B8033010085514D /* NSXReturnThrowError.h */; settings = {ATTRIBUTES = (Private, ); }; };
+		55193F110B93F36F004C0C98 /* NSXReturnThrowError.h in Headers */ = {isa = PBXBuildFile; fileRef = 55BE6DCB0B8033010085514D /* NSXReturnThrowError.h */; settings = {ATTRIBUTES = (); }; };
 		55193F120B93F371004C0C98 /* NSXReturnThrowError.m in Sources */ = {isa = PBXBuildFile; fileRef = 55BE6DCC0B8033010085514D /* NSXReturnThrowError.m */; };
 		556E1E690B5359F9002F709C /* IOKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 556E1E680B5359F9002F709C /* IOKit.framework */; };
 		55917B640B53408C005308AC /* HidBrowserController.m in Sources */ = {isa = PBXBuildFile; fileRef = 55917B630B53408C005308AC /* HidBrowserController.m */; };
 		55917E1C0B53E454005308AC /* HexFormatter.m in Sources */ = {isa = PBXBuildFile; fileRef = 55917E1B0B53E454005308AC /* HexFormatter.m */; };
-		55917F770B54535B005308AC /* DDHidStandardUsages.plist in Resources */ = {isa = PBXBuildFile; fileRef = 55917F760B54535B005308AC /* DDHidStandardUsages.plist */; };
 		559CBAEB0B5B31AB00C8FD74 /* Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 559CBAE90B5B31AB00C8FD74 /* Info.plist */; };
 		559CBAEC0B5B31AB00C8FD74 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 559CBAEA0B5B31AB00C8FD74 /* main.m */; };
 		559CBB930B5B31E300C8FD74 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1058C7A1FEA54F0111CA2CBB /* Cocoa.framework */; };
@@ -72,13 +72,10 @@
 		559CBBDB0B5B337600C8FD74 /* DDHidUsageTables.h in Headers */ = {isa = PBXBuildFile; fileRef = 55917F610B545104005308AC /* DDHidUsageTables.h */; };
 		559CBBDC0B5B337600C8FD74 /* DDHidUsageTables.m in Sources */ = {isa = PBXBuildFile; fileRef = 55917F620B545104005308AC /* DDHidUsageTables.m */; };
 		559CBBDD0B5B337600C8FD74 /* NSDictionary+DDHidExtras.h in Headers */ = {isa = PBXBuildFile; fileRef = 55917E720B541541005308AC /* NSDictionary+DDHidExtras.h */; };
-		559CBBEC0B5B33C000C8FD74 /* libddhid.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 559CBBCC0B5B336600C8FD74 /* libddhid.a */; };
-		559CBBED0B5B33C400C8FD74 /* libddhid.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 559CBBCC0B5B336600C8FD74 /* libddhid.a */; };
 		559CBC260B5B349100C8FD74 /* NSDictionary+DDHidExtras.m in Sources */ = {isa = PBXBuildFile; fileRef = 55917E730B541541005308AC /* NSDictionary+DDHidExtras.m */; };
 		559CBC2C0B5B34C300C8FD74 /* DDHidMouse.h in Headers */ = {isa = PBXBuildFile; fileRef = 559CBC2A0B5B34C300C8FD74 /* DDHidMouse.h */; };
 		559CBC2D0B5B34C300C8FD74 /* DDHidMouse.m in Sources */ = {isa = PBXBuildFile; fileRef = 559CBC2B0B5B34C300C8FD74 /* DDHidMouse.m */; };
 		559CBCA90B5B3BCE00C8FD74 /* MousePaneController.m in Sources */ = {isa = PBXBuildFile; fileRef = 559CBCA80B5B3BCE00C8FD74 /* MousePaneController.m */; };
-		559CBDAB0B5B451E00C8FD74 /* DDHidStandardUsages.plist in Resources */ = {isa = PBXBuildFile; fileRef = 55917F760B54535B005308AC /* DDHidStandardUsages.plist */; };
 		55A000520B5D7C06001B47E5 /* BoolFormatter.m in Sources */ = {isa = PBXBuildFile; fileRef = 55A000500B5D7C06001B47E5 /* BoolFormatter.m */; };
 		55BE6DCD0B8033010085514D /* NSXReturnThrowError.h in Headers */ = {isa = PBXBuildFile; fileRef = 55BE6DCB0B8033010085514D /* NSXReturnThrowError.h */; };
 		55BE6DCE0B8033010085514D /* NSXReturnThrowError.m in Sources */ = {isa = PBXBuildFile; fileRef = 55BE6DCC0B8033010085514D /* NSXReturnThrowError.m */; };
@@ -87,6 +84,13 @@
 		55CA668B0BA38AEF0012CF7B /* KeyboardPaneController.m in Sources */ = {isa = PBXBuildFile; fileRef = 55CA668A0BA38AEF0012CF7B /* KeyboardPaneController.m */; };
 		55D5927D0BAE306E00364849 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 55D5927B0BAE306E00364849 /* InfoPlist.strings */; };
 		55D592940BAE30B600364849 /* MainMenu.nib in Resources */ = {isa = PBXBuildFile; fileRef = 55D592920BAE30B600364849 /* MainMenu.nib */; };
+		55D593290BAE3ABD00364849 /* DDHidLib.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 55193E500B93F2EE004C0C98 /* DDHidLib.framework */; };
+		55D593390BAE3ADF00364849 /* DDHidLib.framework in Copy Files to Frameworks */ = {isa = PBXBuildFile; fileRef = 55193E500B93F2EE004C0C98 /* DDHidLib.framework */; };
+		55D593660BAE3B5D00364849 /* DDHidLib.framework in Copy Files to Frameworks */ = {isa = PBXBuildFile; fileRef = 55193E500B93F2EE004C0C98 /* DDHidLib.framework */; };
+		55D593750BAE3B7500364849 /* DDHidLib.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 55193E500B93F2EE004C0C98 /* DDHidLib.framework */; };
+		55D5937B0BAE3B8800364849 /* DDHidKeyboard.h in Headers */ = {isa = PBXBuildFile; fileRef = 55CA60E30BA0F2530012CF7B /* DDHidKeyboard.h */; };
+		55D5937C0BAE3B8800364849 /* DDHidKeyboard.m in Sources */ = {isa = PBXBuildFile; fileRef = 55CA60E40BA0F2530012CF7B /* DDHidKeyboard.m */; };
+		55D593870BAE3BB700364849 /* DDHidStandardUsages.plist in Resources */ = {isa = PBXBuildFile; fileRef = 55917F760B54535B005308AC /* DDHidStandardUsages.plist */; };
 		55DCD9C60B55D35D000648E5 /* WatcherWindowController.m in Sources */ = {isa = PBXBuildFile; fileRef = 55DCD9C50B55D35D000648E5 /* WatcherWindowController.m */; };
 		55DCD9E00B55D503000648E5 /* EventWatcher.nib in Resources */ = {isa = PBXBuildFile; fileRef = 55DCD9DE0B55D503000648E5 /* EventWatcher.nib */; };
 		55FD65CB0B5DD57200325FEF /* DeviceTestController.m in Sources */ = {isa = PBXBuildFile; fileRef = 55FD65CA0B5DD57200325FEF /* DeviceTestController.m */; };
@@ -116,21 +120,53 @@
 			remoteGlobalIDString = 559CBAE00B5B313000C8FD74;
 			remoteInfo = HIDDeviceTest;
 		};
-		559CBBF00B5B33CF00C8FD74 /* PBXContainerItemProxy */ = {
+		55D593250BAE3AA800364849 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 29B97313FDCFA39411CA2CEA /* Project object */;
 			proxyType = 1;
-			remoteGlobalIDString = 559CBBCB0B5B336600C8FD74;
-			remoteInfo = ddhid;
+			remoteGlobalIDString = 55193E4F0B93F2EE004C0C98 /* DDHidLib */;
+			remoteInfo = DDHidLib;
 		};
-		559CBBF40B5B33D700C8FD74 /* PBXContainerItemProxy */ = {
+		55D5935C0BAE3B1E00364849 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 29B97313FDCFA39411CA2CEA /* Project object */;
 			proxyType = 1;
-			remoteGlobalIDString = 559CBBCB0B5B336600C8FD74;
-			remoteInfo = ddhid;
+			remoteGlobalIDString = 55193E4F0B93F2EE004C0C98 /* DDHidLib */;
+			remoteInfo = DDHidLib;
+		};
+		55D593600BAE3B3300364849 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 29B97313FDCFA39411CA2CEA /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 55193E4F0B93F2EE004C0C98 /* DDHidLib */;
+			remoteInfo = DDHidLib;
 		};
 /* End PBXContainerItemProxy section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		55D593350BAE3AC800364849 /* Copy Files to Frameworks */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 10;
+			files = (
+				55D593390BAE3ADF00364849 /* DDHidLib.framework in Copy Files to Frameworks */,
+			);
+			name = "Copy Files to Frameworks";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		55D593620BAE3B4B00364849 /* Copy Files to Frameworks */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 10;
+			files = (
+				55D593660BAE3B5D00364849 /* DDHidLib.framework in Copy Files to Frameworks */,
+			);
+			name = "Copy Files to Frameworks";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
 		089C165DFE840E0CC02AAC07 /* English */ = {isa = PBXFileReference; fileEncoding = 10; lastKnownFileType = text.plist.strings; name = English; path = English.lproj/InfoPlist.strings; sourceTree = "<group>"; };
@@ -218,7 +254,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				559CBBED0B5B33C400C8FD74 /* libddhid.a in Frameworks */,
+				55D593750BAE3B7500364849 /* DDHidLib.framework in Frameworks */,
 				559CBB940B5B31EA00C8FD74 /* IOKit.framework in Frameworks */,
 				559CBB930B5B31E300C8FD74 /* Cocoa.framework in Frameworks */,
 			);
@@ -235,7 +271,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				559CBBEC0B5B33C000C8FD74 /* libddhid.a in Frameworks */,
+				55D593290BAE3ABD00364849 /* DDHidLib.framework in Frameworks */,
 				8D11072F0486CEB800E47090 /* Cocoa.framework in Frameworks */,
 				556E1E690B5359F9002F709C /* IOKit.framework in Frameworks */,
 			);
@@ -452,6 +488,7 @@
 				55193E6A0B93F31D004C0C98 /* DDHidAppleRemote.h in Headers */,
 				55193E6C0B93F31D004C0C98 /* DDHidLib.h in Headers */,
 				55193F110B93F36F004C0C98 /* NSXReturnThrowError.h in Headers */,
+				55D5937B0BAE3B8800364849 /* DDHidKeyboard.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -503,11 +540,12 @@
 				559CBADD0B5B313000C8FD74 /* Resources */,
 				559CBADE0B5B313000C8FD74 /* Sources */,
 				559CBADF0B5B313000C8FD74 /* Frameworks */,
+				55D593620BAE3B4B00364849 /* Copy Files to Frameworks */,
 			);
 			buildRules = (
 			);
 			dependencies = (
-				559CBBF50B5B33D700C8FD74 /* PBXTargetDependency */,
+				55D593610BAE3B3300364849 /* PBXTargetDependency */,
 			);
 			name = HIDDeviceTest;
 			productName = HIDDeviceTest;
@@ -538,11 +576,12 @@
 				8D1107290486CEB800E47090 /* Resources */,
 				8D11072C0486CEB800E47090 /* Sources */,
 				8D11072E0486CEB800E47090 /* Frameworks */,
+				55D593350BAE3AC800364849 /* Copy Files to Frameworks */,
 			);
 			buildRules = (
 			);
 			dependencies = (
-				559CBBF10B5B33CF00C8FD74 /* PBXTargetDependency */,
+				55D593260BAE3AA800364849 /* PBXTargetDependency */,
 			);
 			name = HIDBrowser;
 			productInstallPath = "$(HOME)/Applications";
@@ -574,6 +613,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				55D593870BAE3BB700364849 /* DDHidStandardUsages.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -582,7 +622,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				559CBAEB0B5B31AB00C8FD74 /* Info.plist in Resources */,
-				559CBDAB0B5B451E00C8FD74 /* DDHidStandardUsages.plist in Resources */,
 				55170E670B8ECF0000C82155 /* AppleRemote.tiff in Resources */,
 				55D5927D0BAE306E00364849 /* InfoPlist.strings in Resources */,
 				55D592940BAE30B600364849 /* MainMenu.nib in Resources */,
@@ -595,7 +634,6 @@
 			files = (
 				8D11072A0486CEB800E47090 /* MainMenu.nib in Resources */,
 				8D11072B0486CEB800E47090 /* InfoPlist.strings in Resources */,
-				55917F770B54535B005308AC /* DDHidStandardUsages.plist in Resources */,
 				55DCD9E00B55D503000648E5 /* EventWatcher.nib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -618,6 +656,7 @@
 				55193E690B93F31D004C0C98 /* DDHidJoystick.m in Sources */,
 				55193E6B0B93F31D004C0C98 /* DDHidAppleRemote.m in Sources */,
 				55193F120B93F371004C0C98 /* NSXReturnThrowError.m in Sources */,
+				55D5937C0BAE3B8800364849 /* DDHidKeyboard.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -680,15 +719,20 @@
 			target = 559CBAE00B5B313000C8FD74 /* HIDDeviceTest */;
 			targetProxy = 551711140B8F41F500C82155 /* PBXContainerItemProxy */;
 		};
-		559CBBF10B5B33CF00C8FD74 /* PBXTargetDependency */ = {
+		55D593260BAE3AA800364849 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
-			target = 559CBBCB0B5B336600C8FD74 /* ddhid */;
-			targetProxy = 559CBBF00B5B33CF00C8FD74 /* PBXContainerItemProxy */;
+			target = 55193E4F0B93F2EE004C0C98 /* DDHidLib */;
+			targetProxy = 55D593250BAE3AA800364849 /* PBXContainerItemProxy */;
 		};
-		559CBBF50B5B33D700C8FD74 /* PBXTargetDependency */ = {
+		55D5935D0BAE3B1E00364849 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
-			target = 559CBBCB0B5B336600C8FD74 /* ddhid */;
-			targetProxy = 559CBBF40B5B33D700C8FD74 /* PBXContainerItemProxy */;
+			target = 55193E4F0B93F2EE004C0C98 /* DDHidLib */;
+			targetProxy = 55D5935C0BAE3B1E00364849 /* PBXContainerItemProxy */;
+		};
+		55D593610BAE3B3300364849 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 55193E4F0B93F2EE004C0C98 /* DDHidLib */;
+			targetProxy = 55D593600BAE3B3300364849 /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
 
@@ -773,7 +817,7 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "$(SYSTEM_LIBRARY_DIR)/Frameworks/AppKit.framework/Headers/AppKit.h";
 				INFOPLIST_FILE = "DDHidLib-Info.plist";
-				INSTALL_PATH = "$(HOME)/Library/Frameworks";
+				INSTALL_PATH = "@loader_path/../Frameworks";
 				OTHER_LDFLAGS = (
 					"-framework",
 					Foundation,
@@ -782,7 +826,7 @@
 				);
 				PREBINDING = NO;
 				PRODUCT_NAME = DDHidLib;
-				ZERO_LINK = YES;
+				ZERO_LINK = NO;
 			};
 			name = Debug;
 		};
@@ -799,7 +843,7 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "$(SYSTEM_LIBRARY_DIR)/Frameworks/AppKit.framework/Headers/AppKit.h";
 				INFOPLIST_FILE = "DDHidLib-Info.plist";
-				INSTALL_PATH = "$(HOME)/Library/Frameworks";
+				INSTALL_PATH = "@loader_path/../Frameworks";
 				OTHER_LDFLAGS = (
 					"-framework",
 					Foundation,
@@ -844,10 +888,6 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 55D592200BAE2E4500364849 /* versions.xcconfig */;
 			buildSettings = {
-				ARCHS = (
-					ppc,
-					i386,
-				);
 				COPY_PHASE_STRIP = YES;
 				GCC_ENABLE_FIX_AND_CONTINUE = NO;
 				GCC_GENERATE_DEBUGGING_SYMBOLS = NO;
@@ -897,10 +937,6 @@
 		559CBBE80B5B338B00C8FD74 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ARCHS = (
-					ppc,
-					i386,
-				);
 				COPY_PHASE_STRIP = YES;
 				GCC_ENABLE_FIX_AND_CONTINUE = NO;
 				GCC_GENERATE_DEBUGGING_SYMBOLS = NO;
@@ -942,10 +978,6 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 55D592200BAE2E4500364849 /* versions.xcconfig */;
 			buildSettings = {
-				ARCHS = (
-					ppc,
-					i386,
-				);
 				GCC_GENERATE_DEBUGGING_SYMBOLS = NO;
 				GCC_MODEL_TUNING = G5;
 				INFOPLIST_FILE = browser/Info.plist;
@@ -973,6 +1005,10 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 55D592200BAE2E4500364849 /* versions.xcconfig */;
 			buildSettings = {
+				ARCHS = (
+					ppc,
+					i386,
+				);
 				GCC_ENABLE_OBJC_EXCEPTIONS = YES;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
