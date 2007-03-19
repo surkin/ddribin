@@ -59,7 +59,6 @@
 		559CBAEC0B5B31AB00C8FD74 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 559CBAEA0B5B31AB00C8FD74 /* main.m */; };
 		559CBB930B5B31E300C8FD74 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1058C7A1FEA54F0111CA2CBB /* Cocoa.framework */; };
 		559CBB940B5B31EA00C8FD74 /* IOKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 556E1E680B5359F9002F709C /* IOKit.framework */; };
-		559CBBA50B5B324700C8FD74 /* MainMenu.nib in Resources */ = {isa = PBXBuildFile; fileRef = 559CBBA40B5B324700C8FD74 /* MainMenu.nib */; };
 		559CBBD10B5B337600C8FD74 /* DDHidDevice.h in Headers */ = {isa = PBXBuildFile; fileRef = 55917B4F0B533C82005308AC /* DDHidDevice.h */; };
 		559CBBD20B5B337600C8FD74 /* DDHidDevice.m in Sources */ = {isa = PBXBuildFile; fileRef = 55917B500B533C82005308AC /* DDHidDevice.m */; };
 		559CBBD30B5B337600C8FD74 /* DDHidElement.h in Headers */ = {isa = PBXBuildFile; fileRef = 55917E6F0B5413E7005308AC /* DDHidElement.h */; };
@@ -86,6 +85,8 @@
 		55CA60E50BA0F2530012CF7B /* DDHidKeyboard.h in Headers */ = {isa = PBXBuildFile; fileRef = 55CA60E30BA0F2530012CF7B /* DDHidKeyboard.h */; };
 		55CA60E60BA0F2530012CF7B /* DDHidKeyboard.m in Sources */ = {isa = PBXBuildFile; fileRef = 55CA60E40BA0F2530012CF7B /* DDHidKeyboard.m */; };
 		55CA668B0BA38AEF0012CF7B /* KeyboardPaneController.m in Sources */ = {isa = PBXBuildFile; fileRef = 55CA668A0BA38AEF0012CF7B /* KeyboardPaneController.m */; };
+		55D5927D0BAE306E00364849 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 55D5927B0BAE306E00364849 /* InfoPlist.strings */; };
+		55D592940BAE30B600364849 /* MainMenu.nib in Resources */ = {isa = PBXBuildFile; fileRef = 55D592920BAE30B600364849 /* MainMenu.nib */; };
 		55DCD9C60B55D35D000648E5 /* WatcherWindowController.m in Sources */ = {isa = PBXBuildFile; fileRef = 55DCD9C50B55D35D000648E5 /* WatcherWindowController.m */; };
 		55DCD9E00B55D503000648E5 /* EventWatcher.nib in Resources */ = {isa = PBXBuildFile; fileRef = 55DCD9DE0B55D503000648E5 /* EventWatcher.nib */; };
 		55FD65CB0B5DD57200325FEF /* DeviceTestController.m in Sources */ = {isa = PBXBuildFile; fileRef = 55FD65CA0B5DD57200325FEF /* DeviceTestController.m */; };
@@ -172,7 +173,6 @@
 		559CBAE10B5B313000C8FD74 /* HIDDeviceTest.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = HIDDeviceTest.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		559CBAE90B5B31AB00C8FD74 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = text.xml; path = Info.plist; sourceTree = "<group>"; };
 		559CBAEA0B5B31AB00C8FD74 /* main.m */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
-		559CBBA40B5B324700C8FD74 /* MainMenu.nib */ = {isa = PBXFileReference; lastKnownFileType = wrapper.nib; path = MainMenu.nib; sourceTree = "<group>"; };
 		559CBBCC0B5B336600C8FD74 /* libddhid.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libddhid.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		559CBC2A0B5B34C300C8FD74 /* DDHidMouse.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DDHidMouse.h; sourceTree = "<group>"; };
 		559CBC2B0B5B34C300C8FD74 /* DDHidMouse.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DDHidMouse.m; sourceTree = "<group>"; };
@@ -186,6 +186,9 @@
 		55CA60E40BA0F2530012CF7B /* DDHidKeyboard.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DDHidKeyboard.m; sourceTree = "<group>"; };
 		55CA66890BA38AEF0012CF7B /* KeyboardPaneController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KeyboardPaneController.h; sourceTree = "<group>"; };
 		55CA668A0BA38AEF0012CF7B /* KeyboardPaneController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KeyboardPaneController.m; sourceTree = "<group>"; };
+		55D592200BAE2E4500364849 /* versions.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; path = versions.xcconfig; sourceTree = "<group>"; };
+		55D5927C0BAE306E00364849 /* English */ = {isa = PBXFileReference; fileEncoding = 10; lastKnownFileType = text.plist.strings; name = English; path = English.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		55D592930BAE30B600364849 /* English */ = {isa = PBXFileReference; lastKnownFileType = wrapper.nib; name = English; path = English.lproj/MainMenu.nib; sourceTree = "<group>"; };
 		55DCD9C40B55D35D000648E5 /* WatcherWindowController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WatcherWindowController.h; sourceTree = "<group>"; };
 		55DCD9C50B55D35D000648E5 /* WatcherWindowController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WatcherWindowController.m; sourceTree = "<group>"; };
 		55DCD9DF0B55D503000648E5 /* English */ = {isa = PBXFileReference; lastKnownFileType = wrapper.nib; name = English; path = English.lproj/EventWatcher.nib; sourceTree = "<group>"; };
@@ -294,6 +297,7 @@
 				29B97323FDCFA39411CA2CEA /* Frameworks */,
 				19C28FACFE9D520D11CA2CBB /* Products */,
 				55193E510B93F2EE004C0C98 /* DDHidLib-Info.plist */,
+				55D592200BAE2E4500364849 /* versions.xcconfig */,
 			);
 			name = HIDBrowser;
 			sourceTree = "<group>";
@@ -406,7 +410,8 @@
 			children = (
 				55170E660B8ECF0000C82155 /* AppleRemote.tiff */,
 				559CBAE90B5B31AB00C8FD74 /* Info.plist */,
-				559CBBA40B5B324700C8FD74 /* MainMenu.nib */,
+				55D5927B0BAE306E00364849 /* InfoPlist.strings */,
+				55D592920BAE30B600364849 /* MainMenu.nib */,
 			);
 			name = Resources;
 			sourceTree = "<group>";
@@ -577,9 +582,10 @@
 			buildActionMask = 2147483647;
 			files = (
 				559CBAEB0B5B31AB00C8FD74 /* Info.plist in Resources */,
-				559CBBA50B5B324700C8FD74 /* MainMenu.nib in Resources */,
 				559CBDAB0B5B451E00C8FD74 /* DDHidStandardUsages.plist in Resources */,
 				55170E670B8ECF0000C82155 /* AppleRemote.tiff in Resources */,
+				55D5927D0BAE306E00364849 /* InfoPlist.strings in Resources */,
+				55D592940BAE30B600364849 /* MainMenu.nib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -703,6 +709,22 @@
 			name = MainMenu.nib;
 			sourceTree = "<group>";
 		};
+		55D5927B0BAE306E00364849 /* InfoPlist.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				55D5927C0BAE306E00364849 /* English */,
+			);
+			name = InfoPlist.strings;
+			sourceTree = "<group>";
+		};
+		55D592920BAE30B600364849 /* MainMenu.nib */ = {
+			isa = PBXVariantGroup;
+			children = (
+				55D592930BAE30B600364849 /* English */,
+			);
+			name = MainMenu.nib;
+			sourceTree = "<group>";
+		};
 		55DCD9DE0B55D503000648E5 /* EventWatcher.nib */ = {
 			isa = PBXVariantGroup;
 			children = (
@@ -792,6 +814,7 @@
 		};
 		559CBAE50B5B313000C8FD74 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 55D592200BAE2E4500364849 /* versions.xcconfig */;
 			buildSettings = {
 				COPY_PHASE_STRIP = NO;
 				GCC_DYNAMIC_NO_PIC = NO;
@@ -819,6 +842,7 @@
 		};
 		559CBAE60B5B313000C8FD74 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 55D592200BAE2E4500364849 /* versions.xcconfig */;
 			buildSettings = {
 				ARCHS = (
 					ppc,
@@ -898,6 +922,7 @@
 		};
 		C01FCF4B08A954540054247B /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 55D592200BAE2E4500364849 /* versions.xcconfig */;
 			buildSettings = {
 				COPY_PHASE_STRIP = NO;
 				GCC_DYNAMIC_NO_PIC = NO;
@@ -915,6 +940,7 @@
 		};
 		C01FCF4C08A954540054247B /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 55D592200BAE2E4500364849 /* versions.xcconfig */;
 			buildSettings = {
 				ARCHS = (
 					ppc,
@@ -933,6 +959,7 @@
 		};
 		C01FCF4F08A954540054247B /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 55D592200BAE2E4500364849 /* versions.xcconfig */;
 			buildSettings = {
 				GCC_ENABLE_OBJC_EXCEPTIONS = YES;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
@@ -944,6 +971,7 @@
 		};
 		C01FCF5008A954540054247B /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 55D592200BAE2E4500364849 /* versions.xcconfig */;
 			buildSettings = {
 				GCC_ENABLE_OBJC_EXCEPTIONS = YES;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
