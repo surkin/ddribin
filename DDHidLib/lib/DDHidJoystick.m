@@ -27,16 +27,19 @@
 
 @interface DDHidJoystick (DDHidJoystickDelegate)
 
-- (void) hidJoystick: (DDHidJoystick *)  joystick
-               stick: (unsigned) stick
-            xChanged: (int) value;
-- (void) hidJoystick: (DDHidJoystick *)  joystick
-               stick: (unsigned) stick
-            yChanged: (int) value;
-- (void) hidJoystick: (DDHidJoystick *) joystick
-          buttonDown: (unsigned) buttonNumber;
-- (void) hidJoystick: (DDHidJoystick *) joystick
-            buttonUp: (unsigned) buttonNumber;
+- (void) ddhidJoystick: (DDHidJoystick *)  joystick
+                 stick: (unsigned) stick
+              xChanged: (int) value;
+
+- (void) ddhidJoystick: (DDHidJoystick *)  joystick
+                 stick: (unsigned) stick
+              yChanged: (int) value;
+
+- (void) ddhidJoystick: (DDHidJoystick *) joystick
+            buttonDown: (unsigned) buttonNumber;
+
+- (void) ddhidJoystick: (DDHidJoystick *) joystick
+              buttonUp: (unsigned) buttonNumber;
 
 @end
 
@@ -44,7 +47,7 @@
 
 - (void) initJoystickElements: (NSArray *) elements;
 - (void) addStick: (NSArray *) stickElements;
-- (void) hidQueueHasEvents: (DDHidQueue *) hidQueue;
+- (void) ddhidQueueHasEvents: (DDHidQueue *) hidQueue;
 
 - (int) normalizeValue: (int) value
             forElement: (DDHidElement *) element;
@@ -217,7 +220,7 @@
     }
 }
 
-- (void) hidQueueHasEvents: (DDHidQueue *) hidQueue;
+- (void) ddhidQueueHasEvents: (DDHidQueue *) hidQueue;
 {
     DDHidEvent * event;
     while (event = [hidQueue nextEvent])
@@ -230,12 +233,12 @@
         if ([self findStick: &stick element: &element withXAxisCookie: cookie])
         {
             int normalizedValue = [self normalizeValue: value forElement: element];
-            [self hidJoystick: self stick: stick xChanged: normalizedValue];
+            [self ddhidJoystick: self stick: stick xChanged: normalizedValue];
         }
         else if ([self findStick: &stick element: &element withYAxisCookie: cookie])
         {
             int normalizedValue = [self normalizeValue: value forElement: element];
-            [self hidJoystick: self stick: stick yChanged: normalizedValue];
+            [self ddhidJoystick: self stick: stick yChanged: normalizedValue];
         }
         else
         {
@@ -248,11 +251,11 @@
             
             if (value == 1)
             {
-                [self hidJoystick: self buttonDown: i];
+                [self ddhidJoystick: self buttonDown: i];
             }
             else if (value == 0)
             {
-                [self hidJoystick: self buttonUp: i];
+                [self ddhidJoystick: self buttonUp: i];
             }
             else
             {
@@ -321,34 +324,34 @@
 
 @implementation DDHidJoystick (DDHidJoystickDelegate)
 
-- (void) hidJoystick: (DDHidJoystick *)  joystick
-               stick: (unsigned) stick
-            xChanged: (int) value;
+- (void) ddhidJoystick: (DDHidJoystick *)  joystick
+                 stick: (unsigned) stick
+              xChanged: (int) value;
 {
     if ([mDelegate respondsToSelector: _cmd])
-        [mDelegate hidJoystick: joystick stick: stick xChanged: value];
+        [mDelegate ddhidJoystick: joystick stick: stick xChanged: value];
 }
 
-- (void) hidJoystick: (DDHidJoystick *)  joystick
-               stick: (unsigned) stick
-            yChanged: (int) value;
+- (void) ddhidJoystick: (DDHidJoystick *)  joystick
+                 stick: (unsigned) stick
+              yChanged: (int) value;
 {
     if ([mDelegate respondsToSelector: _cmd])
-        [mDelegate hidJoystick: joystick stick: stick yChanged: value];
+        [mDelegate ddhidJoystick: joystick stick: stick yChanged: value];
 }
 
-- (void) hidJoystick: (DDHidJoystick *) joystick
-          buttonDown: (unsigned) buttonNumber;
+- (void) ddhidJoystick: (DDHidJoystick *) joystick
+            buttonDown: (unsigned) buttonNumber;
 {
     if ([mDelegate respondsToSelector: _cmd])
-        [mDelegate hidJoystick: joystick buttonDown: buttonNumber];
+        [mDelegate ddhidJoystick: joystick buttonDown: buttonNumber];
 }
 
-- (void) hidJoystick: (DDHidJoystick *) joystick
-            buttonUp: (unsigned) buttonNumber;  
+- (void) ddhidJoystick: (DDHidJoystick *) joystick
+              buttonUp: (unsigned) buttonNumber;  
 {
     if ([mDelegate respondsToSelector: _cmd])
-        [mDelegate hidJoystick: joystick buttonUp: buttonNumber];
+        [mDelegate ddhidJoystick: joystick buttonUp: buttonNumber];
 }
 
 @end

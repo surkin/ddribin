@@ -115,33 +115,33 @@
     return mYAxis;
 }
 
-- (void) hidJoystick: (DDHidJoystick *)  joystick
-               stick: (unsigned) stick
-            xChanged: (int) value;
+- (void) ddhidJoystick: (DDHidJoystick *)  joystick
+                 stick: (unsigned) stick
+              xChanged: (int) value;
 {
     [self willChangeValueForKey: @"xAxis"];
     mXAxis = value;
     [self didChangeValueForKey: @"xAxis"];
 }
 
-- (void) hidJoystick: (DDHidJoystick *)  joystick
-               stick: (unsigned) stick
-            yChanged: (int) value;
+- (void) ddhidJoystick: (DDHidJoystick *)  joystick
+                 stick: (unsigned) stick
+              yChanged: (int) value;
 {
     [self willChangeValueForKey: @"yAxis"];
     mYAxis = value;
     [self didChangeValueForKey: @"yAxis"];
 }
 
-- (void) hidJoystick: (DDHidJoystick *) joystick
-          buttonDown: (unsigned) buttonNumber;
+- (void) ddhidJoystick: (DDHidJoystick *) joystick
+            buttonDown: (unsigned) buttonNumber;
 {
     ButtonState * state = [mJoystickButtons objectAtIndex: buttonNumber];
     [state setPressed: YES];
 }
 
-- (void) hidJoystick: (DDHidJoystick *) joystick
-            buttonUp: (unsigned) buttonNumber;
+- (void) ddhidJoystick: (DDHidJoystick *) joystick
+              buttonUp: (unsigned) buttonNumber;
 {
     ButtonState * state = [mJoystickButtons objectAtIndex: buttonNumber];
     [state setPressed: NO];
