@@ -23,9 +23,9 @@
  */
 
 #import <Cocoa/Cocoa.h>
+#import "DDHidLib.h"
 
-#import "DDHidAppleRemote.h"
-
+@class DDHidAppleRemote;
 @class RemoteFeedbackView;
 
 @interface AppleRemotePaneController : NSObject

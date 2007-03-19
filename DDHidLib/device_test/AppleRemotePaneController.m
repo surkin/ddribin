@@ -24,7 +24,6 @@
 
 #import "AppleRemotePaneController.h"
 #import "RemoteFeedbackView.h"
-#import "DDHidAppleRemote.h"
 
 @implementation AppleRemotePaneController
 

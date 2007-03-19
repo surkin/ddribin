@@ -163,9 +163,10 @@
 - (void) addEvent: (NSString *) event usageId: (unsigned) usageId;
 {
     DDHidUsageTables * usageTables = [DDHidUsageTables standardUsageTables];
-    NSString * description =
+    NSString * description = [NSString stringWithFormat: @"%@ (0x%04X)",
         [usageTables descriptionForUsagePage: kHIDPage_KeyboardOrKeypad
-                                       usage: usageId];
+                                       usage: usageId],
+        usageId];
     
     NSMutableDictionary * row = [mKeyboardEventsController newObject];
     [row setObject: event forKey: @"event"];
