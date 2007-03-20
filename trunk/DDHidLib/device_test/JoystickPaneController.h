@@ -59,6 +59,11 @@
               yChanged: (int) value;
 
 - (void) ddhidJoystick: (DDHidJoystick *) joystick
+                 stick: (unsigned) stick
+             otherAxis: (unsigned) otherAxis
+          valueChanged: (int) value;
+
+- (void) ddhidJoystick: (DDHidJoystick *) joystick
             buttonDown: (unsigned) buttonNumber;
 
 - (void) ddhidJoystick: (DDHidJoystick *) joystick

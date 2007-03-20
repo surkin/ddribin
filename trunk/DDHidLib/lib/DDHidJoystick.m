@@ -36,6 +36,11 @@
               yChanged: (int) value;
 
 - (void) ddhidJoystick: (DDHidJoystick *) joystick
+                 stick: (unsigned) stick
+             otherAxis: (unsigned) otherAxis
+          valueChanged: (int) value;
+
+- (void) ddhidJoystick: (DDHidJoystick *) joystick
             buttonDown: (unsigned) buttonNumber;
 
 - (void) ddhidJoystick: (DDHidJoystick *) joystick
@@ -55,12 +60,15 @@
 - (BOOL) findStick: (unsigned *) stick
            element: (DDHidElement **) elementOut
    withXAxisCookie: (IOHIDElementCookie) cookie;
+
 - (BOOL) findStick: (unsigned *) stick
            element: (DDHidElement **) elementOut
    withYAxisCookie: (IOHIDElementCookie) cookie;
-- (BOOL) findOtherAxis: (unsigned *) otherAxis
-                 stick: (unsigned *) stick
-            withCookie: (IOHIDElementCookie) cookie;
+
+- (BOOL) findStick: (unsigned *) stickOut
+         otherAxis: (unsigned *) axisOut
+           element: (DDHidElement **) elementOut
+        withCookie: (IOHIDElementCookie) cookie;
 
 @end
 
@@ -229,7 +237,7 @@
         SInt32 value = [event value];
         DDHidElement * element;
         unsigned stick;
-        // unsigned otherAxis;
+        unsigned otherAxis;
         if ([self findStick: &stick element: &element withXAxisCookie: cookie])
         {
             int normalizedValue = [self normalizeValue: value forElement: element];
@@ -239,6 +247,13 @@
         {
             int normalizedValue = [self normalizeValue: value forElement: element];
             [self ddhidJoystick: self stick: stick yChanged: normalizedValue];
+        }
+        else if ([self findStick: &stick otherAxis: &otherAxis element: &element
+                      withCookie: cookie])
+        {
+            int normalizedValue = [self normalizeValue: value forElement: element];
+            [self ddhidJoystick: self stick: stick
+                      otherAxis: otherAxis valueChanged: normalizedValue];
         }
         else
         {
@@ -313,10 +328,28 @@
     return NO;
 }
 
-- (BOOL) findOtherAxis: (unsigned *) otherAxis
-                 stick: (unsigned *) stick
-            withCookie: (IOHIDElementCookie) cookie;
+- (BOOL) findStick: (unsigned *) stickOut
+         otherAxis: (unsigned *) axisOut
+           element: (DDHidElement **) elementOut
+        withCookie: (IOHIDElementCookie) cookie;
 {
+    unsigned i;
+    for (i = 0; i < [mSticks count]; i++)
+    {
+        DDHidJoystickStick * stick = [mSticks objectAtIndex: i];
+        unsigned j;
+        for (j = 0; j < [stick countOfStickElements]; j++)
+        {
+            DDHidElement * element = [stick objectInStickElementsAtIndex: j];
+            if ((element != nil) && ([element cookie] == cookie))
+            {
+                *stickOut = i;
+                *axisOut = j;
+                *elementOut = element;
+                return YES;
+            }
+        }
+    }
     return NO;
 }
 
@@ -338,6 +371,16 @@
 {
     if ([mDelegate respondsToSelector: _cmd])
         [mDelegate ddhidJoystick: joystick stick: stick yChanged: value];
+}
+
+- (void) ddhidJoystick: (DDHidJoystick *) joystick
+                 stick: (unsigned) stick
+             otherAxis: (unsigned) otherAxis
+          valueChanged: (int) value;
+{
+    if ([mDelegate respondsToSelector: _cmd])
+        [mDelegate ddhidJoystick: joystick stick: stick otherAxis: otherAxis
+                    valueChanged: value];
 }
 
 - (void) ddhidJoystick: (DDHidJoystick *) joystick
@@ -410,6 +453,9 @@
             break;
             
         case kHIDUsage_GD_Z:
+        case kHIDUsage_GD_Rx:
+        case kHIDUsage_GD_Ry:
+        case kHIDUsage_GD_Rz:
             [mStickElements addObject: element];
             break;
             
@@ -419,19 +465,6 @@
     }
     
     return elementAdded;
-#if 0
-    
-    BOOL isXAxis = [usage isEqualToUsagePage: kHIDPage_GenericDesktop
-                                     usageId: kHIDUsage_GD_X];
-    BOOL isYAxis = [usage isEqualToUsagePage: kHIDPage_GenericDesktop
-                                     usageId: kHIDUsage_GD_Y];
-    if (isXAxis && (mXAxisElement == nil))
-        mXAxisElement = [element retain];
-    else if (isYAxis && (mYAxisElement == nil))
-        mYAxisElement = [element retain];
-    else
-        [mStickElements addObject: element];
-#endif
 }
 
 - (NSArray *) allElements;

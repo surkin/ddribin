@@ -127,6 +127,15 @@
 }
 
 - (void) ddhidJoystick: (DDHidJoystick *) joystick
+                 stick: (unsigned) stick
+             otherAxis: (unsigned) otherAxis
+          valueChanged: (int) value;
+{
+    // Somehow display values here
+    // NSLog(@"Stick: %d, other axis: %d, changed: %d", stick, otherAxis, value);
+}
+
+- (void) ddhidJoystick: (DDHidJoystick *) joystick
             buttonDown: (unsigned) buttonNumber;
 {
     ButtonState * state = [mJoystickButtons objectAtIndex: buttonNumber];
