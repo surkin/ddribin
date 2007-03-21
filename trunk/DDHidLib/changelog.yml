@@ -1,3 +1,9 @@
+- version: "1.0.1"
+  date: xxx
+  changes:
+    - Replace deprecated stringWithCString: with stringWithUTF8String:.
+    - Make DDHidKeyboard.h public so it gets copied to the framework.
+
 - version: "1.0"
   date: 2007-03-19
   changes:
