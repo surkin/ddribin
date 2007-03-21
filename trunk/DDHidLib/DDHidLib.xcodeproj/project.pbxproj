@@ -88,7 +88,7 @@
 		55D593390BAE3ADF00364849 /* DDHidLib.framework in Copy Files to Frameworks */ = {isa = PBXBuildFile; fileRef = 55193E500B93F2EE004C0C98 /* DDHidLib.framework */; };
 		55D593660BAE3B5D00364849 /* DDHidLib.framework in Copy Files to Frameworks */ = {isa = PBXBuildFile; fileRef = 55193E500B93F2EE004C0C98 /* DDHidLib.framework */; };
 		55D593750BAE3B7500364849 /* DDHidLib.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 55193E500B93F2EE004C0C98 /* DDHidLib.framework */; };
-		55D5937B0BAE3B8800364849 /* DDHidKeyboard.h in Headers */ = {isa = PBXBuildFile; fileRef = 55CA60E30BA0F2530012CF7B /* DDHidKeyboard.h */; };
+		55D5937B0BAE3B8800364849 /* DDHidKeyboard.h in Headers */ = {isa = PBXBuildFile; fileRef = 55CA60E30BA0F2530012CF7B /* DDHidKeyboard.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		55D5937C0BAE3B8800364849 /* DDHidKeyboard.m in Sources */ = {isa = PBXBuildFile; fileRef = 55CA60E40BA0F2530012CF7B /* DDHidKeyboard.m */; };
 		55D593870BAE3BB700364849 /* DDHidStandardUsages.plist in Resources */ = {isa = PBXBuildFile; fileRef = 55917F760B54535B005308AC /* DDHidStandardUsages.plist */; };
 		55DCD9C60B55D35D000648E5 /* WatcherWindowController.m in Sources */ = {isa = PBXBuildFile; fileRef = 55DCD9C50B55D35D000648E5 /* WatcherWindowController.m */; };
