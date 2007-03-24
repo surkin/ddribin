@@ -30,6 +30,12 @@
 
 @implementation HidBrowserController
 
+static BOOL sSleepAtExit = NO;
+
+static void exit_sleeper()
+{
+    while (sSleepAtExit) sleep(60);
+}
 
 - (void) awakeFromNib
 {
@@ -39,6 +45,18 @@
     
     [mWindow center];
     [mWindow makeKeyAndOrderFront: self];
+    atexit(exit_sleeper);
+}
+
+//=========================================================== 
+// dealloc
+//=========================================================== 
+- (void) dealloc
+{
+    [mDevices release];
+    
+    mDevices = nil;
+    [super dealloc];
 }
 
 //=========================================================== 
@@ -111,6 +129,14 @@
 - (BOOL)applicationShouldTerminateAfterLastWindowClosed:(NSApplication *)theApplication
 {
     return YES;
+}
+
+- (void)applicationWillTerminate:(NSNotification *)aNotification
+{
+    [self willChangeValueForKey: @"devices"];
+    [mDevices release];
+    mDevices = nil;
+    [self didChangeValueForKey: @"devices"];
 }
 
 @end

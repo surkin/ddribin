@@ -65,6 +65,21 @@
     return self;
 }
 
+//=========================================================== 
+// dealloc
+//=========================================================== 
+- (void) dealloc
+{
+    [mProperties release];
+    [mUsage release];
+    [mChildren release];
+    
+    mProperties = nil;
+    mUsage = nil;
+    mChildren = nil;
+    [super dealloc];
+}
+
 - (NSDictionary *) properties;
 {
     return mProperties;
