@@ -4,6 +4,8 @@
     - Replace deprecated stringWithCString: with stringWithUTF8String:.
     - Make DDHidKeyboard.h public so it gets copied to the framework.
     - Plugged some memory leaks.
+    - Added a class for barcode scanners, thanks to Lucas Newman of Delicious
+      Monster.
 
 - version: "1.0"
   date: 2007-03-19
