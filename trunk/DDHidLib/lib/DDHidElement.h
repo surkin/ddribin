@@ -31,7 +31,7 @@
 {
     NSDictionary * mProperties;
     DDHidUsage * mUsage;
-    DDHidElement * mChildren;
+    NSArray * mElements;
 }
 
 + (NSArray *) elementsWithPropertiesArray: (NSArray *) propertiesArray;
