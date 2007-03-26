@@ -42,6 +42,7 @@
 - (void) ddhidQueueHasEvents: (DDHidQueue *) hidQueue;
 - (void) processBarcodeDigit: (unsigned) usageId;
 - (void) clearAccumulatedInput;
+- (void) invalidateBarcodeInputTimer;
 
 @end
 
@@ -80,6 +81,7 @@
 //=========================================================== 
 - (void) dealloc
 {
+    [self invalidateBarcodeInputTimer];
     [mKeyElements release];
     [mAccumulatedDigits release];
     
@@ -214,6 +216,11 @@
 {
     [mAccumulatedDigits deleteCharactersInRange:NSMakeRange(0, [mAccumulatedDigits length])];
     
+    [self invalidateBarcodeInputTimer];
+}
+
+- (void) invalidateBarcodeInputTimer;
+{
     [mBarcodeInputTimer invalidate];
     [mBarcodeInputTimer release];
     mBarcodeInputTimer = nil;
