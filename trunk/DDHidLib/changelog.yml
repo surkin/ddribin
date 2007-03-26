@@ -3,6 +3,7 @@
   changes:
     - Replace deprecated stringWithCString: with stringWithUTF8String:.
     - Make DDHidKeyboard.h public so it gets copied to the framework.
+    - Plugged some memory leaks.
 
 - version: "1.0"
   date: 2007-03-19
