@@ -410,7 +410,7 @@
 
 - (void) addElementsToDefaultQueue;
 {
-    [mDefaultQueue addElements: [self elements]];
+    [mDefaultQueue addElements: [self elements] recursively: YES];
 }
 
 @end
