@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2007 Dave Dribin
+ * Copyright (c) 2007 Dave Dribin, Lucas Newman
  * 
  * Permission is hereby granted, free of charge, to any person
  * obtaining a copy of this software and associated documentation
@@ -22,14 +22,53 @@
  * SOFTWARE.
  */
 
+#import <Cocoa/Cocoa.h>
 #import "DDHidDevice.h"
-#import "DDHidElement.h"
-#import "DDHidUsage.h"
-#import "DDHidQueue.h"
-#import "DDHidEvent.h"
-#import "DDHidUsageTables.h"
-#import "DDHidMouse.h"
-#import "DDHidJoystick.h"
-#import "DDHidKeyboard.h"
-#import "DDHidAppleRemote.h"
-#import "DDHidKeyboardBarcodeScanner.h"
+
+@class DDHidElement;
+@class DDHidQueue;
+
+@interface DDHidKeyboardBarcodeScanner : DDHidDevice
+{
+    NSMutableArray * mKeyElements;
+    
+    NSMutableString * mAccumulatedDigits;
+    NSTimer *mBarcodeInputTimer;
+    BOOL mIsLikelyKeyboardBarcodeScanner;
+    
+    id mDelegate;
+}
+
++ (NSArray *) allPossibleKeyboardBarcodeScanners;
+
+- (id) initWithDevice: (io_object_t) device error: (NSError **) error_;
+
+#pragma mark -
+#pragma mark Keyboard Elements
+
+- (NSArray *) keyElements;
+
+- (unsigned) numberOfKeys;
+
+- (void) addElementsToQueue: (DDHidQueue *) queue;
+
+#pragma mark -
+#pragma mark Asynchronous Notification
+
+- (void) setDelegate: (id) delegate;
+
+- (void) addElementsToDefaultQueue;
+
+#pragma mark -
+#pragma mark Properties
+
+- (BOOL) isLikelyKeyboardBarcodeScanner;
+
+@end
+
+@interface NSObject (DDHidKeyboardBarcodeScannerDelegate)
+
+- (void) ddhidKeyboardBarcodeScanner: (DDHidKeyboardBarcodeScanner *) keyboardBarcodeScanner
+                          gotBarcode: (NSString *) barcode;
+
+@end
