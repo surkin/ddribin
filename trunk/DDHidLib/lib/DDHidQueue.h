@@ -45,6 +45,8 @@
 
 - (void) addElements: (NSArray *) elements;
 
+- (void) addElements: (NSArray *) elements recursively: (BOOL) recursively;
+
 - (void) setDelegate: (id) delegate;
 
 - (void) startOnCurrentRunLoop;
