@@ -93,6 +93,10 @@
 		55D593870BAE3BB700364849 /* DDHidStandardUsages.plist in Resources */ = {isa = PBXBuildFile; fileRef = 55917F760B54535B005308AC /* DDHidStandardUsages.plist */; };
 		55DCD9C60B55D35D000648E5 /* WatcherWindowController.m in Sources */ = {isa = PBXBuildFile; fileRef = 55DCD9C50B55D35D000648E5 /* WatcherWindowController.m */; };
 		55DCD9E00B55D503000648E5 /* EventWatcher.nib in Resources */ = {isa = PBXBuildFile; fileRef = 55DCD9DE0B55D503000648E5 /* EventWatcher.nib */; };
+		55FC9FDB0BB76D8D0095FC7B /* DDHidKeyboardBarcodeScanner.h in Headers */ = {isa = PBXBuildFile; fileRef = 55FC9FD90BB76D8D0095FC7B /* DDHidKeyboardBarcodeScanner.h */; };
+		55FC9FDC0BB76D8D0095FC7B /* DDHidKeyboardBarcodeScanner.m in Sources */ = {isa = PBXBuildFile; fileRef = 55FC9FDA0BB76D8D0095FC7B /* DDHidKeyboardBarcodeScanner.m */; };
+		55FC9FDD0BB76D8D0095FC7B /* DDHidKeyboardBarcodeScanner.h in Headers */ = {isa = PBXBuildFile; fileRef = 55FC9FD90BB76D8D0095FC7B /* DDHidKeyboardBarcodeScanner.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		55FC9FDE0BB76D8D0095FC7B /* DDHidKeyboardBarcodeScanner.m in Sources */ = {isa = PBXBuildFile; fileRef = 55FC9FDA0BB76D8D0095FC7B /* DDHidKeyboardBarcodeScanner.m */; };
 		55FD65CB0B5DD57200325FEF /* DeviceTestController.m in Sources */ = {isa = PBXBuildFile; fileRef = 55FD65CA0B5DD57200325FEF /* DeviceTestController.m */; };
 		55FD66D50B5DDC3F00325FEF /* DDHidJoystick.h in Headers */ = {isa = PBXBuildFile; fileRef = 55FD66D30B5DDC3F00325FEF /* DDHidJoystick.h */; };
 		55FD66D60B5DDC3F00325FEF /* DDHidJoystick.m in Sources */ = {isa = PBXBuildFile; fileRef = 55FD66D40B5DDC3F00325FEF /* DDHidJoystick.m */; };
@@ -228,6 +232,8 @@
 		55DCD9C40B55D35D000648E5 /* WatcherWindowController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WatcherWindowController.h; sourceTree = "<group>"; };
 		55DCD9C50B55D35D000648E5 /* WatcherWindowController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WatcherWindowController.m; sourceTree = "<group>"; };
 		55DCD9DF0B55D503000648E5 /* English */ = {isa = PBXFileReference; lastKnownFileType = wrapper.nib; name = English; path = English.lproj/EventWatcher.nib; sourceTree = "<group>"; };
+		55FC9FD90BB76D8D0095FC7B /* DDHidKeyboardBarcodeScanner.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = DDHidKeyboardBarcodeScanner.h; sourceTree = "<group>"; };
+		55FC9FDA0BB76D8D0095FC7B /* DDHidKeyboardBarcodeScanner.m */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.objc; path = DDHidKeyboardBarcodeScanner.m; sourceTree = "<group>"; };
 		55FD65C90B5DD57200325FEF /* DeviceTestController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DeviceTestController.h; sourceTree = "<group>"; };
 		55FD65CA0B5DD57200325FEF /* DeviceTestController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DeviceTestController.m; sourceTree = "<group>"; };
 		55FD66D30B5DDC3F00325FEF /* DDHidJoystick.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DDHidJoystick.h; sourceTree = "<group>"; };
@@ -416,6 +422,8 @@
 				55CA60E40BA0F2530012CF7B /* DDHidKeyboard.m */,
 				55170D340B8EC2CE00C82155 /* DDHidAppleRemote.h */,
 				55170D350B8EC2CE00C82155 /* DDHidAppleRemote.m */,
+				55FC9FD90BB76D8D0095FC7B /* DDHidKeyboardBarcodeScanner.h */,
+				55FC9FDA0BB76D8D0095FC7B /* DDHidKeyboardBarcodeScanner.m */,
 				55FD67CB0B5DE18600325FEF /* DDHidLib.h */,
 			);
 			path = lib;
@@ -489,6 +497,7 @@
 				55193E6C0B93F31D004C0C98 /* DDHidLib.h in Headers */,
 				55193F110B93F36F004C0C98 /* NSXReturnThrowError.h in Headers */,
 				55D5937B0BAE3B8800364849 /* DDHidKeyboard.h in Headers */,
+				55FC9FDD0BB76D8D0095FC7B /* DDHidKeyboardBarcodeScanner.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -509,6 +518,7 @@
 				55BE6DCD0B8033010085514D /* NSXReturnThrowError.h in Headers */,
 				55170D360B8EC2CE00C82155 /* DDHidAppleRemote.h in Headers */,
 				55CA60E50BA0F2530012CF7B /* DDHidKeyboard.h in Headers */,
+				55FC9FDB0BB76D8D0095FC7B /* DDHidKeyboardBarcodeScanner.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -657,6 +667,7 @@
 				55193E6B0B93F31D004C0C98 /* DDHidAppleRemote.m in Sources */,
 				55193F120B93F371004C0C98 /* NSXReturnThrowError.m in Sources */,
 				55D5937C0BAE3B8800364849 /* DDHidKeyboard.m in Sources */,
+				55FC9FDE0BB76D8D0095FC7B /* DDHidKeyboardBarcodeScanner.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -692,6 +703,7 @@
 				55BE6DCE0B8033010085514D /* NSXReturnThrowError.m in Sources */,
 				55170D370B8EC2CE00C82155 /* DDHidAppleRemote.m in Sources */,
 				55CA60E60BA0F2530012CF7B /* DDHidKeyboard.m in Sources */,
+				55FC9FDC0BB76D8D0095FC7B /* DDHidKeyboardBarcodeScanner.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
