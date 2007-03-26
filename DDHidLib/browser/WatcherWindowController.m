@@ -166,13 +166,7 @@
         [newEvents addObject: watcherEvent];
     }
     
-#if 1
     [mEventHistoryController addObjects: newEvents];
-#else
-    [mEventHistoryController performSelector: @selector(addObjects:)
-                                  withObject: newEvents
-                                  afterDelay: 0.0f];
-#endif
 }
 
 - (void) windowDidLoad;
