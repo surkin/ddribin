@@ -137,11 +137,11 @@
 
 - (void) ddhidJoystick: (DDHidJoystick *) joystick
                  stick: (unsigned) stick
-            povElement: (unsigned) povElement
+             povNumber: (unsigned) povNumber
           valueChanged: (int) value;
 {
     // Somehow display values here
-    NSLog(@"Stick: %d, POV element: %d, changed: %d", stick, povElement, value);
+    NSLog(@"Stick: %d, POV number: %d, changed: %d", stick, povNumber, value);
 }
 
 - (void) ddhidJoystick: (DDHidJoystick *) joystick
