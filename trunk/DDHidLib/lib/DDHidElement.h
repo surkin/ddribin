@@ -51,6 +51,7 @@
 
 - (NSArray *) elements;
 - (DDHidUsage *) usage;
+- (NSString *) name;
 - (BOOL) hasNullState;
 - (BOOL) hasPreferredState;
 - (BOOL) isArray;
