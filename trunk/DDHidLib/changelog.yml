@@ -6,6 +6,7 @@
     - Plugged some memory leaks.
     - Added a class for barcode scanners, thanks to Lucas Newman of Delicious
       Monster.
+    - Add support for point of view hat switches on joysticks.
 
 - version: "1.0"
   date: 2007-03-19
