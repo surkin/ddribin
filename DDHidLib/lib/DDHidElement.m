@@ -121,6 +121,11 @@
     return mElements;
 }
 
+- (NSString *) name;
+{
+    return [mProperties ddhid_objectForString: kIOHIDElementNameKey];
+}
+
 - (BOOL) hasNullState;
 {
     return [mProperties ddhid_boolForString: kIOHIDElementHasNullStateKey];
