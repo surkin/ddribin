@@ -132,7 +132,16 @@
           valueChanged: (int) value;
 {
     // Somehow display values here
-    // NSLog(@"Stick: %d, other axis: %d, changed: %d", stick, otherAxis, value);
+    NSLog(@"Stick: %d, other axis: %d, changed: %d", stick, otherAxis, value);
+}
+
+- (void) ddhidJoystick: (DDHidJoystick *) joystick
+                 stick: (unsigned) stick
+            povElement: (unsigned) povElement
+          valueChanged: (int) value;
+{
+    // Somehow display values here
+    NSLog(@"Stick: %d, POV element: %d, changed: %d", stick, povElement, value);
 }
 
 - (void) ddhidJoystick: (DDHidJoystick *) joystick
