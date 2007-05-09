@@ -1,0 +1,17 @@
+Intro
+-----
+
+`nsurl` is a simple command line wrapper around NSURLConnection. It is similar
+to [curl][].  To see the command line arguments, type `nsurl --help`.
+
+Acknowledgments
+---------------
+
+`nsurl` is written by [Dave Dribin][dd].  It was originally written for as a test tool while Dave worked as a consultant on [JamLab][].  So many thanks to JamLab for allowing Dave to release this code as Open Source.
+
+License
+-------
+
+[curl]: http://curl.haxx.se/
+[dd]: http://www.dribin.org/dave/
+[JamLab]: http://www.jamlab.com/
