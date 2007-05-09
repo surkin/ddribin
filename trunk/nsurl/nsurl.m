@@ -24,7 +24,7 @@ static void print_help(void)
     printf("\n");
     printf("  -u, --username USERNAME       Use USERNAME for authentication\n");
     printf("  -p, --password PASSWORD       Use PASSWORD for authentication\n");
-    printf("  -H, --header HEADER           Set HTTP header\n");
+    printf("  -H, --header HEADER           Set HTTP header, e.g. \"Accept: appliation/xml\"\n");
     printf("  -r, --redirect                Allow redirects\n");
     printf("  -h, --help                    Display this help and exit\n");
     printf("\n");
