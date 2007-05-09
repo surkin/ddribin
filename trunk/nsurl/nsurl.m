@@ -8,6 +8,7 @@ enum
     PasswordOption = 'p',
     HeaderOption = 'H',
     HelpOption = 'h',
+    RedirectOption = 'r',
     
     LastCharOption = 255,
 };
@@ -21,10 +22,11 @@ static void print_help(void)
 {
     usage(stdout);
     printf("\n");
-    printf("  -u, --username=USERNAME       use USERNAME for authentication\n");
-    printf("  -p, --password=PASSWORD       use PASSWORD for authentication\n");
-    printf("  -H, --header=HEADER           set HTTP header\n");
-    printf("  -h, --help                    display this help and exit\n");
+    printf("  -u, --username USERNAME       Use USERNAME for authentication\n");
+    printf("  -p, --password PASSWORD       Use PASSWORD for authentication\n");
+    printf("  -H, --header HEADER           Set HTTP header\n");
+    printf("  -r, --redirect                Allow redirects\n");
+    printf("  -h, --help                    Display this help and exit\n");
     printf("\n");
 }
 
@@ -42,12 +44,13 @@ static int run_app(int argc, char * const * argv)
             { "username",   required_argument,      NULL,           UsernameOption },
             { "password",   required_argument,      NULL,           PasswordOption },
             { "header",     required_argument,      NULL,           HeaderOption },
+            { "redirect",   no_argument,            NULL,           RedirectOption },
             { "help",       no_argument,            NULL,           HelpOption },
             { NULL,         0,                      NULL,           0 }
         };
         
         int ch;
-        while ((ch = getopt_long(argc, argv, "u:p:H:h", longopts, NULL)) != -1)
+        while ((ch = getopt_long(argc, argv, "u:p:H:rh", longopts, NULL)) != -1)
         {
             NSString * nsoptarg = nil;
             if (optarg != NULL)
@@ -65,6 +68,10 @@ static int run_app(int argc, char * const * argv)
                     [app setHeaderValue: nsoptarg];
                     break;
                     
+                case RedirectOption:
+                    [app setAllowRedirects: YES];
+                    break;
+                    
                 case HelpOption:
                     print_help();
                     return 0;
@@ -80,7 +87,8 @@ static int run_app(int argc, char * const * argv)
         
         if (argc != 1)
         {
-            usage(stderr);
+            fprintf(stderr, "nsurl: missing url argument\n");
+            fprintf(stderr, "Try `nsurl --help` for more information.\n");
             return 1;
         }
         
