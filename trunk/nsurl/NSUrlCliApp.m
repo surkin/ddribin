@@ -228,15 +228,26 @@ void ddprintf(NSString * format, ...)
 - (void) connection: (NSURLConnection *) connection
  didReceiveResponse: (NSURLResponse *)response
 {
-    // reset the progress, this might be called multiple times
-    mBytesReceived = 0;
-    
-    // retain the response to use later
-    [self setResponse: response];
+    NSHTTPURLResponse * httpResponse = (NSHTTPURLResponse *) response;
+    int statusCode = [httpResponse statusCode];
+    if ((statusCode == 200) || (statusCode == 201))
+    {
+        // reset the progress, this might be called multiple times
+        mBytesReceived = 0;
+        
+        // retain the response to use later
+        [self setResponse: response];
+    }
+    else
+    {
+        NSDictionary * headers = [httpResponse allHeaderFields];
+        ddfprintf(stderr, @"Received unsuccessful response: %@\n", [headers valueForKey: @"Status"]);
+    }
 }
 
 -(void)connection:(NSURLConnection *)connection didReceiveAuthenticationChallenge:(NSURLAuthenticationChallenge *)challenge
 {
+    // ddfprintf(stderr, @"%@\n", NSStringFromSelector(_cmd));
     NSURLCredential * credential = [challenge proposedCredential];
     
     if ([challenge previousFailureCount] == 0)
