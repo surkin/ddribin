@@ -28,7 +28,11 @@ Use I<PASSWORD> if requested for authentication.
 Sets the HTTP header. I<HEADER> is formated like I<NAME: VALUE>, for example,
 B<Accept: applcation/xml>.
 
-This option can be used multiple times to add/replace/remove multiple headres.
+This option can be used multiple times to add/replace/remove multiple headers.
+
+=item B<-r>, B<--redirect>
+
+Follow HTTP 301/302 redirects.  By default, redirects are not followed.
 
 =item B<-h>, B<--help>
 
