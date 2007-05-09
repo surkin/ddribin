@@ -48,6 +48,7 @@ void ddprintf(NSString * format, ...)
         return nil;
     
     mHeaders = [[NSMutableDictionary alloc] init];
+    mAllowRedirects = NO;
     
     return self;
 }
@@ -134,6 +135,19 @@ void ddprintf(NSString * format, ...)
     NSString * value = [headerValue substringFromIndex: range.location+1];
     value = [value stringByTrimmingCharactersInSet: [NSCharacterSet whitespaceCharacterSet]];
     [mHeaders setValue: value forKey: header];
+}
+
+//=========================================================== 
+//  allowRedirects 
+//=========================================================== 
+- (BOOL) allowRedirects
+{
+    return mAllowRedirects;
+}
+
+- (void) setAllowRedirects: (BOOL) flag
+{
+    mAllowRedirects = flag;
 }
 
 - (BOOL) run;
@@ -241,8 +255,21 @@ void ddprintf(NSString * format, ...)
              redirectResponse: (NSURLResponse *) redirectResponse
 {
     NSHTTPURLResponse * httpResponse = (NSHTTPURLResponse *) redirectResponse;
-    ddfprintf(stderr, @"Redirecting (%d) to: %@\n", [httpResponse statusCode], [request URL]);
-    return request;
+    if (mAllowRedirects)
+    {
+        ddfprintf(stderr, @"Redirecting (%d) to: %@\n",
+                  [httpResponse statusCode], [request URL]);
+        return request;
+    }
+    else
+    {
+        ddfprintf(stderr, @"Canceling redirect (%d) to: %@\n",
+                  [httpResponse statusCode], [request URL]);
+        [connection cancel];
+        mShouldKeepRunning = NO;
+        mRanWithSuccess = NO;
+        return nil;
+    }
 }
 
 @end

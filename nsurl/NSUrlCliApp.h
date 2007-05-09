@@ -22,6 +22,7 @@
     
     BOOL mShouldKeepRunning;
     BOOL mRanWithSuccess;
+    BOOL mAllowRedirects;
 }
 
 - (NSString *) url;
@@ -34,6 +35,9 @@
 - (void) setPassword: (NSString *) thePassword;
 
 - (void) setHeaderValue: (NSString *) headerValue;
+
+- (BOOL) allowRedirects;
+- (void) setAllowRedirects: (BOOL) flag;
 
 - (BOOL) run;
 
