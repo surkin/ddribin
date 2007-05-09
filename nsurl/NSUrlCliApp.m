@@ -186,10 +186,10 @@ void ddprintf(NSString * format, ...)
     // release the connection, and the data object
     [connection release];
     
-    ddfprintf(stderr, @"Connection failed! Error - %@ %@ %@",
+    ddfprintf(stderr, @"Connection failed: %@ %@ %@\n",
               [error localizedDescription],
               [error localizedFailureReason],
-              [[error userInfo] objectForKey:NSErrorFailingURLStringKey]);
+              [[error userInfo] objectForKey: NSErrorFailingURLStringKey]);
     mShouldKeepRunning = NO;
     mRanWithSuccess = NO;
 }
