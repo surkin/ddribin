@@ -1,0 +1,4 @@
+#include "versions.xcconfig"
+
+DSTROOT = /tmp/$(PROJECT_NAME).dst
+PREFIX = /usr
