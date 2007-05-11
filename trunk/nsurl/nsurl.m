@@ -10,8 +10,9 @@ enum
     AddHeaderOption = 'A',
     HelpOption = 'h',
     RedirectOption = 'r',
-    
+   
     LastCharOption = 255,
+    VersionOption,
 };
 
 static void usage(FILE * stream)
@@ -29,7 +30,13 @@ static void print_help(void)
     printf("  -A, --add-header HEADER       Add HTTP header, e.g. \"Accept: application/xml\"\n");
     printf("  -r, --redirect                Follow redirects\n");
     printf("  -h, --help                    Display this help and exit\n");
+    printf("      --version                 Display version and exit\n");
     printf("\n");
+}
+
+static void print_version(void)
+{
+    printf("nsurl version %s\n", CURRENT_MARKETING_VERSION);
 }
 
 static int run_app(int argc, char * const * argv)
@@ -49,6 +56,7 @@ static int run_app(int argc, char * const * argv)
             { "add-header", required_argument,      NULL,           AddHeaderOption },
             { "redirect",   no_argument,            NULL,           RedirectOption },
             { "help",       no_argument,            NULL,           HelpOption },
+            { "version",    no_argument,            NULL,           VersionOption },
             { NULL,         0,                      NULL,           0 }
         };
         
@@ -81,6 +89,11 @@ static int run_app(int argc, char * const * argv)
                     
                 case HelpOption:
                     print_help();
+                    return 0;
+                    break;
+                    
+                case VersionOption:
+                    print_version();
                     return 0;
                     break;
                     
