@@ -25,10 +25,16 @@ Use I<PASSWORD> if requested for authentication.
 
 =item B<-H>, B<--header> I<HEADER>
 
-Sets the HTTP header. I<HEADER> is formated like I<NAME: VALUE>, for example,
+Sets the HTTP header. I<HEADER> is formatted like I<NAME: VALUE>, for example,
 B<Accept: applcation/xml>.
 
 This option can be used multiple times to add/replace/remove multiple headers.
+
+=item B<-A>, B<--add-header> I<HEADER>
+
+Adds the HTTP header. I<HEADER> is formatted like I<NAME: VALUE>, for example,
+B<Accept: applcation/xml>. This option provides the ability to add values to
+header fields incrementally.
 
 =item B<-r>, B<--redirect>
 
