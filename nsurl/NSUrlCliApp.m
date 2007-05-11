@@ -8,6 +8,8 @@
 
 #import "NSUrlCliApp.h"
 
+const char * COMMAND = 0;
+
 void ddfprintf(FILE * stream, NSString * format, ...)
 {
     va_list arguments;
@@ -178,7 +180,7 @@ static BOOL parseHeaderValue(NSString * headerValue, NSString ** header,
                                         delegate: self];
     if (connection == nil)
     {
-        ddfprintf(stderr, @"Could not create connection");
+        ddfprintf(stderr, @"%s: Could not create connection", COMMAND);
         return NO;
     }
     
@@ -206,7 +208,8 @@ static BOOL parseHeaderValue(NSString * headerValue, NSString ** header,
     // release the connection, and the data object
     [connection release];
     
-    ddfprintf(stderr, @"Connection failed: %@ %@ %@\n",
+    ddfprintf(stderr, @"%s: Connection failed: %@ %@ %@\n",
+              COMMAND,
               [error localizedDescription],
               [error localizedFailureReason],
               [[error userInfo] objectForKey: NSErrorFailingURLStringKey]);
@@ -265,7 +268,8 @@ static BOOL parseHeaderValue(NSString * headerValue, NSString ** header,
     else
     {
         NSDictionary * headers = [httpResponse allHeaderFields];
-        ddfprintf(stderr, @"Received unsuccessful response: %@\n", [headers valueForKey: @"Status"]);
+        ddfprintf(stderr, @"%s: Received unsuccessful response: %@\n",
+                  COMMAND, [headers valueForKey: @"Status"]);
     }
 }
 

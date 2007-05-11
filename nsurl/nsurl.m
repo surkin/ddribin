@@ -3,8 +3,6 @@
 #include <getopt.h>
 #include <libgen.h>
 
-const char * COMMAND = 0;
-
 enum
 {
     UsernameOption = 'u',
