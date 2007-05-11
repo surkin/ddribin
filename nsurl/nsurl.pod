@@ -40,6 +40,10 @@ header fields incrementally.
 
 Follow HTTP 301/302 redirects.  By default, redirects are not followed.
 
+=item B<--version>
+
+Print version and exit.
+
 =item B<-h>, B<--help>
 
 Print usage and exit.
