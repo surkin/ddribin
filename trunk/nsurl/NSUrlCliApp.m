@@ -62,13 +62,13 @@ void ddprintf(NSString * format, ...)
 //=========================================================== 
 - (void) dealloc
 {
-    [mUrl release];
+    [mUrlRequest release];
     [mFileHandle release];
     [mResponse release];
     [mUsername release];
     [mPassword release];
     
-    mUrl = nil;
+    mUrlRequest = nil;
     mFileHandle = nil;
     mResponse = nil;
     mUsername = nil;
@@ -123,8 +123,8 @@ void ddprintf(NSString * format, ...)
     }
 }
 
-BOOL parseHeaderValue(NSString * headerValue, NSString ** header,
-                      NSString ** value)
+static BOOL parseHeaderValue(NSString * headerValue, NSString ** header,
+                             NSString ** value)
 {
     *header = nil;
     *value = nil;
