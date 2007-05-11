@@ -43,3 +43,5 @@
 - (BOOL) run;
 
 @end
+
+extern const char * COMMAND;
