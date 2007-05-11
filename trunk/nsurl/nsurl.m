@@ -26,8 +26,10 @@ static void print_help(void)
     printf("\n");
     printf("  -u, --username USERNAME       Use USERNAME for authentication\n");
     printf("  -p, --password PASSWORD       Use PASSWORD for authentication\n");
-    printf("  -H, --header HEADER           Set HTTP header, e.g. \"Accept: application/xml\"\n");
-    printf("  -A, --add-header HEADER       Add HTTP header, e.g. \"Accept: application/xml\"\n");
+    printf("  -H, --header HEADER           "
+           "Set HTTP header, e.g. \"Accept: application/xml\"\n");
+    printf("  -A, --add-header HEADER       "
+           "Add HTTP header, e.g. \"Accept: application/xml\"\n");
     printf("  -r, --redirect                Follow redirects\n");
     printf("  -h, --help                    Display this help and exit\n");
     printf("      --version                 Display version and exit\n");
@@ -50,14 +52,14 @@ static int run_app(int argc, char * const * argv)
 
         /* options descriptor */
         static struct option longopts[] = {
-            { "username",   required_argument,      NULL,           UsernameOption },
-            { "password",   required_argument,      NULL,           PasswordOption },
-            { "header",     required_argument,      NULL,           HeaderOption },
-            { "add-header", required_argument,      NULL,           AddHeaderOption },
-            { "redirect",   no_argument,            NULL,           RedirectOption },
-            { "help",       no_argument,            NULL,           HelpOption },
-            { "version",    no_argument,            NULL,           VersionOption },
-            { NULL,         0,                      NULL,           0 }
+            { "username",   required_argument,      NULL,   UsernameOption },
+            { "password",   required_argument,      NULL,   PasswordOption },
+            { "header",     required_argument,      NULL,   HeaderOption },
+            { "add-header", required_argument,      NULL,   AddHeaderOption },
+            { "redirect",   no_argument,            NULL,   RedirectOption },
+            { "help",       no_argument,            NULL,   HelpOption },
+            { "version",    no_argument,            NULL,   VersionOption },
+            { NULL,         0,                      NULL,   0 }
         };
         
         int ch;
