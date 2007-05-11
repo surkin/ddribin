@@ -273,6 +273,7 @@ static BOOL parseHeaderValue(NSString * headerValue, NSString ** header,
 {
     // ddfprintf(stderr, @"%@\n", NSStringFromSelector(_cmd));
     NSURLCredential * credential = [challenge proposedCredential];
+    ddfprintf(stderr, @"Proposed credential: %@, failure count: %d\n", credential, [challenge previousFailureCount]);
     
     if ([challenge previousFailureCount] == 0)
     {
@@ -283,6 +284,11 @@ static BOOL parseHeaderValue(NSString * headerValue, NSString ** header,
     {
         [[challenge sender] cancelAuthenticationChallenge: challenge];
     }
+}
+
+- (void)connection:(NSURLConnection *)connection didCancelAuthenticationChallenge:(NSURLAuthenticationChallenge *)challenge;
+{
+    ddfprintf(stderr, @"%@\n", NSStringFromSelector(_cmd));
 }
 
 - (NSURLRequest *) connection: (NSURLConnection *) connection
