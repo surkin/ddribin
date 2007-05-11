@@ -12,7 +12,6 @@
 @interface NSUrlCliApp : NSObject
 {
     NSMutableURLRequest * mUrlRequest;
-    NSString * mUrl;
     NSFileHandle * mFileHandle;
     NSURLResponse * mResponse;
     unsigned mBytesReceived;
