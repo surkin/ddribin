@@ -1,6 +1,9 @@
 #import <Foundation/Foundation.h>
 #import "NSUrlCliApp.h"
 #include <getopt.h>
+#include <libgen.h>
+
+const char * COMMAND = 0;
 
 enum
 {
@@ -17,7 +20,7 @@ enum
 
 static void usage(FILE * stream)
 {
-    fprintf(stream, "Usage: nsurl [OPTIONS] <url>\n");
+    fprintf(stream, "Usage: %s [OPTIONS] <url>\n", COMMAND);
 }
 
 static void print_help(void)
@@ -38,7 +41,7 @@ static void print_help(void)
 
 static void print_version(void)
 {
-    printf("nsurl version %s\n", CURRENT_MARKETING_VERSION);
+    printf("%s version %s\n", COMMAND, CURRENT_MARKETING_VERSION);
 }
 
 static int run_app(int argc, char * const * argv)
@@ -48,6 +51,7 @@ static int run_app(int argc, char * const * argv)
     
     @try
     {
+        COMMAND = basename(argv[0]);
         app = [[NSUrlCliApp alloc] init];
 
         /* options descriptor */
@@ -100,7 +104,7 @@ static int run_app(int argc, char * const * argv)
                     break;
                     
                 default:
-                    usage(stderr);
+                    fprintf(stderr, "Try `%s --help` for more information.\n", COMMAND);
                     return 1;
             }
         }
@@ -109,8 +113,8 @@ static int run_app(int argc, char * const * argv)
         
         if (argc != 1)
         {
-            fprintf(stderr, "nsurl: missing url argument\n");
-            fprintf(stderr, "Try `nsurl --help` for more information.\n");
+            fprintf(stderr, "%s: missing url argument\n", COMMAND);
+            fprintf(stderr, "Try `%s --help` for more information.\n", COMMAND);
             return 1;
         }
         
