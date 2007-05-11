@@ -7,6 +7,7 @@ enum
     UsernameOption = 'u',
     PasswordOption = 'p',
     HeaderOption = 'H',
+    AddHeaderOption = 'A',
     HelpOption = 'h',
     RedirectOption = 'r',
     
@@ -24,8 +25,9 @@ static void print_help(void)
     printf("\n");
     printf("  -u, --username USERNAME       Use USERNAME for authentication\n");
     printf("  -p, --password PASSWORD       Use PASSWORD for authentication\n");
-    printf("  -H, --header HEADER           Set HTTP header, e.g. \"Accept: appliation/xml\"\n");
-    printf("  -r, --redirect                Allow redirects\n");
+    printf("  -H, --header HEADER           Set HTTP header, e.g. \"Accept: application/xml\"\n");
+    printf("  -A, --add-header HEADER       Add HTTP header, e.g. \"Accept: application/xml\"\n");
+    printf("  -r, --redirect                Follow redirects\n");
     printf("  -h, --help                    Display this help and exit\n");
     printf("\n");
 }
@@ -44,13 +46,14 @@ static int run_app(int argc, char * const * argv)
             { "username",   required_argument,      NULL,           UsernameOption },
             { "password",   required_argument,      NULL,           PasswordOption },
             { "header",     required_argument,      NULL,           HeaderOption },
+            { "add-header", required_argument,      NULL,           AddHeaderOption },
             { "redirect",   no_argument,            NULL,           RedirectOption },
             { "help",       no_argument,            NULL,           HelpOption },
             { NULL,         0,                      NULL,           0 }
         };
         
         int ch;
-        while ((ch = getopt_long(argc, argv, "u:p:H:rh", longopts, NULL)) != -1)
+        while ((ch = getopt_long(argc, argv, "u:p:H:A:rh", longopts, NULL)) != -1)
         {
             NSString * nsoptarg = nil;
             if (optarg != NULL)
@@ -66,6 +69,10 @@ static int run_app(int argc, char * const * argv)
                     
                 case HeaderOption:
                     [app setHeaderValue: nsoptarg];
+                    break;
+                    
+                case AddHeaderOption:
+                    [app addHeaderValue: nsoptarg];
                     break;
                     
                 case RedirectOption:

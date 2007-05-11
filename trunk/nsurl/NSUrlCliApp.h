@@ -11,10 +11,10 @@
 
 @interface NSUrlCliApp : NSObject
 {
+    NSMutableURLRequest * mUrlRequest;
     NSString * mUrl;
     NSFileHandle * mFileHandle;
     NSURLResponse * mResponse;
-    NSMutableDictionary * mHeaders;
     unsigned mBytesReceived;
     
     NSString * mUsername;
@@ -23,6 +23,7 @@
     BOOL mShouldKeepRunning;
     BOOL mRanWithSuccess;
     BOOL mAllowRedirects;
+    BOOL mShowProgress;
 }
 
 - (NSString *) url;
@@ -35,6 +36,7 @@
 - (void) setPassword: (NSString *) thePassword;
 
 - (void) setHeaderValue: (NSString *) headerValue;
+- (void) addHeaderValue: (NSString *) headerValue;
 
 - (BOOL) allowRedirects;
 - (void) setAllowRedirects: (BOOL) flag;

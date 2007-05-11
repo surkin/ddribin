@@ -47,7 +47,11 @@ void ddprintf(NSString * format, ...)
     if (self == nil)
         return nil;
     
-    mHeaders = [[NSMutableDictionary alloc] init];
+    mUrlRequest = [[NSMutableURLRequest alloc] init];
+    [mUrlRequest setCachePolicy: NSURLRequestReloadIgnoringCacheData];
+    [mUrlRequest setTimeoutInterval: 60.0];
+    [mUrlRequest setHTTPShouldHandleCookies: NO];
+    
     mAllowRedirects = NO;
     
     return self;
@@ -61,14 +65,12 @@ void ddprintf(NSString * format, ...)
     [mUrl release];
     [mFileHandle release];
     [mResponse release];
-    [mHeaders release];
     [mUsername release];
     [mPassword release];
     
     mUrl = nil;
     mFileHandle = nil;
     mResponse = nil;
-    mHeaders = nil;
     mUsername = nil;
     mPassword = nil;
     [super dealloc];
@@ -79,16 +81,12 @@ void ddprintf(NSString * format, ...)
 //=========================================================== 
 - (NSString *) url
 {
-    return mUrl; 
+    return [[mUrlRequest URL] absoluteString];
 }
 
 - (void) setUrl: (NSString *) theUrl
 {
-    if (mUrl != theUrl)
-    {
-        [mUrl release];
-        mUrl = [theUrl retain];
-    }
+    [mUrlRequest setURL: [NSURL URLWithString: theUrl]];
 }
 
 //=========================================================== 
@@ -125,16 +123,39 @@ void ddprintf(NSString * format, ...)
     }
 }
 
-- (void) setHeaderValue: (NSString *) headerValue;
+BOOL parseHeaderValue(NSString * headerValue, NSString ** header,
+                      NSString ** value)
 {
+    *header = nil;
+    *value = nil;
+
     NSRange range = [headerValue rangeOfString: @":"];
     if (range.location == NSNotFound)
-        return;
+        return NO;
     
-    NSString * header = [headerValue substringToIndex: range.location];
-    NSString * value = [headerValue substringFromIndex: range.location+1];
-    value = [value stringByTrimmingCharactersInSet: [NSCharacterSet whitespaceCharacterSet]];
-    [mHeaders setValue: value forKey: header];
+    *header = [headerValue substringToIndex: range.location];
+    *value = [headerValue substringFromIndex: range.location+1];
+    *value = [*value stringByTrimmingCharactersInSet:
+        [NSCharacterSet whitespaceCharacterSet]];
+    return YES;
+}
+
+- (void) setHeaderValue: (NSString *) headerValue;
+{
+    NSString * header;
+    NSString * value;
+    if (!parseHeaderValue(headerValue, &header, &value))
+        return;
+    [mUrlRequest setValue: value forHTTPHeaderField: header];
+}
+
+- (void) addHeaderValue: (NSString *) headerValue;
+{
+    NSString * header;
+    NSString * value;
+    if (!parseHeaderValue(headerValue, &header, &value))
+        return;
+    [mUrlRequest addValue: value forHTTPHeaderField: header];
 }
 
 //=========================================================== 
@@ -152,14 +173,9 @@ void ddprintf(NSString * format, ...)
 
 - (BOOL) run;
 {
-    NSURL * url = [NSURL URLWithString: mUrl];
-    NSMutableURLRequest * request = [NSMutableURLRequest requestWithURL: url
-                                                            cachePolicy: NSURLRequestUseProtocolCachePolicy
-                                                        timeoutInterval: 60.0];
-    [request setAllHTTPHeaderFields: mHeaders];
-
-    NSURLConnection * connection = [[NSURLConnection alloc] initWithRequest: request
-                                                                   delegate: self];
+    NSURLConnection * connection =
+        [[NSURLConnection alloc] initWithRequest: mUrlRequest
+                                        delegate: self];
     if (connection == nil)
     {
         ddfprintf(stderr, @"Could not create connection");
@@ -167,6 +183,10 @@ void ddprintf(NSString * format, ...)
     }
     
     mFileHandle = [[NSFileHandle fileHandleWithStandardOutput] retain];
+    if (isatty([mFileHandle fileDescriptor]))
+        mShowProgress = NO;
+    else
+        mShowProgress = YES;
 
     
     mShouldKeepRunning = YES;
@@ -210,16 +230,20 @@ void ddprintf(NSString * format, ...)
     {
         // if the expected content length is
         // available, display percent complete
-        float percentComplete=(mBytesReceived/(float)expectedLength)*100.0;
-        fprintf(stderr, "\rPercent complete - %.1f     ", percentComplete);
-        if (mBytesReceived == expectedLength)
-            fprintf(stderr, "\n");
+        if (mShowProgress)
+        {
+            float percentComplete=(mBytesReceived/(float)expectedLength)*100.0;
+            fprintf(stderr, "Percent complete - %.1f\r", percentComplete);
+            if (mBytesReceived == expectedLength)
+                fprintf(stderr, "\n");
+        }
     }
     else
     {
         // if the expected content length is
         // unknown just log the progress
-        fprintf(stderr, "Bytes received - %d\n", mBytesReceived);
+        if (mShowProgress)
+            fprintf(stderr, "Bytes received - %d\n", mBytesReceived);
     }
 
     [mFileHandle writeData: data];
