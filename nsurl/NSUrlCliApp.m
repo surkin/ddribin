@@ -34,6 +34,27 @@ void ddprintf(NSString * format, ...)
     [string release];
 }
 
+static NSMutableDictionary * sDefaultCredentials;
+
+void initializeDefaultCredentials()
+{
+    sDefaultCredentials = [[NSMutableDictionary alloc] init];;
+}
+
+@implementation NSURLCredentialStorage  (NSUrlCliApp)
+
+- (NSURLCredential *)defaultCredentialForProtectionSpace:(NSURLProtectionSpace *)protectionSpace;
+{
+    return [sDefaultCredentials objectForKey: protectionSpace];
+}
+
+- (void)setDefaultCredential:(NSURLCredential *)credential forProtectionSpace:(NSURLProtectionSpace *)protectionSpace
+{
+    [sDefaultCredentials setObject: credential forKey: protectionSpace];
+}
+
+@end
+
 @interface NSUrlCliApp (Private)
 
 - (NSURLResponse *) response;
@@ -42,6 +63,11 @@ void ddprintf(NSString * format, ...)
 @end
 
 @implementation NSUrlCliApp
+
++ (void) initialize
+{
+    initializeDefaultCredentials();
+}
 
 - (id) init;
 {
@@ -208,11 +234,19 @@ static BOOL parseHeaderValue(NSString * headerValue, NSString ** header,
     // release the connection, and the data object
     [connection release];
     
-    ddfprintf(stderr, @"%s: Connection failed: %@ %@ %@\n",
-              COMMAND,
-              [error localizedDescription],
-              [error localizedFailureReason],
-              [[error userInfo] objectForKey: NSErrorFailingURLStringKey]);
+    if ([[error domain] isEqualToString: NSURLErrorDomain] &&
+        [error code] == NSURLErrorUserCancelledAuthentication)
+    {
+        ddfprintf(stderr, @"%s: Authorization required or invalid authorization\n", COMMAND);
+    }
+    else
+    {
+        ddfprintf(stderr, @"%s: Connection failed: %@ %@ %@\n",
+                  COMMAND,
+                  [error localizedDescription],
+                  [error localizedFailureReason],
+                  [[error userInfo] objectForKey: NSErrorFailingURLStringKey]);
+    }
     mShouldKeepRunning = NO;
     mRanWithSuccess = NO;
 }
@@ -277,7 +311,7 @@ static BOOL parseHeaderValue(NSString * headerValue, NSString ** header,
 {
     // ddfprintf(stderr, @"%@\n", NSStringFromSelector(_cmd));
     NSURLCredential * credential = [challenge proposedCredential];
-    ddfprintf(stderr, @"Proposed credential: %@, failure count: %d\n", credential, [challenge previousFailureCount]);
+    // ddfprintf(stderr, @"Proposed credential: %@, failure count: %d\n", credential, [challenge previousFailureCount]);
     
     if ([challenge previousFailureCount] == 0)
     {
@@ -292,7 +326,7 @@ static BOOL parseHeaderValue(NSString * headerValue, NSString ** header,
 
 - (void)connection:(NSURLConnection *)connection didCancelAuthenticationChallenge:(NSURLAuthenticationChallenge *)challenge;
 {
-    ddfprintf(stderr, @"%@\n", NSStringFromSelector(_cmd));
+    // ddfprintf(stderr, @"%@\n", NSStringFromSelector(_cmd));
 }
 
 - (NSURLRequest *) connection: (NSURLConnection *) connection
