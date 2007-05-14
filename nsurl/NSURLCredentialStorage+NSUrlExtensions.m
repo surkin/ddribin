@@ -7,6 +7,7 @@
 //
 
 #import "NSURLCredentialStorage+NSUrlExtensions.h"
+#import "JRLog.h"
 
 
 static NSMutableDictionary * sDefaultCredentials;
@@ -20,14 +21,15 @@ void initializeDefaultCredentials()
 
 - (NSURLCredential *) defaultCredentialForProtectionSpace: (NSURLProtectionSpace *) protectionSpace;
 {
-    // NSLog(@"%@ (%@)", NSStringFromSelector(_cmd), protectionSpace);
+    JRLogDebug(@"%@ (%@)", NSStringFromSelector(_cmd), protectionSpace);
     return [sDefaultCredentials objectForKey: protectionSpace];
 }
 
 - (void) setDefaultCredential: (NSURLCredential *) credential
            forProtectionSpace: (NSURLProtectionSpace *) protectionSpace;
 {
-    // NSLog(@"%@ (%@, %@)", NSStringFromSelector(_cmd), credential, protectionSpace);
+    JRLogDebug(@"%@ (%@, %@)", NSStringFromSelector(_cmd), credential,
+               protectionSpace);
     [sDefaultCredentials setObject: credential forKey: protectionSpace];
 }
 
