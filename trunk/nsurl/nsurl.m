@@ -1,5 +1,6 @@
 #import <Foundation/Foundation.h>
 #import "NSUrlCliApp.h"
+#import "JRLog.h"
 #include <getopt.h>
 #include <libgen.h>
 
@@ -14,6 +15,7 @@ enum
    
     LastCharOption = 255,
     VersionOption,
+    DebugOption,
 };
 
 static void usage(FILE * stream)
@@ -33,6 +35,7 @@ static void print_help(void)
            "Add HTTP header, e.g. \"Accept: application/xml\"\n");
     printf("  -r, --redirect                Follow redirects\n");
     printf("  -h, --help                    Display this help and exit\n");
+    printf("      --debug                   Dispaly debugging information\n");
     printf("      --version                 Display version and exit\n");
     printf("\n");
 }
@@ -40,6 +43,11 @@ static void print_help(void)
 static void print_version(void)
 {
     printf("%s version %s\n", COMMAND, CURRENT_MARKETING_VERSION);
+}
+
+static void set_debug_level(NSString * level)
+{
+    [NSObject setDefaultJRLogLevel: JRLogLevel_Debug];
 }
 
 static int run_app(int argc, char * const * argv)
@@ -61,6 +69,7 @@ static int run_app(int argc, char * const * argv)
             { "redirect",   no_argument,            NULL,   RedirectOption },
             { "help",       no_argument,            NULL,   HelpOption },
             { "version",    no_argument,            NULL,   VersionOption },
+            { "debug",      optional_argument,      NULL,   DebugOption },
             { NULL,         0,                      NULL,   0 }
         };
         
@@ -94,6 +103,10 @@ static int run_app(int argc, char * const * argv)
                 case HelpOption:
                     print_help();
                     return 0;
+                    break;
+                    
+                case DebugOption:
+                    set_debug_level(nsoptarg);
                     break;
                     
                 case VersionOption:
@@ -135,6 +148,7 @@ int main (int argc, char * const * argv)
 {
     NSAutoreleasePool * pool = [[NSAutoreleasePool alloc] init];
 
+    [NSObject setDefaultJRLogLevel: JRLogLevel_Error];
     int result = run_app(argc, argv);
 
     [pool release];

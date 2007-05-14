@@ -8,6 +8,8 @@
 
 /* Begin PBXBuildFile section */
 		553A824B0BF23E4400F4F17F /* NSUrlCliApp.m in Sources */ = {isa = PBXBuildFile; fileRef = 553A82490BF23E4400F4F17F /* NSUrlCliApp.m */; };
+		5594C5FC0BF82064006A4FC9 /* JRLog.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = 5594C5FA0BF82064006A4FC9 /* JRLog.h */; };
+		5594C5FD0BF82064006A4FC9 /* JRLog.m in Sources */ = {isa = PBXBuildFile; fileRef = 5594C5FB0BF82064006A4FC9 /* JRLog.m */; };
 		55CB73340BF633480045D049 /* NSURLCredentialStorage+NSUrlExtensions.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = 55CB73320BF633480045D049 /* NSURLCredentialStorage+NSUrlExtensions.h */; };
 		55CB73350BF633480045D049 /* NSURLCredentialStorage+NSUrlExtensions.m in Sources */ = {isa = PBXBuildFile; fileRef = 55CB73330BF633480045D049 /* NSURLCredentialStorage+NSUrlExtensions.m */; };
 		55CB73380BF633AE0045D049 /* NSUrlExtensions.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = 55CB73370BF633AE0045D049 /* NSUrlExtensions.h */; };
@@ -29,6 +31,7 @@
 				55CB73340BF633480045D049 /* NSURLCredentialStorage+NSUrlExtensions.h in CopyFiles */,
 				55CB73380BF633AE0045D049 /* NSUrlExtensions.h in CopyFiles */,
 				55CB733E0BF633FB0045D049 /* ddutil.h in CopyFiles */,
+				5594C5FC0BF82064006A4FC9 /* JRLog.h in CopyFiles */,
 			);
 			runOnlyForDeploymentPostprocessing = 1;
 		};
@@ -41,6 +44,8 @@
 		553A82480BF23E4400F4F17F /* NSUrlCliApp.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NSUrlCliApp.h; sourceTree = "<group>"; };
 		553A82490BF23E4400F4F17F /* NSUrlCliApp.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NSUrlCliApp.m; sourceTree = "<group>"; };
 		5594C5570BF41F6D006A4FC9 /* versions.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; path = versions.xcconfig; sourceTree = "<group>"; };
+		5594C5FA0BF82064006A4FC9 /* JRLog.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = JRLog.h; sourceTree = "<group>"; };
+		5594C5FB0BF82064006A4FC9 /* JRLog.m */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.objc; path = JRLog.m; sourceTree = "<group>"; };
 		55CB72B80BF4C9E70045D049 /* config.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; path = config.xcconfig; sourceTree = "<group>"; };
 		55CB73320BF633480045D049 /* NSURLCredentialStorage+NSUrlExtensions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSURLCredentialStorage+NSUrlExtensions.h"; sourceTree = "<group>"; };
 		55CB73330BF633480045D049 /* NSURLCredentialStorage+NSUrlExtensions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSURLCredentialStorage+NSUrlExtensions.m"; sourceTree = "<group>"; };
@@ -67,6 +72,7 @@
 			isa = PBXGroup;
 			children = (
 				08FB7795FE84155DC02AAC07 /* Source */,
+				5594C5F80BF82064006A4FC9 /* vendor */,
 				C6859EA2029092E104C91782 /* Documentation */,
 				08FB779DFE84155DC02AAC07 /* External Frameworks and Libraries */,
 				1AB674ADFE9D54B511CA2CBB /* Products */,
@@ -106,6 +112,23 @@
 				8DD76FA10486AA7600D96B5E /* nsurl */,
 			);
 			name = Products;
+			sourceTree = "<group>";
+		};
+		5594C5F80BF82064006A4FC9 /* vendor */ = {
+			isa = PBXGroup;
+			children = (
+				5594C5F90BF82064006A4FC9 /* JRLog */,
+			);
+			path = vendor;
+			sourceTree = "<group>";
+		};
+		5594C5F90BF82064006A4FC9 /* JRLog */ = {
+			isa = PBXGroup;
+			children = (
+				5594C5FA0BF82064006A4FC9 /* JRLog.h */,
+				5594C5FB0BF82064006A4FC9 /* JRLog.m */,
+			);
+			path = JRLog;
 			sourceTree = "<group>";
 		};
 		C6859EA2029092E104C91782 /* Documentation */ = {
@@ -178,6 +201,7 @@
 				553A824B0BF23E4400F4F17F /* NSUrlCliApp.m in Sources */,
 				55CB73350BF633480045D049 /* NSURLCredentialStorage+NSUrlExtensions.m in Sources */,
 				55CB733F0BF633FB0045D049 /* ddutil.m in Sources */,
+				5594C5FD0BF82064006A4FC9 /* JRLog.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
