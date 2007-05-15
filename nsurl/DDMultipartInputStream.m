@@ -83,6 +83,11 @@
     [mParts addObject: part];
 }
 
+- (unsigned long long) length;
+{
+    return mLength;
+}
+
 #pragma mark -
 #pragma mark NSInputStream Overrides
 
@@ -159,8 +164,10 @@
         [headerData dd_appendUTF8String: [part headersAsString]];
         NSInputStream * headerStream = [NSInputStream inputStreamWithData: headerData];
         [mPartStreams addObject: headerStream];
+        mLength += [headerData length];
         
         [mPartStreams addObject: [part contentAsStream]];
+        mLength += [part contentLength];
         
         delimiter = middleDelimiter;
     }
@@ -169,6 +176,7 @@
     NSData * finalDelimiterData = [finalDelimiter dataUsingEncoding: NSUTF8StringEncoding];
     NSInputStream * finalDelimiterStream = [NSInputStream inputStreamWithData: finalDelimiterData];
     [mPartStreams addObject: finalDelimiterStream];
+    mLength += [finalDelimiterData length];
 }
 
 @end
@@ -201,17 +209,26 @@
     [headers appendString: @"Content-Transfer-Encoding: binary\r\n"];
     [headers appendFormat: @"Content-Type: %@\r\n", [path dd_pathMimeType]];
     [headers appendString: @"\r\n"];
+    
+    NSDictionary * fileAttributes = [[NSFileManager defaultManager]
+        fileAttributesAtPath: path traverseLink: YES];
+    NSNumber * fileSize = [fileAttributes valueForKey: NSFileSize];
+    
     return [self initWithHeaders: headers
-                   streamContent: [NSInputStream inputStreamWithFileAtPath: path]]; 
+                   streamContent: [NSInputStream inputStreamWithFileAtPath: path]
+                          length: [fileSize unsignedLongLongValue]];
 }
 
 - (id) initWithHeaders: (NSString *) headers dataContent: (NSData *) data;
 {
     return [self initWithHeaders: headers
-                   streamContent: [NSInputStream inputStreamWithData: data]];
+                   streamContent: [NSInputStream inputStreamWithData: data]
+                          length: [data length]];
 }
 
-- (id) initWithHeaders: (NSString *) headers streamContent: (NSInputStream *) stream;
+- (id) initWithHeaders: (NSString *) headers
+         streamContent: (NSInputStream *) stream
+                length: (unsigned long long) length;
 {
     self = [super init];
     if (self == nil)
@@ -219,6 +236,7 @@
     
     mHeaders = [headers retain];
     mContentStream = [stream retain];
+    mContentLength  = length;
     
     return self;
 }
@@ -244,6 +262,11 @@
 - (NSInputStream *) contentAsStream;
 {
     return mContentStream;
+}
+
+- (unsigned long long) contentLength;
+{
+    return mContentLength;
 }
 
 @end
