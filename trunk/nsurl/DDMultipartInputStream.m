@@ -30,6 +30,27 @@
     return self;
 }
 
+/*
+    [self close];
+ */
+
+//=========================================================== 
+// dealloc
+//=========================================================== 
+- (void) dealloc
+{
+    [self close];
+    [mBoundary release];
+    [mParts release];
+    [mPartStreams release];
+    
+    mBoundary = nil;
+    mParts = nil;
+    mPartStreams = nil;
+    [super dealloc];
+}
+
+
 - (NSString *) boundary;
 {
     return mBoundary;
@@ -176,6 +197,19 @@
     mContentStream = [stream retain];
     
     return self;
+}
+
+//=========================================================== 
+// dealloc
+//=========================================================== 
+- (void) dealloc
+{
+    [mHeaders release];
+    [mContentStream release];
+    
+    mHeaders = nil;
+    mContentStream = nil;
+    [super dealloc];
 }
 
 - (NSString *) headersAsString;

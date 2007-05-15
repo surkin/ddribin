@@ -14,6 +14,7 @@
     NSString * mBoundary;
     NSMutableArray * mParts;
     NSMutableArray * mPartStreams;
+
     NSInputStream * mCurrentStream;
     unsigned mStreamIndex;
 }
