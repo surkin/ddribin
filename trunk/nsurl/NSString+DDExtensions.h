@@ -13,6 +13,6 @@ NSString * DDMimeTypeForExtension(NSString * extension);
 
 @interface NSString (DDExtensions)
 
-- (NSString *) dd_mimeTypeOfPath;
+- (NSString *) dd_pathMimeType;
 
 @end

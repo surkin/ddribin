@@ -27,7 +27,7 @@ NSString * DDMimeTypeForExtension(NSString * extension)
 
 @implementation NSString (DDExtensions)
 
-- (NSString *) dd_mimeTypeOfPath;
+- (NSString *) dd_pathMimeType;
 {
     return DDMimeTypeForExtension([self pathExtension]);
 }

@@ -20,13 +20,13 @@
     STAssertEqualObjects(DDMimeTypeForExtension(@""), @"application/octet-stream", nil);
 }
 
-- (void) testMimeTypeForPathCategory;
+- (void) testPathMimeTypeCategory;
 {
-    STAssertEqualObjects([@"foo.png" dd_mimeTypeOfPath], @"image/png", nil);
-    STAssertEqualObjects([@"foo.zip" dd_mimeTypeOfPath], @"application/zip", nil);
-    STAssertEqualObjects([@"foo.txt" dd_mimeTypeOfPath], @"text/plain", nil);
-    STAssertEqualObjects([@"foo.unknown" dd_mimeTypeOfPath], @"application/octet-stream", nil);
-    STAssertEqualObjects([@"foo" dd_mimeTypeOfPath], @"application/octet-stream", nil);
+    STAssertEqualObjects([@"foo.png" dd_pathMimeType], @"image/png", nil);
+    STAssertEqualObjects([@"foo.zip" dd_pathMimeType], @"application/zip", nil);
+    STAssertEqualObjects([@"foo.txt" dd_pathMimeType], @"text/plain", nil);
+    STAssertEqualObjects([@"foo.unknown" dd_pathMimeType], @"application/octet-stream", nil);
+    STAssertEqualObjects([@"foo" dd_pathMimeType], @"application/octet-stream", nil);
 }
 
 @end
