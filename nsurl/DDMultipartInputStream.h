@@ -12,8 +12,10 @@
 @interface DDMultipartInputStream : NSInputStream
 {
     NSString * mBoundary;
-    NSInputStream * mBodyStream;
     NSMutableArray * mParts;
+    NSMutableArray * mPartStreams;
+    NSInputStream * mCurrentStream;
+    unsigned mStreamIndex;
 }
 
 - (NSString *) boundary;
@@ -31,7 +33,7 @@
 @interface DDMultipartDataPart : NSObject
 {
     NSString * mHeaders;
-    NSData * mContentData;
+    NSInputStream * mContentStream;
 }
 
 + partWithName: (NSString *) name dataContent: (NSData *) data;
@@ -44,8 +46,10 @@
 
 - (id) initWithHeaders: (NSString *) headers dataContent: (NSData *) data;
 
+- (id) initWithHeaders: (NSString *) headers streamContent: (NSInputStream *) stream;
+
 - (NSString *) headersAsString;
 
-- (NSData *) contentAsData;
+- (NSInputStream *) contentAsStream;
 
 @end

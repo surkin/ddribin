@@ -25,6 +25,7 @@
     
     mBoundary = @"1174583781";
     mParts = [[NSMutableArray alloc] init];
+    mPartStreams = [[NSMutableArray alloc] init];
     
     return self;
 }
@@ -66,17 +67,32 @@
 - (void) open
 {
     [self buildBody];
-    [mBodyStream open];
+    [mPartStreams makeObjectsPerformSelector: @selector(open)];
+    mCurrentStream = nil;
+    mStreamIndex = 0;
+    if ([mPartStreams count] > 0)
+        mCurrentStream = [mPartStreams objectAtIndex: mStreamIndex];
 }
 
 - (void) close
 {
-    [mBodyStream close];
+    [mPartStreams makeObjectsPerformSelector: @selector(close)];
 }
 
 - (int) read: (uint8_t *) buffer maxLength: (unsigned int) len;
 {
-    return [mBodyStream read: buffer maxLength: len];
+    if (mCurrentStream == nil)
+        return 0;
+    
+    int result = [mCurrentStream read: buffer maxLength: len];
+    if ((result == 0) &&  (mStreamIndex < [mPartStreams count] - 1))
+    {
+        mStreamIndex++;
+        mCurrentStream = [mPartStreams objectAtIndex: mStreamIndex];
+        result = [self read: buffer maxLength: len];
+    }
+        
+    return result;
 }
 
 @end
@@ -85,25 +101,29 @@
 
 - (void) buildBody;
 {
-    NSMutableData * body = [NSMutableData data];
     NSString * firstDelimiter = [NSString stringWithFormat: @"--%@\r\n", mBoundary];
     NSString * middleDelimiter = [NSString stringWithFormat: @"\r\n--%@\r\n", mBoundary];
-    NSString * finalDelimiter = [NSString stringWithFormat: @"\r\n--%@--\r\n", mBoundary];
     NSString * delimiter = firstDelimiter;
     
     NSEnumerator * e = [mParts objectEnumerator];
     DDMultipartDataPart * part;
     while (part = [e nextObject])
     {
-        [body dd_appendUTF8Format: delimiter];
-        [body dd_appendUTF8String: [part headersAsString]];
-        [body appendData: [part contentAsData]];
+        NSMutableData * headerData = [NSMutableData data];
+        [headerData dd_appendUTF8Format: delimiter];
+        [headerData dd_appendUTF8String: [part headersAsString]];
+        NSInputStream * headerStream = [NSInputStream inputStreamWithData: headerData];
+        [mPartStreams addObject: headerStream];
+        
+        [mPartStreams addObject: [part contentAsStream]];
         
         delimiter = middleDelimiter;
     }
-    [body dd_appendUTF8Format: finalDelimiter];
-    
-    mBodyStream = [[NSInputStream alloc] initWithData: body];
+
+    NSString * finalDelimiter = [NSString stringWithFormat: @"\r\n--%@--\r\n", mBoundary];
+    NSData * finalDelimiterData = [finalDelimiter dataUsingEncoding: NSUTF8StringEncoding];
+    NSInputStream * finalDelimiterStream = [NSInputStream inputStreamWithData: finalDelimiterData];
+    [mPartStreams addObject: finalDelimiterStream];
 }
 
 @end
@@ -134,19 +154,26 @@
     [headers appendFormat: @"Content-Disposition: form-data; name=\"%@\"; filename=\"%@\"\r\n",
             name, [path lastPathComponent]];
     [headers appendString: @"Content-Transfer-Encoding: binary\r\n"];
-    [headers appendFormat: @"Content-Type: %@\r\n", [path dd_mimeTypeOfPath]];
+    [headers appendFormat: @"Content-Type: %@\r\n", [path dd_pathMimeType]];
     [headers appendString: @"\r\n"];
-    return [self initWithHeaders: headers dataContent: [NSData dataWithContentsOfFile: path]];
+    return [self initWithHeaders: headers
+                   streamContent: [NSInputStream inputStreamWithFileAtPath: path]]; 
 }
 
 - (id) initWithHeaders: (NSString *) headers dataContent: (NSData *) data;
+{
+    return [self initWithHeaders: headers
+                   streamContent: [NSInputStream inputStreamWithData: data]];
+}
+
+- (id) initWithHeaders: (NSString *) headers streamContent: (NSInputStream *) stream;
 {
     self = [super init];
     if (self == nil)
         return nil;
     
     mHeaders = [headers retain];
-    mContentData = [data retain];
+    mContentStream = [stream retain];
     
     return self;
 }
@@ -156,9 +183,9 @@
     return mHeaders;
 }
 
-- (NSData *) contentAsData;
+- (NSInputStream *) contentAsStream;
 {
-    return mContentData;
+    return mContentStream;
 }
 
 @end
