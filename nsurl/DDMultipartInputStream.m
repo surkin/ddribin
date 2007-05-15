@@ -83,6 +83,36 @@
     [mParts addObject: part];
 }
 
+- (void) buildBody;
+{
+    NSString * firstDelimiter = [NSString stringWithFormat: @"--%@\r\n", mBoundary];
+    NSString * middleDelimiter = [NSString stringWithFormat: @"\r\n--%@\r\n", mBoundary];
+    NSString * delimiter = firstDelimiter;
+    
+    NSEnumerator * e = [mParts objectEnumerator];
+    DDMultipartDataPart * part;
+    while (part = [e nextObject])
+    {
+        NSMutableData * headerData = [NSMutableData data];
+        [headerData dd_appendUTF8Format: delimiter];
+        [headerData dd_appendUTF8String: [part headersAsString]];
+        NSInputStream * headerStream = [NSInputStream inputStreamWithData: headerData];
+        [mPartStreams addObject: headerStream];
+        mLength += [headerData length];
+        
+        [mPartStreams addObject: [part contentAsStream]];
+        mLength += [part contentLength];
+        
+        delimiter = middleDelimiter;
+    }
+    
+    NSString * finalDelimiter = [NSString stringWithFormat: @"\r\n--%@--\r\n", mBoundary];
+    NSData * finalDelimiterData = [finalDelimiter dataUsingEncoding: NSUTF8StringEncoding];
+    NSInputStream * finalDelimiterStream = [NSInputStream inputStreamWithData: finalDelimiterData];
+    [mPartStreams addObject: finalDelimiterStream];
+    mLength += [finalDelimiterData length];
+}
+
 - (unsigned long long) length;
 {
     return mLength;
@@ -155,35 +185,24 @@
     JRLogDebug(@"%@", NSStringFromSelector(_cmd));
 }
 
-- (void) buildBody;
-{
-    NSString * firstDelimiter = [NSString stringWithFormat: @"--%@\r\n", mBoundary];
-    NSString * middleDelimiter = [NSString stringWithFormat: @"\r\n--%@\r\n", mBoundary];
-    NSString * delimiter = firstDelimiter;
-    
-    NSEnumerator * e = [mParts objectEnumerator];
-    DDMultipartDataPart * part;
-    while (part = [e nextObject])
-    {
-        NSMutableData * headerData = [NSMutableData data];
-        [headerData dd_appendUTF8Format: delimiter];
-        [headerData dd_appendUTF8String: [part headersAsString]];
-        NSInputStream * headerStream = [NSInputStream inputStreamWithData: headerData];
-        [mPartStreams addObject: headerStream];
-        mLength += [headerData length];
-        
-        [mPartStreams addObject: [part contentAsStream]];
-        mLength += [part contentLength];
-        
-        delimiter = middleDelimiter;
-    }
+#if DD_INPUT_STREAM_HACK
 
-    NSString * finalDelimiter = [NSString stringWithFormat: @"\r\n--%@--\r\n", mBoundary];
-    NSData * finalDelimiterData = [finalDelimiter dataUsingEncoding: NSUTF8StringEncoding];
-    NSInputStream * finalDelimiterStream = [NSInputStream inputStreamWithData: finalDelimiterData];
-    [mPartStreams addObject: finalDelimiterStream];
-    mLength += [finalDelimiterData length];
+#pragma mark -
+#pragma mark NSURLConnection Hacks
+
+- (void) _scheduleInCFRunLoop: (NSRunLoop *) inRunLoop forMode: (id) inMode
+{
+    // Safe to ignore this?
 }
+
+- (void) _setCFClientFlags: (CFOptionFlags)inFlags
+                  callback: (CFReadStreamClientCallBack) inCallback
+                   context: (CFStreamClientContext) inContext
+{
+    // Safe to ignore this?
+}
+
+#endif
 
 @end
 
