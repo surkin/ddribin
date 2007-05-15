@@ -7,6 +7,7 @@
 //
 
 #import "DDMultipartInputStream.h"
+#import "DDTemporaryFile.h"
 #import "DDExtensions.h"
 #import "JRLog.h"
 
@@ -44,13 +45,14 @@
     [mBoundary release];
     [mParts release];
     [mPartStreams release];
+    [mTemporaryFile release];
     
     mBoundary = nil;
     mParts = nil;
     mPartStreams = nil;
+    mTemporaryFile = nil;
     [super dealloc];
 }
-
 
 - (NSString *) boundary;
 {
@@ -86,6 +88,17 @@
 - (unsigned long long) length;
 {
     return mLength;
+}
+
+- (NSInputStream *) inputStreamWithTemporaryFile;
+{
+    mTemporaryFile = [[DDTemporaryFile alloc] initWithName: @"multipart"];
+    
+    [self open];
+    [self dd_readIntoFile: [mTemporaryFile fullPath]];
+    [self close];
+    
+    return [NSInputStream inputStreamWithFileAtPath: [mTemporaryFile fullPath]];
 }
 
 #pragma mark -

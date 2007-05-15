@@ -17,10 +17,13 @@
     NSMutableData * data = [NSMutableData data];
     
     int bytesRead;
-    while ((bytesRead = [self read: buffer maxLength: sizeof(buffer)]) != 0)
+    while ((bytesRead = [self read: buffer maxLength: sizeof(buffer)]) > 0)
     {
         [data appendBytes: buffer length: bytesRead];
     }
+    
+    if (bytesRead < 0)
+        return nil;
     
     return data;
 }
@@ -35,7 +38,7 @@
     NSAssert(fileHandle != nil, @"File handle not nil");
     
     int bytesRead;
-    while ((bytesRead = [self read: buffer maxLength: sizeof(buffer)]) != 0)
+    while ((bytesRead = [self read: buffer maxLength: sizeof(buffer)]) > 0)
     {
         NSData * data = [NSData dataWithBytesNoCopy: buffer
                                              length: bytesRead

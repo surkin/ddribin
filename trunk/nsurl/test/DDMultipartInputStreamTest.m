@@ -146,6 +146,43 @@
     STAssertEqualObjects(actualData, expected, nil);
 }
 
+- (void) testInputStreamWithTemporaryFile
+{
+    NSString * filePath = [[NSBundle bundleForClass: [self class]]
+        pathForResource: @"file" ofType: @"txt"];
+    [mStream addPartWithName: @"foo" string: @"bar"];
+    [mStream addPartWithName: @"file" fileAtPath: filePath];
+    
+    NSMutableString * expected = [NSMutableString string];
+    [expected appendFormat: @"--%@\r\n", [mStream boundary]];
+    [expected appendString: @"Content-Disposition: form-data; name=\"foo\"\r\n"];
+    [expected appendString: @"\r\n"];
+    [expected appendString: @"bar"];
+    [expected appendFormat: @"\r\n--%@\r\n", [mStream boundary]];
+    [expected appendString: @"Content-Disposition: form-data; name=\"file\"; filename=\"file.txt\"\r\n"];
+    [expected appendString: @"Content-Transfer-Encoding: binary\r\n"];
+    [expected appendString: @"Content-Type: text/plain\r\n"];
+    [expected appendString: @"\r\n"];
+    [expected appendString: @"Line one\n"];
+    [expected appendString: @"Line two\n"];
+    [expected appendFormat: @"\r\n--%@--\r\n", [mStream boundary]];
+    
+    NSInputStream * inputStream = [mStream inputStreamWithTemporaryFile];
+    STAssertNotNil(inputStream, nil);
+    
+    STAssertEquals([mStream length], (unsigned long long) [expected length], nil);
+    
+    [inputStream open];
+    NSData * actualData = [inputStream dd_readUntilEndOfStream];
+    STAssertNotNil(actualData, nil);
+    [inputStream close];
+    
+    NSString * actualString = [[NSString alloc] initWithData: actualData
+                                                    encoding: NSUTF8StringEncoding];
+    [actualString autorelease];
+    STAssertEqualObjects(actualString, expected, nil);
+}
+
 - (void) testDataPart;
 {
     NSData * body = [@"bar" dataUsingEncoding: NSUTF8StringEncoding];

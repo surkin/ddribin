@@ -218,36 +218,18 @@ const char * COMMAND = 0;
 
 - (BOOL) run;
 {
-#if 1
     if (mMultipartInputStream != nil)
     {
-#if 0
-        [mMultipartInputStream open]
-        NSData * data = nil;
-        [data writeToFile: @"/tmp/body.txt" atomically: YES];
-        [mUrlRequest setHTTPBody: data];
-#elif 1
-        [mMultipartInputStream open];
-        [mMultipartInputStream dd_readIntoFile: @"/tmp/body2.txt"];
-        [mMultipartInputStream close];
-        
-        NSInputStream * stream = [NSInputStream inputStreamWithFileAtPath: @"/tmp/body2.txt"];
-        [mUrlRequest setHTTPBodyStream: stream];
-        
 #if 1
-        NSFileManager * fileManager = [NSFileManager defaultManager];
-        NSDictionary * attributes =
-            [fileManager fileAttributesAtPath: @"/tmp/body2.txt" traverseLink: YES];
-        unsigned long long fileSize = [[attributes valueForKey: NSFileSize] unsignedLongLongValue];
-
-        [mUrlRequest setValue: [NSString stringWithFormat: @"%llu", fileSize]
-           forHTTPHeaderField: @"Content-Length"];
-#endif
+        [mUrlRequest setHTTPBodyStream: [mMultipartInputStream inputStreamWithTemporaryFile]];
 #else
         [mUrlRequest setHTTPBodyStream: mMultipartInputStream];
 #endif
+
+        unsigned long long contentLength = [mMultipartInputStream length];
+        [mUrlRequest setValue: [NSString stringWithFormat: @"%llu", contentLength]
+           forHTTPHeaderField: @"Content-Length"];
     }
-#endif
             
     NSURLConnection * connection =
         [[NSURLConnection alloc] initWithRequest: mUrlRequest
