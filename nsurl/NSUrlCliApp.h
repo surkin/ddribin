@@ -17,8 +17,8 @@
     NSURLResponse * mResponse;
     unsigned mBytesReceived;
     
-    NSMutableDictionary * mFormFields;
     DDMultipartInputStream * mMultipartInputStream;
+    NSString * mHttpMethod;
     
     NSString * mUsername;
     NSString * mPassword;
@@ -45,6 +45,9 @@
 - (void) setAllowRedirects: (BOOL) flag;
 
 - (void) addFormField: (NSString *) formField;
+
+- (NSString *) httpMethod;
+- (void) setHttpMethod: (NSString *) theHttpMethod;
 
 - (BOOL) run;
 

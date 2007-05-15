@@ -8,6 +8,7 @@
 
 #import "DDMultipartInputStream.h"
 #import "DDExtensions.h"
+#import "JRLog.h"
 
 @interface DDMultipartInputStream (Private)
 
@@ -129,9 +130,14 @@
     return NO;
 }
 
+- (void) sechduleInRunLoop: (NSRunLoop *) runLoop forMode: (NSString *) mode;
+{
+    JRLogDebug(@"%@", NSStringFromSelector(_cmd));
+}
+
 - (void) stream: (NSStream *) theStream handleEvent: (NSStreamEvent) streamEvent;
 {
-    NSLog(@"%@", NSStringFromSelector(_cmd));
+    JRLogDebug(@"%@", NSStringFromSelector(_cmd));
 }
 
 @end

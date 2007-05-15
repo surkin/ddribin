@@ -13,6 +13,7 @@ enum
     HelpOption = 'h',
     RedirectOption = 'r',
     FormOption = 'F',
+    MethodOption = 'm',
    
     LastCharOption = 255,
     VersionOption,
@@ -36,6 +37,7 @@ static void print_help(void)
            "Add HTTP header, e.g. \"Accept: application/xml\"\n");
     printf("  -r, --redirect                Follow redirects\n");
     printf("  -F, --form FIELD              Multipart form field\n");
+    printf("  -m, --method METHOD           HTTP method to use\n");
     printf("  -h, --help                    Display this help and exit\n");
     printf("      --debug                   Dispaly debugging information\n");
     printf("      --version                 Display version and exit\n");
@@ -69,6 +71,7 @@ static int run_app(int argc, char * const * argv)
             { "header",     required_argument,      NULL,   HeaderOption },
             { "add-header", required_argument,      NULL,   AddHeaderOption },
             { "form",       required_argument,      NULL,   FormOption },
+            { "method",     required_argument,      NULL,   MethodOption },
             { "redirect",   no_argument,            NULL,   RedirectOption },
             { "help",       no_argument,            NULL,   HelpOption },
             { "version",    no_argument,            NULL,   VersionOption },
@@ -77,7 +80,7 @@ static int run_app(int argc, char * const * argv)
         };
         
         int ch;
-        while ((ch = getopt_long(argc, argv, "u:p:H:A:F:rh", longopts, NULL)) != -1)
+        while ((ch = getopt_long(argc, argv, "u:p:H:A:F:m:rh", longopts, NULL)) != -1)
         {
             NSString * nsoptarg = nil;
             if (optarg != NULL)
@@ -105,6 +108,10 @@ static int run_app(int argc, char * const * argv)
                     
                 case FormOption:
                     [app addFormField: nsoptarg];
+                    break;
+                    
+                case MethodOption:
+                    [app setHttpMethod: nsoptarg];
                     break;
                     
                 case HelpOption:
