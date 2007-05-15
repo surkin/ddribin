@@ -13,8 +13,6 @@
 
 @interface DDMultipartInputStream (Private)
 
-- (void) buildBody;
-
 @end
 
 @implementation DDMultipartInputStream
@@ -106,7 +104,6 @@
 
 - (void) open
 {
-    [self buildBody];
     [mPartStreams makeObjectsPerformSelector: @selector(open)];
     mCurrentStream = nil;
     mStreamIndex = 0;
@@ -158,10 +155,6 @@
     JRLogDebug(@"%@", NSStringFromSelector(_cmd));
 }
 
-@end
-
-@implementation DDMultipartInputStream (Private)
-
 - (void) buildBody;
 {
     NSString * firstDelimiter = [NSString stringWithFormat: @"--%@\r\n", mBoundary];
@@ -191,6 +184,10 @@
     [mPartStreams addObject: finalDelimiterStream];
     mLength += [finalDelimiterData length];
 }
+
+@end
+
+@implementation DDMultipartInputStream (Private)
 
 @end
 
