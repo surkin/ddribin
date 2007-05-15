@@ -220,15 +220,17 @@ const char * COMMAND = 0;
 {
     if (mMultipartInputStream != nil)
     {
+        [mMultipartInputStream buildBody];
+        // Set content length to avoid chunked encoding
+        unsigned long long contentLength = [mMultipartInputStream length];
+        [mUrlRequest setValue: [NSString stringWithFormat: @"%llu", contentLength]
+           forHTTPHeaderField: @"Content-Length"];
+
 #if 1
         [mUrlRequest setHTTPBodyStream: [mMultipartInputStream inputStreamWithTemporaryFile]];
 #else
         [mUrlRequest setHTTPBodyStream: mMultipartInputStream];
 #endif
-
-        unsigned long long contentLength = [mMultipartInputStream length];
-        [mUrlRequest setValue: [NSString stringWithFormat: @"%llu", contentLength]
-           forHTTPHeaderField: @"Content-Length"];
     }
             
     NSURLConnection * connection =

@@ -33,6 +33,8 @@
 
 - (void) addPartWithName: (NSString *) name fileAtPath: (NSString *) path;
 
+- (void) buildBody;
+
 - (unsigned long long) length;
 
 - (NSInputStream *) inputStreamWithTemporaryFile;

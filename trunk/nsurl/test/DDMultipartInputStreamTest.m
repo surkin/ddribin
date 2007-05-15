@@ -46,12 +46,13 @@
     [expected appendString: @"\r\n"];
     [expected appendString: @"bar"];
     [expected appendFormat: @"\r\n--%@--\r\n", [mStream boundary]];
+    [mStream buildBody];
+    
+    // Check length before opening stream
+    STAssertEquals([mStream length], (unsigned long long) [expected length], nil);
     
     [mStream open];
     STAssertTrue([mStream hasBytesAvailable], nil);
-    // Check length before reading data
-    STAssertEquals([mStream length], (unsigned long long) [expected length], nil);
-    
     NSData * actualData = [self readUntilEndOfStream];
     NSString * actualString = [[NSString alloc] initWithData: actualData
                                                     encoding: NSUTF8StringEncoding];
@@ -63,6 +64,7 @@
 {
     [mStream addPartWithName: @"foo" string: @"bar"];
     [mStream addPartWithName: @"baz" intValue: 5];
+    [mStream buildBody];
     
     NSMutableString * expected = [NSMutableString string];
     [expected appendFormat: @"--%@\r\n", [mStream boundary]];
@@ -75,10 +77,10 @@
     [expected appendString: @"5"];
     [expected appendFormat: @"\r\n--%@--\r\n", [mStream boundary]];
     
-    [mStream open];
-    // Check length before reading data
+    // Check length before opening stream
     STAssertEquals([mStream length], (unsigned long long) [expected length], nil);
-
+    
+    [mStream open];
     NSData * actualData = [self readUntilEndOfStream];
     NSString * actualString = [[NSString alloc] initWithData: actualData
                                                     encoding: NSUTF8StringEncoding];
@@ -92,6 +94,7 @@
         pathForResource: @"file" ofType: @"txt"];
     [mStream addPartWithName: @"foo" string: @"bar"];
     [mStream addPartWithName: @"file" fileAtPath: filePath];
+    [mStream buildBody];
     
     NSMutableString * expected = [NSMutableString string];
     [expected appendFormat: @"--%@\r\n", [mStream boundary]];
@@ -107,10 +110,10 @@
     [expected appendString: @"Line two\n"];
     [expected appendFormat: @"\r\n--%@--\r\n", [mStream boundary]];
     
-    [mStream open];
-    // Check length before reading data
+    // Check length before opening stream
     STAssertEquals([mStream length], (unsigned long long) [expected length], nil);
     
+    [mStream open];
     NSData * actualData = [self readUntilEndOfStream];
     NSString * actualString = [[NSString alloc] initWithData: actualData
                                                     encoding: NSUTF8StringEncoding];
@@ -124,6 +127,7 @@
         pathForResource: @"mspacman" ofType: @"png"];
     [mStream addPartWithName: @"foo" string: @"bar"];
     [mStream addPartWithName: @"file" fileAtPath: filePath];
+    [mStream buildBody];
     
     NSMutableData * expected = [NSMutableData data];
     [expected dd_appendUTF8Format: @"--%@\r\n", [mStream boundary]];
@@ -138,10 +142,10 @@
     [expected appendData: [NSData dataWithContentsOfFile: filePath]];
     [expected dd_appendUTF8Format: @"\r\n--%@--\r\n", [mStream boundary]];
     
-    [mStream open];
-    // Check length before reading data
+    // Check length before opening stream
     STAssertEquals([mStream length], (unsigned long long) [expected length], nil);
-    
+
+    [mStream open];
     NSData * actualData = [self readUntilEndOfStream];
     STAssertEqualObjects(actualData, expected, nil);
 }
@@ -152,6 +156,7 @@
         pathForResource: @"file" ofType: @"txt"];
     [mStream addPartWithName: @"foo" string: @"bar"];
     [mStream addPartWithName: @"file" fileAtPath: filePath];
+    [mStream buildBody];
     
     NSMutableString * expected = [NSMutableString string];
     [expected appendFormat: @"--%@\r\n", [mStream boundary]];
