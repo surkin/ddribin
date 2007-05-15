@@ -9,6 +9,8 @@
 #import "NSUrlCliApp.h"
 #import "NSUrlExtensions.h"
 #import "ddutil.h"
+#import "DDExtensions.h"
+#import "DDMultipartInputStream.h"
 
 const char * COMMAND = 0;
 
@@ -108,38 +110,31 @@ const char * COMMAND = 0;
     }
 }
 
-static BOOL parseHeaderValue(NSString * headerValue, NSString ** header,
-                             NSString ** value)
-{
-    *header = nil;
-    *value = nil;
-
-    NSRange range = [headerValue rangeOfString: @":"];
-    if (range.location == NSNotFound)
-        return NO;
-    
-    *header = [headerValue substringToIndex: range.location];
-    *value = [headerValue substringFromIndex: range.location+1];
-    *value = [*value stringByTrimmingCharactersInSet:
-        [NSCharacterSet whitespaceCharacterSet]];
-    return YES;
-}
-
 - (void) setHeaderValue: (NSString *) headerValue;
 {
-    NSString * header;
-    NSString * value;
-    if (!parseHeaderValue(headerValue, &header, &value))
+    NSArray * components = [headerValue dd_splitBySeparator: @":"];
+    if (components == nil)
         return;
+
+    NSString * header = [components objectAtIndex: 0];
+    NSString * value = [[components objectAtIndex: 1]
+        stringByTrimmingCharactersInSet:
+        [NSCharacterSet whitespaceCharacterSet]];
+
     [mUrlRequest setValue: value forHTTPHeaderField: header];
 }
 
 - (void) addHeaderValue: (NSString *) headerValue;
 {
-    NSString * header;
-    NSString * value;
-    if (!parseHeaderValue(headerValue, &header, &value))
+    NSArray * components = [headerValue dd_splitBySeparator: @":"];
+    if (components == nil)
         return;
+    
+    NSString * header = [components objectAtIndex: 0];
+    NSString * value = [[components objectAtIndex: 1]
+        stringByTrimmingCharactersInSet:
+        [NSCharacterSet whitespaceCharacterSet]];
+    
     [mUrlRequest addValue: value forHTTPHeaderField: header];
 }
 
@@ -156,8 +151,40 @@ static BOOL parseHeaderValue(NSString * headerValue, NSString ** header,
     mAllowRedirects = flag;
 }
 
+- (void) addFormField: (NSString *) formField;
+{
+    NSArray * components = [formField dd_splitBySeparator: @"="];
+    NSAssert(components != nil, @"Not a valid field form");
+    
+    NSString * name = [components objectAtIndex: 0];
+    NSString * value = [components objectAtIndex: 1];
+    
+    if (mMultipartInputStream == nil)
+    {
+        mMultipartInputStream = [[DDMultipartInputStream alloc] init];
+        [mUrlRequest setValue: @"mutlipart/form-data"
+           forHTTPHeaderField: @"Content-Type"];
+        [mUrlRequest setHTTPMethod: @"POST"];
+    }
+    
+    if ([value hasPrefix: @"@"])
+    {
+        value = [value substringFromIndex: 1];
+        [mMultipartInputStream addPartWithName: name
+                                    fileAtPath: value];
+    }
+    else
+    {
+        [mMultipartInputStream addPartWithName: name
+                                        string: value];
+    }
+}
+
 - (BOOL) run;
 {
+    if (mMultipartInputStream != nil)
+        [mUrlRequest setHTTPBodyStream: mMultipartInputStream];
+            
     NSURLConnection * connection =
         [[NSURLConnection alloc] initWithRequest: mUrlRequest
                                         delegate: self];

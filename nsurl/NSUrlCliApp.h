@@ -8,6 +8,7 @@
 
 #import <Cocoa/Cocoa.h>
 
+@class DDMultipartInputStream;
 
 @interface NSUrlCliApp : NSObject
 {
@@ -15,6 +16,9 @@
     NSFileHandle * mFileHandle;
     NSURLResponse * mResponse;
     unsigned mBytesReceived;
+    
+    NSMutableDictionary * mFormFields;
+    DDMultipartInputStream * mMultipartInputStream;
     
     NSString * mUsername;
     NSString * mPassword;
@@ -39,6 +43,8 @@
 
 - (BOOL) allowRedirects;
 - (void) setAllowRedirects: (BOOL) flag;
+
+- (void) addFormField: (NSString *) formField;
 
 - (BOOL) run;
 

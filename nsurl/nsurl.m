@@ -12,6 +12,7 @@ enum
     AddHeaderOption = 'A',
     HelpOption = 'h',
     RedirectOption = 'r',
+    FormOption = 'f',
    
     LastCharOption = 255,
     VersionOption,
@@ -34,6 +35,7 @@ static void print_help(void)
     printf("  -A, --add-header HEADER       "
            "Add HTTP header, e.g. \"Accept: application/xml\"\n");
     printf("  -r, --redirect                Follow redirects\n");
+    printf("  -F, --form FIELD              Multipart form field\n");
     printf("  -h, --help                    Display this help and exit\n");
     printf("      --debug                   Dispaly debugging information\n");
     printf("      --version                 Display version and exit\n");
@@ -98,6 +100,10 @@ static int run_app(int argc, char * const * argv)
                     
                 case RedirectOption:
                     [app setAllowRedirects: YES];
+                    break;
+                    
+                case FormOption:
+                    [app addFormField: nsoptarg];
                     break;
                     
                 case HelpOption:
