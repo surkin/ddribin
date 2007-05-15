@@ -23,16 +23,9 @@
     mStream = nil;
 }
 
-- (NSMutableData *) readUntilEndOfStream;
+- (NSData *) readUntilEndOfStream;
 {
-    uint8_t buffer[64 * 1024];
-    NSMutableData * data = [NSMutableData data];
-    
-    int bytesRead;
-    while ((bytesRead = [mStream read: buffer maxLength: sizeof(buffer)]) != 0)
-    {
-        [data appendBytes: buffer length: bytesRead];
-    }
+    NSData * data = [mStream dd_readUntilEndOfStream];
     [mStream close];
     
     return data;

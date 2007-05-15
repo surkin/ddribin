@@ -9,3 +9,4 @@
 
 #import "NSData+DDExtensions.h"
 #import "NSString+DDExtensions.h"
+#import "NSInputStream+DDExtensions.h"

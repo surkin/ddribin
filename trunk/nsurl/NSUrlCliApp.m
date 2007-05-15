@@ -183,6 +183,23 @@ const char * COMMAND = 0;
     }
 }
 
+//=========================================================== 
+//  httpMethod 
+//=========================================================== 
+- (NSString *) httpMethod
+{
+    return mHttpMethod; 
+}
+
+- (void) setHttpMethod: (NSString *) theHttpMethod
+{
+    if (mHttpMethod != theHttpMethod)
+    {
+        [mHttpMethod release];
+        mHttpMethod = [theHttpMethod retain];
+    }
+}
+
 - (NSMutableData *) readUntilEndOfStream: (NSInputStream *) stream;
 {
     uint8_t buffer[64 * 1024];
@@ -204,10 +221,31 @@ const char * COMMAND = 0;
 #if 1
     if (mMultipartInputStream != nil)
     {
-        NSData * data = [self readUntilEndOfStream: mMultipartInputStream];
+#if 0
+        [mMultipartInputStream open]
+        NSData * data = nil;
         [data writeToFile: @"/tmp/body.txt" atomically: YES];
         [mUrlRequest setHTTPBody: data];
-        // [mUrlRequest setHTTPBodyStream: mMultipartInputStream];
+#elif 1
+        [mMultipartInputStream open];
+        [mMultipartInputStream dd_readIntoFile: @"/tmp/body2.txt"];
+        [mMultipartInputStream close];
+        
+        NSInputStream * stream = [NSInputStream inputStreamWithFileAtPath: @"/tmp/body2.txt"];
+        [mUrlRequest setHTTPBodyStream: stream];
+        
+#if 1
+        NSFileManager * fileManager = [NSFileManager defaultManager];
+        NSDictionary * attributes =
+            [fileManager fileAttributesAtPath: @"/tmp/body2.txt" traverseLink: YES];
+        unsigned long long fileSize = [[attributes valueForKey: NSFileSize] unsignedLongLongValue];
+
+        [mUrlRequest setValue: [NSString stringWithFormat: @"%llu", fileSize]
+           forHTTPHeaderField: @"Content-Length"];
+#endif
+#else
+        [mUrlRequest setHTTPBodyStream: mMultipartInputStream];
+#endif
     }
 #endif
             
