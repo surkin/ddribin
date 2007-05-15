@@ -58,4 +58,14 @@
     }
 }
 
+- (void) testReadWhenNotOpen
+{
+    NSString * path = [self resource: @"file_100k" ofType: nil];
+    
+    NSInputStream * inputStream = [NSInputStream inputStreamWithFileAtPath: path];
+    NSData * actual = [inputStream dd_readUntilEndOfStream];
+    
+    STAssertNil(actual, nil);
+}
+
 @end

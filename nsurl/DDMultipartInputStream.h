@@ -17,7 +17,7 @@
     NSMutableArray * mParts;
     NSMutableArray * mPartStreams;
     unsigned long long mLength;
-    DDTemporaryFile * mTemporarayFile;
+    DDTemporaryFile * mTemporaryFile;
 
     NSInputStream * mCurrentStream;
     unsigned mStreamIndex;
@@ -34,6 +34,8 @@
 - (void) addPartWithName: (NSString *) name fileAtPath: (NSString *) path;
 
 - (unsigned long long) length;
+
+- (NSInputStream *) inputStreamWithTemporaryFile;
 
 @end
 
