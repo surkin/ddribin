@@ -100,6 +100,11 @@
     [mPartStreams makeObjectsPerformSelector: @selector(close)];
 }
 
+- (BOOL) hasBytesAvailable;
+{
+    return (mCurrentStream != nil);
+}
+
 - (int) read: (uint8_t *) buffer maxLength: (unsigned int) len;
 {
     if (mCurrentStream == nil)
@@ -112,8 +117,21 @@
         mCurrentStream = [mPartStreams objectAtIndex: mStreamIndex];
         result = [self read: buffer maxLength: len];
     }
+    
+    if (result == 0)
+        mCurrentStream == nil;
         
     return result;
+}
+
+- (BOOL)getBuffer:(uint8_t **)buffer length:(unsigned int *)len
+{
+    return NO;
+}
+
+- (void) stream: (NSStream *) theStream handleEvent: (NSStreamEvent) streamEvent;
+{
+    NSLog(@"%@", NSStringFromSelector(_cmd));
 }
 
 @end

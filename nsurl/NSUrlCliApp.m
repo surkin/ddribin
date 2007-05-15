@@ -162,7 +162,9 @@ const char * COMMAND = 0;
     if (mMultipartInputStream == nil)
     {
         mMultipartInputStream = [[DDMultipartInputStream alloc] init];
-        [mUrlRequest setValue: @"mutlipart/form-data"
+        NSString * value = [NSString stringWithFormat:
+            @"multipart/form-data; boundary=%@", [mMultipartInputStream boundary]];
+        [mUrlRequest setValue: value
            forHTTPHeaderField: @"Content-Type"];
         [mUrlRequest setHTTPMethod: @"POST"];
     }
@@ -170,6 +172,7 @@ const char * COMMAND = 0;
     if ([value hasPrefix: @"@"])
     {
         value = [value substringFromIndex: 1];
+        value = [value stringByExpandingTildeInPath];
         [mMultipartInputStream addPartWithName: name
                                     fileAtPath: value];
     }
@@ -180,10 +183,33 @@ const char * COMMAND = 0;
     }
 }
 
+- (NSMutableData *) readUntilEndOfStream: (NSInputStream *) stream;
+{
+    uint8_t buffer[64 * 1024];
+    NSMutableData * data = [NSMutableData data];
+    
+    [stream open];
+    int bytesRead;
+    while ((bytesRead = [stream read: buffer maxLength: sizeof(buffer)]) != 0)
+    {
+        [data appendBytes: buffer length: bytesRead];
+    }
+    [stream close];
+    
+    return data;
+}
+
 - (BOOL) run;
 {
+#if 1
     if (mMultipartInputStream != nil)
-        [mUrlRequest setHTTPBodyStream: mMultipartInputStream];
+    {
+        NSData * data = [self readUntilEndOfStream: mMultipartInputStream];
+        [data writeToFile: @"/tmp/body.txt" atomically: YES];
+        [mUrlRequest setHTTPBody: data];
+        // [mUrlRequest setHTTPBodyStream: mMultipartInputStream];
+    }
+#endif
             
     NSURLConnection * connection =
         [[NSURLConnection alloc] initWithRequest: mUrlRequest

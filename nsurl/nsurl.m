@@ -12,7 +12,7 @@ enum
     AddHeaderOption = 'A',
     HelpOption = 'h',
     RedirectOption = 'r',
-    FormOption = 'f',
+    FormOption = 'F',
    
     LastCharOption = 255,
     VersionOption,
@@ -68,6 +68,7 @@ static int run_app(int argc, char * const * argv)
             { "password",   required_argument,      NULL,   PasswordOption },
             { "header",     required_argument,      NULL,   HeaderOption },
             { "add-header", required_argument,      NULL,   AddHeaderOption },
+            { "form",       required_argument,      NULL,   FormOption },
             { "redirect",   no_argument,            NULL,   RedirectOption },
             { "help",       no_argument,            NULL,   HelpOption },
             { "version",    no_argument,            NULL,   VersionOption },
@@ -76,7 +77,7 @@ static int run_app(int argc, char * const * argv)
         };
         
         int ch;
-        while ((ch = getopt_long(argc, argv, "u:p:H:A:rh", longopts, NULL)) != -1)
+        while ((ch = getopt_long(argc, argv, "u:p:H:A:F:rh", longopts, NULL)) != -1)
         {
             NSString * nsoptarg = nil;
             if (optarg != NULL)

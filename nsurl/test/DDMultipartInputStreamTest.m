@@ -27,7 +27,6 @@
 {
     uint8_t buffer[64 * 1024];
     NSMutableData * data = [NSMutableData data];
-    [mStream open];
     
     int bytesRead;
     while ((bytesRead = [mStream read: buffer maxLength: sizeof(buffer)]) != 0)
@@ -55,6 +54,8 @@
     [expected appendString: @"bar"];
     [expected appendFormat: @"\r\n--%@--\r\n", [mStream boundary]];
     
+    [mStream open];
+    STAssertTrue([mStream hasBytesAvailable], nil);
     NSData * actualData = [self readUntilEndOfStream];
     NSString * actualString = [[NSString alloc] initWithData: actualData
                                                     encoding: NSUTF8StringEncoding];
@@ -78,6 +79,7 @@
     [expected appendString: @"5"];
     [expected appendFormat: @"\r\n--%@--\r\n", [mStream boundary]];
     
+    [mStream open];
     NSData * actualData = [self readUntilEndOfStream];
     NSString * actualString = [[NSString alloc] initWithData: actualData
                                                     encoding: NSUTF8StringEncoding];
@@ -106,6 +108,7 @@
     [expected appendString: @"Line two\n"];
     [expected appendFormat: @"\r\n--%@--\r\n", [mStream boundary]];
     
+    [mStream open];
     NSData * actualData = [self readUntilEndOfStream];
     NSString * actualString = [[NSString alloc] initWithData: actualData
                                                     encoding: NSUTF8StringEncoding];
@@ -133,6 +136,7 @@
     [expected appendData: [NSData dataWithContentsOfFile: filePath]];
     [expected dd_appendUTF8Format: @"\r\n--%@--\r\n", [mStream boundary]];
     
+    [mStream open];
     NSData * actualData = [self readUntilEndOfStream];
     STAssertEqualObjects(actualData, expected, nil);
 }
