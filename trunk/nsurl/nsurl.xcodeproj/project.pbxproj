@@ -41,21 +41,21 @@
 			isa = PBXContainerItemProxy;
 			containerPortal = 08FB7793FE84155DC02AAC07 /* Project object */;
 			proxyType = 1;
-			remoteGlobalIDString = 55BC2E780BF9131900C8DA71 /* core */;
+			remoteGlobalIDString = 55BC2E780BF9131900C8DA71;
 			remoteInfo = core;
 		};
 		55BC2E800BF9132E00C8DA71 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 08FB7793FE84155DC02AAC07 /* Project object */;
 			proxyType = 1;
-			remoteGlobalIDString = 55BC2E660BF912F300C8DA71 /* UnitTests */;
+			remoteGlobalIDString = 55BC2E660BF912F300C8DA71;
 			remoteInfo = UnitTests;
 		};
 		55BC2E820BF9132E00C8DA71 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 08FB7793FE84155DC02AAC07 /* Project object */;
 			proxyType = 1;
-			remoteGlobalIDString = 55BC2E780BF9131900C8DA71 /* core */;
+			remoteGlobalIDString = 55BC2E780BF9131900C8DA71;
 			remoteInfo = core;
 		};
 /* End PBXContainerItemProxy section */
@@ -87,7 +87,7 @@
 		5594C5FA0BF82064006A4FC9 /* JRLog.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = JRLog.h; sourceTree = "<group>"; };
 		5594C5FB0BF82064006A4FC9 /* JRLog.m */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.objc; path = JRLog.m; sourceTree = "<group>"; };
 		55BC2E670BF912F300C8DA71 /* UnitTests.octest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = UnitTests.octest; sourceTree = BUILT_PRODUCTS_DIR; };
-		55BC2E790BF9131900C8DA71 /* libcore.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; name = libcore.a; path = build/Debug/libcore.a; sourceTree = "<group>"; };
+		55BC2E790BF9131900C8DA71 /* libcore.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libcore.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		55BC2E900BF9139000C8DA71 /* UnitTests-Info.plist */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = text.xml; path = "UnitTests-Info.plist"; sourceTree = "<group>"; };
 		55BC2E9C0BF913EB00C8DA71 /* DDMultipartInputStream.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DDMultipartInputStream.h; sourceTree = "<group>"; };
 		55BC2E9D0BF913EB00C8DA71 /* DDMultipartInputStream.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DDMultipartInputStream.m; sourceTree = "<group>"; };

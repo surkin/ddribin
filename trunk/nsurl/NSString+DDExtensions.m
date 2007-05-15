@@ -32,4 +32,16 @@ NSString * DDMimeTypeForExtension(NSString * extension)
     return DDMimeTypeForExtension([self pathExtension]);
 }
 
+- (NSArray *) dd_splitBySeparator: (NSString *) separator;
+{
+    NSRange range = [self rangeOfString: separator];
+    if (range.location == NSNotFound)
+        return nil;
+    
+    return [NSArray arrayWithObjects:
+        [self substringToIndex: range.location],
+        [self substringFromIndex: range.location+1],
+        nil];
+}
+
 @end

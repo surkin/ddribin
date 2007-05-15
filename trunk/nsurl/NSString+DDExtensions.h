@@ -15,4 +15,6 @@ NSString * DDMimeTypeForExtension(NSString * extension);
 
 - (NSString *) dd_pathMimeType;
 
+- (NSArray *) dd_splitBySeparator: (NSString *) separator;
+
 @end

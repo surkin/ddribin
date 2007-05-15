@@ -29,4 +29,16 @@
     STAssertEqualObjects([@"foo" dd_pathMimeType], @"application/octet-stream", nil);
 }
 
+- (void) testSplitBySeparator;
+{
+    NSArray * components = [@"foo: bar" dd_splitBySeparator: @":"];
+    STAssertEquals([components count], 2U, nil);
+    STAssertEqualObjects([components objectAtIndex: 0],
+                         @"foo", nil);
+    STAssertEqualObjects([components objectAtIndex: 1],
+                         @" bar", nil);
+    
+    STAssertNil([@"foo bar" dd_splitBySeparator: @":"], nil);
+}
+
 @end
