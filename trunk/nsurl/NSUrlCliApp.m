@@ -11,6 +11,7 @@
 #import "ddutil.h"
 #import "DDExtensions.h"
 #import "DDMultipartInputStream.h"
+#import "JRLog.h"
 
 const char * COMMAND = 0;
 
@@ -52,12 +53,16 @@ const char * COMMAND = 0;
     [mUrlRequest release];
     [mFileHandle release];
     [mResponse release];
+    [mMultipartInputStream release];
+    [mHttpMethod release];
     [mUsername release];
     [mPassword release];
     
     mUrlRequest = nil;
     mFileHandle = nil;
     mResponse = nil;
+    mMultipartInputStream = nil;
+    mHttpMethod = nil;
     mUsername = nil;
     mPassword = nil;
     [super dealloc];
@@ -226,10 +231,12 @@ const char * COMMAND = 0;
         [mUrlRequest setValue: [NSString stringWithFormat: @"%llu", contentLength]
            forHTTPHeaderField: @"Content-Length"];
 
-#if 1
-        [mUrlRequest setHTTPBodyStream: [mMultipartInputStream inputStreamWithTemporaryFile]];
-#else
+#if DD_INPUT_STREAM_HACK
+        JRLogDebug(@"Using input stream hack");
         [mUrlRequest setHTTPBodyStream: mMultipartInputStream];
+#else
+        JRLogDebug(@"Using temporary input stream");
+        [mUrlRequest setHTTPBodyStream: [mMultipartInputStream inputStreamWithTemporaryFile]];
 #endif
     }
             
