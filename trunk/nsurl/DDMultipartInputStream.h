@@ -9,11 +9,15 @@
 #import <Cocoa/Cocoa.h>
 
 
+@class DDTemporaryFile;
+
 @interface DDMultipartInputStream : NSInputStream
 {
     NSString * mBoundary;
     NSMutableArray * mParts;
     NSMutableArray * mPartStreams;
+    unsigned long long mLength;
+    DDTemporaryFile * mTemporarayFile;
 
     NSInputStream * mCurrentStream;
     unsigned mStreamIndex;
@@ -29,12 +33,15 @@
 
 - (void) addPartWithName: (NSString *) name fileAtPath: (NSString *) path;
 
+- (unsigned long long) length;
+
 @end
 
 @interface DDMultipartDataPart : NSObject
 {
     NSString * mHeaders;
     NSInputStream * mContentStream;
+    unsigned long long mContentLength;
 }
 
 + partWithName: (NSString *) name dataContent: (NSData *) data;
@@ -47,10 +54,14 @@
 
 - (id) initWithHeaders: (NSString *) headers dataContent: (NSData *) data;
 
-- (id) initWithHeaders: (NSString *) headers streamContent: (NSInputStream *) stream;
+- (id) initWithHeaders: (NSString *) headers
+         streamContent: (NSInputStream *) stream
+                length: (unsigned long long) length;
 
 - (NSString *) headersAsString;
 
 - (NSInputStream *) contentAsStream;
+
+- (unsigned long long) contentLength;
 
 @end

@@ -49,6 +49,9 @@
     
     [mStream open];
     STAssertTrue([mStream hasBytesAvailable], nil);
+    // Check length before reading data
+    STAssertEquals([mStream length], (unsigned long long) [expected length], nil);
+    
     NSData * actualData = [self readUntilEndOfStream];
     NSString * actualString = [[NSString alloc] initWithData: actualData
                                                     encoding: NSUTF8StringEncoding];
@@ -73,6 +76,9 @@
     [expected appendFormat: @"\r\n--%@--\r\n", [mStream boundary]];
     
     [mStream open];
+    // Check length before reading data
+    STAssertEquals([mStream length], (unsigned long long) [expected length], nil);
+
     NSData * actualData = [self readUntilEndOfStream];
     NSString * actualString = [[NSString alloc] initWithData: actualData
                                                     encoding: NSUTF8StringEncoding];
@@ -102,6 +108,9 @@
     [expected appendFormat: @"\r\n--%@--\r\n", [mStream boundary]];
     
     [mStream open];
+    // Check length before reading data
+    STAssertEquals([mStream length], (unsigned long long) [expected length], nil);
+    
     NSData * actualData = [self readUntilEndOfStream];
     NSString * actualString = [[NSString alloc] initWithData: actualData
                                                     encoding: NSUTF8StringEncoding];
@@ -130,6 +139,9 @@
     [expected dd_appendUTF8Format: @"\r\n--%@--\r\n", [mStream boundary]];
     
     [mStream open];
+    // Check length before reading data
+    STAssertEquals([mStream length], (unsigned long long) [expected length], nil);
+    
     NSData * actualData = [self readUntilEndOfStream];
     STAssertEqualObjects(actualData, expected, nil);
 }
