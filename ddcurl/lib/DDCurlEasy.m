@@ -7,6 +7,7 @@
 //
 
 #import "DDCurlEasy.h"
+#import "DDCurlSlist.h"
 #import "DDCurlMultipartForm.h"
 
 @interface DDCurlEasy (Private)
@@ -115,6 +116,26 @@
          message: @"set user/password"];
 }
 
+- (void) setCustomRequest: (NSString *) customRequest;
+{
+    const char * utf8String = [self savedUTF8String: customRequest
+                                          forOption: CURLOPT_CUSTOMREQUEST];
+    [self assert: curl_easy_setopt(mCurl, CURLOPT_CUSTOMREQUEST, utf8String)
+         message: @"set custom request"];
+}
+
+- (void) setHttpHeaders: (DDCurlSlist *) httpHeaders;
+{
+    [self setCurlHttpHeaders: [httpHeaders curl_slist]];
+    [self setProperty: httpHeaders forOption: CURLOPT_HTTPHEADER];
+}
+
+- (void) setCurlHttpHeaders: (struct curl_slist *) httpHeaders;
+{
+    [self assert: curl_easy_setopt(mCurl, CURLOPT_HTTPHEADER, httpHeaders)
+         message: @"set HTTP headers"];
+}
+
 - (void) setForm: (DDCurlMultipartForm *) form;
 {
     [self setCurlHttpPost: [form curl_httppost]];
@@ -139,6 +160,14 @@
     [self assert: curl_easy_getinfo(mCurl, CURLINFO_RESPONSE_CODE, &responseCode)
          message: nil];
     return responseCode;
+}
+
+- (NSString *) contentType;
+{
+    char * contentType;
+    [self assert: curl_easy_getinfo(mCurl, CURLINFO_CONTENT_TYPE, &contentType)
+         message: nil];
+    return [NSString stringWithUTF8String: contentType];
 }
 
 @end

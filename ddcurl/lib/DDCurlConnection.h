@@ -11,11 +11,13 @@
 @class DDMutableCurlRequest;
 @class DDCurlResponse;
 @class DDCurlEasy;
+@class DDCurlSlist;
 
 @interface DDCurlConnection : NSObject
 {
     DDCurlEasy * mCurl;
     DDCurlResponse * mResponse;
+    DDCurlSlist * mHeaders;
     BOOL mIsFirstData;
 
     id mDelegate;
@@ -31,7 +33,7 @@
 @interface NSObject (DDCurlConnectionDelegate)
 
 - (void) dd_curlConnection: (DDCurlConnection *) connection
-           didReceiveBytes: (void *) buffer
+           didReceiveBytes: (void *) bytes
                     length: (unsigned) length;
 
 - (void) dd_curlConnection: (DDCurlConnection *) connection

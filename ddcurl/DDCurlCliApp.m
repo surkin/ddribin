@@ -48,7 +48,7 @@
     [form addFile: @"/tmp/ending.mp3" withName: @"uploadedfile"];
     // [form addFile: @"~/Desktop/07_raven_entry.pdf" withName: @"uploadedfile"];
     // [form addFile: @"~/mspacman.png" withName: @"uploadedfile"];
-    [request setForm: form];
+    [request setMultipartForm: form];
     
     [request setUsername: @"foo"];
     [request setPassword: @"bar"];

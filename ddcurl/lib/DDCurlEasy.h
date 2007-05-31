@@ -9,6 +9,7 @@
 #import <Cocoa/Cocoa.h>
 #import <curl/curl.h>
 
+@class DDCurlSlist;
 @class DDCurlMultipartForm;
 
 @interface DDCurlEasy : NSObject
@@ -37,6 +38,12 @@
 
 - (void) setUser: (NSString *) user password: (NSString *) password;
 
+- (void) setCustomRequest: (NSString *) customRequest;
+
+- (void) setHttpHeaders: (DDCurlSlist *) httpHeaders;
+
+- (void) setCurlHttpHeaders: (struct curl_slist *) httpHeaders;
+
 - (void) setForm: (DDCurlMultipartForm *) setForm;
 
 - (void) setCurlHttpPost: (struct curl_httppost *) httpPost;
@@ -44,5 +51,7 @@
 - (void) perform;
 
 - (long) responseCode;
+
+- (NSString *) contentType;
 
 @end
