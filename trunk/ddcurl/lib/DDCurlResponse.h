@@ -13,6 +13,7 @@
 {
     long long mExpectedContentLength;
     int mStatusCode;
+    NSString * mMIMEType;
     NSMutableDictionary * mHeaders;
 }
 
@@ -20,6 +21,9 @@
 
 - (long long) expectedContentLength;
 - (void) setExpectedContentLength: (long long) theExpectedContentLength;
+
+- (NSString *) MIMEType;
+- (void) setMIMEType: (NSString *) theMIMEType;
 
 - (int) statusCode;
 - (void) setStatusCode: (int) theStatusCode;

@@ -41,6 +41,24 @@
 {
     mExpectedContentLength = theExpectedContentLength;
 }
+
+//=========================================================== 
+//  MIMEType 
+//=========================================================== 
+- (NSString *) MIMEType
+{
+    return mMIMEType; 
+}
+
+- (void) setMIMEType: (NSString *) theMIMEType
+{
+    if (mMIMEType != theMIMEType)
+    {
+        [mMIMEType release];
+        mMIMEType = [theMIMEType retain];
+    }
+}
+
 //=========================================================== 
 //  statusCode 
 //=========================================================== 

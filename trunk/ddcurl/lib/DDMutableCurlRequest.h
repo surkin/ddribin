@@ -13,9 +13,11 @@
 @interface DDMutableCurlRequest : NSObject
 {
     NSURL * mUrl;
-    DDCurlMultipartForm * mForm;
+    DDCurlMultipartForm * mMultipartForm;
     NSString * mUsername;
     NSString * mPassword;
+    NSString * mHTTPMethod;
+    NSMutableDictionary * mHeaders;
 }
 
 #pragma mark -
@@ -44,7 +46,14 @@
 - (NSString *) password;
 - (void) setPassword: (NSString *) thePassword;
 
-- (DDCurlMultipartForm *) form;
-- (void) setForm: (DDCurlMultipartForm *) theForm;
+- (DDCurlMultipartForm *) multipartForm;
+- (void) setMultipartForm: (DDCurlMultipartForm *) theMultipartForm;
+
+- (NSString *) HTTPMethod;
+- (void) setHTTPMethod: (NSString *) theHTTPMethod;
+
+- (void) setValue: (NSString *) value forHTTPHeaderField: (NSString *) field;
+
+- (NSDictionary *) allHeaders;
 
 @end

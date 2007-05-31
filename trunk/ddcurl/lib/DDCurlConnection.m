@@ -11,6 +11,7 @@
 #import "DDCurlResponse.h"
 #import "DDCurlMultipartForm.h"
 #import "DDCurlEasy.h"
+#import "DDCurlSlist.h"
 
 @implementation DDCurlConnection
 
@@ -63,6 +64,7 @@
     }
     
     [mResponse setStatusCode: [mCurl responseCode]];
+    [mResponse setMIMEType: [mCurl contentType]];
     [mDelegate dd_curlConnection: self
               didReceiveResponse: mResponse];
 }
@@ -168,14 +170,33 @@ static int staticProgress(void * clientp,
 
         [mCurl setFollowLocation: YES];
         
-        DDCurlMultipartForm * form = [request form];
+        DDCurlMultipartForm * form = [request multipartForm];
         if (form != nil)
             [mCurl setForm: form];
+        
+        DDCurlSlist * headers = [DDCurlSlist slist];
+        NSDictionary * allHeaders = [request allHeaders];
+        NSString * name;
+        NSEnumerator * e = [allHeaders keyEnumerator];
+        while (name = [e nextObject])
+        {
+            NSString * value = [allHeaders objectForKey: name];
+            NSString * header = [NSString stringWithFormat: @"%@: %@",
+                name, value];
+            [headers appendString: header];
+        }
+        [mCurl setHttpHeaders: headers];
+        
+        NSString * httpMethod = [request HTTPMethod];
+        if (httpMethod != nil)
+        {
+            [mCurl setCustomRequest: httpMethod];
+        }
+        
         [mCurl setUser: [request username] password: [request password]];
         [mCurl setUrl: [request urlString]];
 
         mIsFirstData = YES;
-        
         [mCurl perform];
         if (mIsFirstData)
             [self callResponseDelegate];

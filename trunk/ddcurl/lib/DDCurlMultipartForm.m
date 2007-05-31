@@ -42,6 +42,12 @@
                  CURLFORM_END);
 }
 
+- (void) addInt: (int) number withName: (NSString *) name;
+{
+    NSString * string = [NSString stringWithFormat: @"%d", number];
+    [self addString: string withName: name];
+}
+
 - (void) addFile: (NSString *) path withName: (NSString *) name;
 {
     curl_formadd(&mFirst, &mLast,

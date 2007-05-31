@@ -34,7 +34,8 @@
         return nil;
     
     mUrl = [url retain];
-    mForm = nil;
+    mMultipartForm = nil;
+    mHeaders = [[NSMutableDictionary alloc] init];
     
     return self;
 }
@@ -45,12 +46,12 @@
 - (void) dealloc
 {
     [mUrl release];
-    [mForm release];
+    [mMultipartForm release];
     [mUsername release];
     [mPassword release];
     
     mUrl = nil;
-    mForm = nil;
+    mMultipartForm = nil;
     mUsername = nil;
     mPassword = nil;
     [super dealloc];
@@ -115,20 +116,47 @@
 }
 
 //=========================================================== 
-//  form 
+//  multipartForm 
 //=========================================================== 
-- (DDCurlMultipartForm *) form
+- (DDCurlMultipartForm *) multipartForm
 {
-    return mForm; 
+    return mMultipartForm; 
 }
 
-- (void) setForm: (DDCurlMultipartForm *) theForm
+- (void) setMultipartForm: (DDCurlMultipartForm *) theMultipartForm
 {
-    if (mForm != theForm)
+    if (mMultipartForm != theMultipartForm)
     {
-        [mForm release];
-        mForm = [theForm retain];
+        [mMultipartForm release];
+        mMultipartForm = [theMultipartForm retain];
     }
+}
+
+//=========================================================== 
+//  HTTPMethod 
+//=========================================================== 
+- (NSString *) HTTPMethod
+{
+    return mHTTPMethod; 
+}
+
+- (void) setHTTPMethod: (NSString *) theHTTPMethod
+{
+    if (mHTTPMethod != theHTTPMethod)
+    {
+        [mHTTPMethod release];
+        mHTTPMethod = [theHTTPMethod retain];
+    }
+}
+
+- (void) setValue: (NSString *) value forHTTPHeaderField: (NSString *) field;
+{
+    [mHeaders setObject: value forKey: [field lowercaseString]];
+}
+
+- (NSDictionary *) allHeaders;
+{
+    return mHeaders;
 }
 
 @end

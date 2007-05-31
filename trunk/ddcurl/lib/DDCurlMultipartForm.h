@@ -19,6 +19,8 @@
 
 - (void) addString: (NSString *) string withName: (NSString *) name;
 
+- (void) addInt: (int) number withName: (NSString *) name;
+
 - (void) addFile: (NSString *) path withName: (NSString *) name;
 
 - (struct curl_httppost *) curl_httppost;
