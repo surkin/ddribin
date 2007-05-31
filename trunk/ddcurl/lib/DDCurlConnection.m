@@ -13,6 +13,34 @@
 #import "DDCurlEasy.h"
 #import "DDCurlSlist.h"
 
+@interface DDCurlConnection (Private)
+
+- (void) threadMain: (DDMutableCurlRequest *) request;
+
+#pragma mark -
+#pragma mark Delegation
+
+- (void) dd_curlConnection: (DDCurlConnection *) connection
+           didReceiveBytes: (void *) bytes
+                    length: (unsigned) length;
+- (void) callDidReceiveBytesDelegate: (NSArray *) arguments;
+
+- (void) dd_curlConnection: (DDCurlConnection *) connection
+        didReceiveResponse: (DDCurlResponse *) response;
+- (void) callDidReceiveResponse: (DDCurlResponse *) response;
+
+- (void) dd_curlConnection: (DDCurlConnection *) connection
+          progressDownload: (double) download
+             downloadTotal: (double) downloadTotal
+                    upload: (double) upload
+               uploadTotal: (double) uploadTotal;
+- (void) callProgressDownload: (NSArray *) arguments;
+
+- (void) dd_curlConnectionDidFinishLoading: (DDCurlConnection *) connection;
+
+
+@end
+
 @implementation DDCurlConnection
 
 + (DDCurlConnection *) alloc;
@@ -50,7 +78,7 @@
     [super dealloc];
 }
 
-- (void) callResponseDelegate;
+- (void) setResponseInfo;
 {
     NSString * contentLengthString = [mResponse headerWithName: @"Content-Length"];
     if (contentLengthString != nil)
@@ -65,8 +93,7 @@
     
     [mResponse setStatusCode: [mCurl responseCode]];
     [mResponse setMIMEType: [mCurl contentType]];
-    [mDelegate dd_curlConnection: self
-              didReceiveResponse: mResponse];
+    [self dd_curlConnection: self didReceiveResponse: mResponse];
 }
 
 - (size_t) writeData: (char *) buffer size: (size_t) size
@@ -75,11 +102,11 @@
     size_t bytes = size * nmemb;
     if (mIsFirstData)
     {
-        [self callResponseDelegate];
+        [self setResponseInfo];
         mIsFirstData = NO;
     }
     
-    [mDelegate dd_curlConnection: self
+    [self dd_curlConnection: self
                  didReceiveBytes: buffer length: bytes];
     return bytes;
 }
@@ -119,7 +146,7 @@ BOOL splitField(NSString * string, NSString * separator,
                   upload: (double) upload
              uploadTotal: (double) uploadTotal;
 {
-    [mDelegate dd_curlConnection: self
+    [self dd_curlConnection: self
                 progressDownload: download
                    downloadTotal: downloadTotal
                           upload: upload
@@ -154,6 +181,11 @@ static int staticProgress(void * clientp,
                             uploadTotal: ultotal];
 }
 
+@end
+
+@implementation DDCurlConnection (Private)
+
+
 - (void) threadMain: (DDMutableCurlRequest *) request
 {
     NSAutoreleasePool * pool = [[NSAutoreleasePool alloc] init];
@@ -167,7 +199,7 @@ static int staticProgress(void * clientp,
         [mCurl setProgressData: self];
         [mCurl setProgressFunction: staticProgress];
         [mCurl setProgress: YES];
-
+        
         [mCurl setFollowLocation: YES];
         
         DDCurlMultipartForm * form = [request multipartForm];
@@ -195,11 +227,11 @@ static int staticProgress(void * clientp,
         
         [mCurl setUser: [request username] password: [request password]];
         [mCurl setUrl: [request urlString]];
-
+        
         mIsFirstData = YES;
         [mCurl perform];
         if (mIsFirstData)
-            [self callResponseDelegate];
+            [self setResponseInfo];
         
 #if 0
         if ([mResponse statusCode] == 401)
@@ -209,13 +241,101 @@ static int staticProgress(void * clientp,
             [mCurl perform];
         }
 #endif
-
-        [mDelegate dd_curlConnectionDidFinishLoading: self];
+        
+        [self dd_curlConnectionDidFinishLoading: self];
     }
     @finally
     {
         [pool release];
     }
+}
+
+#pragma mark -
+#pragma mark Delegation
+
+- (void) dd_curlConnection: (DDCurlConnection *) connection
+           didReceiveBytes: (void *) bytes
+                    length: (unsigned) length;
+{
+    
+    if (![mDelegate respondsToSelector: _cmd])
+        return;
+    
+    NSArray * arguments = [NSArray arrayWithObjects:
+        [NSValue valueWithPointer: bytes],
+        [NSNumber numberWithUnsignedInt: length],
+        nil];
+    [self performSelectorOnMainThread: @selector(callDidReceiveBytesDelegate:)
+                           withObject: arguments
+                        waitUntilDone: YES];
+}
+
+- (void) callDidReceiveBytesDelegate: (NSArray *) arguments;
+{
+    void * bytes = [[arguments objectAtIndex: 0] pointerValue];
+    unsigned length = [[arguments objectAtIndex: 1] unsignedIntValue];
+    [mDelegate dd_curlConnection: self
+                 didReceiveBytes: bytes
+                          length: length];
+}
+
+- (void) dd_curlConnection: (DDCurlConnection *) connection
+        didReceiveResponse: (DDCurlResponse *) response;
+{
+    if (![mDelegate respondsToSelector: _cmd])
+        return;
+    
+    [self performSelectorOnMainThread: @selector(callDidReceiveResponse:)
+                           withObject: response
+                        waitUntilDone: YES];
+}
+
+- (void) callDidReceiveResponse: (DDCurlResponse *) response;
+{
+    [mDelegate dd_curlConnection: self didReceiveResponse: response];
+}
+
+- (void) dd_curlConnection: (DDCurlConnection *) connection
+          progressDownload: (double) download
+             downloadTotal: (double) downloadTotal
+                    upload: (double) upload
+               uploadTotal: (double) uploadTotal;
+{
+    if (![mDelegate respondsToSelector: _cmd])
+        return;
+    
+    NSArray * arguments = [NSArray arrayWithObjects:
+        [NSNumber numberWithDouble: download],
+        [NSNumber numberWithDouble: downloadTotal],
+        [NSNumber numberWithDouble: upload],
+        [NSNumber numberWithDouble: uploadTotal],
+        nil];
+    [self performSelectorOnMainThread: @selector(callProgressDownload:)
+                           withObject: arguments
+                        waitUntilDone: YES];
+}
+
+- (void) callProgressDownload: (NSArray *) arguments;
+{
+    double download = [[arguments objectAtIndex: 0] doubleValue];
+    double downloadTotal = [[arguments objectAtIndex: 1] doubleValue];
+    double upload = [[arguments objectAtIndex: 2] doubleValue];
+    double uploadTotal = [[arguments objectAtIndex: 3] doubleValue];
+    [mDelegate dd_curlConnection: self
+                progressDownload: download
+                   downloadTotal: downloadTotal
+                          upload: upload
+                     uploadTotal: uploadTotal];
+}
+
+- (void) dd_curlConnectionDidFinishLoading: (DDCurlConnection *) connection;
+{
+    if (![mDelegate respondsToSelector: _cmd])
+        return;
+    
+    [mDelegate performSelectorOnMainThread: @selector(dd_curlConnectionDidFinishLoading:)
+                                withObject: connection
+                             waitUntilDone: YES];
 }
 
 @end
