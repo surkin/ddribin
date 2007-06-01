@@ -9,8 +9,22 @@
 #import "DDCurlCliApp.h"
 #import "DDCurlConnection.h"
 #import "DDCurl.h"
+#import "DDGetoptLong.h"
+#import "DDExtensions.h"
 
 @implementation DDCurlCliApp
+
+- (id) init
+{
+    self = [super init];
+    if (self == nil)
+        return nil;
+    
+    mCommand = [[NSProcessInfo processInfo] processName];
+    mShouldPrintHelp = NO;
+    
+    return self;
+}
 
 //=========================================================== 
 //  url 
@@ -29,29 +43,153 @@
     }
 }
 
-- (int) run;
+//=========================================================== 
+//  username 
+//=========================================================== 
+- (NSString *) username
 {
-    mBody = [[NSMutableData alloc] init];
-    mLock = [[NSConditionLock alloc] initWithCondition: DDCurlCliAppNotDone];
-    
-    NSString * url = nil;
-    if (url == nil)
+    return mUsername; 
+}
+
+- (void) setUsername: (NSString *) theUsername
+{
+    if (mUsername != theUsername)
     {
-        // url = @"http://www.dribin.org/";
-        // url = @"http://curl.haxx.se/download/curl-7.16.2.tar.bz2";
-        // url = @"http://localhost/~dave/upload/private/uploader.php";
-        url = @"http://www.dribin.org/dave/upload/private/uploader.php";
+        [mUsername release];
+        mUsername = [theUsername retain];
+    }
+}
+//=========================================================== 
+//  password 
+//=========================================================== 
+- (NSString *) password
+{
+    return mPassword; 
+}
+
+- (void) setPassword: (NSString *) thePassword
+{
+    if (mPassword != thePassword)
+    {
+        [mPassword release];
+        mPassword = [thePassword retain];
+    }
+}
+
+- (void) addFormField: (NSString *) formField;
+{
+    NSString * name;
+    NSString * value;
+    if (![formField dd_splitOnFirstSeparator: @"=" left: &name right: &value])
+    {
+        fprintf(stderr, "Not a valid field form: %s", [formField UTF8String]);
+        return;
     }
 
-    DDMutableCurlRequest * request = [DDMutableCurlRequest requestWithURLString: url];
-    DDCurlMultipartForm * form = [DDCurlMultipartForm form];
-    [form addFile: @"/tmp/ending.mp3" withName: @"uploadedfile"];
-    // [form addFile: @"~/Desktop/07_raven_entry.pdf" withName: @"uploadedfile"];
-    // [form addFile: @"~/mspacman.png" withName: @"uploadedfile"];
-    [request setMultipartForm: form];
+    if (mForm == nil)
+    {
+        mForm = [[DDCurlMultipartForm alloc] init];
+    }
     
-    [request setUsername: @"foo"];
-    [request setPassword: @"bar"];
+    if ([value hasPrefix: @"@"])
+    {
+        value = [value substringFromIndex: 1];
+        value = [value stringByExpandingTildeInPath];
+        [mForm addFile: value withName: name];
+    }
+    else
+    {
+        [mForm addString: value withName: name];
+    }
+}
+
+- (void) help;
+{
+    mShouldPrintHelp = YES;
+}
+
+- (void) printUsage: (FILE *) stream;
+{
+    fprintf(stream, "Usage: %s [OPTIONS] <url>\n", [mCommand UTF8String]);
+}
+
+- (void) printHelp;
+{
+    [self printUsage: stdout];
+    printf("\n");
+    printf("  -u, --username USERNAME       Use USERNAME for authentication\n");
+    printf("  -p, --password PASSWORD       Use PASSWORD for authentication\n");
+    // printf("  -H, --header HEADER           "
+    //        "Set HTTP header, e.g. \"Accept: application/xml\"\n");
+    // printf("  -A, --add-header HEADER       "
+    //        "Add HTTP header, e.g. \"Accept: application/xml\"\n");
+    // printf("  -r, --redirect                Follow redirects\n");
+    printf("  -F, --form FIELD              Multipart form field\n");
+    // printf("  -m, --method METHOD           HTTP method to use\n");
+    printf("  -h, --help                    Display this help and exit\n");
+    // printf("      --debug                   Dispaly debugging information\n");
+    // printf("      --version                 Display version and exit\n");
+    printf("\n");
+}
+
+- (int) run;
+{
+    DDGetoptLong * options = [DDGetoptLong optionsWithTarget: self];
+    [options addLongOption: @"header"
+               shortOption: 'H'
+                  selector: @selector(setHeader:)
+           argumentOptions: DDGetoptRequiredArgument];
+
+    [options addLongOption: @"form"
+               shortOption: 'F'
+                  selector: @selector(addFormField:)
+           argumentOptions: DDGetoptRequiredArgument];
+    
+    [options addLongOption: @"username"
+               shortOption: 'u'
+                  selector: @selector(setUsername:)
+           argumentOptions: DDGetoptRequiredArgument];
+
+    [options addLongOption: @"password"
+               shortOption: 'p'
+                  selector: @selector(setPassword:)
+           argumentOptions: DDGetoptRequiredArgument];
+    
+
+    [options addLongOption: @"help"
+               shortOption: 'h'
+                  selector: @selector(help)
+           argumentOptions: DDGetoptNoArgument];
+    
+    NSArray * arguments = [options processOptions];
+    if (arguments == nil)
+    {
+        [self printUsage: stderr];
+        return 1;
+    }
+
+    if (mShouldPrintHelp)
+    {
+        [self printHelp];
+        return 0;
+    }
+    
+    if ([arguments count] != 1)
+    {
+        fprintf(stderr, "%s: missing url argument\n", [mCommand UTF8String]);
+        fprintf(stderr, "Try `%s --help` for more information.\n", [mCommand UTF8String]);
+        return 1;
+    }
+    NSString * url = [arguments objectAtIndex: 0];
+    
+    mBody = [[NSMutableData alloc] init];
+    mShouldKeepRunning = YES;
+
+    DDMutableCurlRequest * request = [DDMutableCurlRequest requestWithURLString: url];
+    [request setUsername: mUsername];
+    [request setPassword: mPassword];
+    if (mForm != nil)
+        [request setMultipartForm: mForm];
     
     DDCurlConnection * connection = [[DDCurlConnection alloc] initWithRequest: request
                                                                      delegate: self];
@@ -61,12 +199,18 @@
         return 1;
     }
     
-    [mLock lockWhenCondition: DDCurlCliAppDone];
+    NSRunLoop * currentRunLoop = [NSRunLoop currentRunLoop];
+    while (mShouldKeepRunning &&
+           [currentRunLoop runMode:NSDefaultRunLoopMode beforeDate:[NSDate distantFuture]])
+    {
+        // Empty
+    }
 
     fprintf(stderr, "\n");
 #if 1
-    NSLog(@"Data: %@", [[[NSString alloc] initWithData: mBody
-                                              encoding: NSUTF8StringEncoding] autorelease]);
+    NSString * bodyString = [[[NSString alloc] initWithData: mBody
+                                                   encoding: NSUTF8StringEncoding] autorelease];
+    printf("Data: %s\n", [bodyString UTF8String]);
 #endif
     
     return 0;
@@ -145,7 +289,8 @@
 
 - (void) dd_curlConnectionDidFinishLoading: (DDCurlConnection *) connection;
 {
-    [mLock unlockWithCondition: DDCurlCliAppDone];
+    // [mLock unlockWithCondition: DDCurlCliAppDone];
+    mShouldKeepRunning = NO;
     [connection release];
 }
 

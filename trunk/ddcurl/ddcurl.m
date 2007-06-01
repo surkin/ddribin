@@ -1,6 +1,7 @@
 #import <Foundation/Foundation.h>
 #import "DDCurlCliApp.h"
 
+
 static int run_app(int argc, char * const * argv)
 {
     DDCurlCliApp * app = nil;
@@ -8,7 +9,6 @@ static int run_app(int argc, char * const * argv)
     @try
     {
         app = [[DDCurlCliApp alloc] init];
-        [app setUrl: @"http://www.dribin.org/dave/blog/"];
         result = [app run];
     }
     @finally
