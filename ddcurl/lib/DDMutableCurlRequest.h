@@ -23,6 +23,8 @@
 #pragma mark -
 #pragma mark Class Constructors
 
++ (DDMutableCurlRequest *) request;
+
 + (DDMutableCurlRequest *) requestWithURL: (NSURL *) url;
 
 + (DDMutableCurlRequest *) requestWithURLString: (NSString *) urlString;
@@ -30,13 +32,19 @@
 #pragma mark -
 #pragma mark Constructors
 
+- (id) init;
+
 - (id) initWithURL: (NSURL *) url;
+
+- (id) initWithURLString: (NSString *) urlString;
 
 #pragma mark -
 #pragma mark Properties
 
 - (NSURL *) URL;
 - (void) setURL: (NSURL *) theURL;
+
+- (void) setURLString: (NSString *) urlString;
 
 - (NSString *) urlString;
 

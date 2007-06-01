@@ -14,6 +14,11 @@
 #pragma mark -
 #pragma mark Class Constructors
 
++ (DDMutableCurlRequest *) request;
+{
+    return [[[self alloc] init] autorelease];
+}
+
 + (DDMutableCurlRequest *) requestWithURL: (NSURL *) url;
 {
     return [[[self alloc] initWithURL: url] autorelease];
@@ -21,11 +26,16 @@
 
 + (DDMutableCurlRequest *) requestWithURLString: (NSString *) urlString;
 {
-    return [self requestWithURL: [NSURL URLWithString: urlString]];
+    return [[[self alloc] initWithURLString: urlString] autorelease];
 }
 
 #pragma mark -
 #pragma mark Constructors
+
+- (id) init;
+{
+    return [self initWithURL: nil];
+}
 
 - (id) initWithURL: (NSURL *) url;
 {
@@ -38,6 +48,11 @@
     mHeaders = [[NSMutableDictionary alloc] init];
     
     return self;
+}
+
+- (id) initWithURLString: (NSString *) urlString;
+{
+    return [self initWithURL: [NSURL URLWithString: urlString]];
 }
 
 //=========================================================== 
@@ -81,6 +96,12 @@
 {
     return [mUrl absoluteString];
 }
+
+- (void) setURLString: (NSString *) urlString;
+{
+    [self setURL: [NSURL URLWithString: urlString]];
+}
+
 //=========================================================== 
 //  username 
 //=========================================================== 

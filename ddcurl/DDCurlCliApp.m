@@ -23,6 +23,8 @@
     mCommand = [[NSProcessInfo processInfo] processName];
     mShouldPrintHelp = NO;
     
+    mRequest = [[DDMutableCurlRequest alloc] init];
+    
     return self;
 }
 
@@ -46,34 +48,33 @@
 //=========================================================== 
 //  username 
 //=========================================================== 
-- (NSString *) username
+- (void) setUsername: (NSString *) username
 {
-    return mUsername; 
+    [mRequest setUsername: username];
 }
 
-- (void) setUsername: (NSString *) theUsername
-{
-    if (mUsername != theUsername)
-    {
-        [mUsername release];
-        mUsername = [theUsername retain];
-    }
-}
 //=========================================================== 
 //  password 
 //=========================================================== 
-- (NSString *) password
+- (void) setPassword: (NSString *) password
 {
-    return mPassword; 
+    [mRequest setPassword: password];
 }
 
-- (void) setPassword: (NSString *) thePassword
+- (void) setHeader: (NSString *) header;
 {
-    if (mPassword != thePassword)
+    NSString * name;
+    NSString * value;
+    if (![header dd_splitOnFirstSeparator: @":" left: &name right: &value])
     {
-        [mPassword release];
-        mPassword = [thePassword retain];
+        fprintf(stderr, "Not a valid header: %s", [header UTF8String]);
+        return;
     }
+    
+    value = [value stringByTrimmingCharactersInSet:
+        [NSCharacterSet whitespaceCharacterSet]];
+    
+    [mRequest setValue: value forHTTPHeaderField: name];
 }
 
 - (void) addFormField: (NSString *) formField;
@@ -119,8 +120,8 @@
     printf("\n");
     printf("  -u, --username USERNAME       Use USERNAME for authentication\n");
     printf("  -p, --password PASSWORD       Use PASSWORD for authentication\n");
-    // printf("  -H, --header HEADER           "
-    //        "Set HTTP header, e.g. \"Accept: application/xml\"\n");
+    printf("  -H, --header HEADER           "
+           "Set HTTP header, e.g. \"Accept: application/xml\"\n");
     // printf("  -A, --add-header HEADER       "
     //        "Add HTTP header, e.g. \"Accept: application/xml\"\n");
     // printf("  -r, --redirect                Follow redirects\n");
@@ -185,13 +186,11 @@
     mBody = [[NSMutableData alloc] init];
     mShouldKeepRunning = YES;
 
-    DDMutableCurlRequest * request = [DDMutableCurlRequest requestWithURLString: url];
-    [request setUsername: mUsername];
-    [request setPassword: mPassword];
     if (mForm != nil)
-        [request setMultipartForm: mForm];
+        [mRequest setMultipartForm: mForm];
     
-    DDCurlConnection * connection = [[DDCurlConnection alloc] initWithRequest: request
+    [mRequest setURLString: url];
+    DDCurlConnection * connection = [[DDCurlConnection alloc] initWithRequest: mRequest
                                                                      delegate: self];
     if (connection == nil)
     {
