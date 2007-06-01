@@ -23,6 +23,9 @@
 
 - (void) addFile: (NSString *) path withName: (NSString *) name;
 
+- (void) addFile: (NSString *) path withName: (NSString *) name
+     contentType: (NSString *) contentType;
+
 - (struct curl_httppost *) curl_httppost;
 
 @end

@@ -7,6 +7,7 @@
 //
 
 #import "DDCurlMultipartForm.h"
+#import "DDExtensions.h"
 
 
 @implementation DDCurlMultipartForm
@@ -50,10 +51,17 @@
 
 - (void) addFile: (NSString *) path withName: (NSString *) name;
 {
+    [self addFile: path withName: name
+      contentType: [path dd_pathMimeType]];
+}
+
+- (void) addFile: (NSString *) path withName: (NSString *) name
+     contentType: (NSString *) contentType;
+{
     curl_formadd(&mFirst, &mLast,
                  CURLFORM_COPYNAME, [name UTF8String],
                  CURLFORM_FILE, [[path stringByExpandingTildeInPath] UTF8String],
-                 // CURLFORM_CONTENTTYPE, "image/jpeg",
+                 CURLFORM_CONTENTTYPE, [contentType UTF8String],
                  CURLFORM_END);
 }
 
