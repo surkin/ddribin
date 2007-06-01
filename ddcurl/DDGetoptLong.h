@@ -10,12 +10,20 @@
 #import <getopt.h>
 #import <libgen.h>
 
-enum
+typedef enum
 {
     DDGetoptNoArgument = no_argument,
     DDGetoptOptionalArgument = optional_argument,
     DDGetoptRequiredArgument = required_argument,
-};
+} DDGetoptArgumentOptions;
+
+typedef struct
+{
+    NSString * longOption;
+    int shortOption;
+    SEL selector;
+    DDGetoptArgumentOptions argumentOptions;
+} DDGetoptOption;
 
 @interface DDGetoptLong : NSObject
 {
@@ -32,14 +40,16 @@ enum
 
 - (id) initWithTarget: (id) target;
 
+- (void) addOptionsFromTable: (DDGetoptOption *) optionTable;
+
 - (void) addLongOption: (NSString *) longOption
            shortOption: (char) shortOption
               selector: (SEL) selector
-       argumentOptions: (int) argumentOptions;
+       argumentOptions: (DDGetoptArgumentOptions) argumentOptions;
 
 - (void) addLongOption: (NSString *) longOption
               selector: (SEL) selector
-       argumentOptions: (int) argumentOptions;
+       argumentOptions: (DDGetoptArgumentOptions) argumentOptions;
 
 - (NSArray *) processOptions;
 

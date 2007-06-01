@@ -8,8 +8,13 @@
 
 #import "DDGetoptLong.h"
 
-// Non-single char options start after as the last ASCII character
-#define FIRST_SHORT_OPTION 256
+@interface DDGetoptLong (Private)
+
+- (struct option *) firstOption;
+- (struct option *) currentOption;
+- (void) addOption;
+
+@end
 
 @implementation DDGetoptLong
 
@@ -25,7 +30,8 @@
         return nil;
     
     mTarget = target;
-    mNextShortOption = FIRST_SHORT_OPTION;
+    // Non-single char options start after as the last ASCII character
+    mNextShortOption = 256;
     mOptionsData = [[NSMutableData alloc] initWithLength: sizeof(struct option)];
     mCurrentOption = 0;
     mUtf8Data = [[NSMutableArray alloc] init];
@@ -35,50 +41,63 @@
     return self;
 }
 
+- (void) addOptionsFromTable: (DDGetoptOption *) optionTable;
+{
+    DDGetoptOption * currentOption = optionTable;
+    while ((currentOption->longOption != nil) ||
+           (currentOption->shortOption != 0))
+    {
+        [self addLongOption: currentOption->longOption
+                shortOption: currentOption->shortOption
+                   selector: currentOption->selector
+            argumentOptions: currentOption->argumentOptions];
+        currentOption++;
+    }
+}
+
 - (void) addLongOption: (NSString *) longOption
            shortOption: (char) shortOption
               selector: (SEL) selector
-       argumentOptions: (int) argumentOptions;
+       argumentOptions: (DDGetoptArgumentOptions) argumentOptions;
 {
     const char * utf8String = [longOption UTF8String];
     NSData * utf8Data = [NSData dataWithBytes: utf8String length: strlen(utf8String)];
     
-    struct option * options = [mOptionsData mutableBytes];
-    options[mCurrentOption].name = utf8String;
-    options[mCurrentOption].has_arg = argumentOptions;
-    options[mCurrentOption].flag = NULL;
-    options[mCurrentOption].val = shortOption;
-    
-    [mOptionsData increaseLengthBy: sizeof(struct option)];
-    mCurrentOption++;
-    
-#if 0
-    if (shortOption < FIRST_SHORT_OPTION)
+    struct option * option = [self currentOption];
+    option->name = utf8String;
+    option->has_arg = argumentOptions;
+    option->flag = NULL;
+
+    int shortOptionValue;
+    if (shortOption != 0)
     {
-#endif
-        if ((argumentOptions == required_argument) ||
-            (argumentOptions == optional_argument))
-        {
+        shortOptionValue = shortOption;
+        option->val = shortOption;
+        if (argumentOptions != DDGetoptNoArgument)
             [mOptionString appendFormat: @"%c:", shortOption];
-        }
         else
-        {
             [mOptionString appendFormat: @"%c", shortOption];
-        }
-#if 0
     }
-#endif
+    else
+    {
+        shortOptionValue = mNextShortOption;
+        mNextShortOption++;
+        option->val = shortOptionValue;
+    }
+    [self addOption];
     
     [mSelectorByShortOption setObject: NSStringFromSelector(selector)
-                               forKey: [NSNumber numberWithInt: shortOption]];
+                               forKey: [NSNumber numberWithInt: shortOptionValue]];
     
     [mUtf8Data addObject: utf8Data];
 }
 
 - (void) addLongOption: (NSString *) longOption
               selector: (SEL) selector
-       argumentOptions: (int) argumentOptions;
+       argumentOptions: (DDGetoptArgumentOptions) argumentOptions;
 {
+    [self addLongOption: longOption shortOption: 0
+               selector: selector argumentOptions: argumentOptions];
 }
 
 - (NSArray *) processOptions;
@@ -102,15 +121,15 @@
     }
     
     // Make sure list is NULL terminated
-    struct option * options = [mOptionsData mutableBytes];
-    options[mCurrentOption].name = NULL;
-    options[mCurrentOption].has_arg = 0;
-    options[mCurrentOption].flag = NULL;
-    options[mCurrentOption].val = 0;
+    struct option * option = [self currentOption];
+    option->name = NULL;
+    option->has_arg = 0;
+    option->flag = NULL;
+    option->val = 0;
     
     const char * optionString = [mOptionString UTF8String];
     int ch;
-    while ((ch = getopt_long(argc, argv, optionString, options, NULL)) != -1)
+    while ((ch = getopt_long(argc, argv, optionString, [self firstOption], NULL)) != -1)
     {
         NSString * nsoptarg = nil;
         if (optarg != NULL)
@@ -134,3 +153,26 @@
 }
 
 @end
+
+@implementation DDGetoptLong (Private)
+
+- (struct option *) firstOption;
+{
+    struct option * options = [mOptionsData mutableBytes];
+    return options;
+}
+
+- (struct option *) currentOption;
+{
+    struct option * options = [mOptionsData mutableBytes];
+    return &options[mCurrentOption];
+}
+
+- (void) addOption;
+{
+    [mOptionsData increaseLengthBy: sizeof(struct option)];
+    mCurrentOption++;
+}
+
+@end
+
