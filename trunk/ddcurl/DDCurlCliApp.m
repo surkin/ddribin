@@ -22,6 +22,7 @@
     
     mCommand = [[NSProcessInfo processInfo] processName];
     mShouldPrintHelp = NO;
+    mShouldPrintVersion = NO;
     
     mRequest = [[DDMutableCurlRequest alloc] init];
     
@@ -109,6 +110,11 @@
     mShouldPrintHelp = YES;
 }
 
+- (void) version;
+{
+    mShouldPrintVersion = YES;
+}
+
 - (void) printUsage: (FILE *) stream;
 {
     fprintf(stream, "Usage: %s [OPTIONS] <url>\n", [mCommand UTF8String]);
@@ -129,38 +135,31 @@
     // printf("  -m, --method METHOD           HTTP method to use\n");
     printf("  -h, --help                    Display this help and exit\n");
     // printf("      --debug                   Dispaly debugging information\n");
-    // printf("      --version                 Display version and exit\n");
+    printf("      --version                 Display version and exit\n");
     printf("\n");
+}
+
+- (void) printVersion;
+{
+    printf("%s version xxx\n", [mCommand UTF8String]);
 }
 
 - (int) run;
 {
+    DDGetoptOption optionTable[] = 
+    {
+        {@"header",     'H',    @selector(setHeader:),      DDGetoptRequiredArgument},
+        {@"form",       'F',    @selector(addFormField:),   DDGetoptRequiredArgument},
+        {@"username",   'u',    @selector(setUsername:),    DDGetoptRequiredArgument},
+        {@"password",   'p',    @selector(setPassword:),    DDGetoptRequiredArgument},
+        {@"help",       'h',    @selector(help),            DDGetoptNoArgument},
+        {@"version",    0,      @selector(version),         DDGetoptNoArgument},
+        {nil,           0,      0,                          0},
+    };
+    
+    
     DDGetoptLong * options = [DDGetoptLong optionsWithTarget: self];
-    [options addLongOption: @"header"
-               shortOption: 'H'
-                  selector: @selector(setHeader:)
-           argumentOptions: DDGetoptRequiredArgument];
-
-    [options addLongOption: @"form"
-               shortOption: 'F'
-                  selector: @selector(addFormField:)
-           argumentOptions: DDGetoptRequiredArgument];
-    
-    [options addLongOption: @"username"
-               shortOption: 'u'
-                  selector: @selector(setUsername:)
-           argumentOptions: DDGetoptRequiredArgument];
-
-    [options addLongOption: @"password"
-               shortOption: 'p'
-                  selector: @selector(setPassword:)
-           argumentOptions: DDGetoptRequiredArgument];
-    
-
-    [options addLongOption: @"help"
-               shortOption: 'h'
-                  selector: @selector(help)
-           argumentOptions: DDGetoptNoArgument];
+    [options addOptionsFromTable: optionTable];
     
     NSArray * arguments = [options processOptions];
     if (arguments == nil)
@@ -172,6 +171,12 @@
     if (mShouldPrintHelp)
     {
         [self printHelp];
+        return 0;
+    }
+    
+    if (mShouldPrintVersion)
+    {
+        [self printVersion];
         return 0;
     }
     

@@ -21,6 +21,7 @@ enum
 @interface DDCurlCliApp : NSObject
 {
     BOOL mShouldPrintHelp;
+    BOOL mShouldPrintVersion;
     NSString * mCommand;
 
     DDMutableCurlRequest * mRequest;
