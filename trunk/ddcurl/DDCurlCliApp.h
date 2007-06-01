@@ -14,6 +14,7 @@ enum
     DDCurlCliAppDone,
 };
 
+@class DDMutableCurlRequest;
 @class DDCurlResponse;
 @class DDCurlMultipartForm;
 
@@ -21,10 +22,9 @@ enum
 {
     BOOL mShouldPrintHelp;
     NSString * mCommand;
+
+    DDMutableCurlRequest * mRequest;
     DDCurlMultipartForm * mForm;
-    
-    NSString * mUsername;
-    NSString * mPassword;
     
     NSString * mUrl;
     NSMutableData * mBody;
@@ -34,11 +34,11 @@ enum
     BOOL mShouldKeepRunning;
 }
 
-- (NSString *) username;
 - (void) setUsername: (NSString *) theUsername;
 
-- (NSString *) password;
 - (void) setPassword: (NSString *) thePassword;
+
+- (void) setHeader: (NSString *) header;
 
 - (NSString *) url;
 - (void) setUrl: (NSString *) theUrl;
