@@ -7,6 +7,7 @@
 //
 
 #import "DDGetoptLong.h"
+#import "DDCliUtil.h"
 
 
 @interface DDGetoptLong (Private)
@@ -75,8 +76,10 @@
     {
         shortOptionValue = shortOption;
         option->val = shortOption;
-        if (argumentOptions != DDGetoptNoArgument)
+        if (argumentOptions == DDGetoptRequiredArgument)
             [mOptionString appendFormat: @"%c:", shortOption];
+        else if (argumentOptions == DDGetoptOptionalArgument)
+            [mOptionString appendFormat: @"%c::", shortOption];
         else
             [mOptionString appendFormat: @"%c", shortOption];
     }
@@ -151,7 +154,7 @@
         }
         else
         {
-            fprintf(stderr, "Try `%s --help` for more information.\n", [command UTF8String]);
+            ddfprintf(stderr, @"Try `%@ --help` for more information.\n", command);
             return nil;
         }
     }
