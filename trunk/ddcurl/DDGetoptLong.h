@@ -21,7 +21,6 @@ typedef struct
 {
     NSString * longOption;
     int shortOption;
-    SEL selector;
     DDGetoptArgumentOptions argumentOptions;
 } DDGetoptOption;
 
@@ -30,7 +29,7 @@ typedef struct
     id mTarget;
     int mNextShortOption;
     NSMutableString * mOptionString;
-    NSMutableDictionary * mSelectorByShortOption;
+    NSMutableDictionary * mOptionInfoMap;
     NSMutableData * mOptionsData;
     int mCurrentOption;
     NSMutableArray * mUtf8Data;
@@ -44,11 +43,11 @@ typedef struct
 
 - (void) addLongOption: (NSString *) longOption
            shortOption: (char) shortOption
-              selector: (SEL) selector
+                   key: (NSString *) key
        argumentOptions: (DDGetoptArgumentOptions) argumentOptions;
 
 - (void) addLongOption: (NSString *) longOption
-              selector: (SEL) selector
+                   key: (NSString *) key
        argumentOptions: (DDGetoptArgumentOptions) argumentOptions;
 
 - (NSArray *) processOptions;

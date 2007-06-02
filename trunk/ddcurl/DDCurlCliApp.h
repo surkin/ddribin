@@ -20,14 +20,15 @@ enum
 
 @interface DDCurlCliApp : NSObject
 {
-    BOOL mShouldPrintHelp;
-    BOOL mShouldPrintVersion;
+    // Options
+    BOOL _help;
+    BOOL _version;
+    
     NSString * mCommand;
 
     DDMutableCurlRequest * mRequest;
     DDCurlMultipartForm * mForm;
     
-    NSString * mUrl;
     NSMutableData * mBody;
     DDCurlResponse * mResponse;
     long long mBytesReceived;
@@ -35,17 +36,18 @@ enum
     BOOL mShouldKeepRunning;
 }
 
+#pragma mark -
+#pragma mark Options Accessors
+
 - (void) setUsername: (NSString *) theUsername;
 
 - (void) setPassword: (NSString *) thePassword;
 
 - (void) setHeader: (NSString *) header;
 
-- (NSString *) url;
-- (void) setUrl: (NSString *) theUrl;
+- (void) setForm: (NSString *) formField;
 
-- (void) help;
-- (void) addFormField: (NSString *) formField;
+#pragma mark -
 
 - (int) run;
 

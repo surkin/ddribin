@@ -8,6 +8,7 @@
 
 #import "DDGetoptLong.h"
 
+
 @interface DDGetoptLong (Private)
 
 - (struct option *) firstOption;
@@ -36,7 +37,7 @@
     mCurrentOption = 0;
     mUtf8Data = [[NSMutableArray alloc] init];
     mOptionString = [[NSMutableString alloc] init];
-    mSelectorByShortOption = [[NSMutableDictionary alloc] init];
+    mOptionInfoMap = [[NSMutableDictionary alloc] init];
     
     return self;
 }
@@ -49,7 +50,7 @@
     {
         [self addLongOption: currentOption->longOption
                 shortOption: currentOption->shortOption
-                   selector: currentOption->selector
+                        key: currentOption->longOption
             argumentOptions: currentOption->argumentOptions];
         currentOption++;
     }
@@ -57,7 +58,7 @@
 
 - (void) addLongOption: (NSString *) longOption
            shortOption: (char) shortOption
-              selector: (SEL) selector
+                   key: (NSString *) key
        argumentOptions: (DDGetoptArgumentOptions) argumentOptions;
 {
     const char * utf8String = [longOption UTF8String];
@@ -86,18 +87,20 @@
     }
     [self addOption];
     
-    [mSelectorByShortOption setObject: NSStringFromSelector(selector)
-                               forKey: [NSNumber numberWithInt: shortOptionValue]];
+    NSArray * optionInfo = [NSArray arrayWithObjects:
+        key, [NSNumber numberWithInt: argumentOptions], nil];
+    [mOptionInfoMap setObject: optionInfo
+                       forKey: [NSNumber numberWithInt: shortOptionValue]];
     
     [mUtf8Data addObject: utf8Data];
 }
 
 - (void) addLongOption: (NSString *) longOption
-              selector: (SEL) selector
+                   key: (NSString *) key
        argumentOptions: (DDGetoptArgumentOptions) argumentOptions;
 {
     [self addLongOption: longOption shortOption: 0
-               selector: selector argumentOptions: argumentOptions];
+                    key: key argumentOptions: argumentOptions];
 }
 
 - (NSArray *) processOptions;
@@ -135,11 +138,15 @@
         if (optarg != NULL)
             nsoptarg = [NSString stringWithUTF8String: optarg];
         
-        NSString * selectorString = [mSelectorByShortOption objectForKey: [NSNumber numberWithInt: ch]];
-        if (selectorString != nil)
+        NSArray * optionInfo = [mOptionInfoMap objectForKey: [NSNumber numberWithInt: ch]];
+        if (optionInfo != nil)
         {
-            SEL selector = NSSelectorFromString(selectorString);
-            [mTarget performSelector: selector withObject: nsoptarg];
+            NSString * key = [optionInfo objectAtIndex: 0];
+            int argumentOptions = [[optionInfo objectAtIndex: 1] intValue];
+            if (argumentOptions == DDGetoptNoArgument)
+                [mTarget setValue: [NSNumber numberWithBool: YES] forKey: key];
+            else
+                [mTarget setValue: nsoptarg forKey: key];
         }
         else
         {
