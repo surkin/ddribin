@@ -8,6 +8,7 @@
 
 #import "DDCliApplication.h"
 #import "DDGetoptLong.h"
+#import "DDCliUtil.h"
 
 DDCliApplication * DDCliApp = nil;
 
@@ -56,6 +57,11 @@ DDCliApplication * DDCliApp = nil;
 
         result = [delegate application: self
                       runWithArguments: arguments];
+    }
+    @catch (NSException * e)
+    {
+        ddfprintf(stderr, @"Caught: %@: %@\n", [e name], [e description]);
+        result = 2;
     }
     @finally
     {
