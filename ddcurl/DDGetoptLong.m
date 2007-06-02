@@ -11,6 +11,7 @@
 
 @interface DDGetoptLong (Private)
 
+- (NSString *) optionToKey: (NSString *) option;
 - (struct option *) firstOption;
 - (struct option *) currentOption;
 - (void) addOption;
@@ -50,7 +51,7 @@
     {
         [self addLongOption: currentOption->longOption
                 shortOption: currentOption->shortOption
-                        key: currentOption->longOption
+                        key: [self optionToKey: currentOption->longOption]
             argumentOptions: currentOption->argumentOptions];
         currentOption++;
     }
@@ -162,6 +163,23 @@
 @end
 
 @implementation DDGetoptLong (Private)
+
+- (NSString *) optionToKey: (NSString *) option;
+{
+    NSScanner * scanner = [NSScanner scannerWithString: option];
+    [scanner setCharactersToBeSkipped: [NSCharacterSet characterSetWithCharactersInString: @"-"]];
+    NSMutableString * key = [NSMutableString string];
+    NSString * string = nil;
+    BOOL caps = NO;
+    while ([scanner scanUpToString: @"-" intoString: &string])
+    {
+        if (caps)
+            string = [string capitalizedString];
+        [key appendString: string];
+        caps = YES;
+    }
+    return key;
+}
 
 - (struct option *) firstOption;
 {
