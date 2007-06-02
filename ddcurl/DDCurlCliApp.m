@@ -12,6 +12,10 @@
 #import "DDGetoptLong.h"
 #import "DDExtensions.h"
 
+@interface DDCurlCliApp (Private)
+
+@end
+
 @implementation DDCurlCliApp
 
 - (id) init
@@ -21,30 +25,16 @@
         return nil;
     
     mCommand = [[NSProcessInfo processInfo] processName];
-    mShouldPrintHelp = NO;
-    mShouldPrintVersion = NO;
+    _help = NO;
+    _version = NO;
     
     mRequest = [[DDMutableCurlRequest alloc] init];
     
     return self;
 }
 
-//=========================================================== 
-//  url 
-//=========================================================== 
-- (NSString *) url
-{
-    return mUrl; 
-}
-
-- (void) setUrl: (NSString *) theUrl
-{
-    if (mUrl != theUrl)
-    {
-        [mUrl release];
-        mUrl = [theUrl retain];
-    }
-}
+#pragma mark -
+#pragma mark Options Accessors
 
 //=========================================================== 
 //  username 
@@ -78,7 +68,7 @@
     [mRequest setValue: value forHTTPHeaderField: name];
 }
 
-- (void) addFormField: (NSString *) formField;
+- (void) setForm: (NSString *) formField;
 {
     NSString * name;
     NSString * value;
@@ -103,16 +93,6 @@
     {
         [mForm addString: value withName: name];
     }
-}
-
-- (void) help;
-{
-    mShouldPrintHelp = YES;
-}
-
-- (void) version;
-{
-    mShouldPrintVersion = YES;
 }
 
 - (void) printUsage: (FILE *) stream;
@@ -144,22 +124,25 @@
     printf("%s version xxx\n", [mCommand UTF8String]);
 }
 
+- (DDGetoptOption *) optionTable
+{
+    static DDGetoptOption optionTable[] = 
+    {
+        {@"header",     'H',    DDGetoptRequiredArgument},
+        {@"form",       'F',    DDGetoptRequiredArgument},
+        {@"username",   'u',    DDGetoptRequiredArgument},
+        {@"password",   'p',    DDGetoptRequiredArgument},
+        {@"help",       'h',    DDGetoptNoArgument},
+        {@"version",    0,      DDGetoptNoArgument},
+        {nil,           0,      0},
+    };
+    return optionTable;
+}
+
 - (int) run;
 {
-    DDGetoptOption optionTable[] = 
-    {
-        {@"header",     'H',    @selector(setHeader:),      DDGetoptRequiredArgument},
-        {@"form",       'F',    @selector(addFormField:),   DDGetoptRequiredArgument},
-        {@"username",   'u',    @selector(setUsername:),    DDGetoptRequiredArgument},
-        {@"password",   'p',    @selector(setPassword:),    DDGetoptRequiredArgument},
-        {@"help",       'h',    @selector(help),            DDGetoptNoArgument},
-        {@"version",    0,      @selector(version),         DDGetoptNoArgument},
-        {nil,           0,      0,                          0},
-    };
-    
-    
     DDGetoptLong * options = [DDGetoptLong optionsWithTarget: self];
-    [options addOptionsFromTable: optionTable];
+    [options addOptionsFromTable: [self optionTable]];
     
     NSArray * arguments = [options processOptions];
     if (arguments == nil)
@@ -168,13 +151,13 @@
         return 1;
     }
 
-    if (mShouldPrintHelp)
+    if (_help)
     {
         [self printHelp];
         return 0;
     }
     
-    if (mShouldPrintVersion)
+    if (_version)
     {
         [self printVersion];
         return 0;
@@ -299,3 +282,8 @@
 }
 
 @end
+
+@implementation DDCurlCliApp (Private)
+
+@end
+
