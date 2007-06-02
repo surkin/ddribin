@@ -14,6 +14,10 @@
 
 @interface DDCurlCliApp (Private)
 
+- (void) printUsage: (FILE *) stream;
+
+- (void) printVersion;
+
 @end
 
 @implementation DDCurlCliApp
@@ -24,7 +28,6 @@
     if (self == nil)
         return nil;
     
-    mCommand = [[NSProcessInfo processInfo] processName];
     _help = NO;
     _version = NO;
     
@@ -95,11 +98,6 @@
     }
 }
 
-- (void) printUsage: (FILE *) stream;
-{
-    fprintf(stream, "Usage: %s [OPTIONS] <url>\n", [mCommand UTF8String]);
-}
-
 - (void) printHelp;
 {
     [self printUsage: stdout];
@@ -119,12 +117,11 @@
     printf("\n");
 }
 
-- (void) printVersion;
-{
-    printf("%s version xxx\n", [mCommand UTF8String]);
-}
+#pragma mark -
+#pragma mark DDCliApplicationDelegate
 
-- (DDGetoptOption *) optionTable
+- (void) application: (DDCliApplication *) app
+    willParseOptions: (DDGetoptLong *) options;
 {
     static DDGetoptOption optionTable[] = 
     {
@@ -136,21 +133,18 @@
         {@"version",    0,      DDGetoptNoArgument},
         {nil,           0,      0},
     };
-    return optionTable;
+    [options addOptionsFromTable: optionTable];
 }
 
-- (int) run;
+- (void) application: (DDCliApplication *) app
+          printUsage: (FILE *) stream;
 {
-    DDGetoptLong * options = [DDGetoptLong optionsWithTarget: self];
-    [options addOptionsFromTable: [self optionTable]];
-    
-    NSArray * arguments = [options processOptions];
-    if (arguments == nil)
-    {
-        [self printUsage: stderr];
-        return 1;
-    }
+    [self printUsage: stream];
+}
 
+- (int) application: (DDCliApplication *) app
+   runWithArguments: (NSArray *) arguments;
+{
     if (_help)
     {
         [self printHelp];
@@ -165,8 +159,8 @@
     
     if ([arguments count] != 1)
     {
-        fprintf(stderr, "%s: missing url argument\n", [mCommand UTF8String]);
-        fprintf(stderr, "Try `%s --help` for more information.\n", [mCommand UTF8String]);
+        fprintf(stderr, "%s: missing url argument\n", [[app name] UTF8String]);
+        fprintf(stderr, "Try `%s --help` for more information.\n", [[app name] UTF8String]);
         return 1;
     }
     NSString * url = [arguments objectAtIndex: 0];
@@ -284,6 +278,16 @@
 @end
 
 @implementation DDCurlCliApp (Private)
+
+- (void) printUsage: (FILE *) stream;
+{
+    fprintf(stream, "Usage: %s [OPTIONS] <url>\n", [[DDCliApp name] UTF8String]);
+}
+
+- (void) printVersion;
+{
+    printf("%s version xxx\n", [[DDCliApp name] UTF8String]);
+}
 
 @end
 

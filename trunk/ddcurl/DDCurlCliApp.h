@@ -7,6 +7,7 @@
 //
 
 #import <Cocoa/Cocoa.h>
+#import "DDCliApplication.h"
 
 enum
 {
@@ -18,14 +19,12 @@ enum
 @class DDCurlResponse;
 @class DDCurlMultipartForm;
 
-@interface DDCurlCliApp : NSObject
+@interface DDCurlCliApp : NSObject <DDCliApplicationDelegate>
 {
     // Options
     BOOL _help;
     BOOL _version;
     
-    NSString * mCommand;
-
     DDMutableCurlRequest * mRequest;
     DDCurlMultipartForm * mForm;
     
@@ -48,7 +47,16 @@ enum
 - (void) setForm: (NSString *) formField;
 
 #pragma mark -
+#pragma mark DDCliApplicationDelegate
 
-- (int) run;
+- (void) application: (DDCliApplication *) app
+    willParseOptions: (DDGetoptLong *) options;
+
+- (void) application: (DDCliApplication *) app
+          printUsage: (FILE *) stream;
+
+- (int) application: (DDCliApplication *) app
+   runWithArguments: (NSArray *) arguments;
+
 
 @end
