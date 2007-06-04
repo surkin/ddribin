@@ -12,10 +12,14 @@
 #import "DDCurlMultipartForm.h"
 #import "DDCurlEasy.h"
 #import "DDCurlSlist.h"
+#import <curl/curl.h>
+
+NSString * DDCurlDomain = @"DDCurlDomain";
 
 @interface DDCurlConnection (Private)
 
 - (void) threadMain: (DDMutableCurlRequest *) request;
+- (void) didFinish: (NSError *) error;
 
 #pragma mark -
 #pragma mark Delegation
@@ -228,10 +232,40 @@ static int staticProgress(void * clientp,
         [mCurl setUser: [request username] password: [request password]];
         [mCurl setUrl: [request urlString]];
         
+        /*
+         * Make sure to call this final method on the main thread in order to
+         * "kick" the run loop into action.
+         */
         mIsFirstData = YES;
-        [mCurl perform];
-        if (mIsFirstData)
-            [self setResponseInfo];
+        CURLcode performResult = [mCurl perform];
+        if (performResult == CURLE_OK)
+        {
+            if (mIsFirstData)
+                [self setResponseInfo];
+            [self performSelectorOnMainThread: @selector(didFinish:)
+                                   withObject: nil
+                                waitUntilDone: YES];
+        }
+        else
+        {
+            NSString * errorString = [mCurl errorString];
+            NSString * reason;
+            if ([errorString isEqualToString: @""])
+                reason = [DDCurlEasy errorString: performResult];
+            else
+                reason = errorString;
+            
+            NSDictionary * userInfo = [NSDictionary dictionaryWithObjectsAndKeys:
+                reason, NSLocalizedFailureReasonErrorKey,
+                nil];
+            
+            NSError * error = [NSError errorWithDomain: DDCurlDomain
+                                                  code: performResult
+                                              userInfo: userInfo];
+            [self performSelectorOnMainThread: @selector(didFinish:)
+                                   withObject: error
+                                waitUntilDone: YES];
+        }
         
 #if 0
         if ([mResponse statusCode] == 401)
@@ -242,12 +276,19 @@ static int staticProgress(void * clientp,
         }
 #endif
         
-        [self dd_curlConnectionDidFinishLoading: self];
     }
     @finally
     {
         [pool release];
     }
+}
+
+- (void) didFinish: (NSError *) error;
+{
+    if (error == nil)
+        [self dd_curlConnectionDidFinishLoading: self];
+    else
+        [self dd_curlConnection: self didFailWithError: error];
 }
 
 #pragma mark -
@@ -333,9 +374,18 @@ static int staticProgress(void * clientp,
     if (![mDelegate respondsToSelector: _cmd])
         return;
     
-    [mDelegate performSelectorOnMainThread: @selector(dd_curlConnectionDidFinishLoading:)
-                                withObject: connection
-                             waitUntilDone: YES];
+    // We're already back on the main thread
+    [mDelegate dd_curlConnectionDidFinishLoading: connection];
+}
+
+- (void) dd_curlConnection: (DDCurlConnection *) connection
+          didFailWithError: (NSError *) error;
+{
+    if (![mDelegate respondsToSelector: _cmd])
+        return;
+    
+    // We're already back on the main thread
+    [mDelegate dd_curlConnection: connection didFailWithError: error];
 }
 
 @end

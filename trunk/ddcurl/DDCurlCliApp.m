@@ -186,6 +186,12 @@
     {
         // Empty
     }
+    
+    if (mError != nil)
+    {
+        ddprintf(@"%@: %@\n", [app name], [mError localizedFailureReason]);
+        return 1;
+    }
 
     fprintf(stderr, "\n");
 #if 1
@@ -273,6 +279,14 @@
     // [mLock unlockWithCondition: DDCurlCliAppDone];
     mShouldKeepRunning = NO;
     [connection release];
+}
+
+- (void) dd_curlConnection: (DDCurlConnection *) connection
+          didFailWithError: (NSError *) error;
+{
+    mShouldKeepRunning = NO;
+    [connection release];
+    mError = [error retain];
 }
 
 @end

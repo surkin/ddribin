@@ -47,4 +47,10 @@
 
 - (void) dd_curlConnectionDidFinishLoading: (DDCurlConnection *) connection;
 
+- (void) dd_curlConnection: (DDCurlConnection *) connection
+          didFailWithError: (NSError *) error;
+
 @end
+
+extern NSString * DDCurlDomain;
+

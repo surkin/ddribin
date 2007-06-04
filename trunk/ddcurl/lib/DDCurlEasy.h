@@ -16,7 +16,10 @@
 {
     CURL * mCurl;
     NSMutableDictionary * mProperties;
+    char mErrorBuffer[CURL_ERROR_SIZE];
 }
+
++ (NSString *) errorString: (CURLcode) errorCode;
 
 - (void) setUrl: (NSString *) url;
 
@@ -48,10 +51,14 @@
 
 - (void) setCurlHttpPost: (struct curl_httppost *) httpPost;
 
-- (void) perform;
+- (CURLcode) perform;
 
 - (long) responseCode;
 
 - (NSString *) contentType;
+
+- (const char *) errorBuffer;
+
+- (NSString *) errorString;
 
 @end
