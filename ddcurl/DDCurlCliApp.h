@@ -33,6 +33,7 @@ enum
     long long mBytesReceived;
     NSConditionLock * mLock;
     BOOL mShouldKeepRunning;
+    NSError * mError;
 }
 
 #pragma mark -

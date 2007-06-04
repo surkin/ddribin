@@ -23,6 +23,11 @@
 
 @implementation DDCurlEasy
 
++ (NSString *) errorString: (CURLcode) errorCode;
+{
+    return [NSString stringWithUTF8String: curl_easy_strerror(errorCode)];
+}
+
 #pragma mark -
 #pragma mark Constructors
 
@@ -33,6 +38,12 @@
         return nil;
     
     mCurl = curl_easy_init();
+    if (curl_easy_setopt(mCurl, CURLOPT_ERRORBUFFER, mErrorBuffer) != CURLE_OK)
+    {
+        curl_easy_cleanup(mCurl);
+        return nil;
+    }
+    
     mProperties = [[NSMutableDictionary alloc] init];
 
     return self;
@@ -148,10 +159,9 @@
          message: @"set HTTP post"];
 }
 
-- (void) perform;
+- (CURLcode) perform;
 {
-    [self assert: curl_easy_perform(mCurl)
-         message: @"perform"];
+    return curl_easy_perform(mCurl);
 }
 
 - (long) responseCode;
@@ -168,6 +178,16 @@
     [self assert: curl_easy_getinfo(mCurl, CURLINFO_CONTENT_TYPE, &contentType)
          message: nil];
     return [NSString stringWithUTF8String: contentType];
+}
+
+- (const char *) errorBuffer;
+{
+    return mErrorBuffer;
+}
+
+- (NSString *) errorString;
+{
+    return [NSString stringWithUTF8String: mErrorBuffer];
 }
 
 @end
@@ -196,12 +216,7 @@
         
         [reason appendFormat: @"curl error #%d (%s)", errorCode, curlError];
         
-#if 0
-        if (mUseErrorBuffer)
-        {
-            message << ": " << mErrorBuffer;
-        }
-#endif
+        [reason appendFormat: @": %s", mErrorBuffer];
         NSException * exception = [NSException exceptionWithName: @"CurlException"
                                                           reason: reason
                                                         userInfo: nil];
