@@ -23,6 +23,11 @@
 
 - (void) setUrl: (NSString *) url;
 
+- (CURL *) CURL;
+
+#pragma mark -
+#pragma mark Callback functions
+
 - (void) setWriteData: (void *) writeData;
 
 - (void) setWriteFunction: (curl_write_callback) writeFunction;
@@ -34,6 +39,12 @@
 - (void) setProgressData: (void *) progressData;
 
 - (void) setProgressFunction: (curl_progress_callback) progressFunction;
+
+- (void) setSslCtxData: (void *) sslCtxData;
+
+- (void) setSslCtxFunction: (curl_ssl_ctx_callback) sslCtxFunction;
+
+#pragma mark -
 
 - (void) setProgress: (BOOL) progress;
 
@@ -50,6 +61,8 @@
 - (void) setForm: (DDCurlMultipartForm *) setForm;
 
 - (void) setCurlHttpPost: (struct curl_httppost *) httpPost;
+
+- (void) setCaInfo: (NSString *) caInfo;
 
 - (CURLcode) perform;
 
