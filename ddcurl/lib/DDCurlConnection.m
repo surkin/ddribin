@@ -175,6 +175,8 @@ BOOL splitField(NSString * string, NSString * separator,
     int n;
     for(n = 0; n < anchorCount; n++)
     {
+        // CSSM_DATA is in DER format.  d2i_X509 converts DER to an
+        // internal format.
         unsigned char * bytes = anchors[n].Data;
         X509 * cert = d2i_X509(NULL, &bytes, anchors[n].Length);
         if (cert != NULL)
@@ -239,8 +241,12 @@ static CURLcode staticSslContext(CURL *curl, void *ssl_ctx, void *userptr)
         [mCurl setProgressData: self];
         [mCurl setProgressFunction: staticProgress];
         [mCurl setProgress: YES];
+        
         [mCurl setSslCtxData: self];
         [mCurl setSslCtxFunction: staticSslContext];
+        // It's important to disable the CAs that came with libcurl, as some
+        // certs that come with libcurl conflict with the OS X certs.  We
+        // want to add our certs to an emtpy X509 store.
         [mCurl setCaInfo: nil];
        
         [mCurl setFollowLocation: YES];
