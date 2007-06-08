@@ -7,6 +7,9 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		551908F20C19B83100169EDC /* libssl.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 551908F10C19B83100169EDC /* libssl.dylib */; };
+		551909060C19B9A600169EDC /* libcrypto.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 551909050C19B9A600169EDC /* libcrypto.dylib */; };
+		5519090C0C19B9BB00169EDC /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5519090B0C19B9BB00169EDC /* Security.framework */; };
 		5519E9B10C0DC64200169EDC /* DDCurlCliApp.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = 5519E9AF0C0DC64200169EDC /* DDCurlCliApp.h */; };
 		5519E9B20C0DC64200169EDC /* DDCurlCliApp.m in Sources */ = {isa = PBXBuildFile; fileRef = 5519E9B00C0DC64200169EDC /* DDCurlCliApp.m */; };
 		5519E9D50C0DC99900169EDC /* DDCurlEasy.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = 5519E9D30C0DC99900169EDC /* DDCurlEasy.h */; };
@@ -70,6 +73,9 @@
 		08FB7796FE84155DC02AAC07 /* ddcurl.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ddcurl.m; sourceTree = "<group>"; };
 		08FB779EFE84155DC02AAC07 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = /System/Library/Frameworks/Foundation.framework; sourceTree = "<absolute>"; };
 		32A70AAB03705E1F00C91783 /* ddcurl_Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ddcurl_Prefix.pch; sourceTree = "<group>"; };
+		551908F10C19B83100169EDC /* libssl.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libssl.dylib; path = /usr/lib/libssl.dylib; sourceTree = "<absolute>"; };
+		551909050C19B9A600169EDC /* libcrypto.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libcrypto.dylib; path = /usr/lib/libcrypto.dylib; sourceTree = "<absolute>"; };
+		5519090B0C19B9BB00169EDC /* Security.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Security.framework; path = /System/Library/Frameworks/Security.framework; sourceTree = "<absolute>"; };
 		5519E9AF0C0DC64200169EDC /* DDCurlCliApp.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DDCurlCliApp.h; sourceTree = "<group>"; };
 		5519E9B00C0DC64200169EDC /* DDCurlCliApp.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DDCurlCliApp.m; sourceTree = "<group>"; };
 		5519E9D30C0DC99900169EDC /* DDCurlEasy.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DDCurlEasy.h; sourceTree = "<group>"; };
@@ -109,6 +115,9 @@
 				8DD76F9C0486AA7600D96B5E /* Foundation.framework in Frameworks */,
 				5519E9DB0C0DCB5D00169EDC /* libcurl.dylib in Frameworks */,
 				5519FD720C10655A00169EDC /* ApplicationServices.framework in Frameworks */,
+				551908F20C19B83100169EDC /* libssl.dylib in Frameworks */,
+				551909060C19B9A600169EDC /* libcrypto.dylib in Frameworks */,
+				5519090C0C19B9BB00169EDC /* Security.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -142,7 +151,10 @@
 		08FB779DFE84155DC02AAC07 /* External Frameworks and Libraries */ = {
 			isa = PBXGroup;
 			children = (
+				551909050C19B9A600169EDC /* libcrypto.dylib */,
+				551908F10C19B83100169EDC /* libssl.dylib */,
 				5519E9DA0C0DCB5D00169EDC /* libcurl.dylib */,
+				5519090B0C19B9BB00169EDC /* Security.framework */,
 				5519FD710C10655A00169EDC /* ApplicationServices.framework */,
 				08FB779EFE84155DC02AAC07 /* Foundation.framework */,
 			);

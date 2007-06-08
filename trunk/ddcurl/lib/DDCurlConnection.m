@@ -14,6 +14,10 @@
 #import "DDCurlSlist.h"
 #import <curl/curl.h>
 
+#include <openssl/ssl.h>
+#include <Security/SecTrust.h>
+#include <Security/SecCertificate.h>
+
 NSString * DDCurlDomain = @"DDCurlDomain";
 
 @interface DDCurlConnection (Private)
@@ -151,11 +155,36 @@ BOOL splitField(NSString * string, NSString * separator,
              uploadTotal: (double) uploadTotal;
 {
     [self dd_curlConnection: self
-                progressDownload: download
-                   downloadTotal: downloadTotal
-                          upload: upload
-                     uploadTotal: uploadTotal];
+           progressDownload: download
+              downloadTotal: downloadTotal
+                     upload: upload
+                uploadTotal: uploadTotal];
     return 0;
+}
+ 
+- (CURLcode) sslContext: (void *) void_ssl_context;
+{
+    SSL_CTX * ssl_context = (SSL_CTX *) void_ssl_context;
+    
+    const CSSM_DATA * anchors = NULL;
+    uint32 anchorCount = 0;
+    if (SecTrustGetCSSMAnchorCertificates(&anchors, &anchorCount) != 0)
+        return CURLE_SSL_CACERT;
+    
+    X509_STORE * store = SSL_CTX_get_cert_store(ssl_context);
+    int n;
+    for(n = 0; n < anchorCount; n++)
+    {
+        unsigned char * bytes = anchors[n].Data;
+        X509 * cert = d2i_X509(NULL, &bytes, anchors[n].Length);
+        if (cert != NULL)
+        {
+            X509_STORE_add_cert(store, cert);
+        }
+        X509_free(cert);
+    }
+
+    return CURLE_OK;
 }
 
 static size_t staticWriteData(char * buffer, size_t size, size_t nmemb,
@@ -185,6 +214,13 @@ static int staticProgress(void * clientp,
                             uploadTotal: ultotal];
 }
 
+
+static CURLcode staticSslContext(CURL *curl, void *ssl_ctx, void *userptr)
+{
+    DDCurlConnection * connection = (DDCurlConnection *) userptr;
+    return [connection sslContext: ssl_ctx];
+}
+
 @end
 
 @implementation DDCurlConnection (Private)
@@ -203,7 +239,10 @@ static int staticProgress(void * clientp,
         [mCurl setProgressData: self];
         [mCurl setProgressFunction: staticProgress];
         [mCurl setProgress: YES];
-        
+        [mCurl setSslCtxData: self];
+        [mCurl setSslCtxFunction: staticSslContext];
+        [mCurl setCaInfo: nil];
+       
         [mCurl setFollowLocation: YES];
         
         DDCurlMultipartForm * form = [request multipartForm];

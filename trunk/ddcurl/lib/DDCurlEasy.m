@@ -17,7 +17,8 @@
 
 - (void) setProperty: (id) property forOption: (int) option;
 
-- (const char *) savedUTF8String: (NSString *) string forOption: (int) option;
+- (void) setString: (NSString *) string forOption: (int) option
+           message: (NSString *) message;
 
 @end
 
@@ -64,6 +65,11 @@
 #pragma mark -
 #pragma mark Properties
 
+- (CURL *) CURL;
+{
+    return mCurl;
+}
+
 - (void) setWriteData: (void *) writeData;
 {
     [self assert: curl_easy_setopt(mCurl, CURLOPT_WRITEDATA, writeData)
@@ -100,6 +106,23 @@
          message: @"set progress function"];
 }
 
+- (void) setSslCtxData: (void *) sslCtxData;
+{
+    {
+        [self assert: curl_easy_setopt(mCurl, CURLOPT_SSL_CTX_DATA, sslCtxData)
+             message: @"set SSL context data"];
+    }
+}
+
+- (void) setSslCtxFunction: (curl_ssl_ctx_callback) sslCtxFunction;
+{
+    [self assert: curl_easy_setopt(mCurl, CURLOPT_SSL_CTX_FUNCTION, sslCtxFunction)
+         message: @"set SSL context function"];
+}
+
+
+#pragma mark -
+
 - (void) setProgress: (BOOL) progress;
 {
     [self assert: curl_easy_setopt(mCurl, CURLOPT_NOPROGRESS, !progress)
@@ -114,25 +137,21 @@
 
 - (void) setUrl: (NSString *) url;
 {
-    const char * utf8String = [self savedUTF8String: url forOption: CURLOPT_URL];
-    [self assert: curl_easy_setopt(mCurl, CURLOPT_URL, utf8String)
-         message: @"set url"];
+    [self setString: url forOption: CURLOPT_URL
+            message: @"set url"];
 }
 
 - (void) setUser: (NSString *) user password: (NSString *) password;
 {
     NSString * userPassword = [NSString stringWithFormat: @"%@:%@", user, password];
-    const char * utf8String = [self savedUTF8String: userPassword forOption: CURLOPT_USERPWD];
-    [self assert: curl_easy_setopt(mCurl, CURLOPT_USERPWD, utf8String)
-         message: @"set user/password"];
+    [self setString: userPassword forOption: CURLOPT_USERPWD
+            message: @"set user/password"];
 }
 
 - (void) setCustomRequest: (NSString *) customRequest;
 {
-    const char * utf8String = [self savedUTF8String: customRequest
-                                          forOption: CURLOPT_CUSTOMREQUEST];
-    [self assert: curl_easy_setopt(mCurl, CURLOPT_CUSTOMREQUEST, utf8String)
-         message: @"set custom request"];
+    [self setString: customRequest forOption: CURLOPT_CUSTOMREQUEST
+            message: @"set custom request"];
 }
 
 - (void) setHttpHeaders: (DDCurlSlist *) httpHeaders;
@@ -157,6 +176,12 @@
 {
     [self assert: curl_easy_setopt(mCurl, CURLOPT_HTTPPOST, httpPost)
          message: @"set HTTP post"];
+}
+
+- (void) setCaInfo: (NSString *) caInfo;
+{
+    [self setString: caInfo forOption: CURLOPT_CAINFO
+            message: @"set CAINFO"];
 }
 
 - (CURLcode) perform;
@@ -229,16 +254,19 @@
     [mProperties setObject: property forKey: [NSNumber numberWithInt: option]];
 }
 
-- (const char *) savedUTF8String: (NSString *) string forOption: (int) option;
+- (void) setString: (NSString *) string forOption: (int) option
+           message: (NSString *) message;
 {
-    NSMutableData * data = [NSMutableData dataWithData:
-        [string dataUsingEncoding: NSUTF8StringEncoding]];
-    char null = '\0';
-    [data appendBytes: &null length: 1];
-    
-    [self setProperty: data forOption: option];
-    return [data bytes];
-}
+    const char * utf8String = NULL;
+    if (string != nil)
+    {
+        utf8String = [string UTF8String];
+        NSData * data = [NSData dataWithBytes: utf8String length: strlen(utf8String)];
+        [self setProperty: data forOption: option];
+    }
 
+    [self assert: curl_easy_setopt(mCurl, option, utf8String)
+         message: message];
+}
 
 @end
