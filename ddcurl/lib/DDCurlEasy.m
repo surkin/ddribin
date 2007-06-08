@@ -62,13 +62,113 @@
     [super dealloc];
 }
 
-#pragma mark -
-#pragma mark Properties
-
 - (CURL *) CURL;
 {
     return mCurl;
 }
+
+#pragma mark -
+#pragma mark Options
+
+- (void) setUrl: (NSString *) url;
+{
+    [self setString: url forOption: CURLOPT_URL
+            message: @"set url"];
+}
+
+- (void) setProgress: (BOOL) progress;
+{
+    [self assert: curl_easy_setopt(mCurl, CURLOPT_NOPROGRESS, !progress)
+         message: @"set progress"];
+}
+
+- (void) setFollowLocation: (BOOL) followLocation;
+{
+    [self assert: curl_easy_setopt(mCurl, CURLOPT_FOLLOWLOCATION, followLocation)
+         message: @"set follow location"];
+}
+
+- (void) setUser: (NSString *) user password: (NSString *) password;
+{
+    NSString * userPassword = [NSString stringWithFormat: @"%@:%@", user, password];
+    [self setString: userPassword forOption: CURLOPT_USERPWD
+            message: @"set user/password"];
+}
+
+- (void) setCustomRequest: (NSString *) customRequest;
+{
+    [self setString: customRequest forOption: CURLOPT_CUSTOMREQUEST
+            message: @"set custom request"];
+}
+
+- (void) setHttpHeaders: (DDCurlSlist *) httpHeaders;
+{
+    [self setCurlHttpHeaders: [httpHeaders curl_slist]];
+    [self setProperty: httpHeaders forOption: CURLOPT_HTTPHEADER];
+}
+
+- (void) setCurlHttpHeaders: (struct curl_slist *) httpHeaders;
+{
+    [self assert: curl_easy_setopt(mCurl, CURLOPT_HTTPHEADER, httpHeaders)
+         message: @"set HTTP headers"];
+}
+
+- (void) setHttpPost: (DDCurlMultipartForm *) httpPost;
+{
+    [self setCurlHttpPost: [httpPost curl_httppost]];
+    [self setProperty: httpPost forOption: CURLOPT_HTTPPOST];
+}
+
+- (void) setCurlHttpPost: (struct curl_httppost *) httpPost;
+{
+    [self assert: curl_easy_setopt(mCurl, CURLOPT_HTTPPOST, httpPost)
+         message: @"set HTTP post"];
+}
+
+- (void) setCaInfo: (NSString *) caInfo;
+{
+    [self setString: caInfo forOption: CURLOPT_CAINFO
+            message: @"set CAINFO"];
+}
+
+#pragma mark -
+
+- (CURLcode) perform;
+{
+    return curl_easy_perform(mCurl);
+}
+
+- (const char *) errorBuffer;
+{
+    return mErrorBuffer;
+}
+
+- (NSString *) errorString;
+{
+    return [NSString stringWithUTF8String: mErrorBuffer];
+}
+
+#pragma mark -
+#pragma mark Informational
+
+- (long) responseCode;
+{
+    long responseCode;
+    [self assert: curl_easy_getinfo(mCurl, CURLINFO_RESPONSE_CODE, &responseCode)
+         message: nil];
+    return responseCode;
+}
+
+- (NSString *) contentType;
+{
+    char * contentType;
+    [self assert: curl_easy_getinfo(mCurl, CURLINFO_CONTENT_TYPE, &contentType)
+         message: nil];
+    return [NSString stringWithUTF8String: contentType];
+}
+
+#pragma mark -
+#pragma mark Callback functions
 
 - (void) setWriteData: (void *) writeData;
 {
@@ -118,101 +218,6 @@
 {
     [self assert: curl_easy_setopt(mCurl, CURLOPT_SSL_CTX_FUNCTION, sslCtxFunction)
          message: @"set SSL context function"];
-}
-
-
-#pragma mark -
-
-- (void) setProgress: (BOOL) progress;
-{
-    [self assert: curl_easy_setopt(mCurl, CURLOPT_NOPROGRESS, !progress)
-         message: @"set progress"];
-}
-
-- (void) setFollowLocation: (BOOL) followLocation;
-{
-    [self assert: curl_easy_setopt(mCurl, CURLOPT_FOLLOWLOCATION, followLocation)
-         message: @"set follow location"];
-}
-
-- (void) setUrl: (NSString *) url;
-{
-    [self setString: url forOption: CURLOPT_URL
-            message: @"set url"];
-}
-
-- (void) setUser: (NSString *) user password: (NSString *) password;
-{
-    NSString * userPassword = [NSString stringWithFormat: @"%@:%@", user, password];
-    [self setString: userPassword forOption: CURLOPT_USERPWD
-            message: @"set user/password"];
-}
-
-- (void) setCustomRequest: (NSString *) customRequest;
-{
-    [self setString: customRequest forOption: CURLOPT_CUSTOMREQUEST
-            message: @"set custom request"];
-}
-
-- (void) setHttpHeaders: (DDCurlSlist *) httpHeaders;
-{
-    [self setCurlHttpHeaders: [httpHeaders curl_slist]];
-    [self setProperty: httpHeaders forOption: CURLOPT_HTTPHEADER];
-}
-
-- (void) setCurlHttpHeaders: (struct curl_slist *) httpHeaders;
-{
-    [self assert: curl_easy_setopt(mCurl, CURLOPT_HTTPHEADER, httpHeaders)
-         message: @"set HTTP headers"];
-}
-
-- (void) setForm: (DDCurlMultipartForm *) form;
-{
-    [self setCurlHttpPost: [form curl_httppost]];
-    [self setProperty: form forOption: CURLOPT_HTTPPOST];
-}
-
-- (void) setCurlHttpPost: (struct curl_httppost *) httpPost;
-{
-    [self assert: curl_easy_setopt(mCurl, CURLOPT_HTTPPOST, httpPost)
-         message: @"set HTTP post"];
-}
-
-- (void) setCaInfo: (NSString *) caInfo;
-{
-    [self setString: caInfo forOption: CURLOPT_CAINFO
-            message: @"set CAINFO"];
-}
-
-- (CURLcode) perform;
-{
-    return curl_easy_perform(mCurl);
-}
-
-- (long) responseCode;
-{
-    long responseCode;
-    [self assert: curl_easy_getinfo(mCurl, CURLINFO_RESPONSE_CODE, &responseCode)
-         message: nil];
-    return responseCode;
-}
-
-- (NSString *) contentType;
-{
-    char * contentType;
-    [self assert: curl_easy_getinfo(mCurl, CURLINFO_CONTENT_TYPE, &contentType)
-         message: nil];
-    return [NSString stringWithUTF8String: contentType];
-}
-
-- (const char *) errorBuffer;
-{
-    return mErrorBuffer;
-}
-
-- (NSString *) errorString;
-{
-    return [NSString stringWithUTF8String: mErrorBuffer];
 }
 
 @end

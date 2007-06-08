@@ -20,10 +20,50 @@
 
 NSString * DDCurlDomain = @"DDCurlDomain";
 
+#pragma mark -
+#pragma mark Static functions
+
+static BOOL splitField(NSString * string, NSString * separator,
+                       NSString ** left, NSString ** right);
+
+static size_t staticWriteData(char * buffer, size_t size, size_t nmemb,
+                              void * userData);
+
+static size_t staticWriteHeader(char * buffer, size_t size, size_t nmemb,
+                                void * userData);
+
+static int staticProgress(void * clientp,
+                          double dltotal,
+                          double dlnow,
+                          double ultotal,
+                          double ulnow);
+
+static CURLcode staticSslContext(CURL *curl, void *ssl_ctx, void *userptr);
+
+#pragma mark -
+
 @interface DDCurlConnection (Private)
 
 - (void) threadMain: (DDMutableCurlRequest *) request;
 - (void) didFinish: (NSError *) error;
+
+- (void) setResponseInfo;
+
+#pragma mark -
+#pragma mark DDCurlEasy Callbacks
+
+- (size_t) writeData: (char *) buffer size: (size_t) size
+               nmemb: (size_t) nmemb;
+
+- (size_t) writeHeader: (char *) buffer size: (size_t) size
+                 nmemb: (size_t) nmemb;
+
+- (int) progressDownload: (double) download
+           downloadTotal: (double) downloadTotal
+                  upload: (double) upload
+             uploadTotal: (double) uploadTotal;
+
+- (CURLcode) sslContext: (void *) void_ssl_context;
 
 #pragma mark -
 #pragma mark Delegation
@@ -48,6 +88,8 @@ NSString * DDCurlDomain = @"DDCurlDomain";
 
 
 @end
+
+#pragma mark -
 
 @implementation DDCurlConnection
 
@@ -80,44 +122,18 @@ NSString * DDCurlDomain = @"DDCurlDomain";
 {
     [mCurl release];
     [mResponse release];
+    [mHeaders release];
     
     mCurl = nil;
     mResponse = nil;
+    mHeaders = nil;
     [super dealloc];
 }
 
-- (void) setResponseInfo;
-{
-    NSString * contentLengthString = [mResponse headerWithName: @"Content-Length"];
-    if (contentLengthString != nil)
-    {
-        long long contentLength = -1;
-        NSScanner * scanner = [NSScanner scannerWithString: contentLengthString];
-        if ([scanner scanLongLong: &contentLength])
-        {
-            [mResponse setExpectedContentLength: contentLength];
-        }
-    }
-    
-    [mResponse setStatusCode: [mCurl responseCode]];
-    [mResponse setMIMEType: [mCurl contentType]];
-    [self dd_curlConnection: self didReceiveResponse: mResponse];
-}
+@end
 
-- (size_t) writeData: (char *) buffer size: (size_t) size
-               nmemb: (size_t) nmemb
-{
-    size_t bytes = size * nmemb;
-    if (mIsFirstData)
-    {
-        [self setResponseInfo];
-        mIsFirstData = NO;
-    }
-    
-    [self dd_curlConnection: self
-                 didReceiveBytes: buffer length: bytes];
-    return bytes;
-}
+#pragma mark -
+#pragma mark Static functions
 
 BOOL splitField(NSString * string, NSString * separator,
                 NSString ** left, NSString ** right)
@@ -131,102 +147,54 @@ BOOL splitField(NSString * string, NSString * separator,
     return YES;
 }
 
-- (size_t) writeHeader: (char *) buffer size: (size_t) size
-                 nmemb: (size_t) nmemb
-{
-    size_t length = size * nmemb;
-    
-    NSString * header = [NSString stringWithCString: buffer length: length];
-    
-    NSString * name;
-    NSString * value;
-    if (splitField(header, @":", &name, &value))
-    {
-        value = [value stringByTrimmingCharactersInSet: [NSCharacterSet whitespaceCharacterSet]];
-        [mResponse setHeader: value withName: name];
-    }
-    
-    return length;
-}
-
-- (int) progressDownload: (double) download
-           downloadTotal: (double) downloadTotal
-                  upload: (double) upload
-             uploadTotal: (double) uploadTotal;
-{
-    [self dd_curlConnection: self
-           progressDownload: download
-              downloadTotal: downloadTotal
-                     upload: upload
-                uploadTotal: uploadTotal];
-    return 0;
-}
- 
-- (CURLcode) sslContext: (void *) void_ssl_context;
-{
-    SSL_CTX * ssl_context = (SSL_CTX *) void_ssl_context;
-    
-    const CSSM_DATA * anchors = NULL;
-    uint32 anchorCount = 0;
-    if (SecTrustGetCSSMAnchorCertificates(&anchors, &anchorCount) != 0)
-        return CURLE_SSL_CACERT;
-    
-    X509_STORE * store = SSL_CTX_get_cert_store(ssl_context);
-    int n;
-    for(n = 0; n < anchorCount; n++)
-    {
-        // CSSM_DATA is in DER format.  d2i_X509 converts DER to an
-        // internal format.
-        unsigned char * bytes = anchors[n].Data;
-        X509 * cert = d2i_X509(NULL, &bytes, anchors[n].Length);
-        if (cert != NULL)
-        {
-            X509_STORE_add_cert(store, cert);
-        }
-        X509_free(cert);
-    }
-
-    return CURLE_OK;
-}
-
 static size_t staticWriteData(char * buffer, size_t size, size_t nmemb,
                               void * userData)
 {
+    NSAutoreleasePool * pool = [[NSAutoreleasePool alloc] init];
     DDCurlConnection * connection = (DDCurlConnection *) userData;
-    return [connection writeData: buffer size: size nmemb: nmemb];
+    size_t result = [connection writeData: buffer size: size nmemb: nmemb];
+    [pool release];
+    return result;
 }
 
 static size_t staticWriteHeader(char * buffer, size_t size, size_t nmemb,
-                              void * userData)
+                                void * userData)
 {
+    NSAutoreleasePool * pool = [[NSAutoreleasePool alloc] init];
     DDCurlConnection * connection = (DDCurlConnection *) userData;
-    return [connection writeHeader: buffer size: size nmemb: nmemb];
+    size_t result = [connection writeHeader: buffer size: size nmemb: nmemb];
+    [pool release];
+    return result;
 }
 
 static int staticProgress(void * clientp,
-                             double dltotal,
-                             double dlnow,
-                             double ultotal,
-                             double ulnow)
+                          double dltotal,
+                          double dlnow,
+                          double ultotal,
+                          double ulnow)
 {
+    NSAutoreleasePool * pool = [[NSAutoreleasePool alloc] init];
     DDCurlConnection * connection = (DDCurlConnection *) clientp;
-    return [connection progressDownload: dlnow
-                          downloadTotal: dltotal
-                                 upload: ulnow
-                            uploadTotal: ultotal];
+    int result = [connection progressDownload: dlnow
+                                downloadTotal: dltotal
+                                       upload: ulnow
+                                  uploadTotal: ultotal];
+    [pool release];
+    return result;
 }
-
 
 static CURLcode staticSslContext(CURL *curl, void *ssl_ctx, void *userptr)
 {
+    NSAutoreleasePool * pool = [[NSAutoreleasePool alloc] init];
     DDCurlConnection * connection = (DDCurlConnection *) userptr;
-    return [connection sslContext: ssl_ctx];
+    CURLcode result = [connection sslContext: ssl_ctx];
+    [pool release];
+    return result;
 }
 
-@end
+#pragma mark -
 
 @implementation DDCurlConnection (Private)
-
 
 - (void) threadMain: (DDMutableCurlRequest *) request
 {
@@ -253,7 +221,7 @@ static CURLcode staticSslContext(CURL *curl, void *ssl_ctx, void *userptr)
         
         DDCurlMultipartForm * form = [request multipartForm];
         if (form != nil)
-            [mCurl setForm: form];
+            [mCurl setHttpPost: form];
         
         DDCurlSlist * headers = [DDCurlSlist slist];
         NSDictionary * allHeaders = [request allHeaders];
@@ -334,6 +302,100 @@ static CURLcode staticSslContext(CURL *curl, void *ssl_ctx, void *userptr)
         [self dd_curlConnectionDidFinishLoading: self];
     else
         [self dd_curlConnection: self didFailWithError: error];
+}
+
+- (void) setResponseInfo;
+{
+    NSString * contentLengthString = [mResponse headerWithName: @"Content-Length"];
+    if (contentLengthString != nil)
+    {
+        long long contentLength = -1;
+        NSScanner * scanner = [NSScanner scannerWithString: contentLengthString];
+        if ([scanner scanLongLong: &contentLength])
+        {
+            [mResponse setExpectedContentLength: contentLength];
+        }
+    }
+    
+    [mResponse setStatusCode: [mCurl responseCode]];
+    [mResponse setMIMEType: [mCurl contentType]];
+    [self dd_curlConnection: self didReceiveResponse: mResponse];
+}
+
+#pragma mark -
+#pragma mark DDCurlEasy Callbacks
+
+- (size_t) writeData: (char *) buffer size: (size_t) size
+               nmemb: (size_t) nmemb
+{
+    size_t bytes = size * nmemb;
+    if (mIsFirstData)
+    {
+        [self setResponseInfo];
+        mIsFirstData = NO;
+    }
+    
+    [self dd_curlConnection: self
+            didReceiveBytes: buffer length: bytes];
+    return bytes;
+}
+
+- (size_t) writeHeader: (char *) buffer size: (size_t) size
+                 nmemb: (size_t) nmemb
+{
+    size_t length = size * nmemb;
+    
+    NSString * header = [NSString stringWithCString: buffer length: length];
+    
+    NSString * name;
+    NSString * value;
+    if (splitField(header, @":", &name, &value))
+    {
+        value = [value stringByTrimmingCharactersInSet: [NSCharacterSet whitespaceCharacterSet]];
+        [mResponse setHeader: value withName: name];
+    }
+    
+    return length;
+}
+
+- (int) progressDownload: (double) download
+           downloadTotal: (double) downloadTotal
+                  upload: (double) upload
+             uploadTotal: (double) uploadTotal;
+{
+    [self dd_curlConnection: self
+           progressDownload: download
+              downloadTotal: downloadTotal
+                     upload: upload
+                uploadTotal: uploadTotal];
+    return 0;
+}
+
+- (CURLcode) sslContext: (void *) void_ssl_context;
+{
+    SSL_CTX * ssl_context = (SSL_CTX *) void_ssl_context;
+    
+    const CSSM_DATA * anchors = NULL;
+    uint32 anchorCount = 0;
+    if (SecTrustGetCSSMAnchorCertificates(&anchors, &anchorCount) != 0)
+        return CURLE_SSL_CACERT;
+    
+    X509_STORE * store = SSL_CTX_get_cert_store(ssl_context);
+    int n;
+    for(n = 0; n < anchorCount; n++)
+    {
+        // CSSM_DATA is in DER format.  d2i_X509 converts DER to an
+        // internal format.
+        unsigned char * bytes = anchors[n].Data;
+        X509 * cert = d2i_X509(NULL, &bytes, anchors[n].Length);
+        if (cert != NULL)
+        {
+            X509_STORE_add_cert(store, cert);
+        }
+        X509_free(cert);
+    }
+    
+    return CURLE_OK;
 }
 
 #pragma mark -
