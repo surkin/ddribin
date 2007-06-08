@@ -13,6 +13,13 @@
 @class DDCurlEasy;
 @class DDCurlSlist;
 
+/**
+ * Loads URLs using libcurl via DDCurlEasy.  The delegate methods 
+ * allow an object to receive informational callbacks. 
+ *
+ * Note: To support asynchronous behavior, a new thread is spawned for each
+ * connection.  The delegate methods are called on the main thread.
+ */
 @interface DDCurlConnection : NSObject
 {
     DDCurlEasy * mCurl;
