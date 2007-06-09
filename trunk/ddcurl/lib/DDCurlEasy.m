@@ -153,6 +153,12 @@
          message: @"set use signals"];
 }
 
+- (void) setVerbose: (BOOL) verbose;
+{
+    [self assert: curl_easy_setopt(mCurl, CURLOPT_VERBOSE, verbose)
+         message: @"set verbose"];
+}
+
 #pragma mark -
 
 - (CURLcode) perform;
@@ -228,6 +234,18 @@
 {
     [self assert: curl_easy_setopt(mCurl, CURLOPT_PROGRESSFUNCTION, progressFunction)
          message: @"set progress function"];
+}
+
+- (void) setDebugData: (void *) debugData;
+{
+    [self assert: curl_easy_setopt(mCurl, CURLOPT_DEBUGDATA, debugData)
+         message: @"set debug data"];
+}
+
+- (void) setDebugFunction: (curl_debug_callback) debugFunction;
+{
+    [self assert: curl_easy_setopt(mCurl, CURLOPT_DEBUGFUNCTION, debugFunction)
+         message: @"set debug function"];
 }
 
 - (void) setSslCtxData: (void *) sslCtxData;

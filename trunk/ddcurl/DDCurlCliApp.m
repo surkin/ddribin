@@ -12,6 +12,14 @@
 #import "DDGetoptLong.h"
 #import "DDExtensions.h"
 
+
+static BOOL sCaughtSignal = NO;
+
+static void signalHandler(int signal)
+{
+    sCaughtSignal = YES;
+}
+
 @interface DDCurlCliApp (Private)
 
 - (void) printUsage: (FILE *) stream;
@@ -167,6 +175,7 @@
     }
     NSString * url = [arguments objectAtIndex: 0];
     
+    signal(SIGINT, signalHandler);
     mShouldKeepRunning = YES;
 
     [mRequest setAllowRedirects: _redirect];
@@ -190,9 +199,15 @@
 
     NSRunLoop * currentRunLoop = [NSRunLoop currentRunLoop];
     while (mShouldKeepRunning &&
-           [currentRunLoop runMode: NSDefaultRunLoopMode beforeDate: [NSDate distantFuture]])
+           [currentRunLoop runMode: NSDefaultRunLoopMode
+                        beforeDate: [NSDate dateWithTimeIntervalSinceNow: 0.25]])
     {
-        // Empty
+        if (sCaughtSignal)
+        {
+            [connection cancel];
+            // We won't get any delegate callbacks, so force ourselves to stop
+            mShouldKeepRunning = NO;
+        }
     }
     
     if (mError != nil)
@@ -262,7 +277,7 @@
     if (uploadStatus != nil)
         [statuses addObject: uploadStatus];
     
-    ddfprintf(stderr, @"%@\r", [statuses componentsJoinedByString: @", "]);
+    ddfprintf(stderr, @"\r%@", [statuses componentsJoinedByString: @", "]);
 }
 
 - (void) dd_curlConnectionDidFinishLoading: (DDCurlConnection *) connection;

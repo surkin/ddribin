@@ -45,6 +45,7 @@
     DDCurlResponse * mResponse;
     DDCurlSlist * mHeaders;
     BOOL mIsFirstData;
+    BOOL mShouldCancel;
 
     id mDelegate;
 }
@@ -61,6 +62,12 @@
  */
 - (id) initWithRequest: (DDMutableCurlRequest *) request
               delegate: (id) delegate;
+
+/**
+ * Cancels this request.  No more delegates will be sent after calling
+ * this method.
+ */
+- (void) cancel;
 
 @end
 
