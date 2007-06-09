@@ -29,16 +29,18 @@
 @class DDCurlMultipartForm;
 
 /**
- * An Objective-C wrapper around a CURL easy handle and the
- * curl_easy_*() functions.  This class provides a couple benefits
- * over the native C API.  First, all return code errors are
- * translated to exceptions.  This simplifies error handling, as the
- * return code does not need to be checked after every call.  Second,
- * this class takes care of memory management for data that needs to
- * be kept around until Curl is finished with it.
+ * An Objective-C wrapper around the <a
+ * href="http://curl.haxx.se/libcurl/c/libcurl-easy.html">CURL easy
+ * interface</a>.  This class provides a couple benefits over the
+ * native C API.  First, all return code errors are translated to
+ * exceptions.  This simplifies error handling, as the return code
+ * does not need to be checked after every call.  Second, this class
+ * takes care of memory management for data that needs to be kept
+ * around until Curl is finished with it.
  */
 @interface DDCurlEasy : NSObject
 {
+    @private
     CURL * mCurl;
     NSMutableDictionary * mProperties;
     char mErrorBuffer[CURL_ERROR_SIZE];
@@ -131,6 +133,13 @@
  * @param caInfo File name of certificate authority info
  */
 - (void) setCaInfo: (NSString *) caInfo;
+
+/**
+ * Sets CURLOPT_NOSIGNAL.
+ *
+ * @param useSignals NO means curl will not install any signal handlers.
+ */
+- (void) setUseSignals: (BOOL) useSignals;
 
 #pragma mark -
 

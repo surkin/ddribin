@@ -114,7 +114,7 @@ static CURLcode staticSslContext(CURL *curl, void *ssl_ctx, void *userptr);
 }
 
 - (id) initWithRequest: (DDMutableCurlRequest *) request
-              delegate: delegate;
+              delegate: (id) delegate;
 {
     self = [super init];
     if (self == nil)
@@ -224,6 +224,7 @@ static CURLcode staticSslContext(CURL *curl, void *ssl_ctx, void *userptr)
         [mCurl setProgressData: self];
         [mCurl setProgressFunction: staticProgress];
         [mCurl setProgress: YES];
+        [mCurl setUseSignals: NO];
         
         [mCurl setSslCtxData: self];
         [mCurl setSslCtxFunction: staticSslContext];

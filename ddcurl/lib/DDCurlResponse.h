@@ -25,26 +25,82 @@
 #import <Cocoa/Cocoa.h>
 
 
+/**
+ * Represents a response sent from the server.
+ */
 @interface DDCurlResponse : NSObject
 {
+    @private
     long long mExpectedContentLength;
     int mStatusCode;
     NSString * mMIMEType;
     NSMutableDictionary * mHeaders;
 }
 
+/**
+ * Creates an autoreleased response.
+ *
+ * @return An autoreleased response
+ */
 + (DDCurlResponse *) response;
 
+/**
+ * Returns the expected content length, or -1 if the server has not
+ * provided a content length.
+ *
+ * @return The expected content length
+ */
 - (long long) expectedContentLength;
-- (void) setExpectedContentLength: (long long) theExpectedContentLength;
 
+/**
+ * Sets the expected content length.
+ *
+ * @param expectedContentLength The expected content length
+ */
+- (void) setExpectedContentLength: (long long) expectedContentLength;
+
+/**
+ * Returns the MIME type of the content for this response.
+ *
+ * @return the MIME type of the content for this response
+ */
 - (NSString *) MIMEType;
-- (void) setMIMEType: (NSString *) theMIMEType;
 
+/**
+ * Sets the MIME type of the content for this response.
+ *
+ * @param MIMEType A MIME type
+ */
+- (void) setMIMEType: (NSString *) MIMEType;
+
+/**
+ * Returns the status code of this response or -1 if the protocol does
+ * not utilize status codes.
+ *
+ * @return The status code
+ */
 - (int) statusCode;
-- (void) setStatusCode: (int) theStatusCode;
 
+/**
+ * Sets the status code of this response.
+ *
+ * @param statusCode A status code
+ */
+- (void) setStatusCode: (int) statusCode;
+
+/**
+ * Sets a header value.
+ *
+ * @param header The header value
+ * @param name The name of the header
+ */
 - (void) setHeader: (NSString *) header withName: (NSString *) name;
+
+/**
+ * Returns the value for a header.
+ *
+ * @return The value for a header
+ */
 - (NSString *) headerWithName: (NSString *) name;
 
 
