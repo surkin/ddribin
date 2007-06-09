@@ -147,6 +147,12 @@
             message: @"set CAINFO"];
 }
 
+- (void) setUseSignals: (BOOL) useSignals;
+{
+    [self assert: curl_easy_setopt(mCurl, CURLOPT_NOSIGNAL, !useSignals)
+         message: @"set use signals"];
+}
+
 #pragma mark -
 
 - (CURLcode) perform;

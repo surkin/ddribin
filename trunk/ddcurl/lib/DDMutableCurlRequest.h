@@ -26,6 +26,9 @@
 
 @class DDCurlMultipartForm;
 
+/**
+ * Represents a request to be executed.
+ */
 @interface DDMutableCurlRequest : NSObject
 {
     NSURL * mUrl;
@@ -40,48 +43,171 @@
 #pragma mark -
 #pragma mark Class Constructors
 
+/**
+ * Create an autoreleased request.
+ *
+ * @return An autoreleased request
+ */
 + (DDMutableCurlRequest *) request;
 
+/**
+ * Create an autoreleased request with a URL.
+ *
+ * @param url A URL
+ * @return An autoreleased request
+ */
 + (DDMutableCurlRequest *) requestWithURL: (NSURL *) url;
 
+/**
+ * Create an autoreleased request with a URL string.
+ *
+ * @param urlString A URL string
+ * @return An autoreleased request
+ */
 + (DDMutableCurlRequest *) requestWithURLString: (NSString *) urlString;
 
 #pragma mark -
 #pragma mark Constructors
 
+/**
+ * Create a new request.
+ *
+ * @return A new request
+ */
 - (id) init;
 
+/**
+ * Create a new request with a URL.
+ *
+ * @param url A URL
+ * @return A new request
+ */
 - (id) initWithURL: (NSURL *) url;
 
+/**
+ * Create a new request with a URL string.
+ *
+ * @param urlString a URL string
+ * @return A new request
+ */
 - (id) initWithURLString: (NSString *) urlString;
 
 #pragma mark -
 #pragma mark Properties
 
+/**
+ * Returns the URL.
+ *
+ * @return The URL
+ */
 - (NSURL *) URL;
-- (void) setURL: (NSURL *) theURL;
 
+/**
+ * Sets the URL.
+ *
+ * @param URL A URL
+ */
+- (void) setURL: (NSURL *) URL;
+
+/**
+ * Sets the URL with a string.
+ * 
+ * @param urlString A URL string.
+ */
 - (void) setURLString: (NSString *) urlString;
 
+/**
+ * Returns the URL as a string.
+ *
+ * @return A URL string
+ */
 - (NSString *) urlString;
 
+/**
+ * Returns the username.
+ *
+ * @return The username
+ */
 - (NSString *) username;
-- (void) setUsername: (NSString *) theUsername;
 
+/**
+ * Sets the username.
+ *
+ * @param username The username
+ */
+- (void) setUsername: (NSString *) username;
+
+/**
+ * Returns the password.
+ *
+ * @return The password
+ */
 - (NSString *) password;
-- (void) setPassword: (NSString *) thePassword;
 
+/**
+ * Sets the password.
+ *
+ * @param password The password
+ */
+- (void) setPassword: (NSString *) password;
+
+/**
+ * Returns YES if redirects are allowed.
+ *
+ * @return YES if redirects are allowed.
+ */
 - (BOOL) allowRedirects;
-- (void) setAllowRedirects: (BOOL) flag;
 
+/**
+ * Sets if redirects are allowed.
+ *
+ * @param allowRedirects YES if redirects are allowed.
+ */
+- (void) setAllowRedirects: (BOOL) allowRedirects;
+
+/**
+ * Returns the multipart form, or nil if there is no form.
+ *
+ * @return The multipart form
+ */
 - (DDCurlMultipartForm *) multipartForm;
-- (void) setMultipartForm: (DDCurlMultipartForm *) theMultipartForm;
 
+/**
+ * Sets the multipart form and change the method to POST.
+ *
+ * @param multipartForm The multipartform
+ */
+- (void) setMultipartForm: (DDCurlMultipartForm *) multipartForm;
+
+/**
+ * Returns the custom HTTP method, or nil if the default method should
+ * be used.
+ *
+ * @return The custom HTTP method.
+ */
 - (NSString *) HTTPMethod;
-- (void) setHTTPMethod: (NSString *) theHTTPMethod;
 
+/**
+ * Sets the custom HTTP method.  By default the method is GET unless a
+ * multipart form is set, which uses POST.
+ *
+ * @param HTTPMethod A custom HTTP method
+ */
+- (void) setHTTPMethod: (NSString *) HTTPMethod;
+
+/**
+ * Sets a HTTP header field.
+ *
+ * @param value The value of the header field
+ * @param field The name of the header field
+ */
 - (void) setValue: (NSString *) value forHTTPHeaderField: (NSString *) field;
 
+/**
+ * Returns all headers set.
+ *
+ * @return All headers set.
+ */
 - (NSDictionary *) allHeaders;
 
 @end

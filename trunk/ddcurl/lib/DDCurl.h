@@ -26,3 +26,15 @@
 #import "DDCurlResponse.h"
 #import "DDCurlConnection.h"
 #import "DDCurlMultipartForm.h"
+
+/**
+ * @mainpage ddcurl: An Objective-C Wrapper Around libcurl
+ *
+ * ddcli is an Objective-C wrapper around <a
+ * href="http://curl.haxx.se/libcurl/c/">libcurl</a>.  There are
+ * wrappers around the libcurl handles (DDCurlEasy, DDCurlSlist,
+ * DDCurlMultipartForm), which requires setting function pointer
+ * callbacks.  But there is also a simpler interface, which mimics the
+ * NSURLConnection APIs, without relying on Apple classes.  The main
+ * class of this API is DDCurlConnection.
+ */

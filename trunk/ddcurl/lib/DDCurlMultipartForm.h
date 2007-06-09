@@ -25,23 +25,60 @@
 #import <Cocoa/Cocoa.h>
 #import <curl/curl.h>
 
+/**
+ * An Objective-C wrapper around struct curl_httppost for multipart forms.
+ */
 @interface DDCurlMultipartForm : NSObject
 {
     struct curl_httppost * mFirst;
     struct curl_httppost * mLast;
 }
 
+/**
+ * Create an autoreleased form.
+ */
 + (DDCurlMultipartForm *) form;
 
+/**
+ * Add a string field.
+ *
+ * @param string String field
+ * @param name Name of field
+ */
 - (void) addString: (NSString *) string withName: (NSString *) name;
 
+/**
+ * Add an integer number field.
+ *
+ * @param number Number field
+ * @param name Name of field
+ */
 - (void) addInt: (int) number withName: (NSString *) name;
 
+/**
+ * Add a file field with the content type is chosen from the file's
+ * extension.
+ *
+ * @param path Path to file
+ * @param name Name of field
+ */
 - (void) addFile: (NSString *) path withName: (NSString *) name;
 
+/**
+ * Add a file field with the specified content type.
+ *
+ * @param path Path to file
+ * @param name Name of field
+ * @param contentType Content type of this file
+ */
 - (void) addFile: (NSString *) path withName: (NSString *) name
      contentType: (NSString *) contentType;
 
+/**
+ * Returns the underlying struct curl_httppost structure.
+ *
+ * @return The underlying struct curl_httppost structure.
+ */
 - (struct curl_httppost *) curl_httppost;
 
 @end

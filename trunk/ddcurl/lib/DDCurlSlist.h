@@ -26,20 +26,45 @@
 
 struct curl_slist;
 
+/**
+ * An Objective-C wrapper arond struct curl_slist.
+ */
 @interface DDCurlSlist : NSObject
 {
+    @private
     struct curl_slist * mSlist;
     NSMutableArray * mUtf8Data;
 }
 
+/**
+ * Createn an autorelease DDCurlSlist
+ */
 + (DDCurlSlist *) slist;
 
+/**
+ * Add a UTF-8 string to the list.
+ *
+ * @param string UTF-8 string to add
+ */
 - (void) appendUtf8String: (const char *) string;
 
+/**
+ * Add a string to the list.
+ *
+ * @param string String to add
+ */
 - (void) appendString: (NSString *) string;
 
+/**
+ * Free all elements of the list
+ */
 - (void) freeAll;
 
+/**
+ * Returns the underlying struct curl_slist.
+ *
+ * @return The underlying struct curl_slist.
+ */
 - (struct curl_slist *) curl_slist;
 
 @end
