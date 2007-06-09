@@ -56,8 +56,7 @@
 @interface NSObject (DDCurlConnectionDelegate)
 
 - (void) dd_curlConnection: (DDCurlConnection *) connection
-           didReceiveBytes: (void *) bytes
-                    length: (unsigned) length;
+            didReceiveData: (NSData *) data;
 
 - (void) dd_curlConnection: (DDCurlConnection *) connection
         didReceiveResponse: (DDCurlResponse *) response;

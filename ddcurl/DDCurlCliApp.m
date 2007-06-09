@@ -217,10 +217,9 @@
 }
 
 - (void) dd_curlConnection: (DDCurlConnection *) connection
-           didReceiveBytes: (void *) bytes
-                    length: (unsigned) length;
+            didReceiveData: (NSData *) data;
 {
-    [mFileHandle writeData: [NSData dataWithBytes: bytes length: length]];
+    [mFileHandle writeData: data];
 }
 
 - (void) dd_curlConnection: (DDCurlConnection *) connection
