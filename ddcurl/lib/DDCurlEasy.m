@@ -180,6 +180,8 @@
     char * contentType;
     [self assert: curl_easy_getinfo(mCurl, CURLINFO_CONTENT_TYPE, &contentType)
          message: nil];
+    if (contentType == NULL)
+        return nil;
     return [NSString stringWithUTF8String: contentType];
 }
 

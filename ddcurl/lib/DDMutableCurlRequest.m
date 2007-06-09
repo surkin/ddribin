@@ -61,6 +61,7 @@
     
     mUrl = [url retain];
     mMultipartForm = nil;
+    mAllowRedirects = NO;
     mHeaders = [[NSMutableDictionary alloc] init];
     
     return self;
@@ -150,6 +151,22 @@
         [mPassword release];
         mPassword = [thePassword retain];
     }
+}
+
+//=========================================================== 
+// - allowRedirects
+//=========================================================== 
+- (BOOL) allowRedirects
+{
+    return mAllowRedirects;
+}
+
+//=========================================================== 
+// - setAllowRedirects:
+//=========================================================== 
+- (void) setAllowRedirects: (BOOL) flag
+{
+    mAllowRedirects = flag;
 }
 
 //=========================================================== 

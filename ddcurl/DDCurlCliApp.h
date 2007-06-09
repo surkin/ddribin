@@ -24,10 +24,13 @@ enum
     // Options
     BOOL _help;
     BOOL _version;
+    BOOL _redirect;
     
     DDMutableCurlRequest * mRequest;
     DDCurlMultipartForm * mForm;
     
+    NSFileHandle * mFileHandle;
+    BOOL mShowProgress;
     NSMutableData * mBody;
     DDCurlResponse * mResponse;
     long long mBytesReceived;
