@@ -141,6 +141,13 @@
  */
 - (void) setUseSignals: (BOOL) useSignals;
 
+/**
+ * Sets CURLOPT_VERBOSE.
+ *
+ * @param verbose YES means turn on verbose information.
+ */
+- (void) setVerbose: (BOOL) verbose;
+
 #pragma mark -
 
 /**
@@ -192,6 +199,10 @@
 - (void) setProgressData: (void *) progressData;
 
 - (void) setProgressFunction: (curl_progress_callback) progressFunction;
+
+- (void) setDebugData: (void *) debugData;
+
+- (void) setDebugFunction: (curl_debug_callback) debugFunction;
 
 - (void) setSslCtxData: (void *) sslCtxData;
 

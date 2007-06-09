@@ -54,6 +54,9 @@ static int staticProgress(void * clientp,
                           double ultotal,
                           double ulnow);
 
+static int staticDebug(CURL *handle, curl_infotype type,
+                       char *data, size_t size, void *userptr);
+
 static CURLcode staticSslContext(CURL *curl, void *ssl_ctx, void *userptr);
 
 #pragma mark -
@@ -79,7 +82,13 @@ static CURLcode staticSslContext(CURL *curl, void *ssl_ctx, void *userptr);
                   upload: (double) upload
              uploadTotal: (double) uploadTotal;
 
-- (CURLcode) sslContext: (void *) void_ssl_context;
+- (int) debug: (CURL *) handle
+         type: (curl_infotype) type
+         data: (char *) data
+         size: (size_t) size;
+
+- (CURLcode) sslContext: (CURL *) handle
+                context: (void *) void_ssl_context;
 
 #pragma mark -
 #pragma mark Delegation
@@ -123,6 +132,7 @@ static CURLcode staticSslContext(CURL *curl, void *ssl_ctx, void *userptr);
     mDelegate = delegate;
     mCurl = [[DDCurlEasy alloc] init];
     mResponse = [[DDCurlResponse alloc] init];
+    mShouldCancel = NO;
     [NSThread detachNewThreadSelector: @selector(threadMain:)
                              toTarget: self
                            withObject: request];
@@ -143,6 +153,11 @@ static CURLcode staticSslContext(CURL *curl, void *ssl_ctx, void *userptr);
     mResponse = nil;
     mHeaders = nil;
     [super dealloc];
+}
+
+- (void) cancel;
+{
+    mShouldCancel = YES;
 }
 
 @end
@@ -198,11 +213,24 @@ static int staticProgress(void * clientp,
     return result;
 }
 
+static int staticDebug(CURL *handle, curl_infotype type,
+                       char *data, size_t size, void *userptr)
+{
+    NSAutoreleasePool * pool = [[NSAutoreleasePool alloc] init];
+    DDCurlConnection * connection = (DDCurlConnection *) userptr;
+    int result = [connection debug: handle
+                              type: type
+                              data: data
+                              size: size];
+    [pool release];
+    return result;
+}
+
 static CURLcode staticSslContext(CURL *curl, void *ssl_ctx, void *userptr)
 {
     NSAutoreleasePool * pool = [[NSAutoreleasePool alloc] init];
     DDCurlConnection * connection = (DDCurlConnection *) userptr;
-    CURLcode result = [connection sslContext: ssl_ctx];
+    CURLcode result = [connection sslContext: curl context: ssl_ctx];
     [pool release];
     return result;
 }
@@ -219,11 +247,18 @@ static CURLcode staticSslContext(CURL *curl, void *ssl_ctx, void *userptr)
     {
         [mCurl setWriteData: self];
         [mCurl setWriteFunction: staticWriteData];
+
         [mCurl setWriteHeaderData: self];
         [mCurl setWriteHeaderFunction: staticWriteHeader];
+
         [mCurl setProgressData: self];
         [mCurl setProgressFunction: staticProgress];
         [mCurl setProgress: YES];
+
+        [mCurl setDebugData: self];
+        [mCurl setDebugFunction: staticDebug];
+        [mCurl setVerbose: YES];
+        
         [mCurl setUseSignals: NO];
         
         [mCurl setSslCtxData: self];
@@ -266,6 +301,7 @@ static CURLcode staticSslContext(CURL *curl, void *ssl_ctx, void *userptr)
          * "kick" the run loop into action.
          */
         mIsFirstData = YES;
+        mShouldCancel = NO;
         CURLcode performResult = [mCurl perform];
         if (performResult == CURLE_OK)
         {
@@ -314,6 +350,9 @@ static CURLcode staticSslContext(CURL *curl, void *ssl_ctx, void *userptr)
 
 - (void) didFinish: (NSError *) error;
 {
+    if (mShouldCancel)
+        return;
+    
     if (error == nil)
         [self dd_curlConnectionDidFinishLoading: self];
     else
@@ -344,6 +383,9 @@ static CURLcode staticSslContext(CURL *curl, void *ssl_ctx, void *userptr)
 - (size_t) writeData: (char *) buffer size: (size_t) size
                nmemb: (size_t) nmemb
 {
+    if (mShouldCancel)
+        return -1;
+    
     size_t length = size * nmemb;
     if (mIsFirstData)
     {
@@ -360,6 +402,9 @@ static CURLcode staticSslContext(CURL *curl, void *ssl_ctx, void *userptr)
 - (size_t) writeHeader: (char *) buffer size: (size_t) size
                  nmemb: (size_t) nmemb
 {
+    if (mShouldCancel)
+        return -1;
+
     size_t length = size * nmemb;
     
     NSString * header = [NSString stringWithCString: buffer length: length];
@@ -380,6 +425,9 @@ static CURLcode staticSslContext(CURL *curl, void *ssl_ctx, void *userptr)
                   upload: (double) upload
              uploadTotal: (double) uploadTotal;
 {
+    if (mShouldCancel)
+        return -1;
+
     [self dd_curlConnection: self
            progressDownload: download
               downloadTotal: downloadTotal
@@ -388,7 +436,17 @@ static CURLcode staticSslContext(CURL *curl, void *ssl_ctx, void *userptr)
     return 0;
 }
 
-- (CURLcode) sslContext: (void *) void_ssl_context;
+- (int) debug: (CURL *) handle
+         type: (curl_infotype) type
+         data: (char *) data
+         size: (size_t) size;
+{
+    if (mShouldCancel)
+        return -1;
+    return 0;
+}
+
+- (CURLcode) sslContext: (CURL *) handle context: (void *) void_ssl_context;
 {
     SSL_CTX * ssl_context = (SSL_CTX *) void_ssl_context;
     
