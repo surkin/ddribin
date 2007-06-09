@@ -225,9 +225,11 @@ static void signalHandler(int signal)
 - (void) dd_curlConnection: (DDCurlConnection *) connection
         didReceiveResponse: (DDCurlResponse *) response;
 {
+#if 0
     ddfprintf(stderr, @"Status code: %d\n", [response statusCode]);
     ddfprintf(stderr, @"Expected content length: %lld\n",
               [response expectedContentLength]);
+#endif
     mResponse = [response retain];
 }
 
