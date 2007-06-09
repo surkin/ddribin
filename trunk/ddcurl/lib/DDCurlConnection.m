@@ -233,7 +233,7 @@ static CURLcode staticSslContext(CURL *curl, void *ssl_ctx, void *userptr)
         // want to add our certs to an emtpy X509 store.
         [mCurl setCaInfo: nil];
        
-        [mCurl setFollowLocation: YES];
+        [mCurl setFollowLocation: [request allowRedirects]];
         
         DDCurlMultipartForm * form = [request multipartForm];
         if (form != nil)

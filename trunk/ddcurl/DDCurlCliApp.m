@@ -30,6 +30,7 @@
     
     _help = NO;
     _version = NO;
+    _redirect = NO;
     
     mRequest = [[DDMutableCurlRequest alloc] init];
     
@@ -108,7 +109,7 @@
            "Set HTTP header, e.g. \"Accept: application/xml\"\n");
     // printf("  -A, --add-header HEADER       "
     //        "Add HTTP header, e.g. \"Accept: application/xml\"\n");
-    // printf("  -r, --redirect                Follow redirects\n");
+    printf("  -r, --redirect                Follow redirects\n");
     printf("  -F, --form FIELD              Multipart form field\n");
     // printf("  -m, --method METHOD           HTTP method to use\n");
     printf("  -h, --help                    Display this help and exit\n");
@@ -129,6 +130,7 @@
         {@"form",       'F',    DDGetoptRequiredArgument},
         {@"username",   'u',    DDGetoptRequiredArgument},
         {@"password",   'p',    DDGetoptRequiredArgument},
+        {@"redirect",   'r',    DDGetoptNoArgument},
         {@"help",       'h',    DDGetoptNoArgument},
         {@"version",    0,      DDGetoptNoArgument},
         {nil,           0,      0},
@@ -165,9 +167,9 @@
     }
     NSString * url = [arguments objectAtIndex: 0];
     
-    mBody = [[NSMutableData alloc] init];
     mShouldKeepRunning = YES;
 
+    [mRequest setAllowRedirects: _redirect];
     if (mForm != nil)
         [mRequest setMultipartForm: mForm];
     
@@ -180,9 +182,15 @@
         return 1;
     }
     
+    mFileHandle = [[NSFileHandle fileHandleWithStandardOutput] retain];
+    if (isatty([mFileHandle fileDescriptor]))
+        mShowProgress = NO;
+    else
+        mShowProgress = YES;
+
     NSRunLoop * currentRunLoop = [NSRunLoop currentRunLoop];
     while (mShouldKeepRunning &&
-           [currentRunLoop runMode:NSDefaultRunLoopMode beforeDate:[NSDate distantFuture]])
+           [currentRunLoop runMode: NSDefaultRunLoopMode beforeDate: [NSDate distantFuture]])
     {
         // Empty
     }
@@ -194,11 +202,6 @@
     }
 
     fprintf(stderr, "\n");
-#if 1
-    NSString * bodyString = [[[NSString alloc] initWithData: mBody
-                                                   encoding: NSUTF8StringEncoding] autorelease];
-    printf("Data: %s\n", [bodyString UTF8String]);
-#endif
     
     return 0;
 }
@@ -207,8 +210,9 @@
 - (void) dd_curlConnection: (DDCurlConnection *) connection
         didReceiveResponse: (DDCurlResponse *) response;
 {
-    NSLog(@"Status code: %d", [response statusCode]);
-    NSLog(@"Expected content length: %lld", [response expectedContentLength]);
+    ddfprintf(stderr, @"Status code: %d\n", [response statusCode]);
+    ddfprintf(stderr, @"Expected content length: %lld\n",
+              [response expectedContentLength]);
     mResponse = [response retain];
 }
 
@@ -216,30 +220,7 @@
            didReceiveBytes: (void *) bytes
                     length: (unsigned) length;
 {
-    [mBody appendBytes: bytes length: length];
-    long long expectedLength = [mResponse expectedContentLength];
-    
-    mBytesReceived = mBytesReceived + length;
-    
-    if (expectedLength != NSURLResponseUnknownLength)
-    {
-        // if the expected content length is
-        // available, display percent complete
-        if (NO) // mShowProgress)
-        {
-            float percentComplete=(mBytesReceived/(float)expectedLength)*100.0;
-            fprintf(stderr, "Percent complete - %.1f\r", percentComplete);
-            if (mBytesReceived == expectedLength)
-                fprintf(stderr, "\n");
-        }
-    }
-    else
-    {
-        // if the expected content length is
-        // unknown just log the progress
-        if (NO) // mShowProgress)
-            fprintf(stderr, "Bytes received - %d\n", mBytesReceived);
-    }
+    [mFileHandle writeData: [NSData dataWithBytes: bytes length: length]];
 }
 
 - (void) dd_curlConnection: (DDCurlConnection *) connection
@@ -248,35 +229,45 @@
                     upload: (double) upload
                uploadTotal: (double) uploadTotal;
 {
+    if (!mShowProgress)
+        return;
+    
+    NSMutableArray * statuses = [NSMutableArray array];
     NSString * downloadStatus = nil;
     if (downloadTotal != 0)
     {
         double percentDown = download/downloadTotal*100;
-        downloadStatus = [NSString stringWithFormat: @"%.1f%%", percentDown];
+        downloadStatus =
+            [NSString stringWithFormat: @"Download %.1f%%", percentDown];
     }
-    else
+    else if (download != 0)
     {
-        downloadStatus = [NSString stringWithFormat: @"%.0f bytes", download];
+        downloadStatus =
+            [NSString stringWithFormat: @"Download %.0f bytes", download];
     }
+    if (downloadStatus != nil)
+        [statuses addObject: downloadStatus];
 
     NSString * uploadStatus = nil;
     if (uploadTotal != 0)
     {
         double percentUp = upload/uploadTotal*100;
-        uploadStatus = [NSString stringWithFormat: @"%.1f%%", percentUp];
+        uploadStatus =
+            [NSString stringWithFormat: @"Upload %.1f%%", percentUp];
     }
-    else
+    else if (upload != 0)
     {
-        uploadStatus = [NSString stringWithFormat: @"%.0f bytes", upload];
+        uploadStatus =
+            [NSString stringWithFormat: @"Upload %.0f bytes", upload];
     }
-
-    fprintf(stderr, "Download: %s, upload: %s\r", [downloadStatus UTF8String],
-            [uploadStatus UTF8String]);
+    if (uploadStatus != nil)
+        [statuses addObject: uploadStatus];
+    
+    ddfprintf(stderr, @"%@\r", [statuses componentsJoinedByString: @", "]);
 }
 
 - (void) dd_curlConnectionDidFinishLoading: (DDCurlConnection *) connection;
 {
-    // [mLock unlockWithCondition: DDCurlCliAppDone];
     mShouldKeepRunning = NO;
     [connection release];
 }

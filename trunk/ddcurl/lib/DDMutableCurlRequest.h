@@ -34,6 +34,7 @@
     NSString * mPassword;
     NSString * mHTTPMethod;
     NSMutableDictionary * mHeaders;
+    BOOL mAllowRedirects;
 }
 
 #pragma mark -
@@ -69,6 +70,9 @@
 
 - (NSString *) password;
 - (void) setPassword: (NSString *) thePassword;
+
+- (BOOL) allowRedirects;
+- (void) setAllowRedirects: (BOOL) flag;
 
 - (DDCurlMultipartForm *) multipartForm;
 - (void) setMultipartForm: (DDCurlMultipartForm *) theMultipartForm;
