@@ -85,9 +85,8 @@ static CURLcode staticSslContext(CURL *curl, void *ssl_ctx, void *userptr);
 #pragma mark Delegation
 
 - (void) dd_curlConnection: (DDCurlConnection *) connection
-           didReceiveBytes: (void *) bytes
-                    length: (unsigned) length;
-- (void) callDidReceiveBytesDelegate: (NSArray *) arguments;
+            didReceiveData: (NSData *) data;
+- (void) callDidReceiveDataDelegate: (NSData *) data;
 
 - (void) dd_curlConnection: (DDCurlConnection *) connection
         didReceiveResponse: (DDCurlResponse *) response;
@@ -344,16 +343,17 @@ static CURLcode staticSslContext(CURL *curl, void *ssl_ctx, void *userptr)
 - (size_t) writeData: (char *) buffer size: (size_t) size
                nmemb: (size_t) nmemb
 {
-    size_t bytes = size * nmemb;
+    size_t length = size * nmemb;
     if (mIsFirstData)
     {
         [self setResponseInfo];
         mIsFirstData = NO;
     }
     
+    NSData * data = [NSData dataWithBytes: buffer length: length];
     [self dd_curlConnection: self
-            didReceiveBytes: buffer length: bytes];
-    return bytes;
+             didReceiveData: data];
+    return length;
 }
 
 - (size_t) writeHeader: (char *) buffer size: (size_t) size
@@ -418,29 +418,21 @@ static CURLcode staticSslContext(CURL *curl, void *ssl_ctx, void *userptr)
 #pragma mark Delegation
 
 - (void) dd_curlConnection: (DDCurlConnection *) connection
-           didReceiveBytes: (void *) bytes
-                    length: (unsigned) length;
+            didReceiveData: (NSData *) data;
 {
     
     if (![mDelegate respondsToSelector: _cmd])
         return;
     
-    NSArray * arguments = [NSArray arrayWithObjects:
-        [NSValue valueWithPointer: bytes],
-        [NSNumber numberWithUnsignedInt: length],
-        nil];
-    [self performSelectorOnMainThread: @selector(callDidReceiveBytesDelegate:)
-                           withObject: arguments
+    [self performSelectorOnMainThread: @selector(callDidReceiveDataDelegate:)
+                           withObject: data
                         waitUntilDone: YES];
 }
 
-- (void) callDidReceiveBytesDelegate: (NSArray *) arguments;
+- (void) callDidReceiveDataDelegate: (NSData *) data;
 {
-    void * bytes = [[arguments objectAtIndex: 0] pointerValue];
-    unsigned length = [[arguments objectAtIndex: 1] unsignedIntValue];
     [mDelegate dd_curlConnection: self
-                 didReceiveBytes: bytes
-                          length: length];
+                  didReceiveData: data];
 }
 
 - (void) dd_curlConnection: (DDCurlConnection *) connection
