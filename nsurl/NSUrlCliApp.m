@@ -372,6 +372,9 @@ const char * COMMAND = 0;
               willSendRequest: (NSURLRequest *) request
              redirectResponse: (NSURLResponse *) redirectResponse
 {
+    if (redirectResponse == nil)
+        return request;
+        
     NSHTTPURLResponse * httpResponse = (NSHTTPURLResponse *) redirectResponse;
     if (mAllowRedirects)
     {
