@@ -4,7 +4,7 @@ header_file = ARGV.shift
 header = IO.read(header_file)
 
 ARGV.each do |path|
-  unless path.match(/\.(c|cpp|h|m|mm)/)
+  unless path.match(/\.(c|cpp|h|m|mm)$/)
     $stderr.puts "Skipping #{path}"
     next
   end
