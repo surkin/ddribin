@@ -30,13 +30,13 @@
 
 + (NSString *) hexStringWithData: (NSData *) data;
 
-+ (NSString *) md5StringWithData: (NSData *) data;
++ (NSString *) md5HexWithData: (NSData *) data;
 
-+ (NSString *) md5StringWithUTF8String: (NSString *) string;
++ (NSString *) md5HexWithUTF8String: (NSString *) string;
 
-+ (NSString *) md5StringWithInputStream: (NSInputStream *) stream;
++ (NSString *) md5HexWithInputStream: (NSInputStream *) stream;
 
-+ (NSString *) md5StringWithFileAtPath: (NSString *)  path;
++ (NSString *) md5HexWithFileAtPath: (NSString *)  path;
 
 #pragma mark -
 
