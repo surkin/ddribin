@@ -71,25 +71,25 @@
         [hash appendFormat: @"%02x", bytes[i]];
     }
     
-    return [hash copy];
+    return [[hash copy] autorelease];
 }
 
-+ (NSString *) md5StringWithData: (NSData *) data;
++ (NSString *) md5HexWithData: (NSData *) data;
 {
     return [self hexStringWithData: [self md5WithData: data]];
 }
 
-+ (NSString *) md5StringWithUTF8String: (NSString *) string;
++ (NSString *) md5HexWithUTF8String: (NSString *) string;
 {
     return [self hexStringWithData: [self md5WithUTF8String: string]];
 }
 
-+ (NSString *) md5StringWithInputStream: (NSInputStream *) stream;
++ (NSString *) md5HexWithInputStream: (NSInputStream *) stream;
 {
     return [self hexStringWithData: [self md5WithInputStream: stream]];
 }
 
-+ (NSString *) md5StringWithFileAtPath: (NSString *)  path;
++ (NSString *) md5HexWithFileAtPath: (NSString *)  path;
 {
     return [self hexStringWithData: [self md5WithFileAtPath: path]];
 }
@@ -110,6 +110,12 @@
     EVP_DigestInit_ex(&mContext, EVP_md5(), NULL);
     
     return self;
+}
+
+- (void) dealloc
+{
+    EVP_MD_CTX_cleanup(&mContext);
+    [super dealloc];
 }
 
 - (void) updateWithBytes: (const void *) bytes length: (unsigned) length;

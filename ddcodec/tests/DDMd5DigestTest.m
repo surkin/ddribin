@@ -26,7 +26,7 @@
 
 - (void) testStringWithUTF8String;
 {
-    NSString * hash = [DDMd5Digest md5StringWithUTF8String: @"hello"];
+    NSString * hash = [DDMd5Digest md5HexWithUTF8String: @"hello"];
     STAssertNotNil(hash, nil);
     NSString * expectedHash = @"5d41402abc4b2a76b9719d911017c592";
     STAssertEqualObjects(hash, expectedHash, nil);
@@ -36,7 +36,7 @@
 {
     NSBundle * myBundle = [NSBundle bundleForClass: [self class]];
     NSString * path = [myBundle pathForResource: @"foo" ofType: @"txt"];
-    NSString * hash = [DDMd5Digest md5StringWithFileAtPath: path];
+    NSString * hash = [DDMd5Digest md5HexWithFileAtPath: path];
     STAssertNotNil(hash, nil);
     NSString * expectedHash = @"e7bea2d8ef3c0f7d3141293055592826";
     STAssertEqualObjects(hash, expectedHash, nil);
