@@ -1,0 +1,86 @@
+//
+//  Bouncer.m
+//  TheBouncer
+//
+//  Created by Dave Dribin on 8/6/07.
+//  Copyright 2007 __MyCompanyName__. All rights reserved.
+//
+
+#import "Bouncer.h"
+
+
+@implementation Bouncer
+
++ (void) load
+{
+    [[NSNotificationCenter defaultCenter]
+        addObserver: self
+           selector: @selector(installDO:)
+               name: NSApplicationWillFinishLaunchingNotification
+             object: nil];
+    NSLog(@"Loaded TheBouncer");
+}
+
++ (void) installDO: (NSNotification *) notification
+{
+    static Bouncer * bouncer = nil;
+    if (bouncer != nil)
+        return;
+    
+    bouncer = [[self alloc] init];
+    [bouncer installDO];
+}
+
+- (void) installDO;
+{
+    NSProcessInfo * processInfo = [NSProcessInfo processInfo];
+    NSString * processName = [processInfo processName];
+    
+    NSString * connectionName = [NSString stringWithFormat:
+        @"DDBouncerVictimDO %@", processName];
+    NSLog(@"Registering %@", connectionName);
+    mConnection = [[NSConnection defaultConnection] retain];
+    [mConnection setRootObject: self];
+    [mConnection registerName: connectionName];
+        
+    NSLog(@"Notifying TheBouncer");
+    NSBundle * mainBundle = [NSBundle mainBundle];
+    NSDictionary * userInfo = [NSDictionary dictionaryWithObjectsAndKeys:
+        processName, @"Name",
+        [mainBundle bundlePath], @"BundlePath",
+        connectionName, @"ConnectionName",
+        nil];
+
+    [[NSDistributedNotificationCenter defaultCenter]
+    postNotificationName: @"DDBouncerDOAvailable"
+                  object: nil
+                userInfo: userInfo];
+}
+
+- (void) bounce;
+{
+    [NSApp cancelUserAttentionRequest: NSInformationalRequest];
+    [NSApp cancelUserAttentionRequest: NSCriticalRequest];
+
+    [NSApp requestUserAttention: NSInformationalRequest];
+    [NSTimer scheduledTimerWithTimeInterval: 0.50
+                                     target: self
+                                   selector: @selector(cancelInformational)
+                                   userInfo: nil
+                                    repeats: NO];
+}
+
+- (void) cancelInformational
+{
+    [NSApp cancelUserAttentionRequest: NSInformationalRequest];
+}
+
+- (void) bounceCritical;
+{
+    [NSApp cancelUserAttentionRequest: NSInformationalRequest];
+    [NSApp cancelUserAttentionRequest: NSCriticalRequest];
+
+    [NSApp requestUserAttention: NSCriticalRequest];
+}
+
+@end
