@@ -1,0 +1,13 @@
+{
+    IBClasses = (
+        {
+            ACTIONS = {bounceInPattern = id; bounceSelectedVictims = id; }; 
+            CLASS = BouncerAppDelegate; 
+            LANGUAGE = ObjC; 
+            OUTLETS = {mVictimsController = NSArrayController; mVictimsTable = NSTableView; }; 
+            SUPERCLASS = NSObject; 
+        }, 
+        {CLASS = FirstResponder; LANGUAGE = ObjC; SUPERCLASS = NSObject; }
+    ); 
+    IBVersion = 1; 
+}
