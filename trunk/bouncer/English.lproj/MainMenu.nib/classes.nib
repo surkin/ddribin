@@ -4,8 +4,18 @@
             ACTIONS = {bounceInPattern = id; bounceSelectedVictims = id; }; 
             CLASS = BouncerAppDelegate; 
             LANGUAGE = ObjC; 
-            OUTLETS = {mVictimsController = NSArrayController; mVictimsTable = NSTableView; }; 
+            OUTLETS = {
+                mMovieView = QTMovieView; 
+                mVictimsController = NSArrayController; 
+                mVictimsTable = NSTableView; 
+            }; 
             SUPERCLASS = NSObject; 
+        }, 
+        {
+            CLASS = BouncerView; 
+            LANGUAGE = ObjC; 
+            OUTLETS = {mController = BouncerAppDelegate; }; 
+            SUPERCLASS = NSView; 
         }, 
         {CLASS = FirstResponder; LANGUAGE = ObjC; SUPERCLASS = NSObject; }
     ); 
