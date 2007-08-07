@@ -28,21 +28,21 @@
 		554228090C67C77F00C7FF64 /* QTKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 554228080C67C77F00C7FF64 /* QTKit.framework */; };
 		554228680C67D03900C7FF64 /* QuickTime.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 554228670C67D03900C7FF64 /* QuickTime.framework */; };
 		5596DFBB0C67E1CE0011E379 /* BouncerView.m in Sources */ = {isa = PBXBuildFile; fileRef = 5596DFBA0C67E1CE0011E379 /* BouncerView.m */; };
-		5596E0630C67E5CD0011E379 /* DDHidAppleRemote.m in Sources */ = {isa = PBXBuildFile; fileRef = 5596E04A0C67E5CD0011E379 /* DDHidAppleRemote.m */; };
-		5596E0640C67E5CD0011E379 /* DDHidDevice.m in Sources */ = {isa = PBXBuildFile; fileRef = 5596E04C0C67E5CD0011E379 /* DDHidDevice.m */; };
-		5596E0650C67E5CD0011E379 /* DDHidElement.m in Sources */ = {isa = PBXBuildFile; fileRef = 5596E04E0C67E5CD0011E379 /* DDHidElement.m */; };
-		5596E0660C67E5CD0011E379 /* DDHidEvent.m in Sources */ = {isa = PBXBuildFile; fileRef = 5596E0500C67E5CD0011E379 /* DDHidEvent.m */; };
-		5596E0670C67E5CD0011E379 /* DDHidJoystick.m in Sources */ = {isa = PBXBuildFile; fileRef = 5596E0520C67E5CD0011E379 /* DDHidJoystick.m */; };
-		5596E0680C67E5CD0011E379 /* DDHidKeyboard.m in Sources */ = {isa = PBXBuildFile; fileRef = 5596E0540C67E5CD0011E379 /* DDHidKeyboard.m */; };
-		5596E0690C67E5CD0011E379 /* DDHidKeyboardBarcodeScanner.m in Sources */ = {isa = PBXBuildFile; fileRef = 5596E0560C67E5CD0011E379 /* DDHidKeyboardBarcodeScanner.m */; };
-		5596E06A0C67E5CD0011E379 /* DDHidMouse.m in Sources */ = {isa = PBXBuildFile; fileRef = 5596E0590C67E5CD0011E379 /* DDHidMouse.m */; };
-		5596E06B0C67E5CD0011E379 /* DDHidQueue.m in Sources */ = {isa = PBXBuildFile; fileRef = 5596E05B0C67E5CD0011E379 /* DDHidQueue.m */; };
-		5596E06C0C67E5CD0011E379 /* DDHidStandardUsages.plist in Resources */ = {isa = PBXBuildFile; fileRef = 5596E05C0C67E5CD0011E379 /* DDHidStandardUsages.plist */; };
-		5596E06D0C67E5CD0011E379 /* DDHidUsage.m in Sources */ = {isa = PBXBuildFile; fileRef = 5596E05E0C67E5CD0011E379 /* DDHidUsage.m */; };
-		5596E06E0C67E5CD0011E379 /* DDHidUsageTables.m in Sources */ = {isa = PBXBuildFile; fileRef = 5596E0600C67E5CD0011E379 /* DDHidUsageTables.m */; };
-		5596E06F0C67E5CD0011E379 /* NSDictionary+DDHidExtras.m in Sources */ = {isa = PBXBuildFile; fileRef = 5596E0620C67E5CD0011E379 /* NSDictionary+DDHidExtras.m */; };
 		5596E07C0C67E5F80011E379 /* NSXReturnThrowError.m in Sources */ = {isa = PBXBuildFile; fileRef = 5596E07B0C67E5F80011E379 /* NSXReturnThrowError.m */; };
 		5596E0820C67E6190011E379 /* IOKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5596E0810C67E6190011E379 /* IOKit.framework */; };
+		55C9DF680C67FB0100126EDC /* DDHidAppleRemote.m in Sources */ = {isa = PBXBuildFile; fileRef = 55C9DF4F0C67FB0100126EDC /* DDHidAppleRemote.m */; };
+		55C9DF690C67FB0100126EDC /* DDHidDevice.m in Sources */ = {isa = PBXBuildFile; fileRef = 55C9DF510C67FB0100126EDC /* DDHidDevice.m */; };
+		55C9DF6A0C67FB0100126EDC /* DDHidElement.m in Sources */ = {isa = PBXBuildFile; fileRef = 55C9DF530C67FB0100126EDC /* DDHidElement.m */; };
+		55C9DF6B0C67FB0100126EDC /* DDHidEvent.m in Sources */ = {isa = PBXBuildFile; fileRef = 55C9DF550C67FB0100126EDC /* DDHidEvent.m */; };
+		55C9DF6C0C67FB0100126EDC /* DDHidJoystick.m in Sources */ = {isa = PBXBuildFile; fileRef = 55C9DF570C67FB0100126EDC /* DDHidJoystick.m */; };
+		55C9DF6D0C67FB0100126EDC /* DDHidKeyboard.m in Sources */ = {isa = PBXBuildFile; fileRef = 55C9DF590C67FB0100126EDC /* DDHidKeyboard.m */; };
+		55C9DF6E0C67FB0100126EDC /* DDHidKeyboardBarcodeScanner.m in Sources */ = {isa = PBXBuildFile; fileRef = 55C9DF5B0C67FB0100126EDC /* DDHidKeyboardBarcodeScanner.m */; };
+		55C9DF6F0C67FB0100126EDC /* DDHidMouse.m in Sources */ = {isa = PBXBuildFile; fileRef = 55C9DF5E0C67FB0100126EDC /* DDHidMouse.m */; };
+		55C9DF700C67FB0100126EDC /* DDHidQueue.m in Sources */ = {isa = PBXBuildFile; fileRef = 55C9DF600C67FB0100126EDC /* DDHidQueue.m */; };
+		55C9DF710C67FB0100126EDC /* DDHidStandardUsages.plist in Resources */ = {isa = PBXBuildFile; fileRef = 55C9DF610C67FB0100126EDC /* DDHidStandardUsages.plist */; };
+		55C9DF720C67FB0100126EDC /* DDHidUsage.m in Sources */ = {isa = PBXBuildFile; fileRef = 55C9DF630C67FB0100126EDC /* DDHidUsage.m */; };
+		55C9DF730C67FB0100126EDC /* DDHidUsageTables.m in Sources */ = {isa = PBXBuildFile; fileRef = 55C9DF650C67FB0100126EDC /* DDHidUsageTables.m */; };
+		55C9DF740C67FB0100126EDC /* NSDictionary+DDHidExtras.m in Sources */ = {isa = PBXBuildFile; fileRef = 55C9DF670C67FB0100126EDC /* NSDictionary+DDHidExtras.m */; };
 		8D11072A0486CEB800E47090 /* MainMenu.nib in Resources */ = {isa = PBXBuildFile; fileRef = 29B97318FDCFA39411CA2CEA /* MainMenu.nib */; };
 		8D11072B0486CEB800E47090 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 089C165CFE840E0CC02AAC07 /* InfoPlist.strings */; };
 		8D11072D0486CEB800E47090 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 29B97316FDCFA39411CA2CEA /* main.m */; settings = {ATTRIBUTES = (); }; };
@@ -88,35 +88,35 @@
 		554228670C67D03900C7FF64 /* QuickTime.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuickTime.framework; path = /System/Library/Frameworks/QuickTime.framework; sourceTree = "<absolute>"; };
 		5596DFB90C67E1CE0011E379 /* BouncerView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BouncerView.h; sourceTree = "<group>"; };
 		5596DFBA0C67E1CE0011E379 /* BouncerView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BouncerView.m; sourceTree = "<group>"; };
-		5596E0490C67E5CD0011E379 /* DDHidAppleRemote.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = DDHidAppleRemote.h; sourceTree = "<group>"; };
-		5596E04A0C67E5CD0011E379 /* DDHidAppleRemote.m */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.objc; path = DDHidAppleRemote.m; sourceTree = "<group>"; };
-		5596E04B0C67E5CD0011E379 /* DDHidDevice.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = DDHidDevice.h; sourceTree = "<group>"; };
-		5596E04C0C67E5CD0011E379 /* DDHidDevice.m */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.objc; path = DDHidDevice.m; sourceTree = "<group>"; };
-		5596E04D0C67E5CD0011E379 /* DDHidElement.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = DDHidElement.h; sourceTree = "<group>"; };
-		5596E04E0C67E5CD0011E379 /* DDHidElement.m */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.objc; path = DDHidElement.m; sourceTree = "<group>"; };
-		5596E04F0C67E5CD0011E379 /* DDHidEvent.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = DDHidEvent.h; sourceTree = "<group>"; };
-		5596E0500C67E5CD0011E379 /* DDHidEvent.m */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.objc; path = DDHidEvent.m; sourceTree = "<group>"; };
-		5596E0510C67E5CD0011E379 /* DDHidJoystick.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = DDHidJoystick.h; sourceTree = "<group>"; };
-		5596E0520C67E5CD0011E379 /* DDHidJoystick.m */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.objc; path = DDHidJoystick.m; sourceTree = "<group>"; };
-		5596E0530C67E5CD0011E379 /* DDHidKeyboard.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = DDHidKeyboard.h; sourceTree = "<group>"; };
-		5596E0540C67E5CD0011E379 /* DDHidKeyboard.m */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.objc; path = DDHidKeyboard.m; sourceTree = "<group>"; };
-		5596E0550C67E5CD0011E379 /* DDHidKeyboardBarcodeScanner.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = DDHidKeyboardBarcodeScanner.h; sourceTree = "<group>"; };
-		5596E0560C67E5CD0011E379 /* DDHidKeyboardBarcodeScanner.m */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.objc; path = DDHidKeyboardBarcodeScanner.m; sourceTree = "<group>"; };
-		5596E0570C67E5CD0011E379 /* DDHidLib.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = DDHidLib.h; sourceTree = "<group>"; };
-		5596E0580C67E5CD0011E379 /* DDHidMouse.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = DDHidMouse.h; sourceTree = "<group>"; };
-		5596E0590C67E5CD0011E379 /* DDHidMouse.m */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.objc; path = DDHidMouse.m; sourceTree = "<group>"; };
-		5596E05A0C67E5CD0011E379 /* DDHidQueue.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = DDHidQueue.h; sourceTree = "<group>"; };
-		5596E05B0C67E5CD0011E379 /* DDHidQueue.m */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.objc; path = DDHidQueue.m; sourceTree = "<group>"; };
-		5596E05C0C67E5CD0011E379 /* DDHidStandardUsages.plist */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = text.xml; path = DDHidStandardUsages.plist; sourceTree = "<group>"; };
-		5596E05D0C67E5CD0011E379 /* DDHidUsage.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = DDHidUsage.h; sourceTree = "<group>"; };
-		5596E05E0C67E5CD0011E379 /* DDHidUsage.m */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.objc; path = DDHidUsage.m; sourceTree = "<group>"; };
-		5596E05F0C67E5CD0011E379 /* DDHidUsageTables.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = DDHidUsageTables.h; sourceTree = "<group>"; };
-		5596E0600C67E5CD0011E379 /* DDHidUsageTables.m */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.objc; path = DDHidUsageTables.m; sourceTree = "<group>"; };
-		5596E0610C67E5CD0011E379 /* NSDictionary+DDHidExtras.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = "NSDictionary+DDHidExtras.h"; sourceTree = "<group>"; };
-		5596E0620C67E5CD0011E379 /* NSDictionary+DDHidExtras.m */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.objc; path = "NSDictionary+DDHidExtras.m"; sourceTree = "<group>"; };
 		5596E07A0C67E5F80011E379 /* NSXReturnThrowError.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = NSXReturnThrowError.h; sourceTree = "<group>"; };
 		5596E07B0C67E5F80011E379 /* NSXReturnThrowError.m */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.objc; path = NSXReturnThrowError.m; sourceTree = "<group>"; };
 		5596E0810C67E6190011E379 /* IOKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = IOKit.framework; path = /System/Library/Frameworks/IOKit.framework; sourceTree = "<absolute>"; };
+		55C9DF4E0C67FB0100126EDC /* DDHidAppleRemote.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = DDHidAppleRemote.h; sourceTree = "<group>"; };
+		55C9DF4F0C67FB0100126EDC /* DDHidAppleRemote.m */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.objc; path = DDHidAppleRemote.m; sourceTree = "<group>"; };
+		55C9DF500C67FB0100126EDC /* DDHidDevice.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = DDHidDevice.h; sourceTree = "<group>"; };
+		55C9DF510C67FB0100126EDC /* DDHidDevice.m */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.objc; path = DDHidDevice.m; sourceTree = "<group>"; };
+		55C9DF520C67FB0100126EDC /* DDHidElement.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = DDHidElement.h; sourceTree = "<group>"; };
+		55C9DF530C67FB0100126EDC /* DDHidElement.m */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.objc; path = DDHidElement.m; sourceTree = "<group>"; };
+		55C9DF540C67FB0100126EDC /* DDHidEvent.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = DDHidEvent.h; sourceTree = "<group>"; };
+		55C9DF550C67FB0100126EDC /* DDHidEvent.m */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.objc; path = DDHidEvent.m; sourceTree = "<group>"; };
+		55C9DF560C67FB0100126EDC /* DDHidJoystick.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = DDHidJoystick.h; sourceTree = "<group>"; };
+		55C9DF570C67FB0100126EDC /* DDHidJoystick.m */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.objc; path = DDHidJoystick.m; sourceTree = "<group>"; };
+		55C9DF580C67FB0100126EDC /* DDHidKeyboard.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = DDHidKeyboard.h; sourceTree = "<group>"; };
+		55C9DF590C67FB0100126EDC /* DDHidKeyboard.m */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.objc; path = DDHidKeyboard.m; sourceTree = "<group>"; };
+		55C9DF5A0C67FB0100126EDC /* DDHidKeyboardBarcodeScanner.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = DDHidKeyboardBarcodeScanner.h; sourceTree = "<group>"; };
+		55C9DF5B0C67FB0100126EDC /* DDHidKeyboardBarcodeScanner.m */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.objc; path = DDHidKeyboardBarcodeScanner.m; sourceTree = "<group>"; };
+		55C9DF5C0C67FB0100126EDC /* DDHidLib.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = DDHidLib.h; sourceTree = "<group>"; };
+		55C9DF5D0C67FB0100126EDC /* DDHidMouse.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = DDHidMouse.h; sourceTree = "<group>"; };
+		55C9DF5E0C67FB0100126EDC /* DDHidMouse.m */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.objc; path = DDHidMouse.m; sourceTree = "<group>"; };
+		55C9DF5F0C67FB0100126EDC /* DDHidQueue.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = DDHidQueue.h; sourceTree = "<group>"; };
+		55C9DF600C67FB0100126EDC /* DDHidQueue.m */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.objc; path = DDHidQueue.m; sourceTree = "<group>"; };
+		55C9DF610C67FB0100126EDC /* DDHidStandardUsages.plist */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = text.xml; path = DDHidStandardUsages.plist; sourceTree = "<group>"; };
+		55C9DF620C67FB0100126EDC /* DDHidUsage.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = DDHidUsage.h; sourceTree = "<group>"; };
+		55C9DF630C67FB0100126EDC /* DDHidUsage.m */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.objc; path = DDHidUsage.m; sourceTree = "<group>"; };
+		55C9DF640C67FB0100126EDC /* DDHidUsageTables.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = DDHidUsageTables.h; sourceTree = "<group>"; };
+		55C9DF650C67FB0100126EDC /* DDHidUsageTables.m */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.objc; path = DDHidUsageTables.m; sourceTree = "<group>"; };
+		55C9DF660C67FB0100126EDC /* NSDictionary+DDHidExtras.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = "NSDictionary+DDHidExtras.h"; sourceTree = "<group>"; };
+		55C9DF670C67FB0100126EDC /* NSDictionary+DDHidExtras.m */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.objc; path = "NSDictionary+DDHidExtras.m"; sourceTree = "<group>"; };
 		8D1107310486CEB800E47090 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
 		8D1107320486CEB800E47090 /* TheBouncer.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = TheBouncer.app; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
@@ -243,43 +243,10 @@
 		5596E0470C67E5CD0011E379 /* vendor */ = {
 			isa = PBXGroup;
 			children = (
+				55C9DF4D0C67FB0100126EDC /* DDHidLib */,
 				5596E0790C67E5F80011E379 /* NSXReturnThrowError */,
-				5596E0480C67E5CD0011E379 /* DDHidLib */,
 			);
 			path = vendor;
-			sourceTree = "<group>";
-		};
-		5596E0480C67E5CD0011E379 /* DDHidLib */ = {
-			isa = PBXGroup;
-			children = (
-				5596E0490C67E5CD0011E379 /* DDHidAppleRemote.h */,
-				5596E04A0C67E5CD0011E379 /* DDHidAppleRemote.m */,
-				5596E04B0C67E5CD0011E379 /* DDHidDevice.h */,
-				5596E04C0C67E5CD0011E379 /* DDHidDevice.m */,
-				5596E04D0C67E5CD0011E379 /* DDHidElement.h */,
-				5596E04E0C67E5CD0011E379 /* DDHidElement.m */,
-				5596E04F0C67E5CD0011E379 /* DDHidEvent.h */,
-				5596E0500C67E5CD0011E379 /* DDHidEvent.m */,
-				5596E0510C67E5CD0011E379 /* DDHidJoystick.h */,
-				5596E0520C67E5CD0011E379 /* DDHidJoystick.m */,
-				5596E0530C67E5CD0011E379 /* DDHidKeyboard.h */,
-				5596E0540C67E5CD0011E379 /* DDHidKeyboard.m */,
-				5596E0550C67E5CD0011E379 /* DDHidKeyboardBarcodeScanner.h */,
-				5596E0560C67E5CD0011E379 /* DDHidKeyboardBarcodeScanner.m */,
-				5596E0570C67E5CD0011E379 /* DDHidLib.h */,
-				5596E0580C67E5CD0011E379 /* DDHidMouse.h */,
-				5596E0590C67E5CD0011E379 /* DDHidMouse.m */,
-				5596E05A0C67E5CD0011E379 /* DDHidQueue.h */,
-				5596E05B0C67E5CD0011E379 /* DDHidQueue.m */,
-				5596E05C0C67E5CD0011E379 /* DDHidStandardUsages.plist */,
-				5596E05D0C67E5CD0011E379 /* DDHidUsage.h */,
-				5596E05E0C67E5CD0011E379 /* DDHidUsage.m */,
-				5596E05F0C67E5CD0011E379 /* DDHidUsageTables.h */,
-				5596E0600C67E5CD0011E379 /* DDHidUsageTables.m */,
-				5596E0610C67E5CD0011E379 /* NSDictionary+DDHidExtras.h */,
-				5596E0620C67E5CD0011E379 /* NSDictionary+DDHidExtras.m */,
-			);
-			path = DDHidLib;
 			sourceTree = "<group>";
 		};
 		5596E0790C67E5F80011E379 /* NSXReturnThrowError */ = {
@@ -290,6 +257,40 @@
 			);
 			path = NSXReturnThrowError;
 			sourceTree = "<group>";
+		};
+		55C9DF4D0C67FB0100126EDC /* DDHidLib */ = {
+			isa = PBXGroup;
+			children = (
+				55C9DF4E0C67FB0100126EDC /* DDHidAppleRemote.h */,
+				55C9DF4F0C67FB0100126EDC /* DDHidAppleRemote.m */,
+				55C9DF500C67FB0100126EDC /* DDHidDevice.h */,
+				55C9DF510C67FB0100126EDC /* DDHidDevice.m */,
+				55C9DF520C67FB0100126EDC /* DDHidElement.h */,
+				55C9DF530C67FB0100126EDC /* DDHidElement.m */,
+				55C9DF540C67FB0100126EDC /* DDHidEvent.h */,
+				55C9DF550C67FB0100126EDC /* DDHidEvent.m */,
+				55C9DF560C67FB0100126EDC /* DDHidJoystick.h */,
+				55C9DF570C67FB0100126EDC /* DDHidJoystick.m */,
+				55C9DF580C67FB0100126EDC /* DDHidKeyboard.h */,
+				55C9DF590C67FB0100126EDC /* DDHidKeyboard.m */,
+				55C9DF5A0C67FB0100126EDC /* DDHidKeyboardBarcodeScanner.h */,
+				55C9DF5B0C67FB0100126EDC /* DDHidKeyboardBarcodeScanner.m */,
+				55C9DF5C0C67FB0100126EDC /* DDHidLib.h */,
+				55C9DF5D0C67FB0100126EDC /* DDHidMouse.h */,
+				55C9DF5E0C67FB0100126EDC /* DDHidMouse.m */,
+				55C9DF5F0C67FB0100126EDC /* DDHidQueue.h */,
+				55C9DF600C67FB0100126EDC /* DDHidQueue.m */,
+				55C9DF610C67FB0100126EDC /* DDHidStandardUsages.plist */,
+				55C9DF620C67FB0100126EDC /* DDHidUsage.h */,
+				55C9DF630C67FB0100126EDC /* DDHidUsage.m */,
+				55C9DF640C67FB0100126EDC /* DDHidUsageTables.h */,
+				55C9DF650C67FB0100126EDC /* DDHidUsageTables.m */,
+				55C9DF660C67FB0100126EDC /* NSDictionary+DDHidExtras.h */,
+				55C9DF670C67FB0100126EDC /* NSDictionary+DDHidExtras.m */,
+			);
+			name = DDHidLib;
+			path = ../DDHidLib/lib;
+			sourceTree = SOURCE_ROOT;
 		};
 /* End PBXGroup section */
 
@@ -360,7 +361,7 @@
 			files = (
 				8D11072A0486CEB800E47090 /* MainMenu.nib in Resources */,
 				8D11072B0486CEB800E47090 /* InfoPlist.strings in Resources */,
-				5596E06C0C67E5CD0011E379 /* DDHidStandardUsages.plist in Resources */,
+				55C9DF710C67FB0100126EDC /* DDHidStandardUsages.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -383,19 +384,19 @@
 				554225800C67A1E000C7FF64 /* BouncerAppDelegate.m in Sources */,
 				554225E70C67A7CF00C7FF64 /* BouncerVictim.m in Sources */,
 				5596DFBB0C67E1CE0011E379 /* BouncerView.m in Sources */,
-				5596E0630C67E5CD0011E379 /* DDHidAppleRemote.m in Sources */,
-				5596E0640C67E5CD0011E379 /* DDHidDevice.m in Sources */,
-				5596E0650C67E5CD0011E379 /* DDHidElement.m in Sources */,
-				5596E0660C67E5CD0011E379 /* DDHidEvent.m in Sources */,
-				5596E0670C67E5CD0011E379 /* DDHidJoystick.m in Sources */,
-				5596E0680C67E5CD0011E379 /* DDHidKeyboard.m in Sources */,
-				5596E0690C67E5CD0011E379 /* DDHidKeyboardBarcodeScanner.m in Sources */,
-				5596E06A0C67E5CD0011E379 /* DDHidMouse.m in Sources */,
-				5596E06B0C67E5CD0011E379 /* DDHidQueue.m in Sources */,
-				5596E06D0C67E5CD0011E379 /* DDHidUsage.m in Sources */,
-				5596E06E0C67E5CD0011E379 /* DDHidUsageTables.m in Sources */,
-				5596E06F0C67E5CD0011E379 /* NSDictionary+DDHidExtras.m in Sources */,
 				5596E07C0C67E5F80011E379 /* NSXReturnThrowError.m in Sources */,
+				55C9DF680C67FB0100126EDC /* DDHidAppleRemote.m in Sources */,
+				55C9DF690C67FB0100126EDC /* DDHidDevice.m in Sources */,
+				55C9DF6A0C67FB0100126EDC /* DDHidElement.m in Sources */,
+				55C9DF6B0C67FB0100126EDC /* DDHidEvent.m in Sources */,
+				55C9DF6C0C67FB0100126EDC /* DDHidJoystick.m in Sources */,
+				55C9DF6D0C67FB0100126EDC /* DDHidKeyboard.m in Sources */,
+				55C9DF6E0C67FB0100126EDC /* DDHidKeyboardBarcodeScanner.m in Sources */,
+				55C9DF6F0C67FB0100126EDC /* DDHidMouse.m in Sources */,
+				55C9DF700C67FB0100126EDC /* DDHidQueue.m in Sources */,
+				55C9DF720C67FB0100126EDC /* DDHidUsage.m in Sources */,
+				55C9DF730C67FB0100126EDC /* DDHidUsageTables.m in Sources */,
+				55C9DF740C67FB0100126EDC /* NSDictionary+DDHidExtras.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
