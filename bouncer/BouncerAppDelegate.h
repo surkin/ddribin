@@ -7,14 +7,17 @@
 //
 
 #import <Cocoa/Cocoa.h>
+#import <QTKit/QTKit.h>
 
 
 @interface BouncerAppDelegate : NSObject
 {
     IBOutlet NSArrayController * mVictimsController;
     IBOutlet NSTableView * mVictimsTable;
+    IBOutlet QTMovieView * mMovieView;
     
     NSMutableArray * mVictims;
+    QTAudioFrequencyLevels * mFreqResults;
 }
 
 - (NSArray *) victims;

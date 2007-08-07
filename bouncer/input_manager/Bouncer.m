@@ -43,7 +43,7 @@
     [mConnection setRootObject: self];
     [mConnection registerName: connectionName];
         
-    NSLog(@"Notifying TheBouncer");
+    NSLog(@"Sending DDBouncerDOAvailable");
     NSBundle * mainBundle = [NSBundle mainBundle];
     NSDictionary * userInfo = [NSDictionary dictionaryWithObjectsAndKeys:
         processName, @"Name",
@@ -53,6 +53,27 @@
 
     [[NSDistributedNotificationCenter defaultCenter]
     postNotificationName: @"DDBouncerDOAvailable"
+                  object: nil
+                userInfo: userInfo];
+    [[NSNotificationCenter defaultCenter]
+        addObserver: self
+           selector: @selector(removeDO:)
+               name: NSApplicationWillTerminateNotification
+             object: nil];
+    
+}
+
+- (void) removeDO: (NSNotification *) notification;
+{
+    NSProcessInfo * processInfo = [NSProcessInfo processInfo];
+    NSString * processName = [processInfo processName];
+    NSDictionary * userInfo = [NSDictionary dictionaryWithObjectsAndKeys:
+        processName, @"Name",
+        nil];
+    
+    NSLog(@"Sending DDBouncerDOGone");
+    [[NSDistributedNotificationCenter defaultCenter]
+    postNotificationName: @"DDBouncerDOGone"
                   object: nil
                 userInfo: userInfo];
 }
