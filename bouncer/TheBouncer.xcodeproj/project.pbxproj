@@ -22,6 +22,7 @@
 /* End PBXAggregateTarget section */
 
 /* Begin PBXBuildFile section */
+		5522E60D0C6A5FCC0053E4B8 /* icons.qtz in Resources */ = {isa = PBXBuildFile; fileRef = 5522E60C0C6A5FCC0053E4B8 /* icons.qtz */; };
 		5542257D0C67A0FB00C7FF64 /* Bouncer.m in Sources */ = {isa = PBXBuildFile; fileRef = 5542257C0C67A0FB00C7FF64 /* Bouncer.m */; };
 		554225800C67A1E000C7FF64 /* BouncerAppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 5542257F0C67A1E000C7FF64 /* BouncerAppDelegate.m */; };
 		554225E70C67A7CF00C7FF64 /* BouncerVictim.m in Sources */ = {isa = PBXBuildFile; fileRef = 554225E60C67A7CF00C7FF64 /* BouncerVictim.m */; };
@@ -43,6 +44,8 @@
 		55C9DF720C67FB0100126EDC /* DDHidUsage.m in Sources */ = {isa = PBXBuildFile; fileRef = 55C9DF630C67FB0100126EDC /* DDHidUsage.m */; };
 		55C9DF730C67FB0100126EDC /* DDHidUsageTables.m in Sources */ = {isa = PBXBuildFile; fileRef = 55C9DF650C67FB0100126EDC /* DDHidUsageTables.m */; };
 		55C9DF740C67FB0100126EDC /* NSDictionary+DDHidExtras.m in Sources */ = {isa = PBXBuildFile; fileRef = 55C9DF670C67FB0100126EDC /* NSDictionary+DDHidExtras.m */; };
+		55C9E0070C68075E00126EDC /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 55C9E0060C68075E00126EDC /* QuartzCore.framework */; };
+		55C9E22E0C68077F00126EDC /* Quartz.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 55C9E22D0C68077F00126EDC /* Quartz.framework */; };
 		8D11072A0486CEB800E47090 /* MainMenu.nib in Resources */ = {isa = PBXBuildFile; fileRef = 29B97318FDCFA39411CA2CEA /* MainMenu.nib */; };
 		8D11072B0486CEB800E47090 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 089C165CFE840E0CC02AAC07 /* InfoPlist.strings */; };
 		8D11072D0486CEB800E47090 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 29B97316FDCFA39411CA2CEA /* main.m */; settings = {ATTRIBUTES = (); }; };
@@ -75,6 +78,7 @@
 		29B97324FDCFA39411CA2CEA /* AppKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AppKit.framework; path = /System/Library/Frameworks/AppKit.framework; sourceTree = "<absolute>"; };
 		29B97325FDCFA39411CA2CEA /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = /System/Library/Frameworks/Foundation.framework; sourceTree = "<absolute>"; };
 		32CA4F630368D1EE00C91783 /* TheBouncer_Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TheBouncer_Prefix.pch; sourceTree = "<group>"; };
+		5522E60C0C6A5FCC0053E4B8 /* icons.qtz */ = {isa = PBXFileReference; lastKnownFileType = file; path = icons.qtz; sourceTree = "<group>"; };
 		5542256D0C67A04600C7FF64 /* TheBouncerPlugin.bundle */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = TheBouncerPlugin.bundle; sourceTree = BUILT_PRODUCTS_DIR; };
 		5542256E0C67A04600C7FF64 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.xml; path = Info.plist; sourceTree = "<group>"; };
 		5542257B0C67A0FB00C7FF64 /* Bouncer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Bouncer.h; sourceTree = "<group>"; };
@@ -117,6 +121,8 @@
 		55C9DF650C67FB0100126EDC /* DDHidUsageTables.m */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.objc; path = DDHidUsageTables.m; sourceTree = "<group>"; };
 		55C9DF660C67FB0100126EDC /* NSDictionary+DDHidExtras.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = "NSDictionary+DDHidExtras.h"; sourceTree = "<group>"; };
 		55C9DF670C67FB0100126EDC /* NSDictionary+DDHidExtras.m */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.objc; path = "NSDictionary+DDHidExtras.m"; sourceTree = "<group>"; };
+		55C9E0060C68075E00126EDC /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = /System/Library/Frameworks/QuartzCore.framework; sourceTree = "<absolute>"; };
+		55C9E22D0C68077F00126EDC /* Quartz.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Quartz.framework; path = /System/Library/Frameworks/Quartz.framework; sourceTree = "<absolute>"; };
 		8D1107310486CEB800E47090 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
 		8D1107320486CEB800E47090 /* TheBouncer.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = TheBouncer.app; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
@@ -137,6 +143,8 @@
 				554228090C67C77F00C7FF64 /* QTKit.framework in Frameworks */,
 				554228680C67D03900C7FF64 /* QuickTime.framework in Frameworks */,
 				5596E0820C67E6190011E379 /* IOKit.framework in Frameworks */,
+				55C9E0070C68075E00126EDC /* QuartzCore.framework in Frameworks */,
+				55C9E22E0C68077F00126EDC /* Quartz.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -160,6 +168,8 @@
 		1058C7A0FEA54F0111CA2CBB /* Linked Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				55C9E22D0C68077F00126EDC /* Quartz.framework */,
+				55C9E0060C68075E00126EDC /* QuartzCore.framework */,
 				5596E0810C67E6190011E379 /* IOKit.framework */,
 				554228670C67D03900C7FF64 /* QuickTime.framework */,
 				554228080C67C77F00C7FF64 /* QTKit.framework */,
@@ -213,6 +223,7 @@
 		29B97317FDCFA39411CA2CEA /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				5522E60C0C6A5FCC0053E4B8 /* icons.qtz */,
 				8D1107310486CEB800E47090 /* Info.plist */,
 				089C165CFE840E0CC02AAC07 /* InfoPlist.strings */,
 				29B97318FDCFA39411CA2CEA /* MainMenu.nib */,
@@ -362,6 +373,7 @@
 				8D11072A0486CEB800E47090 /* MainMenu.nib in Resources */,
 				8D11072B0486CEB800E47090 /* InfoPlist.strings in Resources */,
 				55C9DF710C67FB0100126EDC /* DDHidStandardUsages.plist in Resources */,
+				5522E60D0C6A5FCC0053E4B8 /* icons.qtz in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -12,13 +12,11 @@
 #import "BouncerAppDelegate.h"
 #import "BouncerVictim.h"
 
-// increase this number for more frequency bands
-static UInt32 numberOfBandLevels = 4;
-// for StereoMix - If using DeviceMix, you need to get the channel count of the device.
-static UInt32 numberOfChannels = 2;
-// NSLevelIndicators are set up to have this max value
-static UInt8  maxLevelIndicatorValue = 20;
+@interface BouncerAppDelegate (Private)
 
+- (void) findExistingVictims;
+
+@end
 
 @implementation BouncerAppDelegate
 
@@ -29,50 +27,21 @@ static UInt8  maxLevelIndicatorValue = 20;
         return nil;
     
     mVictims = [[NSMutableArray alloc] init];
-    // allocate memory for the QTAudioFrequencyLevels struct and set it up
-    // depending on the number of channels and frequency bands you want    
-    mFreqResults = malloc(offsetof(QTAudioFrequencyLevels, level[numberOfBandLevels * numberOfChannels]));
-    
-    mFreqResults->numChannels = numberOfChannels;
-    mFreqResults->numFrequencyBands = numberOfBandLevels;
     
     return self;
-}
-
-- (void) progressProc;
-{
-    NSLog(@"progressProc");
-}
-
-pascal OSErr myMovieProgressProc(Movie theMovie, short theMessage, short theOperation, Fixed thePercentDone, long refcon)
-{
-    NSAutoreleasePool * pool = [[NSAutoreleasePool alloc] init];
-    
-    BouncerAppDelegate * controller = (BouncerAppDelegate *) refcon;
-    [controller progressProc];
-    
-    [pool release];
-    return noErr;
 }
 
 - (void) awakeFromNib;
 {
     [mVictimsTable setDoubleAction: @selector(bounceSelectedVictims:)];
+    [self findExistingVictims];
+    
+    NSBundle * myBundle = [NSBundle bundleForClass: [self class]];
+    NSString * composition = [myBundle pathForResource: @"icons"
+                                                ofType: @"qtz"];
+    [mQCView loadCompositionFromFile: composition];
     
     QTMovie * movie = [mMovieView movie];
-#if 0
-    [movie setDelegate: self];
-#elif 0
-    MovieProgressUPP movieProgressUPP = NewMovieProgressUPP(myMovieProgressProc);
-    if (movieProgressUPP != NULL)
-    {
-        SetMovieProgressProc([movie quickTimeMovie], movieProgressUPP,
-                             (long) self);
-    }
-#else
-    SetMovieAudioFrequencyMeteringNumBands(
-        [movie quickTimeMovie], kQTAudioMeter_StereoMix, &numberOfBandLevels);
-
     [[NSNotificationCenter defaultCenter] addObserver: self
                                              selector: @selector(movieTimeDidChange:)
                                                  name: QTMovieTimeDidChangeNotification
@@ -85,8 +54,6 @@ pascal OSErr myMovieProgressProc(Movie theMovie, short theMessage, short theOper
                                    userInfo: movie
                                     repeats: YES];
 #endif
-#endif
-    
 }
 
 - (void) applicationDidFinishLaunching: (NSNotification *) notification;
@@ -114,6 +81,7 @@ pascal OSErr myMovieProgressProc(Movie theMovie, short theMessage, short theOper
     [self willChangeValueForKey: @"victims"];
     [mVictims addObject: victim];
     [self didChangeValueForKey: @"victims"];
+    [self updateQCIcons];
 }
 
 - (void) bouncerDOGone: (NSNotification *) notification;
@@ -133,6 +101,7 @@ pascal OSErr myMovieProgressProc(Movie theMovie, short theMessage, short theOper
     [self willChangeValueForKey: @"victims"];
     [mVictims removeObjectsAtIndexes: indexes];
     [self didChangeValueForKey: @"victims"];
+    [self updateQCIcons];
 
 }
 
@@ -216,30 +185,6 @@ pascal OSErr myMovieProgressProc(Movie theMovie, short theMessage, short theOper
     return YES;
 }
 
-- (void) movieTimerx: (NSTimer *) timer
-{
-    QTMovie * movie = [timer userInfo];
-
-    GetMovieAudioFrequencyLevels([movie quickTimeMovie], kQTAudioMeter_StereoMix, mFreqResults);
-    int i, j;
-#if 1
-    for (i = 0; i < mFreqResults->numChannels; i++)
-    {
-        for (j = 0; j < mFreqResults->numFrequencyBands; j++)
-        {
-            if (j >= [mVictims count])
-                continue;
-            
-            BouncerVictim * victim = [mVictims objectAtIndex: j];
-                // the frequency levels are Float32 values between 0. and 1.
-            Float32 value = (mFreqResults->level[(i * mFreqResults->numFrequencyBands) + j]) * maxLevelIndicatorValue;
-            if (value > 15.0)
-                [victim bounce];
-        }
-    }
-#endif
-}
-
 - (void) movieTimer: (NSTimer *) timer
 {
     QTMovie * movie = [timer userInfo];
@@ -266,4 +211,50 @@ pascal OSErr myMovieProgressProc(Movie theMovie, short theMessage, short theOper
     }
 }
 
+- (void) updateQCIcons;
+{
+    NSMutableArray * images = [NSMutableArray array];
+    for (int i = 0; i < [mVictims count]; i++)
+    {
+        BouncerVictim * victim = [mVictims objectAtIndex: i];
+        NSImage * icon = [victim icon];
+        NSNumber * effect = [NSNumber numberWithInt: [victim effect]? 0 : 1];
+        NSDictionary * item = [NSDictionary dictionaryWithObjectsAndKeys:
+            icon, @"image",
+            effect, @"effect",
+            nil];
+        
+        [images addObject: item];
+    }
+    [mQCView setValue: images forInputKey: @"Images"];
+}
+
 @end
+
+
+@implementation BouncerAppDelegate (Private)
+
+- (void) findExistingVictims;
+{
+    NSArray * applications = [[NSWorkspace sharedWorkspace] launchedApplications];
+    [self willChangeValueForKey: @"victims"];
+    for (int i = 0; i < [applications count]; i++)
+    {
+        NSDictionary * application = [applications objectAtIndex: i];
+        BouncerVictim * victim = [[BouncerVictim alloc] initWithWorkspaceApplication:
+            application];
+        if (victim == nil)
+        {
+            NSLog(@"Skipping %@", [application valueForKey: @"NSApplicationName"]);
+        }
+        else
+        {
+            [mVictims addObject: victim];
+        }
+    }
+    [self didChangeValueForKey: @"victims"];
+    [self updateQCIcons];
+}
+
+@end
+

@@ -6,6 +6,7 @@
             LANGUAGE = ObjC; 
             OUTLETS = {
                 mMovieView = QTMovieView; 
+                mQCView = QCView; 
                 mVictimsController = NSArrayController; 
                 mVictimsTable = NSTableView; 
             }; 
