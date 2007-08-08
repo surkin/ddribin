@@ -15,6 +15,7 @@
 {
     IBOutlet BouncerAppDelegate * mController;
     NSArray * mKeyboards;
+    NSMutableArray * mSprites;
 }
 
 @end
