@@ -12,12 +12,84 @@
 #import "DDHidLib.h"
 #include <IOKit/hid/IOHIDUsageTables.h>
 
+@interface BouncerSprite : NSObject
+{
+    NSImage * mImage;
+    int mIndex;
+    NSPoint mCurrentPoint;
+    NSPoint mVelocity;
+}
+
+- (void) updateForElapsedTime: (NSTimeInterval) elapsedTime;
+
+- (void) drawWithWidth: (float) width;
+
+@end
+
+@implementation BouncerSprite
+
+- (id) initWithImage: (NSImage *) image atPoint: (NSPoint) point;
+{
+    self = [super init];
+    if (self == nil)
+        return nil;
+    
+    mImage = [image retain];
+    mCurrentPoint = point;
+    mVelocity = NSZeroPoint;
+    
+    return self;
+}
+
+- (NSPoint) currentPoint;
+{
+    return mCurrentPoint;
+}
+
+- (void) setVelocity: (NSPoint) velocity;
+{
+    mVelocity = velocity;
+}
+
+- (void) updateForElapsedTime: (NSTimeInterval) elapsedTime;
+{
+    mCurrentPoint.x += mVelocity.x * elapsedTime;
+    mCurrentPoint.y += mVelocity.y * elapsedTime;
+}
+
+- (void) update: (float) width x: (float) x;
+{
+}
+
+- (void) setIndex: (int) index;
+{
+    mIndex = index;
+}
+
+- (void) drawWithWidth: (float) width;
+{
+    [mImage setSize: NSMakeSize(width, width)];
+    mCurrentPoint.x = mIndex * width;;
+    [mImage drawAtPoint: mCurrentPoint
+               fromRect: NSZeroRect
+              operation: NSCompositeSourceOver
+               fraction: 1.0 - (mCurrentPoint.y / 200)];
+}
+
+@end
+
+
 @implementation BouncerView
 
 - (id)initWithFrame:(NSRect)frame {
     self = [super initWithFrame:frame];
     if (self) {
-        // Initialization code here.
+        mSprites = [[NSMutableArray alloc] init];
+        [NSTimer scheduledTimerWithTimeInterval: 1.0/60.0
+                                         target: self
+                                       selector: @selector(update:)
+                                       userInfo: nil
+                                        repeats: YES];
     }
     return self;
 }
@@ -108,7 +180,15 @@
         BouncerVictim * victim = [victims objectAtIndex: index];
         [victim bounce];
         [victim setEffect: YES];
-        [mController updateQCIcons];
+        // [mController updateQCIcons];
+        NSImage * image = [victim icon];
+        BouncerSprite * sprite = [[BouncerSprite alloc] initWithImage: image
+                                                              atPoint: NSZeroPoint];
+        [sprite setVelocity: NSMakePoint(0, 150)];
+        [sprite setIndex: index];
+        [sprite autorelease];
+        [mSprites addObject: sprite];
+        [self setNeedsDisplay: YES];
     }
 }
 
@@ -122,12 +202,45 @@
     {
         BouncerVictim * victim = [victims objectAtIndex: index];
         [victim setEffect: NO];
-        [mController updateQCIcons];
+        // [mController updateQCIcons];
     }
 }
 
-- (void)drawRect:(NSRect)rect {
-    // Drawing code here.
+- (void) update: (NSTimer *) timer;
+{
+    NSMutableIndexSet * spritesToRemove = [NSMutableIndexSet indexSet];
+    NSRect bounds = [self bounds];
+    float height = bounds.size.height;
+
+    for (int i = 0; i < [mSprites count]; i++)
+    {
+        BouncerSprite * sprite = [mSprites objectAtIndex: i];
+        [sprite updateForElapsedTime: [timer timeInterval]];
+        if ([sprite currentPoint].y > height)
+        {
+            NSLog(@"Removing: %d", i);
+            [spritesToRemove addIndex: i];
+        }
+    }
+    [mSprites removeObjectsAtIndexes: spritesToRemove];
+    [self setNeedsDisplay: YES];
+}
+
+- (void) drawRect: (NSRect) rect
+{
+    // NSGraphicsContext * nsContext = [NSGraphicsContext currentContext];
+    [[NSColor whiteColor] set];
+    NSRectFill(rect);
+    
+    NSRect bounds = [self bounds];
+    float width = bounds.size.width;
+    float eachWidth = width/[[mController victims] count];
+    
+    for (int i = 0; i < [mSprites count]; i++)
+    {
+        BouncerSprite * sprite = [mSprites objectAtIndex: i];
+        [sprite drawWithWidth: eachWidth];
+    }
 }
 
 @end
