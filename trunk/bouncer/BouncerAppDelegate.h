@@ -8,16 +8,16 @@
 
 #import <Cocoa/Cocoa.h>
 #import <QTKit/QTKit.h>
-
+#import <Quartz/Quartz.h>
 
 @interface BouncerAppDelegate : NSObject
 {
     IBOutlet NSArrayController * mVictimsController;
     IBOutlet NSTableView * mVictimsTable;
     IBOutlet QTMovieView * mMovieView;
+    IBOutlet QCView * mQCView;
     
     NSMutableArray * mVictims;
-    QTAudioFrequencyLevels * mFreqResults;
 }
 
 - (NSArray *) victims;
@@ -25,5 +25,7 @@
 - (IBAction) bounceSelectedVictims: (id) sender;
 
 - (IBAction) bounceInPattern: (id) sender;
+
+- (void) updateQCIcons;
 
 @end

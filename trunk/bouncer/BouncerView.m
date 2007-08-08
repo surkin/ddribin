@@ -65,8 +65,7 @@
 #endif
 }
 
-- (void) ddhidKeyboard: (DDHidKeyboard *) keyboard
-               keyDown: (unsigned) usageId;
+- (unsigned) indexForUsageId: (unsigned) usageId;
 {
     static const int usages[] = {
         kHIDUsage_KeyboardA,
@@ -96,9 +95,35 @@
         }
     }
     
+    return index;
+}
+
+- (void) ddhidKeyboard: (DDHidKeyboard *) keyboard
+               keyDown: (unsigned) usageId;
+{
+    unsigned index = [self indexForUsageId: usageId];
     NSArray * victims = [mController victims];
     if ((index != NSNotFound) && (index < [victims count]))
-        [[victims objectAtIndex: index] bounce];
+    {
+        BouncerVictim * victim = [victims objectAtIndex: index];
+        [victim bounce];
+        [victim setEffect: YES];
+        [mController updateQCIcons];
+    }
+}
+
+
+- (void) ddhidKeyboard: (DDHidKeyboard *) keyboard
+               keyUp: (unsigned) usageId;
+{
+    unsigned index = [self indexForUsageId: usageId];
+    NSArray * victims = [mController victims];
+    if ((index != NSNotFound) && (index < [victims count]))
+    {
+        BouncerVictim * victim = [victims objectAtIndex: index];
+        [victim setEffect: NO];
+        [mController updateQCIcons];
+    }
 }
 
 - (void)drawRect:(NSRect)rect {

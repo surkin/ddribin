@@ -15,14 +15,19 @@
 {
     [[NSNotificationCenter defaultCenter]
         addObserver: self
-           selector: @selector(installDO:)
+           selector: @selector(applicationWillFinishLaunching:)
                name: NSApplicationWillFinishLaunchingNotification
              object: nil];
     NSLog(@"Loaded TheBouncer");
 }
 
-+ (void) installDO: (NSNotification *) notification
++ (void) applicationWillFinishLaunching: (NSNotification *) notification
 {
+    BOOL disabled = [[NSUserDefaults standardUserDefaults] boolForKey:
+        @"org.dribin.dave.TheBouncer.disabled"];
+    if (disabled)
+        return;
+    
     static Bouncer * bouncer = nil;
     if (bouncer != nil)
         return;
