@@ -19,8 +19,12 @@
     NSArray * mKeyboards;
     NSMutableArray * mSprites;
     CTGradient * mGradient;
+    NSTimer * mAnimationTimer;
 }
 
 - (void) addSprite: (BouncerSprite *) sprite;
+
+- (void) startAnimation;
+- (void) stopAnimation;
 
 @end

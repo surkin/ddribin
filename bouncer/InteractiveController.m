@@ -34,6 +34,7 @@
 
 - (void) awakeFromNib;
 {
+    [[self window] setFrameAutosaveName: @"Interactive"];
     mKeyboards = [DDHidKeyboard allKeyboards];
     [mKeyboards retain];
     for (int i = 0; i < [mKeyboards count]; i++)
@@ -120,10 +121,8 @@
             [NSNumber numberWithDouble: interval],
             nil];
         [mPlaybackQueue addObject: playbackItem];
-        NSLog(@"Index: %d time: %f", index, interval);
     }
     [self addSpriteForIndex: index];
-    [mBouncerView setNeedsDisplay: YES];
 }
 
 - (NSString *) applicationSupportFolder;
@@ -159,6 +158,7 @@
 {
     [self stopPlayback: nil];
     [mPlaybackQueue removeAllObjects];
+    [mBouncerView stopAnimation];
     [mMovie gotoBeginning];
     [mMovie play];
 }
@@ -180,10 +180,12 @@
 
 - (IBAction) stopPlayback: (id) sender;
 {
+    [mPlaybackTimer invalidate];
     [mPlaybackTimer release];
     mPlaybackTimer = nil;
     
     [mMovie stop];
+    [mBouncerView startAnimation];
 }
 
 - (void) movieTimer: (NSTimer *) timer;
@@ -200,19 +202,17 @@
     while (mCurrentPlaybackIndex < [mPlaybackQueue count])
     {
         NSArray * playbackItem = [mPlaybackQueue objectAtIndex: mCurrentPlaybackIndex];
-        NSNumber * index = [playbackItem objectAtIndex: 0];
-        NSNumber * time = [playbackItem objectAtIndex: 1];
-        if ([time doubleValue] < currentTime)
+        unsigned index = [[playbackItem objectAtIndex: 0] unsignedIntValue];
+        double time = [[playbackItem objectAtIndex: 1] doubleValue];
+        if (time <= currentTime)
         {
-            [self addSpriteForIndex: [index unsignedIntValue]];
+            [self addSpriteForIndex: index];
             mCurrentPlaybackIndex++;
             needsDisplay = YES;
         }
         else
             break;
     }
-    if (needsDisplay)
-        [mBouncerView setNeedsDisplay: YES];
 }
 
 @end

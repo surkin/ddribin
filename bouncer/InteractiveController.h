@@ -23,6 +23,7 @@
     NSTimer * mPlaybackTimer;
     NSMutableArray * mPlaybackQueue;
     unsigned mCurrentPlaybackIndex;
+    BOOL mRecording;
 }
 
 - (IBAction) savePlayback: (id) sender;

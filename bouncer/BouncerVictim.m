@@ -24,7 +24,7 @@
     NSWorkspace * workspace = [NSWorkspace sharedWorkspace];
     mIcon = [[workspace iconForFile: fullPath] retain];
     [mIcon setScalesWhenResized: YES];
-    // [mIcon setSize: NSMakeSize(16.0, 16.0)];
+    [mIcon setSize: NSMakeSize(16.0, 16.0)];
     
     NSString * connectionName = [userInfo valueForKey: @"ConnectionName"];
     mVictim = [[NSConnection rootProxyForConnectionWithRegisteredName: connectionName
@@ -57,7 +57,7 @@
     NSWorkspace * workspace = [NSWorkspace sharedWorkspace];
     mIcon = [[workspace iconForFile: fullPath] retain];
     [mIcon setScalesWhenResized: YES];
-    // [mIcon setSize: NSMakeSize(16.0, 16.0)];
+    [mIcon setSize: NSMakeSize(16.0, 16.0)];
     
     return self;
 }
