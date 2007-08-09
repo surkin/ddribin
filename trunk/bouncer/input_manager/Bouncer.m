@@ -18,7 +18,6 @@
            selector: @selector(applicationWillFinishLaunching:)
                name: NSApplicationWillFinishLaunchingNotification
              object: nil];
-    NSLog(@"Loaded TheBouncer");
 }
 
 + (void) applicationWillFinishLaunching: (NSNotification *) notification
