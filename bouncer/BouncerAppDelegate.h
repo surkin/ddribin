@@ -15,7 +15,6 @@
     IBOutlet NSArrayController * mVictimsController;
     IBOutlet NSTableView * mVictimsTable;
     IBOutlet QTMovieView * mMovieView;
-    IBOutlet QCView * mQCView;
     
     NSMutableArray * mVictims;
 }
@@ -25,7 +24,5 @@
 - (IBAction) bounceSelectedVictims: (id) sender;
 
 - (IBAction) bounceInPattern: (id) sender;
-
-- (void) updateQCIcons;
 
 @end
