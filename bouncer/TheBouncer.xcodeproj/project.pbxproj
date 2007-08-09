@@ -23,8 +23,11 @@
 
 /* Begin PBXBuildFile section */
 		5522E60D0C6A5FCC0053E4B8 /* icons.qtz in Resources */ = {isa = PBXBuildFile; fileRef = 5522E60C0C6A5FCC0053E4B8 /* icons.qtz */; };
+		5522E7810C6B7A190053E4B8 /* CTGradient.m in Sources */ = {isa = PBXBuildFile; fileRef = 5522E7800C6B7A190053E4B8 /* CTGradient.m */; };
+		5522E86D0C6B845B0053E4B8 /* InteractiveController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5522E86C0C6B845B0053E4B8 /* InteractiveController.m */; };
+		5522E8AB0C6B85740053E4B8 /* BouncerSprite.m in Sources */ = {isa = PBXBuildFile; fileRef = 5522E8AA0C6B85740053E4B8 /* BouncerSprite.m */; };
 		5542257D0C67A0FB00C7FF64 /* Bouncer.m in Sources */ = {isa = PBXBuildFile; fileRef = 5542257C0C67A0FB00C7FF64 /* Bouncer.m */; };
-		554225800C67A1E000C7FF64 /* BouncerAppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 5542257F0C67A1E000C7FF64 /* BouncerAppDelegate.m */; };
+		554225800C67A1E000C7FF64 /* BouncerController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5542257F0C67A1E000C7FF64 /* BouncerController.m */; };
 		554225E70C67A7CF00C7FF64 /* BouncerVictim.m in Sources */ = {isa = PBXBuildFile; fileRef = 554225E60C67A7CF00C7FF64 /* BouncerVictim.m */; };
 		554228090C67C77F00C7FF64 /* QTKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 554228080C67C77F00C7FF64 /* QTKit.framework */; };
 		554228680C67D03900C7FF64 /* QuickTime.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 554228670C67D03900C7FF64 /* QuickTime.framework */; };
@@ -79,12 +82,18 @@
 		29B97325FDCFA39411CA2CEA /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = /System/Library/Frameworks/Foundation.framework; sourceTree = "<absolute>"; };
 		32CA4F630368D1EE00C91783 /* TheBouncer_Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TheBouncer_Prefix.pch; sourceTree = "<group>"; };
 		5522E60C0C6A5FCC0053E4B8 /* icons.qtz */ = {isa = PBXFileReference; lastKnownFileType = file; path = icons.qtz; sourceTree = "<group>"; };
+		5522E77F0C6B7A190053E4B8 /* CTGradient.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = CTGradient.h; sourceTree = "<group>"; };
+		5522E7800C6B7A190053E4B8 /* CTGradient.m */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.objc; path = CTGradient.m; sourceTree = "<group>"; };
+		5522E86B0C6B845B0053E4B8 /* InteractiveController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = InteractiveController.h; sourceTree = "<group>"; };
+		5522E86C0C6B845B0053E4B8 /* InteractiveController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = InteractiveController.m; sourceTree = "<group>"; };
+		5522E8A90C6B85740053E4B8 /* BouncerSprite.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BouncerSprite.h; sourceTree = "<group>"; };
+		5522E8AA0C6B85740053E4B8 /* BouncerSprite.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BouncerSprite.m; sourceTree = "<group>"; };
 		5542256D0C67A04600C7FF64 /* TheBouncerPlugin.bundle */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = TheBouncerPlugin.bundle; sourceTree = BUILT_PRODUCTS_DIR; };
 		5542256E0C67A04600C7FF64 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.xml; path = Info.plist; sourceTree = "<group>"; };
 		5542257B0C67A0FB00C7FF64 /* Bouncer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Bouncer.h; sourceTree = "<group>"; };
 		5542257C0C67A0FB00C7FF64 /* Bouncer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Bouncer.m; sourceTree = "<group>"; };
-		5542257E0C67A1E000C7FF64 /* BouncerAppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BouncerAppDelegate.h; sourceTree = "<group>"; };
-		5542257F0C67A1E000C7FF64 /* BouncerAppDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BouncerAppDelegate.m; sourceTree = "<group>"; };
+		5542257E0C67A1E000C7FF64 /* BouncerController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BouncerController.h; sourceTree = "<group>"; };
+		5542257F0C67A1E000C7FF64 /* BouncerController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BouncerController.m; sourceTree = "<group>"; };
 		554225E50C67A7CF00C7FF64 /* BouncerVictim.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BouncerVictim.h; sourceTree = "<group>"; };
 		554225E60C67A7CF00C7FF64 /* BouncerVictim.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BouncerVictim.m; sourceTree = "<group>"; };
 		554226510C67AB7800C7FF64 /* BouncerVictimDO.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BouncerVictimDO.h; sourceTree = "<group>"; };
@@ -154,13 +163,17 @@
 		080E96DDFE201D6D7F000001 /* Classes */ = {
 			isa = PBXGroup;
 			children = (
-				5542257E0C67A1E000C7FF64 /* BouncerAppDelegate.h */,
-				5542257F0C67A1E000C7FF64 /* BouncerAppDelegate.m */,
+				5542257E0C67A1E000C7FF64 /* BouncerController.h */,
+				5542257F0C67A1E000C7FF64 /* BouncerController.m */,
 				554225E50C67A7CF00C7FF64 /* BouncerVictim.h */,
 				554225E60C67A7CF00C7FF64 /* BouncerVictim.m */,
 				554226510C67AB7800C7FF64 /* BouncerVictimDO.h */,
+				5522E86B0C6B845B0053E4B8 /* InteractiveController.h */,
+				5522E86C0C6B845B0053E4B8 /* InteractiveController.m */,
 				5596DFB90C67E1CE0011E379 /* BouncerView.h */,
 				5596DFBA0C67E1CE0011E379 /* BouncerView.m */,
+				5522E8A90C6B85740053E4B8 /* BouncerSprite.h */,
+				5522E8AA0C6B85740053E4B8 /* BouncerSprite.m */,
 			);
 			name = Classes;
 			sourceTree = "<group>";
@@ -240,6 +253,15 @@
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
+		5522E77E0C6B7A190053E4B8 /* CTGradient */ = {
+			isa = PBXGroup;
+			children = (
+				5522E77F0C6B7A190053E4B8 /* CTGradient.h */,
+				5522E7800C6B7A190053E4B8 /* CTGradient.m */,
+			);
+			path = CTGradient;
+			sourceTree = "<group>";
+		};
 		554225620C679FDA00C7FF64 /* Input Manager */ = {
 			isa = PBXGroup;
 			children = (
@@ -254,6 +276,7 @@
 		5596E0470C67E5CD0011E379 /* vendor */ = {
 			isa = PBXGroup;
 			children = (
+				5522E77E0C6B7A190053E4B8 /* CTGradient */,
 				55C9DF4D0C67FB0100126EDC /* DDHidLib */,
 				5596E0790C67E5F80011E379 /* NSXReturnThrowError */,
 			);
@@ -393,7 +416,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				8D11072D0486CEB800E47090 /* main.m in Sources */,
-				554225800C67A1E000C7FF64 /* BouncerAppDelegate.m in Sources */,
+				554225800C67A1E000C7FF64 /* BouncerController.m in Sources */,
 				554225E70C67A7CF00C7FF64 /* BouncerVictim.m in Sources */,
 				5596DFBB0C67E1CE0011E379 /* BouncerView.m in Sources */,
 				5596E07C0C67E5F80011E379 /* NSXReturnThrowError.m in Sources */,
@@ -409,6 +432,9 @@
 				55C9DF720C67FB0100126EDC /* DDHidUsage.m in Sources */,
 				55C9DF730C67FB0100126EDC /* DDHidUsageTables.m in Sources */,
 				55C9DF740C67FB0100126EDC /* NSDictionary+DDHidExtras.m in Sources */,
+				5522E7810C6B7A190053E4B8 /* CTGradient.m in Sources */,
+				5522E86D0C6B845B0053E4B8 /* InteractiveController.m in Sources */,
+				5522E8AB0C6B85740053E4B8 /* BouncerSprite.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -7,14 +7,12 @@
 //
 
 #import <Cocoa/Cocoa.h>
-#import <QTKit/QTKit.h>
 #import <Quartz/Quartz.h>
 
-@interface BouncerAppDelegate : NSObject
+@interface BouncerController : NSObject
 {
     IBOutlet NSArrayController * mVictimsController;
     IBOutlet NSTableView * mVictimsTable;
-    IBOutlet QTMovieView * mMovieView;
     
     NSMutableArray * mVictims;
 }

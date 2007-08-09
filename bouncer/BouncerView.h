@@ -9,13 +9,18 @@
 #import <Cocoa/Cocoa.h>
 
 @class BouncerAppDelegate;
+@class BouncerSprite;
 @class DDHidKeyboard;
+@class CTGradient;
 
 @interface BouncerView : NSView
 {
     IBOutlet BouncerAppDelegate * mController;
     NSArray * mKeyboards;
     NSMutableArray * mSprites;
+    CTGradient * mGradient;
 }
+
+- (void) addSprite: (BouncerSprite *) sprite;
 
 @end
