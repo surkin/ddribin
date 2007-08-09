@@ -24,11 +24,7 @@
         return nil;
     
     mSprites = [[NSMutableArray alloc] init];
-    [NSTimer scheduledTimerWithTimeInterval: 1.0/60.0
-                                     target: self
-                                   selector: @selector(update:)
-                                   userInfo: nil
-                                    repeats: YES];
+    [self startAnimation];
 #if 0
     // mGradient = [[CTGradient unifiedNormalGradient] retain];
 #elif 0
@@ -70,69 +66,24 @@
     // Empty implementation stops the beeping
 }
 
-#if 0
-- (unsigned) indexForUsageId: (unsigned) usageId;
+- (void) startAnimation;
 {
-    static const int usages[] = {
-        kHIDUsage_KeyboardA,
-        kHIDUsage_KeyboardS,
-        kHIDUsage_KeyboardD,
-        kHIDUsage_KeyboardF,
-        kHIDUsage_KeyboardG,
-        kHIDUsage_KeyboardH,
-        kHIDUsage_KeyboardJ,
-        kHIDUsage_KeyboardK,
-        kHIDUsage_KeyboardL,
-        kHIDUsage_KeyboardY,
-        kHIDUsage_KeyboardU,
-        kHIDUsage_KeyboardI,
-        kHIDUsage_KeyboardO,
-        kHIDUsage_KeyboardP,
-        kHIDUsage_KeyboardQ,
-        kHIDUsage_KeyboardW,
-        kHIDUsage_KeyboardE,
-        kHIDUsage_KeyboardR,
-        kHIDUsage_KeyboardT,
-    };
-    
-    unsigned index = NSNotFound;
-    int keyCount = sizeof(usages)/sizeof(usages[0]);
-    for (int i = 0; i < keyCount; i++)
-    {
-        if (usageId == usages[i])
-        {
-            index = i;
-            break;
-        }
-    }
-    
-    return index;
+    [self stopAnimation];
+    mAnimationTimer = 
+        [NSTimer scheduledTimerWithTimeInterval: 1.0/60.0
+                                         target: self
+                                       selector: @selector(update:)
+                                       userInfo: nil
+                                        repeats: YES];
+    [mAnimationTimer retain];
 }
 
-- (void) ddhidKeyboard: (DDHidKeyboard *) keyboard
-               keyDown: (unsigned) usageId;
+- (void) stopAnimation;
 {
-    if (![[self window] isVisible])
-        return;
-    
-    unsigned index = [self indexForUsageId: usageId];
-    NSArray * victims = [mController victims];
-    if ((index != NSNotFound) && (index < [victims count]))
-    {
-        BouncerVictim * victim = [victims objectAtIndex: index];
-        [victim bounce];
-        [victim setEffect: YES];
-        NSImage * image = [victim icon];
-        BouncerSprite * sprite = [[BouncerSprite alloc] initWithImage: image
-                                                              atPoint: NSZeroPoint];
-        [sprite setVelocity: NSMakePoint(0, 150)];
-        [sprite setIndex: index];
-        [sprite autorelease];
-        [mSprites addObject: sprite];
-        [self setNeedsDisplay: YES];
-    }
+    [mAnimationTimer invalidate];
+    [mAnimationTimer release];
+    mAnimationTimer = nil;
 }
-#endif
 
 - (void) addSprite: (BouncerSprite *) sprite;
 {
