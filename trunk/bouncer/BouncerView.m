@@ -173,6 +173,9 @@
 - (void) ddhidKeyboard: (DDHidKeyboard *) keyboard
                keyDown: (unsigned) usageId;
 {
+    if (![[self window] isVisible])
+        return;
+    
     unsigned index = [self indexForUsageId: usageId];
     NSArray * victims = [mController victims];
     if ((index != NSNotFound) && (index < [victims count]))
@@ -180,7 +183,6 @@
         BouncerVictim * victim = [victims objectAtIndex: index];
         [victim bounce];
         [victim setEffect: YES];
-        // [mController updateQCIcons];
         NSImage * image = [victim icon];
         BouncerSprite * sprite = [[BouncerSprite alloc] initWithImage: image
                                                               atPoint: NSZeroPoint];
@@ -196,13 +198,15 @@
 - (void) ddhidKeyboard: (DDHidKeyboard *) keyboard
                keyUp: (unsigned) usageId;
 {
+    if (![[self window] isVisible])
+        return;
+
     unsigned index = [self indexForUsageId: usageId];
     NSArray * victims = [mController victims];
     if ((index != NSNotFound) && (index < [victims count]))
     {
         BouncerVictim * victim = [victims objectAtIndex: index];
         [victim setEffect: NO];
-        // [mController updateQCIcons];
     }
 }
 
@@ -218,7 +222,6 @@
         [sprite updateForElapsedTime: [timer timeInterval]];
         if ([sprite currentPoint].y > height)
         {
-            NSLog(@"Removing: %d", i);
             [spritesToRemove addIndex: i];
         }
     }

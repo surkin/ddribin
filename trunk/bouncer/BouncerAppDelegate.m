@@ -36,11 +36,6 @@
     [mVictimsTable setDoubleAction: @selector(bounceSelectedVictims:)];
     [self findExistingVictims];
     
-    NSBundle * myBundle = [NSBundle bundleForClass: [self class]];
-    NSString * composition = [myBundle pathForResource: @"icons"
-                                                ofType: @"qtz"];
-    [mQCView loadCompositionFromFile: composition];
-    
     QTMovie * movie = [mMovieView movie];
     [[NSNotificationCenter defaultCenter] addObserver: self
                                              selector: @selector(movieTimeDidChange:)
@@ -81,7 +76,6 @@
     [self willChangeValueForKey: @"victims"];
     [mVictims addObject: victim];
     [self didChangeValueForKey: @"victims"];
-    [self updateQCIcons];
 }
 
 - (void) bouncerDOGone: (NSNotification *) notification;
@@ -101,7 +95,6 @@
     [self willChangeValueForKey: @"victims"];
     [mVictims removeObjectsAtIndexes: indexes];
     [self didChangeValueForKey: @"victims"];
-    [self updateQCIcons];
 
 }
 
@@ -211,24 +204,6 @@
     }
 }
 
-- (void) updateQCIcons;
-{
-    NSMutableArray * images = [NSMutableArray array];
-    for (int i = 0; i < [mVictims count]; i++)
-    {
-        BouncerVictim * victim = [mVictims objectAtIndex: i];
-        NSImage * icon = [victim icon];
-        NSNumber * effect = [NSNumber numberWithInt: [victim effect]? 0 : 1];
-        NSDictionary * item = [NSDictionary dictionaryWithObjectsAndKeys:
-            icon, @"image",
-            effect, @"effect",
-            nil];
-        
-        [images addObject: item];
-    }
-    [mQCView setValue: images forInputKey: @"Images"];
-}
-
 @end
 
 
@@ -253,7 +228,6 @@
         }
     }
     [self didChangeValueForKey: @"victims"];
-    [self updateQCIcons];
 }
 
 @end
