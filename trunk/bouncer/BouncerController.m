@@ -9,16 +9,16 @@
 #import <unistd.h>
 #import <QuickTime/QuickTime.h>
 #import <unistd.h>
-#import "BouncerAppDelegate.h"
+#import "BouncerController.h"
 #import "BouncerVictim.h"
 
-@interface BouncerAppDelegate (Private)
+@interface BouncerController (Private)
 
 - (void) findExistingVictims;
 
 @end
 
-@implementation BouncerAppDelegate
+@implementation BouncerController
 
 - (id) init;
 {
@@ -35,20 +35,6 @@
 {
     [mVictimsTable setDoubleAction: @selector(bounceSelectedVictims:)];
     [self findExistingVictims];
-    
-    QTMovie * movie = [mMovieView movie];
-    [[NSNotificationCenter defaultCenter] addObserver: self
-                                             selector: @selector(movieTimeDidChange:)
-                                                 name: QTMovieTimeDidChangeNotification
-                                               object: movie];
-
-#if 0
-    [NSTimer scheduledTimerWithTimeInterval: 0.1
-                                     target: self 
-                                   selector: @selector(movieTimer:)
-                                   userInfo: movie
-                                    repeats: YES];
-#endif
 }
 
 - (void) applicationDidFinishLaunching: (NSNotification *) notification;
@@ -151,63 +137,10 @@
     
 }
 
-- (void) movieTimeDidChange: (NSNotification *) notification;
-{
-    NSLog(@"time did change");
-}
-
-- (BOOL) movieShouldTask_: (QTMovie *) movie
-{
-#if 0
-    static int currentVictim = 0;
-    static NSTimeInterval lastTime = 0;
-    
-    QTTime time = [movie currentTime];
-    NSTimeInterval interval;
-    QTGetTimeInterval(time, &interval);
-    
-    if ((interval - lastTime) > 0.5)
-    {
-        BouncerVictim * victim = [mVictims objectAtIndex: currentVictim];
-        [victim bounce];
-        lastTime = interval;
-        currentVictim = (currentVictim + 1) % [mVictims count];
-    }
-#endif
-
-    return YES;
-}
-
-- (void) movieTimer: (NSTimer *) timer
-{
-    QTMovie * movie = [timer userInfo];
-    static int currentVictim = 0;
-    static NSTimeInterval lastTime = 0;
-    
-    QTTime time = [movie currentTime];
-    NSTimeInterval interval;
-    QTGetTimeInterval(time, &interval);
-    
-    if ((interval - lastTime) > 1.0)
-    {
-        if ([mVictims count] > 0)
-        {
-            BouncerVictim * victim = [mVictims objectAtIndex: currentVictim];
-            [victim bounce];
-            lastTime = interval;
-            currentVictim = (currentVictim + 1) % [mVictims count];
-        }
-        else
-        {
-            currentVictim = 0;
-        }
-    }
-}
-
 @end
 
 
-@implementation BouncerAppDelegate (Private)
+@implementation BouncerController (Private)
 
 - (void) findExistingVictims;
 {
