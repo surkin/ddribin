@@ -19,6 +19,8 @@
     IBOutlet BouncerView * mBouncerView;
     NSArray * mKeyboards;
     
+    NSMachPort * mNotificationPort;
+
     QTMovie * mMovie;
     NSTimer * mPlaybackTimer;
     NSMutableArray * mPlaybackQueue;

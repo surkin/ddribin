@@ -11,6 +11,7 @@
 #import <unistd.h>
 #import "BouncerController.h"
 #import "BouncerVictim.h"
+#import "BouncerConstants.h"
 
 @interface BouncerController (Private)
 
@@ -42,13 +43,13 @@
     [[NSDistributedNotificationCenter defaultCenter]
         addObserver: self
            selector: @selector(bouncerDOAvailable:)
-               name: @"DDBouncerDOAvailable"
+               name: BouncerDOAvailableNotification
              object: nil];
 
     [[NSDistributedNotificationCenter defaultCenter]
         addObserver: self
            selector: @selector(bouncerDOGone:)
-               name: @"DDBouncerDOGone"
+               name: BouncerDOGoneNotification
              object: nil];
 }
 

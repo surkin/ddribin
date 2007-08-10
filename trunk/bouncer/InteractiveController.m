@@ -11,9 +11,11 @@
 #import "BouncerVictim.h"
 #import "BouncerView.h"
 #import "BouncerSprite.h"
+#import "BouncerConstants.h"
 #import "DDHidLib.h"
 #import <QTKit/QTKit.h>
 #include <IOKit/hid/IOHIDUsageTables.h>
+#import <notify.h>
 
 
 @implementation InteractiveController
@@ -43,6 +45,29 @@
         [keyboard setDelegate: self];
         [keyboard startListening];
     }
+
+    
+    mach_port_t notify_port;
+    int token_mach_port = -1;
+    int status = notify_register_mach_port(BouncerRemoteStartNotification,
+                                           &notify_port, 0, &token_mach_port);
+    if (status != NOTIFY_STATUS_OK)
+    {
+        perror("notify_register_mach_port");
+    }
+    mNotificationPort = [[NSMachPort alloc] initWithMachPort: notify_port];
+    [mNotificationPort setDelegate: self];
+    [mNotificationPort scheduleInRunLoop: [NSRunLoop currentRunLoop]
+                                 forMode: NSDefaultRunLoopMode];
+}
+
+- (void) handleMachMessage: (void *) machMessage
+{
+    NSLog(@"remoteStart");
+    [NSApp activateIgnoringOtherApps: YES];
+    [self showWindow: self];
+    [self openPlayback: self];
+    [self startPlayback: self];
 }
 
 - (unsigned) indexForUsageId: (unsigned) usageId;

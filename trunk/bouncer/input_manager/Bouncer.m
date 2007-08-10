@@ -7,7 +7,7 @@
 //
 
 #import "Bouncer.h"
-
+#import "BouncerConstants.h"
 
 @implementation Bouncer
 
@@ -23,7 +23,7 @@
 + (void) applicationWillFinishLaunching: (NSNotification *) notification
 {
     BOOL disabled = [[NSUserDefaults standardUserDefaults] boolForKey:
-        @"org.dribin.dave.TheBouncer.disabled"];
+        BouncerDisableKey];
     if (disabled)
         return;
     
@@ -41,13 +41,13 @@
     NSString * processName = [processInfo processName];
     
     NSString * connectionName = [NSString stringWithFormat:
-        @"DDBouncerVictimDO %@", processName];
+        BouncerConnectionFormat, processName];
     NSLog(@"Registering %@", connectionName);
     mConnection = [[NSConnection defaultConnection] retain];
     [mConnection setRootObject: self];
     [mConnection registerName: connectionName];
         
-    NSLog(@"Sending DDBouncerDOAvailable");
+    NSLog(@"Sending BouncerDOAvailable");
     NSBundle * mainBundle = [NSBundle mainBundle];
     NSDictionary * userInfo = [NSDictionary dictionaryWithObjectsAndKeys:
         processName, @"Name",
@@ -56,7 +56,7 @@
         nil];
 
     [[NSDistributedNotificationCenter defaultCenter]
-    postNotificationName: @"DDBouncerDOAvailable"
+    postNotificationName: BouncerDOAvailableNotification
                   object: nil
                 userInfo: userInfo];
     [[NSNotificationCenter defaultCenter]
@@ -75,9 +75,9 @@
         processName, @"Name",
         nil];
     
-    NSLog(@"Sending DDBouncerDOGone");
+    NSLog(@"Sending BouncerDOGone");
     [[NSDistributedNotificationCenter defaultCenter]
-    postNotificationName: @"DDBouncerDOGone"
+    postNotificationName: BouncerDOGoneNotification
                   object: nil
                 userInfo: userInfo];
 }
