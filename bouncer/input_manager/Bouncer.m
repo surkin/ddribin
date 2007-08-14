@@ -100,28 +100,8 @@
 
 - (void) bounce;
 {
-    [NSApp cancelUserAttentionRequest: NSInformationalRequest];
-    [NSApp cancelUserAttentionRequest: NSCriticalRequest];
-
     [NSApp requestUserAttention: NSInformationalRequest];
-    [NSTimer scheduledTimerWithTimeInterval: 0.50
-                                     target: self
-                                   selector: @selector(cancelInformational)
-                                   userInfo: nil
-                                    repeats: NO];
-}
-
-- (void) cancelInformational
-{
-    [NSApp cancelUserAttentionRequest: NSInformationalRequest];
-}
-
-- (void) bounceCritical;
-{
-    [NSApp cancelUserAttentionRequest: NSInformationalRequest];
     [NSApp cancelUserAttentionRequest: NSCriticalRequest];
-
-    [NSApp requestUserAttention: NSCriticalRequest];
 }
 
 @end

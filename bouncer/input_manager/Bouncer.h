@@ -33,6 +33,5 @@
 - (void) installDO;
 
 - (void) bounce;
-- (void) bounceCritical;
 
 @end
