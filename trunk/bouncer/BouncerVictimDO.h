@@ -25,6 +25,5 @@
 @protocol BouncerVictimDO <NSObject>
 
 - (oneway void) bounce;
-- (oneway void) bounceCritical;
 
 @end
