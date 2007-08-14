@@ -28,8 +28,8 @@
     
     mPlaybackQueue = [[NSMutableArray alloc] init];
     mCurrentPlaybackIndex = 0;
-    mMovie = [[QTMovie alloc] initWithFile: @"/Users/dave/Music/Blue Danube.mov"
-                                     error: nil];
+    NSString * file = [@"~/Music/Blue Danube.mov" stringByExpandingTildeInPath];
+    mMovie = [[QTMovie alloc] initWithFile: file error: nil];
     
     return self;
 }
