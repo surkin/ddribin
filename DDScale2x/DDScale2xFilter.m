@@ -56,15 +56,32 @@ static CIKernel * sScale2xKernel = nil;
     return self;
 }
 
+#if 1
 - (NSDictionary *) customAttributes;
 {
     return [NSDictionary dictionary];
 }
+#endif
+
+#if 0
+- (NSDictionary *)customAttributes
+{
+    return [NSDictionary dictionaryWithObjectsAndKeys:
+        
+        [NSDictionary dictionaryWithObjectsAndKeys:
+            [CIVector vectorWithX:200.0 Y:200.0],       kCIAttributeDefault,
+            kCIAttributeTypePosition,           kCIAttributeType,
+            nil],                               @"inputCenter",
+
+        nil];
+}
+#endif
 
 #if 0
 - (CGRect)regionOf:(int)samplerIndex destRect:(CGRect)r userInfo:img
 {
-    return [img extent];
+    // return [img extent];
+    return r;
 }
 #endif
 
@@ -74,8 +91,12 @@ static CIKernel * sScale2xKernel = nil;
         kCISamplerFilterNearest, kCISamplerFilterMode,
         // kCISamplerFilterLinear, kCISamplerFilterMode,
         nil];
+#if 1
     CISampler * src = [CISampler samplerWithImage: inputImage
                                           options: samplerOptions];
+#else
+    CISampler * src = [CISampler samplerWithImage: inputImage];
+#endif
     const float scale = 2.0;
     CGRect e = [inputImage extent];
     NSArray * extent = [NSArray arrayWithObjects:
@@ -88,13 +109,20 @@ static CIKernel * sScale2xKernel = nil;
     NSArray * arguments = [NSArray arrayWithObject: src];
     NSDictionary * options = [NSDictionary dictionaryWithObjectsAndKeys:
         extent, kCIApplyOptionExtent,
+        // extent, kCIApplyOptionDefinition,
         // [src definition], kCIApplyOptionDefinition,
         // inputImage, kCIApplyOptionUserInfo,
         nil];
 
+#if 1
     CIImage * output = [self apply: sScale2xKernel
                          arguments: arguments
                            options: options];
+#else
+    CIImage * output = [self apply: sScale2xKernel, src,
+        kCIApplyOptionDefinition, [src definition],
+        nil];
+#endif
     return output;
 }    
 

@@ -4,14 +4,10 @@
 <dict>
 	<key>CFBundleDevelopmentRegion</key>
 	<string>English</string>
-	<key>CFBundleExecutable</key>
-	<string>${EXECUTABLE_NAME}</string>
-	<key>CFBundleName</key>
-	<string>${PRODUCT_NAME}</string>
 	<key>CFBundleIconFile</key>
 	<string></string>
 	<key>CFBundleIdentifier</key>
-	<string>com.apple.myImageUnit</string>
+	<string>org.dribin.dave.DDScale2x</string>
 	<key>CFBundleInfoDictionaryVersion</key>
 	<string>6.0</string>
 	<key>CFBundlePackageType</key>
@@ -20,7 +16,9 @@
 	<string>????</string>
 	<key>CFBundleVersion</key>
 	<string>1.0</string>
-	<key>NSPrincipalClass</key>
+    <key>CFBundleShortVersionString</key>
+    <string>1.0</string>
+    <key>NSPrincipalClass</key>
 	<string>DDScale2xPlugInLoader</string>
 </dict>
 </plist>
