@@ -24,10 +24,33 @@
 		550B6D5E0B9E5F1100CA6D4B /* DDScale2x.cikernel in Resources */ = {isa = PBXBuildFile; fileRef = 550B6ACA0B9E415700CA6D4B /* DDScale2x.cikernel */; };
 		556EC6700B9E601A00B54157 /* liquidk-1s.png in Resources */ = {isa = PBXBuildFile; fileRef = 556EC66F0B9E601A00B54157 /* liquidk-1s.png */; };
 		556EC6D00B9E661A00B54157 /* MyController.m in Sources */ = {isa = PBXBuildFile; fileRef = 556EC6CF0B9E661A00B54157 /* MyController.m */; };
-		556EC8450B9E732900B54157 /* DDScale2xFilter.m in Sources */ = {isa = PBXBuildFile; fileRef = 550B6ACD0B9E416300CA6D4B /* DDScale2xFilter.m */; };
+		556ECC300B9E917700B54157 /* DDScale2x.plugin in CopyFiles */ = {isa = PBXBuildFile; fileRef = 8D576316048677EA00EA77CD /* DDScale2x.plugin */; };
 		8D576314048677EA00EA77CD /* CoreFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0AA1909FFE8422F4C02AAC07 /* CoreFoundation.framework */; };
 		8D5B49A804867FD3000E48DA /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 8D5B49A704867FD3000E48DA /* InfoPlist.strings */; };
 /* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		556EC9CC0B9E898500B54157 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 089C1669FE841209C02AAC07 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 8D57630D048677EA00EA77CD;
+			remoteInfo = DDScale2x;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		556ECC2C0B9E916300B54157 /* CopyFiles */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 13;
+			files = (
+				556ECC300B9E917700B54157 /* DDScale2x.plugin in CopyFiles */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
 		018396D70662C2C00004726E /* DDScale2xPlugInLoader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DDScale2xPlugInLoader.h; sourceTree = "<group>"; };
@@ -170,10 +193,12 @@
 				550B6C3B0B9E4E7E00CA6D4B /* Resources */,
 				550B6C3C0B9E4E7E00CA6D4B /* Sources */,
 				550B6C3D0B9E4E7E00CA6D4B /* Frameworks */,
+				556ECC2C0B9E916300B54157 /* CopyFiles */,
 			);
 			buildRules = (
 			);
 			dependencies = (
+				556EC9CD0B9E898500B54157 /* PBXTargetDependency */,
 			);
 			name = DDScale2xTest;
 			productName = DDScale2xTest;
@@ -258,7 +283,6 @@
 				550B6C470B9E4ECA00CA6D4B /* DDScale2xView.m in Sources */,
 				550B6D3D0B9E5EE800CA6D4B /* main.m in Sources */,
 				556EC6D00B9E661A00B54157 /* MyController.m in Sources */,
-				556EC8450B9E732900B54157 /* DDScale2xFilter.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -272,6 +296,14 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		556EC9CD0B9E898500B54157 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 8D57630D048677EA00EA77CD /* DDScale2x */;
+			targetProxy = 556EC9CC0B9E898500B54157 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
 
 /* Begin PBXVariantGroup section */
 		01EF28850659A5DC0035FD02 /* Description.strings */ = {

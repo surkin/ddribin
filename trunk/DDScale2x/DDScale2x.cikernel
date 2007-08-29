@@ -43,7 +43,7 @@ int modulo(float x, float d)
 	return int(x) - int(x/d)*int(d);
 }
 
-kernel vec4 myHazeRemovalKernel(sampler src)
+kernel vec4 scale2x(sampler src)
 {
     float scale = 2.0;
     vec2 xy = samplerCoord(src);

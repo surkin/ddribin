@@ -32,8 +32,6 @@
 			<string>DDScale2xFilter</string>
 			<key>CIHasCustomInterface</key>
 			<false/>
-			<key>CIKernelFile</key>
-			<string>DDScale2x</string>
 		</dict>
 	</dict>
 	<key>CIPlugInVersion</key>
