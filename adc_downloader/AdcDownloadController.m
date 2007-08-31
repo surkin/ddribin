@@ -27,10 +27,12 @@
 #import "AdcDownloadController.h"
 #import "DDCurl.h"
 #import "ByteSizeFormatter.h"
+#import "JRLog.h"
 
 #if LIBCURLVERNUM < 0x070f05
-// Can't throttle
-// #warning Old curl LIBCURLVERNUM
+# define ADC_DOWNLOAD_HAVE_THROTTLE NO
+#else
+# define ADC_DOWNLOAD_HAVE_THROTTLE YES
 #endif
 
 @interface AdcDownloadController (Private)
@@ -66,6 +68,8 @@
     
     [defaultValues setObject: [NSNumber numberWithInt: 100]
                                                forKey: @"Rate"];
+    
+    [defaultValues setObject: @"WARN" forKey: @"JRLogLevel"];
 
     [defaults registerDefaults: defaultValues];
 }
@@ -81,11 +85,7 @@
     mLimitString = @"100";
     mSelectedSpeed = 1;
     mResumeDownload = NO;
-#if LIBCURLVERNUM < 0x070f05
-    mCanThrottle = NO;
-#else
-    mCanThtrottle = YES;
-#endif
+    mCanThrottle = ADC_DOWNLOAD_HAVE_THROTTLE;
     
     return self;
 }
@@ -249,12 +249,12 @@
 
 - (IBAction) download: (id) sender;
 {
-    NSLog(@"Download URL: %@", mUrl);
+    JRLogDebug(@"Download URL: %@", mUrl);
     NSURL * url = [NSURL URLWithString: mUrl];
     NSString * path = [self queryArgumentInUrl: url forKey: @"path"];
     NSString * file = [path lastPathComponent];
-    NSLog(@"File: %@", file);
-    NSLog(@"Rate: %d, limit: %@, speed: %d", mSelectedRate, mLimitString,
+    JRLogDebug(@"File: %@", file);
+    JRLogDebug(@"Rate: %d, limit: %@, speed: %d", mSelectedRate, mLimitString,
           mSelectedSpeed);
 
     [self setResumeDownload: YES];
@@ -296,19 +296,19 @@
 - (void) dd_curlConnection: (DDCurlConnection *) connection
         didReceiveResponse: (DDCurlResponse *) response;
 {
-    NSLog(@"Status code: %d", [response statusCode]);
-    NSLog(@"Location: %@", [response headerWithName: @"Location"]);
-    NSLog(@"Expected content length: %lld",
-          [response expectedContentLength]);
+    JRLogDebug(@"Status code: %d", [response statusCode]);
+    JRLogDebug(@"Location: %@", [response headerWithName: @"Location"]);
+    JRLogDebug(@"Expected content length: %lld",
+               [response expectedContentLength]);
     NSURL * url = [NSURL URLWithString: [response effectiveUrl]];
     NSString * path = [url path];
     NSString * file = [path lastPathComponent];
-    NSLog(@"Path: %@, file: %@", path, file);
+    JRLogDebug(@"Path: %@, file: %@", path, file);
     if (mExpectingRedirect)
     {
         if ([response statusCode] != 302)
         {
-            NSLog(@"Session no longer valid");
+            JRLogDebug(@"Session no longer valid");
             [mConnection cancel];
             [self downloadFinished];
             NSAlert * alert = [[[NSAlert alloc] init] autorelease];
@@ -384,7 +384,7 @@
 
 - (void) dd_curlConnectionDidFinishLoading: (DDCurlConnection *) connection;
 {
-    NSLog(@"didFinishLoading");
+    JRLogDebug(@"didFinishLoading");
     [self downloadFinished];
     mDownloading = NO;
     [mConnection release];
@@ -394,7 +394,7 @@
 - (void) dd_curlConnection: (DDCurlConnection *) connection
           didFailWithError: (NSError *) error;
 {
-    NSLog(@"didFailWithError: %@", error);
+    JRLogDebug(@"didFailWithError: %@", error);
     [NSApp presentError: error
          modalForWindow: [self window]
                delegate: self
@@ -458,7 +458,7 @@
     
     NSDictionary * attributes =
         [manager fileAttributesAtPath: file traverseLink: YES];
-    NSLog(@"Attributes: %@", attributes);
+    JRLogDebug(@"Attributes: %@", attributes);
     
     mResumeOffset = 0;
     if (attributes != nil)

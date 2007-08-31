@@ -21,6 +21,7 @@
 		556F62B40C885EA100DE73E7 /* DDMutableCurlRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = 556F62AC0C885EA100DE73E7 /* DDMutableCurlRequest.m */; };
 		556F62B50C885EA100DE73E7 /* NSString+DDExtensions.m in Sources */ = {isa = PBXBuildFile; fileRef = 556F62AE0C885EA100DE73E7 /* NSString+DDExtensions.m */; };
 		556F62CE0C8864F700DE73E7 /* versions.xcconfig in Resources */ = {isa = PBXBuildFile; fileRef = 556F62CD0C8864F700DE73E7 /* versions.xcconfig */; };
+		556F63030C88693200DE73E7 /* JRLog.m in Sources */ = {isa = PBXBuildFile; fileRef = 556F63020C88693200DE73E7 /* JRLog.m */; };
 		8D11072A0486CEB800E47090 /* MainMenu.nib in Resources */ = {isa = PBXBuildFile; fileRef = 29B97318FDCFA39411CA2CEA /* MainMenu.nib */; };
 		8D11072B0486CEB800E47090 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 089C165CFE840E0CC02AAC07 /* InfoPlist.strings */; };
 		8D11072D0486CEB800E47090 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 29B97316FDCFA39411CA2CEA /* main.m */; settings = {ATTRIBUTES = (); }; };
@@ -61,6 +62,8 @@
 		556F62AD0C885EA100DE73E7 /* NSString+DDExtensions.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = "NSString+DDExtensions.h"; sourceTree = "<group>"; };
 		556F62AE0C885EA100DE73E7 /* NSString+DDExtensions.m */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.objc; path = "NSString+DDExtensions.m"; sourceTree = "<group>"; };
 		556F62CD0C8864F700DE73E7 /* versions.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; path = versions.xcconfig; sourceTree = "<group>"; };
+		556F63010C88693200DE73E7 /* JRLog.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = JRLog.h; sourceTree = "<group>"; };
+		556F63020C88693200DE73E7 /* JRLog.m */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.objc; path = JRLog.m; sourceTree = "<group>"; };
 		8D1107310486CEB800E47090 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
 		8D1107320486CEB800E47090 /* ADC Downloader.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "ADC Downloader.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
@@ -167,6 +170,7 @@
 		556F62640C885E7100DE73E7 /* vendor */ = {
 			isa = PBXGroup;
 			children = (
+				556F63000C88693200DE73E7 /* JRLog */,
 				556F629E0C885EA100DE73E7 /* ddcurl */,
 			);
 			path = vendor;
@@ -193,6 +197,15 @@
 				556F62AE0C885EA100DE73E7 /* NSString+DDExtensions.m */,
 			);
 			path = ddcurl;
+			sourceTree = "<group>";
+		};
+		556F63000C88693200DE73E7 /* JRLog */ = {
+			isa = PBXGroup;
+			children = (
+				556F63010C88693200DE73E7 /* JRLog.h */,
+				556F63020C88693200DE73E7 /* JRLog.m */,
+			);
+			path = JRLog;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -259,6 +272,7 @@
 				556F62B30C885EA100DE73E7 /* DDCurlSlist.m in Sources */,
 				556F62B40C885EA100DE73E7 /* DDMutableCurlRequest.m in Sources */,
 				556F62B50C885EA100DE73E7 /* NSString+DDExtensions.m in Sources */,
+				556F63030C88693200DE73E7 /* JRLog.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
