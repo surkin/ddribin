@@ -49,7 +49,12 @@
           returnCode: (int) returnCode
              context: (void *) contextInfo;
 
+-(void) didPresentErrorWithRecovery: (BOOL) didRecover 
+                            context: (void *) contextInfo;
+
 @end
+
+#pragma mark -
 
 @implementation AdcDownloadController
 
@@ -111,6 +116,9 @@
     mOutputFile = nil;
     [super dealloc];
 }
+
+#pragma mark -
+#pragma mark Properties
 
 //=========================================================== 
 //  url 
@@ -383,15 +391,6 @@
     mConnection = nil;
 }
 
--(void)didPresentErrorWithRecovery: (BOOL)didRecover 
-                           context: (void *)contextInfo
-{
-    [self downloadFinished];
-    mDownloading = NO;
-    [mConnection release];
-    mConnection = nil;
-}
-
 - (void) dd_curlConnection: (DDCurlConnection *) connection
           didFailWithError: (NSError *) error;
 {
@@ -405,6 +404,8 @@
 
 
 @end
+
+#pragma mark -
 
 @implementation AdcDownloadController (Private)
 
@@ -508,6 +509,15 @@
              context: (void *) contextInfo;
 {
     
+}
+
+-(void) didPresentErrorWithRecovery: (BOOL) didRecover 
+                            context: (void *) contextInfo;
+{
+    [self downloadFinished];
+    mDownloading = NO;
+    [mConnection release];
+    mConnection = nil;
 }
 
 @end

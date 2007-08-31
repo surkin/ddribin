@@ -48,6 +48,9 @@
     BOOL mExpectingRedirect;
 }
 
+#pragma mark -
+#pragma mark Properties
+
 - (NSString *) url;
 - (void) setUrl: (NSString *) theUrl;
 
