@@ -20,6 +20,7 @@
 		556F62B30C885EA100DE73E7 /* DDCurlSlist.m in Sources */ = {isa = PBXBuildFile; fileRef = 556F62A90C885EA100DE73E7 /* DDCurlSlist.m */; };
 		556F62B40C885EA100DE73E7 /* DDMutableCurlRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = 556F62AC0C885EA100DE73E7 /* DDMutableCurlRequest.m */; };
 		556F62B50C885EA100DE73E7 /* NSString+DDExtensions.m in Sources */ = {isa = PBXBuildFile; fileRef = 556F62AE0C885EA100DE73E7 /* NSString+DDExtensions.m */; };
+		556F62CE0C8864F700DE73E7 /* versions.xcconfig in Resources */ = {isa = PBXBuildFile; fileRef = 556F62CD0C8864F700DE73E7 /* versions.xcconfig */; };
 		8D11072A0486CEB800E47090 /* MainMenu.nib in Resources */ = {isa = PBXBuildFile; fileRef = 29B97318FDCFA39411CA2CEA /* MainMenu.nib */; };
 		8D11072B0486CEB800E47090 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 089C165CFE840E0CC02AAC07 /* InfoPlist.strings */; };
 		8D11072D0486CEB800E47090 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 29B97316FDCFA39411CA2CEA /* main.m */; settings = {ATTRIBUTES = (); }; };
@@ -34,7 +35,7 @@
 		29B97319FDCFA39411CA2CEA /* English */ = {isa = PBXFileReference; lastKnownFileType = wrapper.nib; name = English; path = English.lproj/MainMenu.nib; sourceTree = "<group>"; };
 		29B97324FDCFA39411CA2CEA /* AppKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AppKit.framework; path = /System/Library/Frameworks/AppKit.framework; sourceTree = "<absolute>"; };
 		29B97325FDCFA39411CA2CEA /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = /System/Library/Frameworks/Foundation.framework; sourceTree = "<absolute>"; };
-		32CA4F630368D1EE00C91783 /* ADC Downloader_Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "ADC Downloader_Prefix.pch"; sourceTree = "<group>"; };
+		32CA4F630368D1EE00C91783 /* ADC_Downloader_Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ADC_Downloader_Prefix.pch; sourceTree = "<group>"; };
 		556F5C270C8737C400DE73E7 /* AdcDownloadController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AdcDownloadController.h; sourceTree = "<group>"; };
 		556F5C280C8737C400DE73E7 /* AdcDownloadController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AdcDownloadController.m; sourceTree = "<group>"; };
 		556F5C5D0C873D9700DE73E7 /* libcrypto.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libcrypto.dylib; path = /usr/lib/libcrypto.dylib; sourceTree = "<absolute>"; };
@@ -59,6 +60,7 @@
 		556F62AC0C885EA100DE73E7 /* DDMutableCurlRequest.m */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.objc; path = DDMutableCurlRequest.m; sourceTree = "<group>"; };
 		556F62AD0C885EA100DE73E7 /* NSString+DDExtensions.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = "NSString+DDExtensions.h"; sourceTree = "<group>"; };
 		556F62AE0C885EA100DE73E7 /* NSString+DDExtensions.m */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.objc; path = "NSString+DDExtensions.m"; sourceTree = "<group>"; };
+		556F62CD0C8864F700DE73E7 /* versions.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; path = versions.xcconfig; sourceTree = "<group>"; };
 		8D1107310486CEB800E47090 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
 		8D1107320486CEB800E47090 /* ADC Downloader.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "ADC Downloader.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
@@ -136,8 +138,9 @@
 		29B97315FDCFA39411CA2CEA /* Other Sources */ = {
 			isa = PBXGroup;
 			children = (
-				32CA4F630368D1EE00C91783 /* ADC Downloader_Prefix.pch */,
+				32CA4F630368D1EE00C91783 /* ADC_Downloader_Prefix.pch */,
 				29B97316FDCFA39411CA2CEA /* main.m */,
+				556F62CD0C8864F700DE73E7 /* versions.xcconfig */,
 			);
 			name = "Other Sources";
 			sourceTree = "<group>";
@@ -235,6 +238,7 @@
 			files = (
 				8D11072A0486CEB800E47090 /* MainMenu.nib in Resources */,
 				8D11072B0486CEB800E47090 /* InfoPlist.strings in Resources */,
+				556F62CE0C8864F700DE73E7 /* versions.xcconfig in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -319,6 +323,7 @@
 		};
 		C01FCF4F08A954540054247B /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 556F62CD0C8864F700DE73E7 /* versions.xcconfig */;
 			buildSettings = {
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
@@ -329,6 +334,7 @@
 		};
 		C01FCF5008A954540054247B /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 556F62CD0C8864F700DE73E7 /* versions.xcconfig */;
 			buildSettings = {
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
