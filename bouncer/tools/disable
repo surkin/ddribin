@@ -1,3 +1,0 @@
-#!/bin/sh
-
-defaults write -g org.dribin.dave.TheBouncer.disabled -bool YES
