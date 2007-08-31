@@ -38,6 +38,8 @@
     NSString * mHTTPMethod;
     NSMutableDictionary * mHeaders;
     BOOL mAllowRedirects;
+    BOOL mEnableCookies;
+    long long mResumeOffset;
 }
 
 #pragma mark -
@@ -164,6 +166,12 @@
  * @param allowRedirects YES if redirects are allowed.
  */
 - (void) setAllowRedirects: (BOOL) allowRedirects;
+
+- (BOOL) enableCookies;
+- (void) setEnableCookies: (BOOL) enableCookies;
+
+- (long long) resumeOffset;
+- (void) setResumeOffset: (long long) theResumeOffset;
 
 /**
  * Returns the multipart form, or nil if there is no form.

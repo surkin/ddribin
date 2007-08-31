@@ -23,7 +23,7 @@
  */
 
 #import "DDCurlSlist.h"
-#import <curl/curl.h>
+#import "curl/curl.h"
 
 
 @implementation DDCurlSlist

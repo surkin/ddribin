@@ -28,7 +28,7 @@
 #import "DDCurlMultipartForm.h"
 #import "DDCurlEasy.h"
 #import "DDCurlSlist.h"
-#import <curl/curl.h>
+#import "curl/curl.h"
 
 #include <openssl/ssl.h>
 #include <Security/SecTrust.h>
@@ -269,6 +269,9 @@ static CURLcode staticSslContext(CURL *curl, void *ssl_ctx, void *userptr)
         [mCurl setCaInfo: nil];
        
         [mCurl setFollowLocation: [request allowRedirects]];
+        if ([request enableCookies])
+            [mCurl setCookieFile: @""];
+        [mCurl setResumeFromLarge: [request resumeOffset]];
         
         DDCurlMultipartForm * form = [request multipartForm];
         if (form != nil)
@@ -321,7 +324,7 @@ static CURLcode staticSslContext(CURL *curl, void *ssl_ctx, void *userptr)
                 reason = errorString;
             
             NSDictionary * userInfo = [NSDictionary dictionaryWithObjectsAndKeys:
-                reason, NSLocalizedFailureReasonErrorKey,
+                reason, NSLocalizedDescriptionKey,
                 nil];
             
             NSError * error = [NSError errorWithDomain: DDCurlDomain
@@ -372,6 +375,7 @@ static CURLcode staticSslContext(CURL *curl, void *ssl_ctx, void *userptr)
         }
     }
     
+    [mResponse setEffectiveUrl: [mCurl effectiveUrl]];
     [mResponse setStatusCode: [mCurl responseCode]];
     [mResponse setMIMEType: [mCurl contentType]];
     [self dd_curlConnection: self didReceiveResponse: mResponse];

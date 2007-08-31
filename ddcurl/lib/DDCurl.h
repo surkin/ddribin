@@ -22,6 +22,7 @@
  * SOFTWARE.
  */
 
+#import "curl/curl.h"
 #import "DDMutableCurlRequest.h"
 #import "DDCurlResponse.h"
 #import "DDCurlConnection.h"

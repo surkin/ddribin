@@ -159,6 +159,32 @@
          message: @"set verbose"];
 }
 
+- (void) setCookieFile: (NSString *) cookieFile;
+{
+    [self setString:  cookieFile forOption: CURLOPT_COOKIEFILE
+            message: @"set cookie file"];
+}
+
+- (void) setResumeFromLarge: (curl_off_t) resumeFrom;
+{
+    [self assert: curl_easy_setopt(mCurl, CURLOPT_RESUME_FROM_LARGE, resumeFrom)
+         message: @"set resume from (large)"];
+}
+
+#if LIBCURL_VERSION_NUM > 0x070f05
+- (void) setMaxSendSpeedLarge: (curl_off_t) maxSendSpeed;
+{
+    [self assert: curl_easy_setopt(mCurl, CURLOPT_MAX_SEND_SPEED_LARGE, maxSendSpeed)
+         message: @"set max send speed (large)"];
+}
+
+- (void) setMaxReceiveSpeedLarge: (curl_off_t) maxReceiveSpeed;
+{
+    [self assert: curl_easy_setopt(mCurl, CURLOPT_MAX_RECV_SPEED_LARGE, maxReceiveSpeed)
+         message: @"set max receive speed (large)"];
+}
+#endif
+
 #pragma mark -
 
 - (CURLcode) perform;
@@ -195,6 +221,16 @@
     if (contentType == NULL)
         return nil;
     return [NSString stringWithUTF8String: contentType];
+}
+
+- (NSString *) effectiveUrl;
+{
+    char * effectiveUrl;
+    [self assert: curl_easy_getinfo(mCurl, CURLINFO_EFFECTIVE_URL, &effectiveUrl)
+         message: nil];
+    if (effectiveUrl == NULL)
+        return nil;
+    return [NSString stringWithUTF8String: effectiveUrl];
 }
 
 #pragma mark -

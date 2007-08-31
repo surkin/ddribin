@@ -41,8 +41,42 @@
     mHeaders = [[NSMutableDictionary alloc] init];
     mExpectedContentLength = -1;
     mStatusCode = 0;
+    mMIMEType = nil;
+    mEffectiveUrl = nil;
     
     return self;
+}
+
+//=========================================================== 
+// dealloc
+//=========================================================== 
+- (void) dealloc
+{
+    [mMIMEType release];
+    [mEffectiveUrl release];
+    [mHeaders release];
+    
+    mMIMEType = nil;
+    mEffectiveUrl = nil;
+    mHeaders = nil;
+    [super dealloc];
+}
+
+//=========================================================== 
+//  effectiveUrl 
+//=========================================================== 
+- (NSString *) effectiveUrl
+{
+    return mEffectiveUrl; 
+}
+
+- (void) setEffectiveUrl: (NSString *) theEffectiveUrl
+{
+    if (mEffectiveUrl != theEffectiveUrl)
+    {
+        [mEffectiveUrl release];
+        mEffectiveUrl = [theEffectiveUrl retain];
+    }
 }
 
 //=========================================================== 
