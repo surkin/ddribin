@@ -8,18 +8,18 @@
 
 /* Begin PBXBuildFile section */
 		556F5C290C8737C400DE73E7 /* AdcDownloadController.m in Sources */ = {isa = PBXBuildFile; fileRef = 556F5C280C8737C400DE73E7 /* AdcDownloadController.m */; };
-		556F5C520C873D1100DE73E7 /* DDCurlConnection.m in Sources */ = {isa = PBXBuildFile; fileRef = 556F5C440C873D1100DE73E7 /* DDCurlConnection.m */; };
-		556F5C530C873D1100DE73E7 /* DDCurlEasy.m in Sources */ = {isa = PBXBuildFile; fileRef = 556F5C460C873D1100DE73E7 /* DDCurlEasy.m */; };
-		556F5C540C873D1100DE73E7 /* DDCurlMultipartForm.m in Sources */ = {isa = PBXBuildFile; fileRef = 556F5C480C873D1100DE73E7 /* DDCurlMultipartForm.m */; };
-		556F5C550C873D1100DE73E7 /* DDCurlResponse.m in Sources */ = {isa = PBXBuildFile; fileRef = 556F5C4A0C873D1100DE73E7 /* DDCurlResponse.m */; };
-		556F5C560C873D1100DE73E7 /* DDCurlSlist.m in Sources */ = {isa = PBXBuildFile; fileRef = 556F5C4C0C873D1100DE73E7 /* DDCurlSlist.m */; };
-		556F5C570C873D1100DE73E7 /* DDMutableCurlRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = 556F5C4F0C873D1100DE73E7 /* DDMutableCurlRequest.m */; };
-		556F5C580C873D1100DE73E7 /* NSString+DDExtensions.m in Sources */ = {isa = PBXBuildFile; fileRef = 556F5C510C873D1100DE73E7 /* NSString+DDExtensions.m */; };
 		556F5C600C873D9700DE73E7 /* libcrypto.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 556F5C5D0C873D9700DE73E7 /* libcrypto.dylib */; };
 		556F5C610C873D9700DE73E7 /* libcurl.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 556F5C5E0C873D9700DE73E7 /* libcurl.dylib */; };
 		556F5C620C873D9700DE73E7 /* libssl.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 556F5C5F0C873D9700DE73E7 /* libssl.dylib */; };
 		556F5C6B0C873DDD00DE73E7 /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 556F5C6A0C873DDD00DE73E7 /* Security.framework */; };
 		556F60170C87630800DE73E7 /* ByteSizeFormatter.m in Sources */ = {isa = PBXBuildFile; fileRef = 556F60160C87630800DE73E7 /* ByteSizeFormatter.m */; };
+		556F62AF0C885EA100DE73E7 /* DDCurlConnection.m in Sources */ = {isa = PBXBuildFile; fileRef = 556F62A10C885EA100DE73E7 /* DDCurlConnection.m */; };
+		556F62B00C885EA100DE73E7 /* DDCurlEasy.m in Sources */ = {isa = PBXBuildFile; fileRef = 556F62A30C885EA100DE73E7 /* DDCurlEasy.m */; };
+		556F62B10C885EA100DE73E7 /* DDCurlMultipartForm.m in Sources */ = {isa = PBXBuildFile; fileRef = 556F62A50C885EA100DE73E7 /* DDCurlMultipartForm.m */; };
+		556F62B20C885EA100DE73E7 /* DDCurlResponse.m in Sources */ = {isa = PBXBuildFile; fileRef = 556F62A70C885EA100DE73E7 /* DDCurlResponse.m */; };
+		556F62B30C885EA100DE73E7 /* DDCurlSlist.m in Sources */ = {isa = PBXBuildFile; fileRef = 556F62A90C885EA100DE73E7 /* DDCurlSlist.m */; };
+		556F62B40C885EA100DE73E7 /* DDMutableCurlRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = 556F62AC0C885EA100DE73E7 /* DDMutableCurlRequest.m */; };
+		556F62B50C885EA100DE73E7 /* NSString+DDExtensions.m in Sources */ = {isa = PBXBuildFile; fileRef = 556F62AE0C885EA100DE73E7 /* NSString+DDExtensions.m */; };
 		8D11072A0486CEB800E47090 /* MainMenu.nib in Resources */ = {isa = PBXBuildFile; fileRef = 29B97318FDCFA39411CA2CEA /* MainMenu.nib */; };
 		8D11072B0486CEB800E47090 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 089C165CFE840E0CC02AAC07 /* InfoPlist.strings */; };
 		8D11072D0486CEB800E47090 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 29B97316FDCFA39411CA2CEA /* main.m */; settings = {ATTRIBUTES = (); }; };
@@ -37,28 +37,28 @@
 		32CA4F630368D1EE00C91783 /* ADC Downloader_Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "ADC Downloader_Prefix.pch"; sourceTree = "<group>"; };
 		556F5C270C8737C400DE73E7 /* AdcDownloadController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AdcDownloadController.h; sourceTree = "<group>"; };
 		556F5C280C8737C400DE73E7 /* AdcDownloadController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AdcDownloadController.m; sourceTree = "<group>"; };
-		556F5C420C873D1100DE73E7 /* DDCurl.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = DDCurl.h; sourceTree = "<group>"; };
-		556F5C430C873D1100DE73E7 /* DDCurlConnection.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = DDCurlConnection.h; sourceTree = "<group>"; };
-		556F5C440C873D1100DE73E7 /* DDCurlConnection.m */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.objc; path = DDCurlConnection.m; sourceTree = "<group>"; };
-		556F5C450C873D1100DE73E7 /* DDCurlEasy.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = DDCurlEasy.h; sourceTree = "<group>"; };
-		556F5C460C873D1100DE73E7 /* DDCurlEasy.m */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.objc; path = DDCurlEasy.m; sourceTree = "<group>"; };
-		556F5C470C873D1100DE73E7 /* DDCurlMultipartForm.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = DDCurlMultipartForm.h; sourceTree = "<group>"; };
-		556F5C480C873D1100DE73E7 /* DDCurlMultipartForm.m */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.objc; path = DDCurlMultipartForm.m; sourceTree = "<group>"; };
-		556F5C490C873D1100DE73E7 /* DDCurlResponse.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = DDCurlResponse.h; sourceTree = "<group>"; };
-		556F5C4A0C873D1100DE73E7 /* DDCurlResponse.m */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.objc; path = DDCurlResponse.m; sourceTree = "<group>"; };
-		556F5C4B0C873D1100DE73E7 /* DDCurlSlist.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = DDCurlSlist.h; sourceTree = "<group>"; };
-		556F5C4C0C873D1100DE73E7 /* DDCurlSlist.m */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.objc; path = DDCurlSlist.m; sourceTree = "<group>"; };
-		556F5C4D0C873D1100DE73E7 /* DDExtensions.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = DDExtensions.h; sourceTree = "<group>"; };
-		556F5C4E0C873D1100DE73E7 /* DDMutableCurlRequest.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = DDMutableCurlRequest.h; sourceTree = "<group>"; };
-		556F5C4F0C873D1100DE73E7 /* DDMutableCurlRequest.m */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.objc; path = DDMutableCurlRequest.m; sourceTree = "<group>"; };
-		556F5C500C873D1100DE73E7 /* NSString+DDExtensions.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = "NSString+DDExtensions.h"; sourceTree = "<group>"; };
-		556F5C510C873D1100DE73E7 /* NSString+DDExtensions.m */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.objc; path = "NSString+DDExtensions.m"; sourceTree = "<group>"; };
 		556F5C5D0C873D9700DE73E7 /* libcrypto.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libcrypto.dylib; path = /usr/lib/libcrypto.dylib; sourceTree = "<absolute>"; };
 		556F5C5E0C873D9700DE73E7 /* libcurl.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libcurl.dylib; path = /usr/lib/libcurl.dylib; sourceTree = "<absolute>"; };
 		556F5C5F0C873D9700DE73E7 /* libssl.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libssl.dylib; path = /usr/lib/libssl.dylib; sourceTree = "<absolute>"; };
 		556F5C6A0C873DDD00DE73E7 /* Security.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Security.framework; path = /System/Library/Frameworks/Security.framework; sourceTree = "<absolute>"; };
 		556F60150C87630800DE73E7 /* ByteSizeFormatter.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = ByteSizeFormatter.h; sourceTree = "<group>"; };
 		556F60160C87630800DE73E7 /* ByteSizeFormatter.m */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.objc; path = ByteSizeFormatter.m; sourceTree = "<group>"; };
+		556F629F0C885EA100DE73E7 /* DDCurl.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = DDCurl.h; sourceTree = "<group>"; };
+		556F62A00C885EA100DE73E7 /* DDCurlConnection.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = DDCurlConnection.h; sourceTree = "<group>"; };
+		556F62A10C885EA100DE73E7 /* DDCurlConnection.m */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.objc; path = DDCurlConnection.m; sourceTree = "<group>"; };
+		556F62A20C885EA100DE73E7 /* DDCurlEasy.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = DDCurlEasy.h; sourceTree = "<group>"; };
+		556F62A30C885EA100DE73E7 /* DDCurlEasy.m */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.objc; path = DDCurlEasy.m; sourceTree = "<group>"; };
+		556F62A40C885EA100DE73E7 /* DDCurlMultipartForm.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = DDCurlMultipartForm.h; sourceTree = "<group>"; };
+		556F62A50C885EA100DE73E7 /* DDCurlMultipartForm.m */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.objc; path = DDCurlMultipartForm.m; sourceTree = "<group>"; };
+		556F62A60C885EA100DE73E7 /* DDCurlResponse.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = DDCurlResponse.h; sourceTree = "<group>"; };
+		556F62A70C885EA100DE73E7 /* DDCurlResponse.m */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.objc; path = DDCurlResponse.m; sourceTree = "<group>"; };
+		556F62A80C885EA100DE73E7 /* DDCurlSlist.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = DDCurlSlist.h; sourceTree = "<group>"; };
+		556F62A90C885EA100DE73E7 /* DDCurlSlist.m */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.objc; path = DDCurlSlist.m; sourceTree = "<group>"; };
+		556F62AA0C885EA100DE73E7 /* DDExtensions.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = DDExtensions.h; sourceTree = "<group>"; };
+		556F62AB0C885EA100DE73E7 /* DDMutableCurlRequest.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = DDMutableCurlRequest.h; sourceTree = "<group>"; };
+		556F62AC0C885EA100DE73E7 /* DDMutableCurlRequest.m */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.objc; path = DDMutableCurlRequest.m; sourceTree = "<group>"; };
+		556F62AD0C885EA100DE73E7 /* NSString+DDExtensions.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = "NSString+DDExtensions.h"; sourceTree = "<group>"; };
+		556F62AE0C885EA100DE73E7 /* NSString+DDExtensions.m */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.objc; path = "NSString+DDExtensions.m"; sourceTree = "<group>"; };
 		8D1107310486CEB800E47090 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
 		8D1107320486CEB800E47090 /* ADC Downloader.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "ADC Downloader.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
@@ -124,7 +124,7 @@
 			isa = PBXGroup;
 			children = (
 				080E96DDFE201D6D7F000001 /* Classes */,
-				556F5C410C873D1100DE73E7 /* ddcurl */,
+				556F62640C885E7100DE73E7 /* vendor */,
 				29B97315FDCFA39411CA2CEA /* Other Sources */,
 				29B97317FDCFA39411CA2CEA /* Resources */,
 				29B97323FDCFA39411CA2CEA /* Frameworks */,
@@ -161,29 +161,36 @@
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
-		556F5C410C873D1100DE73E7 /* ddcurl */ = {
+		556F62640C885E7100DE73E7 /* vendor */ = {
 			isa = PBXGroup;
 			children = (
-				556F5C420C873D1100DE73E7 /* DDCurl.h */,
-				556F5C430C873D1100DE73E7 /* DDCurlConnection.h */,
-				556F5C440C873D1100DE73E7 /* DDCurlConnection.m */,
-				556F5C450C873D1100DE73E7 /* DDCurlEasy.h */,
-				556F5C460C873D1100DE73E7 /* DDCurlEasy.m */,
-				556F5C470C873D1100DE73E7 /* DDCurlMultipartForm.h */,
-				556F5C480C873D1100DE73E7 /* DDCurlMultipartForm.m */,
-				556F5C490C873D1100DE73E7 /* DDCurlResponse.h */,
-				556F5C4A0C873D1100DE73E7 /* DDCurlResponse.m */,
-				556F5C4B0C873D1100DE73E7 /* DDCurlSlist.h */,
-				556F5C4C0C873D1100DE73E7 /* DDCurlSlist.m */,
-				556F5C4D0C873D1100DE73E7 /* DDExtensions.h */,
-				556F5C4E0C873D1100DE73E7 /* DDMutableCurlRequest.h */,
-				556F5C4F0C873D1100DE73E7 /* DDMutableCurlRequest.m */,
-				556F5C500C873D1100DE73E7 /* NSString+DDExtensions.h */,
-				556F5C510C873D1100DE73E7 /* NSString+DDExtensions.m */,
+				556F629E0C885EA100DE73E7 /* ddcurl */,
 			);
-			name = ddcurl;
-			path = ../ddcurl/lib;
-			sourceTree = SOURCE_ROOT;
+			path = vendor;
+			sourceTree = "<group>";
+		};
+		556F629E0C885EA100DE73E7 /* ddcurl */ = {
+			isa = PBXGroup;
+			children = (
+				556F629F0C885EA100DE73E7 /* DDCurl.h */,
+				556F62A00C885EA100DE73E7 /* DDCurlConnection.h */,
+				556F62A10C885EA100DE73E7 /* DDCurlConnection.m */,
+				556F62A20C885EA100DE73E7 /* DDCurlEasy.h */,
+				556F62A30C885EA100DE73E7 /* DDCurlEasy.m */,
+				556F62A40C885EA100DE73E7 /* DDCurlMultipartForm.h */,
+				556F62A50C885EA100DE73E7 /* DDCurlMultipartForm.m */,
+				556F62A60C885EA100DE73E7 /* DDCurlResponse.h */,
+				556F62A70C885EA100DE73E7 /* DDCurlResponse.m */,
+				556F62A80C885EA100DE73E7 /* DDCurlSlist.h */,
+				556F62A90C885EA100DE73E7 /* DDCurlSlist.m */,
+				556F62AA0C885EA100DE73E7 /* DDExtensions.h */,
+				556F62AB0C885EA100DE73E7 /* DDMutableCurlRequest.h */,
+				556F62AC0C885EA100DE73E7 /* DDMutableCurlRequest.m */,
+				556F62AD0C885EA100DE73E7 /* NSString+DDExtensions.h */,
+				556F62AE0C885EA100DE73E7 /* NSString+DDExtensions.m */,
+			);
+			path = ddcurl;
+			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
 
@@ -240,14 +247,14 @@
 			files = (
 				8D11072D0486CEB800E47090 /* main.m in Sources */,
 				556F5C290C8737C400DE73E7 /* AdcDownloadController.m in Sources */,
-				556F5C520C873D1100DE73E7 /* DDCurlConnection.m in Sources */,
-				556F5C530C873D1100DE73E7 /* DDCurlEasy.m in Sources */,
-				556F5C540C873D1100DE73E7 /* DDCurlMultipartForm.m in Sources */,
-				556F5C550C873D1100DE73E7 /* DDCurlResponse.m in Sources */,
-				556F5C560C873D1100DE73E7 /* DDCurlSlist.m in Sources */,
-				556F5C570C873D1100DE73E7 /* DDMutableCurlRequest.m in Sources */,
-				556F5C580C873D1100DE73E7 /* NSString+DDExtensions.m in Sources */,
 				556F60170C87630800DE73E7 /* ByteSizeFormatter.m in Sources */,
+				556F62AF0C885EA100DE73E7 /* DDCurlConnection.m in Sources */,
+				556F62B00C885EA100DE73E7 /* DDCurlEasy.m in Sources */,
+				556F62B10C885EA100DE73E7 /* DDCurlMultipartForm.m in Sources */,
+				556F62B20C885EA100DE73E7 /* DDCurlResponse.m in Sources */,
+				556F62B30C885EA100DE73E7 /* DDCurlSlist.m in Sources */,
+				556F62B40C885EA100DE73E7 /* DDMutableCurlRequest.m in Sources */,
+				556F62B50C885EA100DE73E7 /* NSString+DDExtensions.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
