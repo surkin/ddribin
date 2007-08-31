@@ -89,6 +89,30 @@
 {
 }
 
+
+//=========================================================== 
+// dealloc
+//=========================================================== 
+- (void) dealloc
+{
+    [mUrl release];
+    [mLimitString release];
+    [mStatusText release];
+    [mConnection release];
+    [mResponse release];
+    [mError release];
+    [mOutputFile release];
+    
+    mUrl = nil;
+    mLimitString = nil;
+    mStatusText = nil;
+    mConnection = nil;
+    mResponse = nil;
+    mError = nil;
+    mOutputFile = nil;
+    [super dealloc];
+}
+
 //=========================================================== 
 //  url 
 //=========================================================== 
