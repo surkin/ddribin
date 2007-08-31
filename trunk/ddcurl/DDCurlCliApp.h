@@ -25,6 +25,7 @@ enum
     BOOL _help;
     BOOL _version;
     BOOL _redirect;
+    BOOL _cookie;
     
     DDMutableCurlRequest * mRequest;
     DDCurlMultipartForm * mForm;

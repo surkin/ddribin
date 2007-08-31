@@ -34,6 +34,7 @@
     long long mExpectedContentLength;
     int mStatusCode;
     NSString * mMIMEType;
+    NSString * mEffectiveUrl;
     NSMutableDictionary * mHeaders;
 }
 
@@ -43,6 +44,9 @@
  * @return An autoreleased response
  */
 + (DDCurlResponse *) response;
+
+- (NSString *) effectiveUrl;
+- (void) setEffectiveUrl: (NSString *) theEffectiveUrl;
 
 /**
  * Returns the expected content length, or -1 if the server has not

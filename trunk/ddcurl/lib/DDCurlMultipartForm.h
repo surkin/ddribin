@@ -23,7 +23,7 @@
  */
 
 #import <Cocoa/Cocoa.h>
-#import <curl/curl.h>
+#import "curl/curl.h"
 
 /**
  * An Objective-C wrapper around struct curl_httppost for multipart forms.

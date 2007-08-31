@@ -62,6 +62,8 @@
     mUrl = [url retain];
     mMultipartForm = nil;
     mAllowRedirects = NO;
+    mEnableCookies = YES;
+    mResumeOffset = 0LL;
     mHeaders = [[NSMutableDictionary alloc] init];
     
     return self;
@@ -167,6 +169,32 @@
 - (void) setAllowRedirects: (BOOL) flag
 {
     mAllowRedirects = flag;
+}
+
+//=========================================================== 
+//  enableCookies 
+//=========================================================== 
+- (BOOL) enableCookies
+{
+    return mEnableCookies;
+}
+
+- (void) setEnableCookies: (BOOL) flag
+{
+    mEnableCookies = flag;
+}
+
+//=========================================================== 
+//  resumeOffset 
+//=========================================================== 
+- (long long) resumeOffset
+{
+    return mResumeOffset;
+}
+
+- (void) setResumeOffset: (long long) theResumeOffset
+{
+    mResumeOffset = theResumeOffset;
 }
 
 //=========================================================== 

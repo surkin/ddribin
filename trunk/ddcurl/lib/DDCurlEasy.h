@@ -23,7 +23,7 @@
  */
 
 #import <Cocoa/Cocoa.h>
-#import <curl/curl.h>
+#import "curl/curl.h"
 
 @class DDCurlSlist;
 @class DDCurlMultipartForm;
@@ -148,6 +148,38 @@
  */
 - (void) setVerbose: (BOOL) verbose;
 
+/**
+ * Sets CURLOPT_COOKIEFILE.
+ *
+ * @param cookieFile File name of cookies
+ */
+- (void) setCookieFile: (NSString *) cookieFile;
+
+/**
+ * Sets CURLOPT_RESUME_FROM_LARGE.
+ *
+ * @param resumeFrom Resume from offest
+ */
+- (void) setResumeFromLarge: (curl_off_t) resumeFrom;
+
+#if LIBCURL_VERSION_NUM > 0x070f05
+
+/**
+ * Sets CURLOPT_MAX_SEND_SPEED_LARGE.
+ *
+ * @param maxSendSpeed Maximum send speed
+ */
+- (void) setMaxSendSpeedLarge: (curl_off_t) maxSendSpeed;
+
+/**
+ * Sets CURLOPT_MAX_RECV_SPEED_LARGE.
+ *
+ * @param maxSendSpeed Maximum receive speed.
+ */
+- (void) setMaxReceiveSpeedLarge: (curl_off_t) maxReceiveSpeed;
+
+#endif
+
 #pragma mark -
 
 /**
@@ -184,6 +216,11 @@
  * Gets CURLINFO_CONTENT_TYPE
  */
 - (NSString *) contentType;
+
+/**
+ * Gets CURLINFO_EFFECTIVE_URL
+ */
+- (NSString *) effectiveUrl;
 
 #pragma mark -
 #pragma mark Callback functions

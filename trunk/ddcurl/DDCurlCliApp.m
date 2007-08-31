@@ -39,6 +39,7 @@ static void signalHandler(int signal)
     _help = NO;
     _version = NO;
     _redirect = NO;
+    _cookie = NO;
     
     mRequest = [[DDMutableCurlRequest alloc] init];
     
@@ -118,6 +119,7 @@ static void signalHandler(int signal)
     // printf("  -A, --add-header HEADER       "
     //        "Add HTTP header, e.g. \"Accept: application/xml\"\n");
     printf("  -r, --redirect                Follow redirects\n");
+    printf("  -b, --cookie                  Enable cookies\n");
     printf("  -F, --form FIELD              Multipart form field\n");
     // printf("  -m, --method METHOD           HTTP method to use\n");
     printf("  -h, --help                    Display this help and exit\n");
@@ -139,6 +141,7 @@ static void signalHandler(int signal)
         {@"username",   'u',    DDGetoptRequiredArgument},
         {@"password",   'p',    DDGetoptRequiredArgument},
         {@"redirect",   'r',    DDGetoptNoArgument},
+        {@"cookie",     'b',    DDGetoptNoArgument},
         {@"help",       'h',    DDGetoptNoArgument},
         {@"version",    0,      DDGetoptNoArgument},
         {nil,           0,      0},
@@ -179,6 +182,7 @@ static void signalHandler(int signal)
     mShouldKeepRunning = YES;
 
     [mRequest setAllowRedirects: _redirect];
+    [mRequest setEnableCookies: _cookie];
     if (mForm != nil)
         [mRequest setMultipartForm: mForm];
     
@@ -229,6 +233,10 @@ static void signalHandler(int signal)
     ddfprintf(stderr, @"Status code: %d\n", [response statusCode]);
     ddfprintf(stderr, @"Expected content length: %lld\n",
               [response expectedContentLength]);
+    NSURL * url = [NSURL URLWithString: [response effectiveUrl]];
+    NSString * path = [url path];
+    NSString * file = [path lastPathComponent];
+    ddfprintf(stderr, @"Path: %@, file: %@\n", path, file);
 #endif
     mResponse = [response retain];
 }
