@@ -25,10 +25,20 @@
 #import "DeviceTestController.h"
 
 
+static BOOL sSleepAtExit = NO;
+
+static void exit_sleeper()
+{
+    while (sSleepAtExit) sleep(60);
+}
+
 @implementation DeviceTestController
 
 - (void) awakeFromNib
 {
+    sSleepAtExit = [[NSUserDefaults standardUserDefaults] boolForKey: @"SleepAtExit"];
+    atexit(exit_sleeper);
+
     [mWindow center];
     [mWindow makeKeyAndOrderFront: self];
 }
