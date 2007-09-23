@@ -39,13 +39,15 @@ static void exit_sleeper()
 
 - (void) awakeFromNib
 {
+    sSleepAtExit = [[NSUserDefaults standardUserDefaults] boolForKey: @"SleepAtExit"];
+    atexit(exit_sleeper);
+
     [self willChangeValueForKey: @"devices"];
     mDevices = [[DDHidDevice allDevices] retain];
     [self didChangeValueForKey: @"devices"];
     
     [mWindow center];
     [mWindow makeKeyAndOrderFront: self];
-    atexit(exit_sleeper);
 }
 
 //=========================================================== 
