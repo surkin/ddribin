@@ -65,7 +65,7 @@
 		55F74F160C805E3C00101CB6 /* wc.m.rl */ = {isa = PBXFileReference; explicitFileType = sourcecode.c.objc; fileEncoding = 30; path = wc.m.rl; sourceTree = "<group>"; };
 		55F7562E0C84C5D900101CB6 /* RagelStateMachine.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RagelStateMachine.h; sourceTree = "<group>"; };
 		55F7562F0C84C5D900101CB6 /* RagelStateMachine.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RagelStateMachine.m; sourceTree = "<group>"; };
-		8DD76FA10486AA7600D96B5E /* mtexport */ = {isa = PBXFileReference; includeInIndex = 0; lastKnownFileType = "compiled.mach-o.executable"; path = mtexport; sourceTree = BUILT_PRODUCTS_DIR; };
+		8DD76FA10486AA7600D96B5E /* mtexport */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = mtexport; sourceTree = BUILT_PRODUCTS_DIR; };
 		C6859EA3029092ED04C91782 /* mtexport.1 */ = {isa = PBXFileReference; lastKnownFileType = text.man; path = mtexport.1; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 

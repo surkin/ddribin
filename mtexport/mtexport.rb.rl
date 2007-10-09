@@ -151,6 +151,7 @@ class MTExportParser
   def initialize
     %% write data;
     # %%
+    @data = ""
     %% write init;
     # %%
     
@@ -163,9 +164,9 @@ class MTExportParser
   end
   
   def execute(data)
+    @data = data
     p = 0
     pe = data.length
-    @data = data
     
     %% write exec;
     # %%
