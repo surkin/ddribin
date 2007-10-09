@@ -95,79 +95,48 @@ class MTExportParser
     
 # line 97 "mtexport.rb"
 class << self
-	attr_accessor :_mtExportScanner_actions
-	private :_mtExportScanner_actions, :_mtExportScanner_actions=
-end
-self._mtExportScanner_actions = [
-	0, 1, 0, 1, 1, 1, 7, 2, 
-	5, 1, 2, 7, 2, 2, 7, 3, 
-	2, 7, 6, 3, 4, 5, 1, 3, 
-	7, 5, 1, 4, 4, 7, 5, 1
-]
-
-class << self
-	attr_accessor :_mtExportScanner_key_offsets
-	private :_mtExportScanner_key_offsets, :_mtExportScanner_key_offsets=
-end
-self._mtExportScanner_key_offsets = [
-	0, 0, 8, 9, 15, 16, 18, 19, 
-	20, 21, 22, 23, 25, 31, 34, 35, 
-	36, 37, 38, 39, 40, 41, 42, 44, 
-	45, 46, 47, 48, 49, 51, 54, 56, 
-	57, 60, 63, 66, 69, 71, 72, 73, 
-	74, 76, 77, 78, 79, 80, 81, 82, 
-	83, 84, 85, 86, 87, 88, 89, 90, 
-	91, 92, 93, 94, 95
-]
-
-class << self
 	attr_accessor :_mtExportScanner_trans_keys
 	private :_mtExportScanner_trans_keys, :_mtExportScanner_trans_keys=
 end
 self._mtExportScanner_trans_keys = [
-	10, 13, 32, 45, 65, 90, 97, 122, 
-	10, 32, 58, 65, 90, 97, 122, 32, 
-	10, 13, 10, 45, 45, 45, 45, 10, 
-	13, 10, 13, 45, 66, 69, 75, 10, 
-	13, 45, 10, 45, 45, 45, 45, 45, 
-	45, 45, 10, 13, 10, 79, 68, 89, 
-	58, 10, 13, 10, 13, 45, 10, 13, 
-	10, 10, 13, 45, 10, 13, 45, 10, 
-	13, 45, 10, 13, 45, 10, 13, 10, 
-	10, 88, 67, 84, 69, 82, 80, 84, 
-	69, 78, 68, 69, 68, 32, 66, 69, 
-	89, 87, 79, 82, 68, 83, 10, 10, 
-	13, 32, 45, 65, 90, 97, 122, 0
+	0, 0, 10, 122, 10, 10, 
+	32, 122, 32, 32, 10, 
+	13, 10, 10, 45, 45, 
+	45, 45, 45, 45, 45, 45, 
+	10, 13, 10, 75, 10, 
+	45, 10, 10, 45, 45, 
+	45, 45, 45, 45, 45, 45, 
+	45, 45, 45, 45, 45, 
+	45, 10, 13, 10, 10, 
+	79, 79, 68, 68, 89, 89, 
+	58, 58, 10, 13, 10, 
+	45, 10, 13, 10, 10, 
+	10, 45, 10, 45, 10, 45, 
+	10, 45, 10, 13, 10, 
+	10, 10, 10, 88, 88, 
+	67, 84, 69, 69, 82, 82, 
+	80, 80, 84, 84, 69, 
+	69, 78, 78, 68, 68, 
+	69, 69, 68, 68, 32, 32, 
+	66, 66, 69, 69, 89, 
+	89, 87, 87, 79, 79, 
+	82, 82, 68, 68, 83, 83, 
+	10, 10, 10, 122, 0
 ]
 
 class << self
-	attr_accessor :_mtExportScanner_single_lengths
-	private :_mtExportScanner_single_lengths, :_mtExportScanner_single_lengths=
+	attr_accessor :_mtExportScanner_key_spans
+	private :_mtExportScanner_key_spans, :_mtExportScanner_key_spans=
 end
-self._mtExportScanner_single_lengths = [
-	0, 4, 1, 2, 1, 2, 1, 1, 
-	1, 1, 1, 2, 6, 3, 1, 1, 
-	1, 1, 1, 1, 1, 1, 2, 1, 
-	1, 1, 1, 1, 2, 3, 2, 1, 
-	3, 3, 3, 3, 2, 1, 1, 1, 
-	2, 1, 1, 1, 1, 1, 1, 1, 
+self._mtExportScanner_key_spans = [
+	0, 113, 1, 91, 1, 4, 1, 1, 
+	1, 1, 1, 4, 66, 36, 1, 1, 
+	1, 1, 1, 1, 1, 1, 4, 1, 
+	1, 1, 1, 1, 4, 36, 4, 1, 
+	36, 36, 36, 36, 4, 1, 1, 1, 
+	18, 1, 1, 1, 1, 1, 1, 1, 
 	1, 1, 1, 1, 1, 1, 1, 1, 
-	1, 1, 1, 1, 4
-]
-
-class << self
-	attr_accessor :_mtExportScanner_range_lengths
-	private :_mtExportScanner_range_lengths, :_mtExportScanner_range_lengths=
-end
-self._mtExportScanner_range_lengths = [
-	0, 2, 0, 2, 0, 0, 0, 0, 
-	0, 0, 0, 0, 0, 0, 0, 0, 
-	0, 0, 0, 0, 0, 0, 0, 0, 
-	0, 0, 0, 0, 0, 0, 0, 0, 
-	0, 0, 0, 0, 0, 0, 0, 0, 
-	0, 0, 0, 0, 0, 0, 0, 0, 
-	0, 0, 0, 0, 0, 0, 0, 0, 
-	0, 0, 0, 0, 2
+	1, 1, 1, 1, 113
 ]
 
 class << self
@@ -175,14 +144,14 @@ class << self
 	private :_mtExportScanner_index_offsets, :_mtExportScanner_index_offsets=
 end
 self._mtExportScanner_index_offsets = [
-	0, 0, 7, 9, 14, 16, 19, 21, 
-	23, 25, 27, 29, 32, 39, 43, 45, 
-	47, 49, 51, 53, 55, 57, 59, 62, 
-	64, 66, 68, 70, 72, 75, 79, 82, 
-	84, 88, 92, 96, 100, 103, 105, 107, 
-	109, 112, 114, 116, 118, 120, 122, 124, 
-	126, 128, 130, 132, 134, 136, 138, 140, 
-	142, 144, 146, 148, 150
+	0, 0, 114, 116, 208, 210, 215, 217, 
+	219, 221, 223, 225, 230, 297, 334, 336, 
+	338, 340, 342, 344, 346, 348, 350, 355, 
+	357, 359, 361, 363, 365, 370, 407, 412, 
+	414, 451, 488, 525, 562, 567, 569, 571, 
+	573, 592, 594, 596, 598, 600, 602, 604, 
+	606, 608, 610, 612, 614, 616, 618, 620, 
+	622, 624, 626, 628, 630
 ]
 
 class << self
@@ -190,26 +159,100 @@ class << self
 	private :_mtExportScanner_indicies, :_mtExportScanner_indicies=
 end
 self._mtExportScanner_indicies = [
-	0, 2, 3, 4, 3, 3, 1, 0, 
-	1, 3, 5, 3, 3, 1, 6, 1, 
-	8, 9, 7, 8, 1, 10, 1, 11, 
-	1, 12, 1, 13, 1, 14, 15, 1, 
-	16, 17, 18, 19, 20, 21, 1, 16, 
-	17, 18, 1, 16, 1, 22, 1, 23, 
-	1, 24, 1, 25, 1, 26, 1, 27, 
-	1, 28, 1, 29, 30, 1, 29, 1, 
-	31, 1, 32, 1, 33, 1, 34, 1, 
-	35, 36, 1, 38, 39, 40, 37, 38, 
-	39, 37, 41, 1, 38, 39, 42, 37, 
-	38, 39, 43, 37, 38, 39, 44, 37, 
-	38, 39, 45, 37, 46, 47, 37, 46, 
-	1, 35, 1, 48, 1, 49, 50, 1, 
+	0, 1, 1, 2, 1, 1, 1, 1, 
+	1, 1, 1, 1, 1, 1, 1, 1, 
+	1, 1, 1, 1, 1, 1, 3, 1, 
+	1, 1, 1, 1, 1, 1, 1, 1, 
+	1, 1, 1, 4, 1, 1, 1, 1, 
+	1, 1, 1, 1, 1, 1, 1, 1, 
+	1, 1, 1, 1, 1, 1, 1, 3, 
+	3, 3, 3, 3, 3, 3, 3, 3, 
+	3, 3, 3, 3, 3, 3, 3, 3, 
+	3, 3, 3, 3, 3, 3, 3, 3, 
+	3, 1, 1, 1, 1, 1, 1, 3, 
+	3, 3, 3, 3, 3, 3, 3, 3, 
+	3, 3, 3, 3, 3, 3, 3, 3, 
+	3, 3, 3, 3, 3, 3, 3, 3, 
+	3, 1, 0, 1, 3, 1, 1, 1, 
+	1, 1, 1, 1, 1, 1, 1, 1, 
+	1, 1, 1, 1, 1, 1, 1, 1, 
+	1, 1, 1, 1, 1, 1, 5, 1, 
+	1, 1, 1, 1, 1, 3, 3, 3, 
+	3, 3, 3, 3, 3, 3, 3, 3, 
+	3, 3, 3, 3, 3, 3, 3, 3, 
+	3, 3, 3, 3, 3, 3, 3, 1, 
+	1, 1, 1, 1, 1, 3, 3, 3, 
+	3, 3, 3, 3, 3, 3, 3, 3, 
+	3, 3, 3, 3, 3, 3, 3, 3, 
+	3, 3, 3, 3, 3, 3, 3, 1, 
+	6, 1, 8, 7, 7, 9, 7, 8, 
+	1, 10, 1, 11, 1, 12, 1, 13, 
+	1, 14, 1, 1, 15, 1, 16, 1, 
+	1, 17, 1, 1, 1, 1, 1, 1, 
+	1, 1, 1, 1, 1, 1, 1, 1, 
+	1, 1, 1, 1, 1, 1, 1, 1, 
+	1, 1, 1, 1, 1, 1, 1, 1, 
+	1, 18, 1, 1, 1, 1, 1, 1, 
+	1, 1, 1, 1, 1, 1, 1, 1, 
+	1, 1, 1, 1, 1, 1, 19, 1, 
+	1, 20, 1, 1, 1, 1, 1, 21, 
+	1, 16, 1, 1, 17, 1, 1, 1, 
+	1, 1, 1, 1, 1, 1, 1, 1, 
+	1, 1, 1, 1, 1, 1, 1, 1, 
+	1, 1, 1, 1, 1, 1, 1, 1, 
+	1, 1, 1, 1, 18, 1, 16, 1, 
+	22, 1, 23, 1, 24, 1, 25, 1, 
+	26, 1, 27, 1, 28, 1, 29, 1, 
+	1, 30, 1, 29, 1, 31, 1, 32, 
+	1, 33, 1, 34, 1, 35, 1, 1, 
+	36, 1, 38, 37, 37, 39, 37, 37, 
+	37, 37, 37, 37, 37, 37, 37, 37, 
+	37, 37, 37, 37, 37, 37, 37, 37, 
+	37, 37, 37, 37, 37, 37, 37, 37, 
+	37, 37, 37, 37, 37, 40, 37, 38, 
+	37, 37, 39, 37, 41, 1, 38, 37, 
+	37, 39, 37, 37, 37, 37, 37, 37, 
+	37, 37, 37, 37, 37, 37, 37, 37, 
+	37, 37, 37, 37, 37, 37, 37, 37, 
+	37, 37, 37, 37, 37, 37, 37, 37, 
+	37, 42, 37, 38, 37, 37, 39, 37, 
+	37, 37, 37, 37, 37, 37, 37, 37, 
+	37, 37, 37, 37, 37, 37, 37, 37, 
+	37, 37, 37, 37, 37, 37, 37, 37, 
+	37, 37, 37, 37, 37, 37, 43, 37, 
+	38, 37, 37, 39, 37, 37, 37, 37, 
+	37, 37, 37, 37, 37, 37, 37, 37, 
+	37, 37, 37, 37, 37, 37, 37, 37, 
+	37, 37, 37, 37, 37, 37, 37, 37, 
+	37, 37, 37, 44, 37, 38, 37, 37, 
+	39, 37, 37, 37, 37, 37, 37, 37, 
+	37, 37, 37, 37, 37, 37, 37, 37, 
+	37, 37, 37, 37, 37, 37, 37, 37, 
+	37, 37, 37, 37, 37, 37, 37, 37, 
+	45, 37, 46, 37, 37, 47, 37, 46, 
+	1, 35, 1, 48, 1, 49, 1, 1, 
+	1, 1, 1, 1, 1, 1, 1, 1, 
+	1, 1, 1, 1, 1, 1, 50, 1, 
 	51, 1, 52, 1, 53, 1, 33, 1, 
 	54, 1, 55, 1, 56, 1, 57, 1, 
 	58, 1, 59, 1, 19, 1, 60, 1, 
 	61, 1, 62, 1, 63, 1, 64, 1, 
-	65, 1, 33, 1, 14, 1, 0, 2, 
-	3, 4, 3, 3, 1, 0
+	65, 1, 33, 1, 14, 1, 0, 1, 
+	1, 2, 1, 1, 1, 1, 1, 1, 
+	1, 1, 1, 1, 1, 1, 1, 1, 
+	1, 1, 1, 1, 3, 1, 1, 1, 
+	1, 1, 1, 1, 1, 1, 1, 1, 
+	1, 4, 1, 1, 1, 1, 1, 1, 
+	1, 1, 1, 1, 1, 1, 1, 1, 
+	1, 1, 1, 1, 1, 3, 3, 3, 
+	3, 3, 3, 3, 3, 3, 3, 3, 
+	3, 3, 3, 3, 3, 3, 3, 3, 
+	3, 3, 3, 3, 3, 3, 3, 1, 
+	1, 1, 1, 1, 1, 3, 3, 3, 
+	3, 3, 3, 3, 3, 3, 3, 3, 
+	3, 3, 3, 3, 3, 3, 3, 3, 
+	3, 3, 3, 3, 3, 3, 3, 1, 
+	0
 ]
 
 class << self
@@ -233,15 +276,15 @@ class << self
 	private :_mtExportScanner_trans_actions_wi, :_mtExportScanner_trans_actions_wi=
 end
 self._mtExportScanner_trans_actions_wi = [
-	5, 0, 0, 1, 0, 0, 0, 3, 
-	10, 0, 0, 0, 0, 0, 5, 0, 
-	5, 0, 0, 1, 1, 1, 0, 0, 
-	0, 0, 0, 0, 0, 16, 0, 1, 
-	1, 1, 0, 5, 0, 3, 27, 19, 
-	7, 23, 7, 7, 7, 7, 13, 0, 
-	1, 1, 1, 1, 1, 1, 1, 1, 
-	1, 1, 1, 1, 1, 1, 1, 1, 
-	1, 1
+	1, 0, 0, 2, 0, 0, 0, 3, 
+	4, 0, 0, 0, 0, 0, 1, 0, 
+	1, 0, 0, 2, 2, 2, 0, 0, 
+	0, 0, 0, 0, 0, 5, 0, 2, 
+	2, 2, 0, 1, 0, 3, 6, 7, 
+	8, 9, 8, 8, 8, 8, 10, 0, 
+	2, 2, 2, 2, 2, 2, 2, 2, 
+	2, 2, 2, 2, 2, 2, 2, 2, 
+	2, 2
 ]
 
 class << self
@@ -264,12 +307,15 @@ self.mtExportScanner_en_main = 60;
 
 # line 153 "mtexport.rb.rl"
     # %%
+    @data = ""
     
-# line 269 "mtexport.rb"
+# line 313 "mtexport.rb"
 begin
+	p ||= 0
+	pe ||=  @data.length
 	 @cs = mtExportScanner_start
 end
-# line 155 "mtexport.rb.rl"
+# line 156 "mtexport.rb.rl"
     # %%
     
     @curline = 0
@@ -281,90 +327,63 @@ end
   end
   
   def execute(data)
+    @data = data
     p = 0
     pe = data.length
-    @data = data
     
     
-# line 290 "mtexport.rb"
-begin
-	_klen, _trans, _keys, _acts, _nacts = nil
-	if p != pe
-	if  @cs != 0
-	while true
-	_break_resume = false
+# line 336 "mtexport.rb"
+begin # ragel fflat
+	_slen, _trans, _keys, _inds, _acts, _nacts = nil
+	if p != pe # pe guard
+	if  @cs != 0 # errstate guard
+	while true # _resume loop 
+		_break_resume = false
 	begin
-	_break_again = false
-	_keys = _mtExportScanner_key_offsets[ @cs]
-	_trans = _mtExportScanner_index_offsets[ @cs]
-	_klen = _mtExportScanner_single_lengths[ @cs]
-	_break_match = false
-	
-	begin
-	  if _klen > 0
-	     _lower = _keys
-	     _upper = _keys + _klen - 1
-
-	     loop do
-	        break if _upper < _lower
-	        _mid = _lower + ( (_upper - _lower) >> 1 )
-
-	        if  @data[p] < _mtExportScanner_trans_keys[_mid]
-	           _upper = _mid - 1
-	        elsif  @data[p] > _mtExportScanner_trans_keys[_mid]
-	           _lower = _mid + 1
-	        else
-	           _trans += (_mid - _keys)
-	           _break_match = true
-	           break
-	        end
-	     end # loop
-	     break if _break_match
-	     _keys += _klen
-	     _trans += _klen
-	  end
-	  _klen = _mtExportScanner_range_lengths[ @cs]
-	  if _klen > 0
-	     _lower = _keys
-	     _upper = _keys + (_klen << 1) - 2
-	     loop do
-	        break if _upper < _lower
-	        _mid = _lower + (((_upper-_lower) >> 1) & ~1)
-	        if  @data[p] < _mtExportScanner_trans_keys[_mid]
-	          _upper = _mid - 2
-	        elsif  @data[p] > _mtExportScanner_trans_keys[_mid+1]
-	          _lower = _mid + 2
-	        else
-	          _trans += ((_mid - _keys) >> 1)
-	          _break_match = true
-	          break
-	        end
-	     end # loop
-	     break if _break_match
-	     _trans += _klen
-	  end
-	end while false
-	_trans = _mtExportScanner_indicies[_trans]
+		_break_again = false
+	_keys =  @cs << 1
+	_inds = _mtExportScanner_index_offsets[ @cs]
+	_slen = _mtExportScanner_key_spans[ @cs]
+	_trans = if (   _slen > 0 && 
+			_mtExportScanner_trans_keys[_keys] <=  @data[p] && 
+			 @data[p] <= _mtExportScanner_trans_keys[_keys + 1] 
+		    ) then
+			_mtExportScanner_indicies[ _inds +  @data[p] - _mtExportScanner_trans_keys[_keys] ] 
+		 else 
+			_mtExportScanner_indicies[ _inds + _slen ]
+		 end
 	 @cs = _mtExportScanner_trans_targs_wi[_trans]
 	break if _mtExportScanner_trans_actions_wi[_trans] == 0
-	_acts = _mtExportScanner_trans_actions_wi[_trans]
-	_nacts = _mtExportScanner_actions[_acts]
-	_acts += 1
-	while _nacts > 0
-		_nacts -= 1
-		_acts += 1
-		case _mtExportScanner_actions[_acts - 1]
-when 0:
+	case _mtExportScanner_trans_actions_wi[_trans]
+	when 2
 # line 93 "mtexport.rb.rl"
 		begin
  @key << data[p].chr; 		end
 # line 93 "mtexport.rb.rl"
-when 1:
+	when 3
 # line 94 "mtexport.rb.rl"
 		begin
  @value << data[p].chr		end
 # line 94 "mtexport.rb.rl"
-when 2:
+	when 1
+# line 115 "mtexport.rb.rl"
+		begin
+ @curline += 1; 		end
+# line 115 "mtexport.rb.rl"
+	when 8
+# line 109 "mtexport.rb.rl"
+		begin
+ @charsToDelete += 1 		end
+# line 109 "mtexport.rb.rl"
+# line 94 "mtexport.rb.rl"
+		begin
+ @value << data[p].chr		end
+# line 94 "mtexport.rb.rl"
+	when 4
+# line 115 "mtexport.rb.rl"
+		begin
+ @curline += 1; 		end
+# line 115 "mtexport.rb.rl"
 # line 95 "mtexport.rb.rl"
 		begin
 
@@ -373,7 +392,11 @@ when 2:
     @value = ""
   		end
 # line 95 "mtexport.rb.rl"
-when 3:
+	when 10
+# line 115 "mtexport.rb.rl"
+		begin
+ @curline += 1; 		end
+# line 115 "mtexport.rb.rl"
 # line 100 "mtexport.rb.rl"
 		begin
 
@@ -385,17 +408,11 @@ when 3:
     @value = ""
   		end
 # line 100 "mtexport.rb.rl"
-when 4:
-# line 108 "mtexport.rb.rl"
+	when 5
+# line 115 "mtexport.rb.rl"
 		begin
- @charsToDelete = 0 		end
-# line 108 "mtexport.rb.rl"
-when 5:
-# line 109 "mtexport.rb.rl"
-		begin
- @charsToDelete += 1 		end
-# line 109 "mtexport.rb.rl"
-when 6:
+ @curline += 1; 		end
+# line 115 "mtexport.rb.rl"
 # line 110 "mtexport.rb.rl"
 		begin
 
@@ -403,24 +420,60 @@ when 6:
     @current_entry = Entry.new
   		end
 # line 110 "mtexport.rb.rl"
-when 7:
+	when 7
+# line 108 "mtexport.rb.rl"
+		begin
+ @charsToDelete = 0 		end
+# line 108 "mtexport.rb.rl"
+# line 109 "mtexport.rb.rl"
+		begin
+ @charsToDelete += 1 		end
+# line 109 "mtexport.rb.rl"
+# line 94 "mtexport.rb.rl"
+		begin
+ @value << data[p].chr		end
+# line 94 "mtexport.rb.rl"
+	when 9
 # line 115 "mtexport.rb.rl"
 		begin
  @curline += 1; 		end
 # line 115 "mtexport.rb.rl"
-# line 412 "mtexport.rb"
-		end # action switch
-	end
-	end while false
+# line 109 "mtexport.rb.rl"
+		begin
+ @charsToDelete += 1 		end
+# line 109 "mtexport.rb.rl"
+# line 94 "mtexport.rb.rl"
+		begin
+ @value << data[p].chr		end
+# line 94 "mtexport.rb.rl"
+	when 6
+# line 108 "mtexport.rb.rl"
+		begin
+ @charsToDelete = 0 		end
+# line 108 "mtexport.rb.rl"
+# line 115 "mtexport.rb.rl"
+		begin
+ @curline += 1; 		end
+# line 115 "mtexport.rb.rl"
+# line 109 "mtexport.rb.rl"
+		begin
+ @charsToDelete += 1 		end
+# line 109 "mtexport.rb.rl"
+# line 94 "mtexport.rb.rl"
+		begin
+ @value << data[p].chr		end
+# line 94 "mtexport.rb.rl"
+# line 467 "mtexport.rb"
+	end # action switch
+	end while false # _again loop
 	break if _break_resume
 	break if  @cs == 0
 	p += 1
 	break if p == pe
-	end
-	end
-	end
-	end
-# line 171 "mtexport.rb.rl"
+	end # _resume loop
+	end # errstate guard
+	end # pe guard
+end # ragel fflat# line 172 "mtexport.rb.rl"
     # %%
     
     if @cs == mtExportScanner_error
@@ -434,8 +487,8 @@ when 7:
   
   def finish
     
-# line 438 "mtexport.rb"
-# line 184 "mtexport.rb.rl"
+# line 491 "mtexport.rb"
+# line 185 "mtexport.rb.rl"
     # %%
   end
   
