@@ -64,6 +64,8 @@ class Entry < EntryBase
     output_meta("PRIMARY CATEGORY", self.primary_category)
     output_meta("CATEGORY", self.category)
     output_meta("DATE", self.date)
+    output_meta_bool("ALLOW COMMENTS", false)
+    output_meta_bool("ALLOW PINGS", false)
     puts "-----"
     output_multi("BODY", self.body)
     output_multi("EXTENDED BODY", self.extended_body)
@@ -87,13 +89,13 @@ class Entry < EntryBase
   end
 end
 
-# line 148 "mtexport.rb.rl"
+# line 150 "mtexport.rb.rl"
 
 
 class MTExportParser
   def initialize
     
-# line 97 "mtexport.rb"
+# line 99 "mtexport.rb"
 class << self
 	attr_accessor :_mtExportScanner_trans_keys
 	private :_mtExportScanner_trans_keys, :_mtExportScanner_trans_keys=
@@ -305,17 +307,17 @@ class << self
 end
 self.mtExportScanner_en_main = 60;
 
-# line 153 "mtexport.rb.rl"
+# line 155 "mtexport.rb.rl"
     # %%
     @data = ""
     
-# line 313 "mtexport.rb"
+# line 315 "mtexport.rb"
 begin
 	p ||= 0
 	pe ||=  @data.length
 	 @cs = mtExportScanner_start
 end
-# line 156 "mtexport.rb.rl"
+# line 158 "mtexport.rb.rl"
     # %%
     
     @curline = 0
@@ -332,7 +334,7 @@ end
     pe = data.length
     
     
-# line 336 "mtexport.rb"
+# line 338 "mtexport.rb"
 begin # ragel fflat
 	_slen, _trans, _keys, _inds, _acts, _nacts = nil
 	if p != pe # pe guard
@@ -356,48 +358,48 @@ begin # ragel fflat
 	break if _mtExportScanner_trans_actions_wi[_trans] == 0
 	case _mtExportScanner_trans_actions_wi[_trans]
 	when 2
-# line 93 "mtexport.rb.rl"
+# line 95 "mtexport.rb.rl"
 		begin
  @key << data[p].chr; 		end
-# line 93 "mtexport.rb.rl"
+# line 95 "mtexport.rb.rl"
 	when 3
-# line 94 "mtexport.rb.rl"
+# line 96 "mtexport.rb.rl"
 		begin
  @value << data[p].chr		end
-# line 94 "mtexport.rb.rl"
+# line 96 "mtexport.rb.rl"
 	when 1
-# line 115 "mtexport.rb.rl"
+# line 117 "mtexport.rb.rl"
 		begin
  @curline += 1; 		end
-# line 115 "mtexport.rb.rl"
+# line 117 "mtexport.rb.rl"
 	when 8
-# line 109 "mtexport.rb.rl"
+# line 111 "mtexport.rb.rl"
 		begin
  @charsToDelete += 1 		end
-# line 109 "mtexport.rb.rl"
-# line 94 "mtexport.rb.rl"
+# line 111 "mtexport.rb.rl"
+# line 96 "mtexport.rb.rl"
 		begin
  @value << data[p].chr		end
-# line 94 "mtexport.rb.rl"
+# line 96 "mtexport.rb.rl"
 	when 4
-# line 115 "mtexport.rb.rl"
+# line 117 "mtexport.rb.rl"
 		begin
  @curline += 1; 		end
-# line 115 "mtexport.rb.rl"
-# line 95 "mtexport.rb.rl"
+# line 117 "mtexport.rb.rl"
+# line 97 "mtexport.rb.rl"
 		begin
 
     @current_entry.setMetadata(@key, @value)
     @key = ""
     @value = ""
   		end
-# line 95 "mtexport.rb.rl"
+# line 97 "mtexport.rb.rl"
 	when 10
-# line 115 "mtexport.rb.rl"
+# line 117 "mtexport.rb.rl"
 		begin
  @curline += 1; 		end
-# line 115 "mtexport.rb.rl"
-# line 100 "mtexport.rb.rl"
+# line 117 "mtexport.rb.rl"
+# line 102 "mtexport.rb.rl"
 		begin
 
     @value = @value.slice(0, @value.length - @charsToDelete)
@@ -407,63 +409,63 @@ begin # ragel fflat
     @key = ""
     @value = ""
   		end
-# line 100 "mtexport.rb.rl"
+# line 102 "mtexport.rb.rl"
 	when 5
-# line 115 "mtexport.rb.rl"
+# line 117 "mtexport.rb.rl"
 		begin
  @curline += 1; 		end
-# line 115 "mtexport.rb.rl"
-# line 110 "mtexport.rb.rl"
+# line 117 "mtexport.rb.rl"
+# line 112 "mtexport.rb.rl"
 		begin
 
     @entries << @current_entry
     @current_entry = Entry.new
   		end
-# line 110 "mtexport.rb.rl"
+# line 112 "mtexport.rb.rl"
 	when 7
-# line 108 "mtexport.rb.rl"
+# line 110 "mtexport.rb.rl"
 		begin
  @charsToDelete = 0 		end
-# line 108 "mtexport.rb.rl"
-# line 109 "mtexport.rb.rl"
+# line 110 "mtexport.rb.rl"
+# line 111 "mtexport.rb.rl"
 		begin
  @charsToDelete += 1 		end
-# line 109 "mtexport.rb.rl"
-# line 94 "mtexport.rb.rl"
+# line 111 "mtexport.rb.rl"
+# line 96 "mtexport.rb.rl"
 		begin
  @value << data[p].chr		end
-# line 94 "mtexport.rb.rl"
+# line 96 "mtexport.rb.rl"
 	when 9
-# line 115 "mtexport.rb.rl"
+# line 117 "mtexport.rb.rl"
 		begin
  @curline += 1; 		end
-# line 115 "mtexport.rb.rl"
-# line 109 "mtexport.rb.rl"
+# line 117 "mtexport.rb.rl"
+# line 111 "mtexport.rb.rl"
 		begin
  @charsToDelete += 1 		end
-# line 109 "mtexport.rb.rl"
-# line 94 "mtexport.rb.rl"
+# line 111 "mtexport.rb.rl"
+# line 96 "mtexport.rb.rl"
 		begin
  @value << data[p].chr		end
-# line 94 "mtexport.rb.rl"
+# line 96 "mtexport.rb.rl"
 	when 6
-# line 108 "mtexport.rb.rl"
+# line 110 "mtexport.rb.rl"
 		begin
  @charsToDelete = 0 		end
-# line 108 "mtexport.rb.rl"
-# line 115 "mtexport.rb.rl"
+# line 110 "mtexport.rb.rl"
+# line 117 "mtexport.rb.rl"
 		begin
  @curline += 1; 		end
-# line 115 "mtexport.rb.rl"
-# line 109 "mtexport.rb.rl"
+# line 117 "mtexport.rb.rl"
+# line 111 "mtexport.rb.rl"
 		begin
  @charsToDelete += 1 		end
-# line 109 "mtexport.rb.rl"
-# line 94 "mtexport.rb.rl"
+# line 111 "mtexport.rb.rl"
+# line 96 "mtexport.rb.rl"
 		begin
  @value << data[p].chr		end
-# line 94 "mtexport.rb.rl"
-# line 467 "mtexport.rb"
+# line 96 "mtexport.rb.rl"
+# line 469 "mtexport.rb"
 	end # action switch
 	end while false # _again loop
 	break if _break_resume
@@ -473,7 +475,7 @@ begin # ragel fflat
 	end # _resume loop
 	end # errstate guard
 	end # pe guard
-end # ragel fflat# line 172 "mtexport.rb.rl"
+end # ragel fflat# line 174 "mtexport.rb.rl"
     # %%
     
     if @cs == mtExportScanner_error
@@ -487,8 +489,8 @@ end # ragel fflat# line 172 "mtexport.rb.rl"
   
   def finish
     
-# line 491 "mtexport.rb"
-# line 185 "mtexport.rb.rl"
+# line 493 "mtexport.rb"
+# line 187 "mtexport.rb.rl"
     # %%
   end
   
@@ -505,18 +507,18 @@ end # ragel fflat# line 172 "mtexport.rb.rl"
       if (!data.nil?)
         result = self.execute(data)
         if result < 0
-          puts "Scanner result: #{result}"
+          $stderr.puts "Scanner result: #{result}"
           break
         end
       else
         done = true
       end
     end
-    puts "Bytes: #{bytes}"
+    $stderr.puts "Bytes: #{bytes}"
   end
   
   def print_summary
-    puts "Number of lines: #{@curline}"
+    $stderr.puts "Number of lines: #{@curline}"
     # @entries[0].to_export
     @entries.each do |e|
       e.adjust_basename
