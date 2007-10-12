@@ -63,6 +63,8 @@ class Entry < EntryBase
     output_meta("PRIMARY CATEGORY", self.primary_category)
     output_meta("CATEGORY", self.category)
     output_meta("DATE", self.date)
+    output_meta_bool("ALLOW COMMENTS", false)
+    output_meta_bool("ALLOW PINGS", false)
     puts "-----"
     output_multi("BODY", self.body)
     output_multi("EXTENDED BODY", self.extended_body)
@@ -198,18 +200,18 @@ class MTExportParser
       if (!data.nil?)
         result = self.execute(data)
         if result < 0
-          puts "Scanner result: #{result}"
+          $stderr.puts "Scanner result: #{result}"
           break
         end
       else
         done = true
       end
     end
-    puts "Bytes: #{bytes}"
+    $stderr.puts "Bytes: #{bytes}"
   end
   
   def print_summary
-    puts "Number of lines: #{@curline}"
+    $stderr.puts "Number of lines: #{@curline}"
     # @entries[0].to_export
     @entries.each do |e|
       e.adjust_basename
