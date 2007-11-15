@@ -1,6 +1,3 @@
-#include <CoreFoundation/CoreFoundation.h>
-#include <CoreServices/CoreServices.h>
-#include <QuickLook/QuickLook.h>
 /*
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -18,6 +15,9 @@
  * Boston, MA 02111-1307, USA.
  */
 
+#include <CoreFoundation/CoreFoundation.h>
+#include <CoreServices/CoreServices.h>
+#include <QuickLook/QuickLook.h>
 #include "HTMLFromSourceCode.h"
 #import <Foundation/Foundation.h>
 
