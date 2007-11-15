@@ -462,7 +462,7 @@ sub html_faces ()
 	  print ("<!DOCTYPE html PUBLIC \"-//IETF//DTD HTML 2.0//EN\">\n");
 	  print ("<HTML>\n<HEAD>\n<TITLE>");
 	  language_print (document_title);
-	  print ("</TITLE>\n</HEAD>\n",
+      print ("<TITLE>\n</HEAD>\n",
 		 color
 		 ? "<BODY BGCOLOR=\"#FFFFFF\" TEXT=\"#000000\" LINK=\"#1F00FF\" ALINK=\"#FF0000\" VLINK=\"#9900DD\">"
 		 : "<BODY>",
@@ -484,10 +484,12 @@ sub html_faces ()
       /* print ("<A NAME=\"file", current_input_file, "\">\n<H1>"); */
       /* language_print (filename); */
 
+    /*
       if (int (num_input_files) > 1)
 	print (" ", current_input_file, "/", num_input_files);
 
       print ("</H1>\n");
+      */
 
       /* Navigation bar. */
       if (need_version (1, 5, 1))
@@ -511,7 +513,7 @@ sub html_faces ()
 	}
       else
 	print ("[<A HREF=\"#top\">top</A>]");
-      print ("\n<PRE>\n");
+      print ("\n<pre style=\"font-family: Courier; font-size: 9pt\">\n");
     }
 
   sub trailer ()
@@ -527,7 +529,7 @@ sub html_faces ()
 </BODY>
 </HTML>\n");
 */
-      print("</PRE></BODY></HTML\n");
+      print("</pre></BODY></HTML\n");
     }
 
   sub color_on (name)
