@@ -61,6 +61,9 @@ OSStatus GeneratePreviewForURL(void *thisInterface, QLPreviewRequestRef preview,
     [enscriptTask launch];
     NSData * data = [outputFile readDataToEndOfFile];
     [errorFile readDataToEndOfFile];
+    [enscriptTask waitUntilExit];
+    [enscriptTask release];
+    
     QLPreviewRequestSetDataRepresentation(preview, (CFDataRef) data,
                                           kUTTypeHTML,
                                           (CFDictionaryRef) [NSDictionary dictionary]);
