@@ -31,6 +31,7 @@ OSStatus GeneratePreviewForURL(void *thisInterface, QLPreviewRequestRef preview,
 {
     CFDataRef data = createHTMLDataFromSourceCodeFile(url);
     if (data) {
+        // [(NSData *) data writeToFile: @"/tmp/ql.html" atomically: NO];
         QLPreviewRequestSetDataRepresentation(preview, data,
                                               kUTTypeHTML,
                                               (CFDictionaryRef) [NSDictionary dictionary]);
