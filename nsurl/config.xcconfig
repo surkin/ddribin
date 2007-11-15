@@ -1,5 +1,0 @@
-#include "versions.xcconfig"
-
-DSTROOT = /tmp/$(PROJECT_NAME).dst
-PREFIX = /usr
-DD_INPUT_STREAM_HACK = 0
