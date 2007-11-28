@@ -54,10 +54,11 @@ OSStatus GenerateThumbnailForURL(void *thisInterface, QLThumbnailRequestRef thum
             //Room for improvement: Currently, it's possible for all the lines of text that are above the crop line to not completely use the horizontal space (caused by a longer line of text below the crop line). For this reason, it would be better to cut off the original source code somehow, to avoid the risk of wasted horizontal space.
             webViewFrameSize.height = webViewFrameSize.width / MINIMUM_ASPECT_RATIO;
         }
+#else
+        NSSize webViewFrameSize = NSMakeSize(800, 800);
 #endif
 
         //Create a WebView to render the HTML.
-        NSSize webViewFrameSize = NSMakeSize(800, 800);
         WebView *webView = [[[WebView alloc] initWithFrame:NSMakeRect(0.0, 0.0, webViewFrameSize.width, webViewFrameSize.height)] autorelease];
         //We don't want scroll-bars.
         [[[webView mainFrame] frameView] setAllowsScrolling:NO];
