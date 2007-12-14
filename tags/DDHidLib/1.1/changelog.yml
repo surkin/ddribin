@@ -1,0 +1,20 @@
+- version: "1.0.2"
+  date: xxx
+  changes:
+    - Improved keyboard barcode scanning for certain devices.
+    - Added internal debugging code to help detect memory leaks.
+
+- version: "1.0.1"
+  date: 2007-04-03
+  changes:
+    - "Replace deprecated stringWithCString: with stringWithUTF8String:."
+    - Make DDHidKeyboard.h public so it gets copied to the framework.
+    - Plugged some memory leaks.
+    - Added a class for barcode scanners, thanks to Lucas Newman of Delicious
+      Monster.
+    - Add support for point of view hat switches on joysticks.
+
+- version: "1.0"
+  date: 2007-03-19
+  changes:
+    - Initial release.
