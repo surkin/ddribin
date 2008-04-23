@@ -1,6 +1,8 @@
-- version: "1.0.2"
-  date: xxx
+- version: "1.1"
+  date: 2008-04-22
   changes:
+    - Added logical joysticks for devices with multiple top-level elements.
+      Should allow devices like PS/2 to USB converters to work better.
     - Improved keyboard barcode scanning for certain devices.
     - Added internal debugging code to help detect memory leaks.
 
