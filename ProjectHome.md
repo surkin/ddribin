@@ -1,0 +1,1 @@
+I write various open source tools, librarys, and code snippets that I either write for my own projects or for my contracting clients.  This project collects all this code into one easily accessible area.  Currently, there's a slight OS X bent.
